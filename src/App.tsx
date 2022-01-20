@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import useDarkMode from "./Hooks/useDarkMode";
+import PagesImage from "./Styles/Assets/Images/pages.svg";
 
 function App() {
+  const darkTheme = useDarkMode();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="h-screen px-1 py-1 dark:bg-gray-700">
+      <button className="absolute top-3 left-3" onClick={darkTheme.toggle}>
+        Toggle
+      </button>
+      <div className="flex h-full justify-center items-center">
+        <header className="w-2/6 text-6xl text-blue-900 dark:text-white">
+          CV Generator
+        </header>
+        <img src={PagesImage} alt="Page Logo" className="w-2/6" />
+      </div>
     </div>
   );
 }
