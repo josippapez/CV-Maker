@@ -1,0 +1,33 @@
+.page-controls {
+  border-radius: 4px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: fit-content;
+  position: relative;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity ease-in-out 0.2s;
+  height: fit-content;
+  opacity: 0;
+}
+.page-controls span {
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  margin: 0px 10px;
+}
+.page-controls button {
+  width: 40px;
+  height: 40px;
+}
+.page-controls button:hover {
+  background-color: #e6e6e6;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.documentPDFView:hover + .page-controls, .page-controls:hover {
+  opacity: 1;
+}
