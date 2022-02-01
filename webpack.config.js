@@ -15,6 +15,7 @@ module.exports = {
     port: 3000,
     liveReload: true,
     hot: true,
+    historyApiFallback: true,
   },
   resolve: {
     fallback: {

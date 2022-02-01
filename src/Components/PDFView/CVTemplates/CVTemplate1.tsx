@@ -14,9 +14,13 @@ import Phone from './Images/Phone';
 import Pin from './Images/Pin';
 import OpensansRegular from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-Regular.ttf';
 import OpensansBold from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-Bold.ttf';
+import OpensansLite from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-Light.ttf';
+import OpensansSemibold from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-SemiBold.ttf';
+import OpensansMedium from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-Medium.ttf';
+import OpensansExtraBold from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.ttf';
 
 type Props = {
-  firstInput?: Input;
+  generalInfo?: Input;
   professionalExperience?: ProfessionalExperience[];
 };
 
@@ -31,6 +35,10 @@ Font.register({
       src: OpensansBold,
       fontWeight: 'bold',
     },
+    { src: OpensansLite, fontWeight: 'light' },
+    { src: OpensansSemibold, fontWeight: 'semibold' },
+    { src: OpensansMedium, fontWeight: 'medium' },
+    { src: OpensansExtraBold, fontWeight: 'extrabold' },
   ],
 });
 
@@ -45,6 +53,15 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+  },
+  horizontalCenter: {
+    alignItems: 'center',
+  },
+  verticalCenter: {
+    justifyContent: 'center',
+  },
+  lightGrayText: {
+    color: '#818181',
   },
   marginTop10: {
     marginTop: 10,
@@ -94,23 +111,30 @@ const styles = StyleSheet.create({
   },
   companyPosition: {
     fontSize: 11,
+    fontWeight: 'medium',
   },
   companyDescription: {
     fontSize: 11,
     marginTop: 10,
   },
+  customTimeline: {
+    backgroundColor: '#183042',
+    width: 4,
+    borderRadius: 5,
+    marginRight: 40,
+  },
   companyLocation: {
     fontSize: 11,
-    marginTop: 10,
+    marginTop: 0,
   },
   companyDuration: {
     fontSize: 11,
-    marginTop: 10,
+    marginTop: 0,
   },
 });
 
 const CVTemplate1 = (props: Props): JSX.Element => {
-  const { firstInput, professionalExperience } = props;
+  const { generalInfo, professionalExperience } = props;
   console.log(professionalExperience);
 
   return useMemo(
@@ -120,53 +144,55 @@ const CVTemplate1 = (props: Props): JSX.Element => {
           <View style={styles.personalInfo}>
             <View style={[styles.topBar, styles.padding20]}>
               <Text style={styles.topBarName}>
-                {firstInput?.firstName} {firstInput?.lastName}
+                {generalInfo?.firstName} {generalInfo?.lastName}
               </Text>
-              <Text style={styles.topBarPosition}>{firstInput?.position}</Text>
-              <Text style={styles.topBarText}>{firstInput?.aboutMe}</Text>
+              <Text style={styles.topBarPosition}>{generalInfo?.position}</Text>
+              <Text style={styles.topBarText}>{generalInfo?.aboutMe}</Text>
             </View>
             <View
               style={[styles.additionalInfoBar, styles.padding20, styles.row]}
             >
               <View style={[styles.column, { width: '50%' }]}>
-                {firstInput?.email ? (
+                {generalInfo?.email ? (
                   <View style={styles.row}>
                     <Email width={14} />
                     <Text style={styles.additionalInfoBarText}>
-                      {firstInput?.email}
+                      {generalInfo?.email}
                     </Text>
                   </View>
                 ) : null}
-                {firstInput?.city || firstInput?.country ? (
+                {generalInfo?.city || generalInfo?.country ? (
                   <View style={[styles.row, styles.marginTop10]}>
                     <Pin width={14} />
                     <Text style={[styles.additionalInfoBarText]}>
-                      {firstInput?.city}, {firstInput?.country}
+                      {generalInfo?.city}, {generalInfo?.country}
                     </Text>
                   </View>
                 ) : null}
-                {firstInput?.phone ? (
+                {generalInfo?.phone ? (
                   <View style={[styles.row, styles.marginTop10]}>
                     <Phone width={14} />
                     <Text style={styles.additionalInfoBarText}>
-                      {firstInput?.phone}
+                      {generalInfo?.phone}
                     </Text>
                   </View>
                 ) : null}
               </View>
               <View style={[styles.column, { width: '50%' }]}>
-                {firstInput?.website ? (
+                {generalInfo?.website ? (
                   <View style={[styles.row]}>
                     <Earth width={14} />
                     <Text style={[styles.additionalInfoBarText]}>
-                      {firstInput?.website}
+                      {generalInfo?.website}
                     </Text>
                   </View>
                 ) : null}
               </View>
             </View>
           </View>
-          <View style={[styles.padding20, styles.column]}>
+          <View
+            style={[styles.padding20, styles.column, styles.horizontalCenter]}
+          >
             {professionalExperience?.map((experience, index) => (
               <View
                 wrap={false}
@@ -174,26 +200,15 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                 style={[
                   styles.row,
                   {
-                    marginLeft: '10%',
-                    width: '100%',
+                    width: '85%',
                     marginTop: index === 0 ? 0 : 20,
                     marginBottom:
                       index === professionalExperience.length - 1 ? 0 : 10,
                   },
                 ]}
               >
-                <View
-                  style={[
-                    styles.column,
-                    {
-                      backgroundColor: '#183042',
-                      width: 4,
-                      borderRadius: 5,
-                      marginRight: 40,
-                    },
-                  ]}
-                ></View>
-                <View style={[styles.column]}>
+                <View style={[styles.column, styles.customTimeline]}></View>
+                <View style={[styles.column, { width: '100%' }]}>
                   <Text style={[styles.companyName]}>{experience.company}</Text>
                   <View style={[styles.row]}>
                     <View
@@ -212,12 +227,29 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                       {experience.position}
                     </Text>
                   </View>
-                  <Text style={[styles.companyLocation]}>
-                    {experience.location}
-                  </Text>
-                  <Text style={[styles.companyDuration]}>
-                    {experience.startDate} - {experience.endDate}
-                  </Text>
+                  <View
+                    style={[
+                      styles.row,
+                      {
+                        width: '100%',
+                        justifyContent: 'space-between',
+                        paddingBottom: 2,
+                        borderBottomWidth: 1,
+                        borderBottomColor: '#d1d1d1',
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[styles.companyDuration, styles.lightGrayText]}
+                    >
+                      {experience.startDate} - {experience.endDate}
+                    </Text>
+                    <Text
+                      style={[styles.companyLocation, styles.lightGrayText]}
+                    >
+                      {experience.location}
+                    </Text>
+                  </View>
                   <Text style={[styles.companyDescription]}>
                     {experience.description}
                   </Text>
@@ -225,10 +257,16 @@ const CVTemplate1 = (props: Props): JSX.Element => {
               </View>
             ))}
           </View>
+          <View>
+            <Text>Certificates</Text>
+          </View>
+          <View>
+            <Text>Education</Text>
+          </View>
         </Page>
       </Document>
     ),
-    [firstInput, professionalExperience]
+    [generalInfo, professionalExperience]
   );
 };
 
