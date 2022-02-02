@@ -55,7 +55,7 @@ const PDFViewPresenter = (props: Props) => {
   );
 
   return (
-    <div className='flex w-full px-4 mt-4 h-full justify-evenly'>
+    <div className='flex w-full min-h-[100%_-_54px] justify-evenly'>
       <div className='w-2/4 mr-3'>
         <PDFInputsContainer
           setGeneralInfo={setGeneralInfo}
@@ -69,7 +69,7 @@ const PDFViewPresenter = (props: Props) => {
         {...options}
         file={pdfInstance.url}
         renderMode='svg'
-        className='drop-shadow-2xl relative w-2/4 justify-center items-center'
+        className='h-fit drop-shadow-2xl relative w-2/4'
         onItemClick={onItemClick}
         onLoadSuccess={onDocumentLoadSuccess}
       >

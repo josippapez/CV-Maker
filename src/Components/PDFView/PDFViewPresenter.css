@@ -32,6 +32,7 @@
   text-align: -webkit-center;
   justify-content: center;
   align-items: center;
+  display: flex;
 }
 
 .documentPDFView:hover + .page-controls, .page-controls:hover {

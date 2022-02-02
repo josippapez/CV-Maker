@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
 
 const CVTemplate1 = (props: Props): JSX.Element => {
   const { generalInfo, professionalExperience } = props;
-  console.log(professionalExperience);
 
   return useMemo(
     () => (
