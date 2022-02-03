@@ -65,44 +65,45 @@ const PDFViewPresenter = (props: Props) => {
           setProfessionalExperience={setProfessionalExperience}
         />
       </div>
-      <DocumentPDFView
-        {...options}
-        file={pdfInstance.url}
-        renderMode='svg'
-        className='h-fit drop-shadow-2xl relative w-2/4'
-        onItemClick={onItemClick}
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
-        <DocumentPageView
-          className='documentPDFView py-4'
+      <div className='w-2/4'>
+        <DocumentPDFView
+          {...options}
+          file={pdfInstance.url}
           renderMode='svg'
-          pageNumber={pageNumber || 1}
-        />
-        {pageNumber && numPages && (
-          <div className='page-controls'>
-            <button
-              disabled={pageNumber <= 1}
-              onClick={() => setPageNumber(pageNumber - 1)}
-              type='button'
-              aria-label='Previous page'
-            >
-              ‹
-            </button>
-            <span>
-              {pageNumber} of {numPages}
-            </span>
-            <button
-              disabled={pageNumber >= numPages}
-              onClick={() => setPageNumber(pageNumber + 1)}
-              type='button'
-              aria-label='Next page'
-            >
-              ›
-            </button>
-          </div>
-        )}
-      </DocumentPDFView>
-      {/* <PDFViewer
+          className='drop-shadow-2xl sticky top-0'
+          onItemClick={onItemClick}
+          onLoadSuccess={onDocumentLoadSuccess}
+        >
+          <DocumentPageView
+            className='documentPDFView py-4'
+            renderMode='svg'
+            pageNumber={pageNumber || 1}
+          />
+          {pageNumber && numPages && (
+            <div className='page-controls'>
+              <button
+                disabled={pageNumber <= 1}
+                onClick={() => setPageNumber(pageNumber - 1)}
+                type='button'
+                aria-label='Previous page'
+              >
+                ‹
+              </button>
+              <span>
+                {pageNumber} of {numPages}
+              </span>
+              <button
+                disabled={pageNumber >= numPages}
+                onClick={() => setPageNumber(pageNumber + 1)}
+                type='button'
+                aria-label='Next page'
+              >
+                ›
+              </button>
+            </div>
+          )}
+        </DocumentPDFView>
+        {/* <PDFViewer
         height={'100%'}
         width={window.innerWidth / 2}
         showToolbar={false}
@@ -112,6 +113,7 @@ const PDFViewPresenter = (props: Props) => {
           professionalExperience={professionalExperience}
         />
       </PDFViewer> */}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { Ref, useEffect, useRef, useState } from 'react';
 import usePreventBodyScroll from '../../../Hooks/usePreventBodyScroll';
 import { Input, ProfessionalExperience } from '../../PDFView/PDFViewContainer';
+import PDFTabNavigation from '../PDFTabNavigation/PDFTabNavigationContainer';
 import { Tab } from './PDFInputsContainer';
 
 import './PDFInputsPresenter.css';
@@ -34,7 +35,7 @@ const arrayOfInputs: Array<{
   { inputName: 'Website', inputValue: 'website', type: 'text' },
 ];
 
-const arrayOfTexAreas: Array<{
+const arrayOfTextAreas: Array<{
   inputName: string;
   inputValue: keyof Input;
 }> = [
@@ -43,18 +44,6 @@ const arrayOfTexAreas: Array<{
   { inputName: 'Skills', inputValue: 'skills' },
   { inputName: 'Languages', inputValue: 'languages' },
   { inputName: 'Interests', inputValue: 'interests' }, */
-];
-
-const arrayOfProfessionalExperience: Array<{
-  inputName: string;
-  inputValue: keyof ProfessionalExperience;
-  type: string;
-}> = [
-  { inputName: 'Company', inputValue: 'company', type: 'text' },
-  { inputName: 'Position', inputValue: 'position', type: 'text' },
-  { inputName: 'Start date', inputValue: 'startDate', type: 'date' },
-  { inputName: 'End date', inputValue: 'endDate', type: 'date' },
-  { inputName: 'Description', inputValue: 'description', type: 'text' },
 ];
 
 const PDFInputsPresenter = (props: Props) => {
@@ -70,10 +59,6 @@ const PDFInputsPresenter = (props: Props) => {
 
   const updateInstanceRef: { current: null | ReturnType<typeof setTimeout> } =
     useRef(null);
-  const horizontalScroll = useRef<HTMLDivElement>(null);
-
-  const { disableScroll, enableScroll, position } =
-    usePreventBodyScroll(horizontalScroll);
 
   useEffect(() => {
     if (updateInstanceRef.current) {
@@ -83,58 +68,14 @@ const PDFInputsPresenter = (props: Props) => {
       updateInstance();
     }, 500);
   }, [generalInfo, professionalExperience]);
+  console.log(professionalExperience);
 
   return (
     <div className='flex-col h-full p-4'>
-      <div className='w-full relative navigation'>
-        <div className='navigation-hint'>
-          {(position === 'left' || position === 'inbetween') && (
-            <div className='left-arrow' />
-          )}
-          {(position === 'right' || position === 'inbetween') && (
-            <div className='right-arrow' />
-          )}
-        </div>
-        <div
-          ref={horizontalScroll}
-          className='overflow-auto scroll w-full min-w-full'
-          onMouseEnter={() => {
-            disableScroll();
-          }}
-          onMouseLeave={() => {
-            enableScroll();
-          }}
-        >
-          <div className='border-b-4 flex'>
-            <button
-              className={`tab-button px-4 py-2
-            ${
-              selectedTab === Tab.generalInfo
-                ? 'border-blue-500'
-                : 'border-b-transparent'
-            }`}
-              onClick={() => {
-                setSelectedTab(Tab.generalInfo);
-              }}
-            >
-              General information
-            </button>
-            <button
-              className={`tab-button px-4 py-2
-           ${
-             selectedTab === Tab.professionalExperience
-               ? 'border-blue-500'
-               : 'border-b-transparent'
-           }`}
-              onClick={() => {
-                setSelectedTab(Tab.professionalExperience);
-              }}
-            >
-              Professional Experience
-            </button>
-          </div>
-        </div>
-      </div>
+      <PDFTabNavigation
+        setSelectedTab={setSelectedTab}
+        selectedTab={selectedTab}
+      />
       <div hidden={selectedTab !== Tab.generalInfo} className='tab'>
         {arrayOfInputs.map(input => (
           <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
@@ -152,7 +93,7 @@ const PDFInputsPresenter = (props: Props) => {
             />
           </div>
         ))}
-        {arrayOfTexAreas.map(input => (
+        {arrayOfTextAreas.map(input => (
           <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
             <label className='w-1/4'>{input.inputName}</label>
             <textarea
@@ -169,24 +110,166 @@ const PDFInputsPresenter = (props: Props) => {
         ))}
       </div>
       <div hidden={selectedTab !== Tab.professionalExperience} className='tab'>
-        {arrayOfProfessionalExperience.map((input, index) => (
-          <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
-            <label className='w-1/4'>{input.inputName}</label>
-            <input
-              className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
-              type={input.type}
-              value={professionalExperience[index][input.inputValue]}
-              onChange={e => {
-                setProfessionalExperience([
-                  {
-                    ...professionalExperience[index],
-                    [input.inputValue]: e.target.value,
-                  },
-                ]);
+        {professionalExperience.map((experience, index) => (
+          <div
+            key={index}
+            className='flex mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
+          >
+            <button
+              type='button'
+              className='delete-button'
+              onClick={() => {
+                setProfessionalExperience(
+                  professionalExperience.filter(
+                    (experience, existingIndex) => existingIndex !== index
+                  )
+                );
               }}
             />
+            <div className='w-full'>
+              <div className='flex'>
+                <label className='w-1/4'>Company</label>
+                <input
+                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  type='text'
+                  value={experience.company}
+                  onChange={e => {
+                    setProfessionalExperience(
+                      professionalExperience.map((experience, index) => {
+                        if (index === index) {
+                          return {
+                            ...experience,
+                            company: e.target.value,
+                          };
+                        }
+                        return experience;
+                      })
+                    );
+                  }}
+                />
+              </div>
+              <div className='flex mt-2'>
+                <label className='w-1/4'>Position</label>
+                <input
+                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  type='text'
+                  value={experience.position}
+                  onChange={e => {
+                    setProfessionalExperience(
+                      professionalExperience.map((experience, index) => {
+                        if (index === index) {
+                          return {
+                            ...experience,
+                            position: e.target.value,
+                          };
+                        }
+                        return experience;
+                      })
+                    );
+                  }}
+                />
+              </div>
+              <div className='flex mt-2'>
+                <label className='w-1/4'>Location</label>
+                <input
+                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  type='text'
+                  value={experience.location}
+                  onChange={e => {
+                    setProfessionalExperience(
+                      professionalExperience.map((item, i) => {
+                        if (i === index) {
+                          return { ...item, location: e.target.value };
+                        }
+                        return item;
+                      })
+                    );
+                  }}
+                />
+              </div>
+              <div className='flex mt-2'>
+                <label className='w-1/4'>Start date</label>
+                <input
+                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  type='date'
+                  value={experience.startDate}
+                  onChange={e => {
+                    setProfessionalExperience(
+                      professionalExperience.map((experience, index) => {
+                        if (index === index) {
+                          return {
+                            ...experience,
+                            startDate: e.target.value,
+                          };
+                        }
+                        return experience;
+                      })
+                    );
+                  }}
+                />
+              </div>
+              <div className='flex mt-2'>
+                <label className='w-1/4'>End date</label>
+                <input
+                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  type='date'
+                  value={experience.endDate}
+                  onChange={e => {
+                    setProfessionalExperience(
+                      professionalExperience.map((experience, index) => {
+                        if (index === index) {
+                          return {
+                            ...experience,
+                            endDate: e.target.value,
+                          };
+                        }
+                        return experience;
+                      })
+                    );
+                  }}
+                />
+              </div>
+              <div className='flex mt-2'>
+                <label className='w-1/4'>Description</label>
+                <textarea
+                  className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
+                  value={experience.description}
+                  onChange={e => {
+                    setProfessionalExperience(
+                      professionalExperience.map((experience, index) => {
+                        if (index === index) {
+                          return {
+                            ...experience,
+                            description: e.target.value,
+                          };
+                        }
+                        return experience;
+                      })
+                    );
+                  }}
+                />
+              </div>
+            </div>
           </div>
         ))}
+        <button
+          className='w-full border-2 rounded-md p-1 focus:border-slate-400'
+          onClick={() => {
+            setProfessionalExperience([
+              ...professionalExperience,
+              {
+                company: '',
+                position: '',
+                startDate: '',
+                endDate: '',
+                description: '',
+                location: '',
+              },
+            ]);
+          }}
+        >
+          Add experience
+        </button>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input, ProfessionalExperience } from '../../PDFView/PDFViewContainer';
 import PDFInputsPresenter from './PDFInputsPresenter';
 
@@ -15,6 +15,8 @@ type Props = {
 export enum Tab {
   generalInfo = 'generalInfo',
   professionalExperience = 'professionalExperience',
+  certificates = 'certificates',
+  education = 'education',
 }
 
 const PDFInputsContainer = (props: Props) => {
@@ -25,11 +27,22 @@ const PDFInputsContainer = (props: Props) => {
     professionalExperience,
     setProfessionalExperience,
   } = props;
-  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.generalInfo);
+
+  const [selectedTab, setSelectedTab] = useState<Tab>(
+    localStorage.getItem('selectedTab') !== 'null' &&
+      localStorage.getItem('selectedTab') !== null &&
+      localStorage.getItem('selectedTab') !== undefined
+      ? Tab[localStorage.getItem('selectedTab') as keyof typeof Tab]
+      : Tab.generalInfo
+  );
 
   const setSelectedTabHandler = (tab: Tab) => {
     setSelectedTab(tab);
   };
+
+  useEffect(() => {
+    localStorage.setItem('selectedTab', selectedTab);
+  }, [setSelectedTab, selectedTab]);
 
   return (
     <PDFInputsPresenter
