@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import usePreventBodyScroll from '../../../Hooks/usePreventBodyScroll';
 import { Tab } from '../PDFInputs/PDFInputsContainer';
 import PDFTabNavigationPresenter from './PDFTabNavigationPresenter';
