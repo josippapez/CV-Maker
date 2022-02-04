@@ -1,5 +1,11 @@
 import React from 'react';
 
+export enum scrollPosition {
+  left = 'left',
+  right = 'right',
+  inbetween = 'inbetween',
+}
+
 const isOverflown = ({
   clientWidth,
   clientHeight,
@@ -17,9 +23,7 @@ const preventDefault = (ev: Event) => {
 
 function usePreventBodyScroll(ref: React.RefObject<HTMLElement>) {
   const [hidden, setHidden] = React.useState(false);
-  const [position, setPosition] = React.useState<
-    'left' | 'right' | 'inbetween' | null
-  >(null);
+  const [position, setPosition] = React.useState<scrollPosition | null>(null);
 
   const handleScroll = (ev: WheelEvent) => {
     preventDefault(ev);
@@ -33,15 +37,15 @@ function usePreventBodyScroll(ref: React.RefObject<HTMLElement>) {
         if (scrolled === ref.current.scrollWidth) {
           ref.current.classList.remove('scroll-x', 'scroll-x-left');
           ref.current.classList.add('scroll-x-right');
-          setPosition('right');
+          setPosition(scrollPosition.right);
         } else if (scrolled === ref.current.clientWidth) {
           ref.current.classList.remove('scroll-x', 'scroll-x-right');
           ref.current.classList.add('scroll-x-left');
-          setPosition('left');
+          setPosition(scrollPosition.left);
         } else {
           ref.current.classList.remove('scroll-x-left', 'scroll-x-right');
           ref.current.classList.add('scroll-x');
-          setPosition('inbetween');
+          setPosition(scrollPosition.inbetween);
         }
       }
     }

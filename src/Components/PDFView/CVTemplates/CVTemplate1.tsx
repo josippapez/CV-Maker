@@ -7,7 +7,12 @@ import {
   View,
 } from '@react-pdf/renderer';
 import { useMemo } from 'react';
-import { Input, ProfessionalExperience } from '../PDFViewContainer';
+import {
+  Certificate,
+  Education,
+  Input,
+  ProfessionalExperience,
+} from '../PDFViewContainer';
 import Earth from './Images/Earth';
 import Email from './Images/Email';
 import Phone from './Images/Phone';
@@ -18,10 +23,13 @@ import OpensansLite from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-Light.t
 import OpensansSemibold from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-SemiBold.ttf';
 import OpensansMedium from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-Medium.ttf';
 import OpensansExtraBold from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.ttf';
+import OpensansItalic from '../../../Styles/Assets/Fonts/OpenSans/OpenSans-Italic.ttf';
 
 type Props = {
   generalInfo?: Input;
   professionalExperience?: ProfessionalExperience[];
+  certificates?: Certificate[];
+  education?: Education[];
 };
 
 Font.register({
@@ -39,6 +47,7 @@ Font.register({
     { src: OpensansSemibold, fontWeight: 'semibold' },
     { src: OpensansMedium, fontWeight: 'medium' },
     { src: OpensansExtraBold, fontWeight: 'extrabold' },
+    { src: OpensansItalic, fontStyle: 'italic' },
   ],
 });
 
@@ -131,10 +140,16 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginTop: 0,
   },
+  sectionTitle: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
 });
 
 const CVTemplate1 = (props: Props): JSX.Element => {
-  const { generalInfo, professionalExperience } = props;
+  const { generalInfo, professionalExperience, certificates, education } =
+    props;
 
   return useMemo(
     () => (
@@ -256,16 +271,120 @@ const CVTemplate1 = (props: Props): JSX.Element => {
               </View>
             ))}
           </View>
-          <View>
-            <Text>Certificates</Text>
-          </View>
-          <View>
-            <Text>Education</Text>
-          </View>
+          {certificates && certificates.length > 0 ? (
+            <View
+              style={[styles.padding20, styles.column, styles.horizontalCenter]}
+            >
+              <Text style={[styles.sectionTitle, styles.lightGrayText]}>
+                Certificates
+              </Text>
+              {certificates.map((cert, index) => (
+                <View
+                  wrap={false}
+                  key={index}
+                  style={[
+                    styles.row,
+                    {
+                      width: '85%',
+                      marginTop: index === 0 ? 0 : 20,
+                      marginBottom: index === certificates.length - 1 ? 0 : 10,
+                    },
+                  ]}
+                >
+                  <View style={[styles.column, styles.customTimeline]}></View>
+                  <View style={[styles.column, { width: '100%' }]}>
+                    <Text style={[styles.companyName]}>{cert.name}</Text>
+                    <View style={[styles.row]}>
+                      <View
+                        style={[
+                          {
+                            width: 17,
+                            height: 17,
+                            position: 'relative',
+                            borderRadius: '50%',
+                            left: -50.5,
+                            backgroundColor: '#1e86c7',
+                          },
+                        ]}
+                      />
+                      <Text style={[styles.companyPosition, { left: -17 }]}>
+                        {cert.institution}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.row,
+                        {
+                          width: '100%',
+                          justifyContent: 'space-between',
+                          paddingBottom: 2,
+                          borderBottomWidth: 1,
+                          borderBottomColor: '#d1d1d1',
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={[styles.companyDuration, styles.lightGrayText]}
+                      >
+                        {cert.date}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              ))}
+            </View>
+          ) : null}
+          {education && education?.length > 0 ? (
+            <View
+              style={[styles.padding20, styles.column, styles.horizontalCenter]}
+            >
+              <Text style={[styles.sectionTitle, styles.lightGrayText]}>
+                Education
+              </Text>
+              {education?.map((edu, index) => (
+                <View
+                  wrap={false}
+                  key={index}
+                  style={[
+                    styles.row,
+                    {
+                      width: '85%',
+                      marginTop: index === 0 ? 0 : 20,
+                      marginBottom: index === education.length - 1 ? 0 : 10,
+                    },
+                  ]}
+                >
+                  <View style={[styles.column, styles.customTimeline]}></View>
+                  <View style={[styles.column, { width: '100%' }]}>
+                    <Text style={[styles.companyName]}>{edu.school}</Text>
+                    <Text style={[styles.companyPosition]}>
+                      {edu.degree}, {edu.fieldOfStudy}
+                    </Text>
+                    <Text style={[styles.companyLocation]}>{edu.location}</Text>
+                    <Text
+                      style={[
+                        styles.companyDuration,
+                        styles.lightGrayText,
+                        {
+                          marginTop: 10,
+                          fontStyle: 'italic',
+                        },
+                      ]}
+                    >
+                      {edu.startDate} - {edu.endDate}
+                    </Text>
+                    <Text style={[styles.companyDescription]}>
+                      {edu.description}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          ) : null}
         </Page>
       </Document>
     ),
-    [generalInfo, professionalExperience]
+    [generalInfo, professionalExperience, certificates, education]
   );
 };
 

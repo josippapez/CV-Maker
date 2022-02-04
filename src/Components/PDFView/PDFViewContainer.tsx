@@ -1,5 +1,5 @@
 import { usePDF } from '@react-pdf/renderer';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CVTemplate1 from './CVTemplates/CVTemplate1';
 import PDFViewPresenter from './PDFViewPresenter';
 export interface ProfessionalExperience {
@@ -22,6 +22,23 @@ export interface Input {
   zip: string;
   country: string;
   website: string;
+}
+
+export interface Certificate {
+  name: string;
+  date: string;
+  institution: string;
+  description: string;
+}
+
+export interface Education {
+  school: string;
+  location: string;
+  degree: string;
+  fieldOfStudy: string;
+  startDate: string;
+  endDate: string;
+  description: string;
 }
 
 const PDFView = () => {
@@ -109,18 +126,74 @@ const PDFView = () => {
     },
   ]);
 
+  const [certificates, setCertificates] = useState<Certificate[]>([
+    {
+      name: 'Frontend Developer',
+      date: new Date().toLocaleDateString('hr'),
+      description: 'test',
+      institution: 'test',
+    },
+    {
+      name: 'Frontend Developer',
+      date: new Date().toLocaleDateString('hr'),
+      description: 'test',
+      institution: 'test',
+    },
+  ]);
+
+  const [education, setEducation] = useState<Education[]>([
+    {
+      school: 'University of Zagreb',
+      location: 'Zagreb, Hrvatska',
+      degree: 'Bachelor of Science',
+      fieldOfStudy: 'Computer Science',
+      startDate: new Date().toLocaleDateString('hr'),
+      endDate: new Date().toLocaleDateString('hr'),
+      description: 'test',
+    },
+    {
+      school: 'University of Zagreb',
+      location: 'Zagreb, Hrvatska',
+      degree: 'Master of Science',
+      fieldOfStudy: 'Computer Science',
+      startDate: new Date().toLocaleDateString('hr'),
+      endDate: new Date().toLocaleDateString('hr'),
+      description: 'test',
+    },
+  ]);
+
   const [instance, updateInstance] = usePDF({
-    document: CVTemplate1({ generalInfo, professionalExperience }),
+    document: CVTemplate1({
+      generalInfo,
+      professionalExperience,
+      certificates,
+      education,
+    }),
   });
+
+  const updateInstanceRef: { current: null | ReturnType<typeof setTimeout> } =
+    useRef(null);
+
+  useEffect(() => {
+    if (updateInstanceRef.current) {
+      clearTimeout(updateInstanceRef.current);
+    }
+    updateInstanceRef.current = setTimeout(() => {
+      updateInstance();
+    }, 500);
+  }, [generalInfo, professionalExperience, certificates, education]);
 
   return (
     <PDFViewPresenter
       pdfInstance={instance}
-      updateInstance={updateInstance}
       setGeneralInfo={setGeneralInfo}
       generalInfo={generalInfo}
       setProfessionalExperience={setProfessionalExperience}
       professionalExperience={professionalExperience}
+      setCertificates={setCertificates}
+      certificates={certificates}
+      setEducation={setEducation}
+      education={education}
     />
   );
 };

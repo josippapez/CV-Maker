@@ -1,63 +1,20 @@
-.tab-button {
-  color: #1f2937;
-  font-weight: bold;
-  margin-bottom: -4px;
-  border-bottom-width: 4px;
-  border-bottom-style: solid;
-}
-
 .tab {
   animation: 0.5s cubic-bezier(0.25, 1, 0.3, 1) wipe-in-down both;
 }
 
-.scroll {
-  position: relative;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-.scroll::-webkit-scrollbar {
-  display: none;
-}
-.scroll:hover {
-}
-
-.navigation:hover .navigation-hint {
-  display: block;
-}
-
-.scroll-x {
-}
-.scroll-x-left {
-}
-.scroll-x-right {
-}
-
-.navigation-hint {
-  display: none;
-  height: 100%;
-  width: 100%;
+.delete-button {
+  height: 30px;
+  width: 30px;
   position: absolute;
-}
-.left-arrow,
-.right-arrow {
-  height: 100%;
-  width: 28px;
-  position: relative;
+  right: 0;
+  top: 0;
+  background-image: url('../../../Styles/Assets/Images/deleteIconBlack.svg');
+  background-position: center;
   background-repeat: no-repeat;
-  z-index: 1;
-  background-color: #ffffff67;
 }
-.left-arrow {
-  backdrop-filter: blur(1px);
-  background-image: url('../../../Styles/Assets/Images/left-arrow.svg');
-  background-position: center;
-  float: left;
-}
-.right-arrow {
-  backdrop-filter: blur(1px);
-  background-image: url('../../../Styles/Assets/Images/right-arrow.svg');
-  background-position: center;
-  float: right;
+.delete-button:hover {
+  background-color: #afafaf;
+  border-radius: 4px;
 }
 
 @keyframes wipe-in-down {
