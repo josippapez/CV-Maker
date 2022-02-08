@@ -1,52 +1,38 @@
-import { PDFViewer } from '@react-pdf/renderer';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   Document as DocumentPDFView,
   Page as DocumentPageView,
 } from 'react-pdf/dist/umd/entry.webpack';
-import CVTemplate1 from './CVTemplates/CVTemplate1';
-import { Input, ProfessionalExperience } from './PDFViewContainer';
+import PDFInputsContainer from '../Shared/PDFInputs/PDFInputsContainer';
+import {
+  Certificate,
+  Education,
+  GeneralInfo,
+  LanguageSkill,
+  ProfessionalExperience,
+} from './PDFViewContainer';
 import './PDFViewPresenter.css';
 
-interface Props {
+type Props = {
   pdfInstance: {
     loading: boolean;
     blob: Blob | null;
     url: string | null;
     error: string | null;
   };
-  updateInstance: () => void;
-  setFirstInput(firstInput: Input): void;
-  firstInput: Input;
+  setGeneralInfo(generalInfo: GeneralInfo): void;
+  generalInfo: GeneralInfo;
   setProfessionalExperience(
     professionalExperience: ProfessionalExperience[]
   ): void;
   professionalExperience: ProfessionalExperience[];
-}
-
-const arrayOfInputs: Array<keyof Input> = [
-  'firstName',
-  'lastName',
-  'aboutMe',
-  'position',
-  'email',
-  'phone',
-  'address',
-  'city',
-  'zip',
-  'country',
-  'website',
-  'date',
-  'dateOfBirth',
-];
-
-const arrayOfProfessionalExperience: Array<keyof ProfessionalExperience> = [
-  'company',
-  'position',
-  'startDate',
-  'endDate',
-  'description',
-];
+  certificates: Certificate[];
+  education: Education[];
+  setCertificates(certificates: Certificate[]): void;
+  setEducation(education: Education[]): void;
+  languages: LanguageSkill[];
+  setLanguages(languages: LanguageSkill[]): void;
+};
 
 const options = {
   cMapUrl: 'cmaps/',
@@ -56,116 +42,92 @@ const options = {
 const PDFViewPresenter = (props: Props) => {
   const {
     pdfInstance,
-    updateInstance,
-    firstInput,
-    setFirstInput,
+    generalInfo,
+    setGeneralInfo,
     professionalExperience,
     setProfessionalExperience,
+    certificates,
+    setCertificates,
+    education,
+    setEducation,
+    languages,
+    setLanguages,
   } = props;
 
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState<number | null>(null);
+  const [numPages, setNumPages] = useState<number>(1);
+  const [pageNumber, setPageNumber] = useState<number>(1);
 
-  const onDocumentLoadSuccess = useCallback(document => {
-    const { numPages: nextNumPages } = document;
-    setNumPages(nextNumPages);
-    setPageNumber(1);
-  }, []);
-
-  const onItemClick = useCallback(
-    ({ pageNumber: nextPageNumber }) => setPageNumber(nextPageNumber),
-    []
+  const onDocumentLoadSuccess = useCallback(
+    document => {
+      const { numPages: nextNumPages } = document;
+      if (pageNumber > nextNumPages) {
+        setPageNumber(nextNumPages);
+      }
+      setNumPages(nextNumPages);
+    },
+    [pdfInstance.blob]
   );
 
+  const onItemClick = useCallback(({ pageNumber: nextPageNumber }) => {
+    setPageNumber(nextPageNumber);
+  }, []);
+
   return (
-    <div className='flex w-full px-4 mt-4 h-full justify-evenly'>
+    <div className='flex w-full min-h-[100%_-_54px] justify-evenly'>
       <div className='w-2/4 mr-3'>
-        {arrayOfInputs.map(
-          (input: keyof Input): JSX.Element => (
-            <div key={input} className='flex flex-col'>
-              <label className='text-xl text-gray-700'>{input}</label>
-              <input
-                className='w-full px-2 py-1 border border-gray-400 rounded-lg'
-                type='text'
-                maxLength={input === 'aboutMe' ? 350 : undefined}
-                value={firstInput[input]}
-                onKeyDown={e => e.key === 'Enter' && updateInstance()}
-                onChange={e =>
-                  setFirstInput({ ...firstInput, [input]: e.target.value })
-                }
-              />
-            </div>
-          )
-        )}
-        {/* {arrayOfProfessionalExperience.map(
-          (input: keyof ProfessionalExperience, index): JSX.Element => (
-            <div key={input} className='flex flex-col'>
-              <label className='text-xl text-gray-700'>{input}</label>
-              <input
-                className='w-full px-2 py-1 border border-gray-400 rounded-lg'
-                type='text'
-                value={professionalExperience[input]}
-                onKeyDown={e => e.key === 'Enter' && updateInstance()}
-                onChange={e =>
-                  setProfessionalExperience({
-                    ...professionalExperience,
-                    [input]: e.target.value,
-                  })
-                }
-              />
-            </div>
-          )
-        )} */}
-      </div>
-      <DocumentPDFView
-        {...options}
-        file={pdfInstance.url}
-        renderMode='svg'
-        className='drop-shadow-2xl relative hover:'
-        onItemClick={onItemClick}
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
-        <DocumentPageView
-          className='documentPDFView py-4'
-          renderMode='canvas'
-          pageNumber={pageNumber || 1}
+        <PDFInputsContainer
+          setGeneralInfo={setGeneralInfo}
+          generalInfo={generalInfo}
+          professionalExperience={professionalExperience}
+          setProfessionalExperience={setProfessionalExperience}
+          certificates={certificates}
+          setCertificates={setCertificates}
+          education={education}
+          setEducation={setEducation}
+          languages={languages}
+          setLanguages={setLanguages}
         />
-        {pageNumber && numPages && (
-          <div className='page-controls'>
-            <button
-              disabled={pageNumber <= 1}
-              onClick={() => setPageNumber(pageNumber - 1)}
-              type='button'
-              aria-label='Previous page'
-            >
-              ‹
-            </button>
-            <span>
-              {pageNumber} of {numPages}
-            </span>
-            <button
-              disabled={pageNumber >= numPages}
-              onClick={() => setPageNumber(pageNumber + 1)}
-              type='button'
-              aria-label='Next page'
-            >
-              ›
-            </button>
-          </div>
-        )}
-      </DocumentPDFView>
-      {/* <div>
-        <PDFViewer
-          height={'100%'}
-          width={window.innerWidth / 2}
-          showToolbar={false}
+      </div>
+      <div className='w-2/4'>
+        <DocumentPDFView
+          {...options}
+          file={pdfInstance.url}
+          renderMode='svg'
+          className='drop-shadow-2xl sticky top-0'
+          onItemClick={onItemClick}
+          onLoadSuccess={onDocumentLoadSuccess}
         >
-          <CVTemplate1
-            firstInput={firstInput}
-            professionalExperience={professionalExperience}
+          <DocumentPageView
+            height={window.innerHeight - 100}
+            className='documentPDFView py-4'
+            renderMode='svg'
+            pageNumber={pageNumber || 1}
           />
-        </PDFViewer>
-      </div> */}
+          {pageNumber && numPages && (
+            <div className='page-controls'>
+              <button
+                disabled={pageNumber <= 1}
+                onClick={() => setPageNumber(pageNumber - 1)}
+                type='button'
+                aria-label='Previous page'
+              >
+                ‹
+              </button>
+              <span>
+                {pageNumber} of {numPages}
+              </span>
+              <button
+                disabled={pageNumber >= numPages}
+                onClick={() => setPageNumber(pageNumber + 1)}
+                type='button'
+                aria-label='Next page'
+              >
+                ›
+              </button>
+            </div>
+          )}
+        </DocumentPDFView>
+      </div>
     </div>
   );
 };

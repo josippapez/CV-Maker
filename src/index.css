@@ -12,22 +12,27 @@
 
 body {
   margin: 0;
-  font-family: "OpenSans-Regular", sans-serif;
+  font-family: 'OpenSans-Regular', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
-@font-face {
-  font-family: "Opensans-Regular";
-  src: url("./Styles/Assets/Fonts/OpenSans/OpenSans-Regular.ttf");
+input,
+textarea {
+  outline: none !important;
 }
 
 @font-face {
-  font-family: "Opensans-Bold";
-  src: url("./Styles/Assets/Fonts/OpenSans/OpenSans-Bold.ttf");
+  font-family: 'Opensans-Regular';
+  src: url('./Styles/Assets/Fonts/OpenSans/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Opensans-Bold';
+  src: url('./Styles/Assets/Fonts/OpenSans/OpenSans-Bold.ttf');
 }
