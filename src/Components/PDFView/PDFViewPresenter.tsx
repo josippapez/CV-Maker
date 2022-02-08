@@ -1,15 +1,14 @@
-import { PDFViewer } from '@react-pdf/renderer';
 import { useCallback, useState } from 'react';
 import {
   Document as DocumentPDFView,
   Page as DocumentPageView,
 } from 'react-pdf/dist/umd/entry.webpack';
 import PDFInputsContainer from '../Shared/PDFInputs/PDFInputsContainer';
-import CVTemplate1 from './CVTemplates/CVTemplate1';
 import {
   Certificate,
   Education,
-  Input,
+  GeneralInfo,
+  LanguageSkill,
   ProfessionalExperience,
 } from './PDFViewContainer';
 import './PDFViewPresenter.css';
@@ -21,8 +20,8 @@ type Props = {
     url: string | null;
     error: string | null;
   };
-  setGeneralInfo(generalInfo: Input): void;
-  generalInfo: Input;
+  setGeneralInfo(generalInfo: GeneralInfo): void;
+  generalInfo: GeneralInfo;
   setProfessionalExperience(
     professionalExperience: ProfessionalExperience[]
   ): void;
@@ -31,6 +30,8 @@ type Props = {
   education: Education[];
   setCertificates(certificates: Certificate[]): void;
   setEducation(education: Education[]): void;
+  languages: LanguageSkill[];
+  setLanguages(languages: LanguageSkill[]): void;
 };
 
 const options = {
@@ -49,23 +50,27 @@ const PDFViewPresenter = (props: Props) => {
     setCertificates,
     education,
     setEducation,
+    languages,
+    setLanguages,
   } = props;
 
-  const [numPages, setNumPages] = useState(null);
+  const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
-  const onDocumentLoadSuccess = useCallback(document => {
-    const { numPages: nextNumPages } = document;
-    setNumPages(nextNumPages);
-    if (pageNumber > nextNumPages) {
-      setPageNumber(nextNumPages);
-    }
-  }, []);
-
-  const onItemClick = useCallback(
-    ({ pageNumber: nextPageNumber }) => setPageNumber(nextPageNumber),
-    []
+  const onDocumentLoadSuccess = useCallback(
+    document => {
+      const { numPages: nextNumPages } = document;
+      if (pageNumber > nextNumPages) {
+        setPageNumber(nextNumPages);
+      }
+      setNumPages(nextNumPages);
+    },
+    [pdfInstance.blob]
   );
+
+  const onItemClick = useCallback(({ pageNumber: nextPageNumber }) => {
+    setPageNumber(nextPageNumber);
+  }, []);
 
   return (
     <div className='flex w-full min-h-[100%_-_54px] justify-evenly'>
@@ -79,6 +84,8 @@ const PDFViewPresenter = (props: Props) => {
           setCertificates={setCertificates}
           education={education}
           setEducation={setEducation}
+          languages={languages}
+          setLanguages={setLanguages}
         />
       </div>
       <div className='w-2/4'>
@@ -120,16 +127,6 @@ const PDFViewPresenter = (props: Props) => {
             </div>
           )}
         </DocumentPDFView>
-        {/* <PDFViewer
-        height={'100%'}
-        width={window.innerWidth / 2}
-        showToolbar={false}
-      >
-        <CVTemplate1
-          firstInput={firstInput}
-          professionalExperience={professionalExperience}
-        />
-      </PDFViewer> */}
       </div>
     </div>
   );

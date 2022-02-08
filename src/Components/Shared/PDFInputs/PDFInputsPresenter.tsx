@@ -1,19 +1,19 @@
-import { Ref, useEffect, useRef, useState } from 'react';
-import usePreventBodyScroll from '../../../Hooks/usePreventBodyScroll';
+import Images from '../../../Styles/Assets/Images/Images';
 import {
   Certificate,
   Education,
-  Input,
+  GeneralInfo,
+  LanguageProficiencyLevel,
+  LanguageSkill,
   ProfessionalExperience,
 } from '../../PDFView/PDFViewContainer';
 import PDFTabNavigation from '../PDFTabNavigation/PDFTabNavigationContainer';
 import { Tab } from './PDFInputsContainer';
-
 import './PDFInputsPresenter.css';
 
 type Props = {
-  generalInfo: Input;
-  setGeneralInfo: (generalInfo: Input) => void;
+  generalInfo: GeneralInfo;
+  setGeneralInfo: (generalInfo: GeneralInfo) => void;
   professionalExperience: ProfessionalExperience[];
   setProfessionalExperience: (
     professionalExperience: ProfessionalExperience[]
@@ -24,11 +24,13 @@ type Props = {
   setCertificates: (certificates: Certificate[]) => void;
   educations: Education[];
   setEducation: (education: Education[]) => void;
+  languages: LanguageSkill[];
+  setLanguages: (languages: LanguageSkill[]) => void;
 };
 
 const arrayOfGeneralInputs: Array<{
   inputName: string;
-  inputValue: keyof Input;
+  inputValue: keyof GeneralInfo;
   type: string;
 }> = [
   { inputName: 'First name', inputValue: 'firstName', type: 'text' },
@@ -36,23 +38,19 @@ const arrayOfGeneralInputs: Array<{
   { inputName: 'Position', inputValue: 'position', type: 'text' },
   { inputName: 'Email', inputValue: 'email', type: 'email' },
   { inputName: 'Phone', inputValue: 'phone', type: 'text' },
-  { inputName: 'Address', inputValue: 'address', type: 'text' },
   { inputName: 'City', inputValue: 'city', type: 'text' },
-  { inputName: 'Zip', inputValue: 'zip', type: 'number' },
   { inputName: 'Country', inputValue: 'country', type: 'text' },
   { inputName: 'Website', inputValue: 'website', type: 'text' },
+  { inputName: 'LinkedIn', inputValue: 'LinkedIn', type: 'text' },
+  { inputName: 'GitHub', inputValue: 'GitHub', type: 'text' },
+  { inputName: 'Twitter', inputValue: 'Twitter', type: 'text' },
+  { inputName: 'Facebook', inputValue: 'Facebook', type: 'text' },
 ];
 
 const arrayOfGeneralTextAreas: Array<{
   inputName: string;
-  inputValue: keyof Input;
-}> = [
-  { inputName: 'About me', inputValue: 'aboutMe' },
-  /*  { inputName: 'Education', inputValue: 'education' },
-  { inputName: 'Skills', inputValue: 'skills' },
-  { inputName: 'Languages', inputValue: 'languages' },
-  { inputName: 'Interests', inputValue: 'interests' }, */
-];
+  inputValue: keyof GeneralInfo;
+}> = [{ inputName: 'About me', inputValue: 'aboutMe' }];
 
 const arrayOfProfessionalExperienceInputs: Array<{
   inputName: string;
@@ -101,6 +99,8 @@ const PDFInputsPresenter = (props: Props) => {
     setCertificates,
     educations,
     setEducation,
+    languages,
+    setLanguages,
   } = props;
 
   return (
@@ -109,6 +109,7 @@ const PDFInputsPresenter = (props: Props) => {
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
+      <img src={Images.Email} alt='earth' className='earth' />
       <div hidden={selectedTab !== Tab.generalInfo} className='tab'>
         {arrayOfGeneralInputs.map(input => (
           <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
@@ -386,6 +387,84 @@ const PDFInputsPresenter = (props: Props) => {
           }}
         >
           Add education
+        </button>
+      </div>
+      <div hidden={selectedTab !== Tab.languages} className='tab'>
+        {languages.map((language, index) => (
+          <div
+            key={index}
+            className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
+          >
+            <button
+              type='button'
+              className='delete-button'
+              onClick={() => {
+                setLanguages(languages.filter((language, i) => i !== index));
+              }}
+            />
+            <div className='flex'>
+              <label className='w-1/4'>Language</label>
+              <input
+                className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                type='text'
+                value={language.name}
+                onChange={e => {
+                  setLanguages(
+                    languages.map((language, i) => {
+                      if (i === index) {
+                        return {
+                          ...language,
+                          name: e.target.value,
+                        };
+                      }
+                      return language;
+                    })
+                  );
+                }}
+              />
+            </div>
+            <div className='flex mt-2'>
+              <label className='w-1/4'>Level</label>
+              <select
+                className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                value={language.proficiency}
+                onChange={e => {
+                  setLanguages(
+                    languages.map((language, i) => {
+                      if (i === index) {
+                        return {
+                          name: language.name,
+                          proficiency: e.target
+                            .value as LanguageProficiencyLevel,
+                        };
+                      }
+                      return language;
+                    })
+                  );
+                }}
+              >
+                <option value={LanguageProficiencyLevel.BEGINNER}>
+                  Beginner
+                </option>
+                <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
+                  Conversational
+                </option>
+                <option value={LanguageProficiencyLevel.FLUENT}>Fluent</option>
+                <option value={LanguageProficiencyLevel.NATIVE}>Native</option>
+              </select>
+            </div>
+          </div>
+        ))}
+        <button
+          className='w-full border-2 rounded-md p-1 focus:border-slate-400'
+          onClick={() => {
+            setLanguages([
+              ...languages,
+              { name: '', proficiency: LanguageProficiencyLevel.BEGINNER },
+            ]);
+          }}
+        >
+          Add language
         </button>
       </div>
     </div>
