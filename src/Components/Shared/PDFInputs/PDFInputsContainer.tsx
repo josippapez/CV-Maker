@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import {
   Certificate,
   Education,
-  Input,
+  GeneralInfo,
+  LanguageSkill,
   ProfessionalExperience,
 } from '../../PDFView/PDFViewContainer';
 import PDFInputsPresenter from './PDFInputsPresenter';
 
 type Props = {
-  setGeneralInfo(generalInfo: Input): void;
-  generalInfo: Input;
+  setGeneralInfo(generalInfo: GeneralInfo): void;
+  generalInfo: GeneralInfo;
   professionalExperience: ProfessionalExperience[];
   setProfessionalExperience(
     professionalExperience: ProfessionalExperience[]
@@ -18,6 +19,8 @@ type Props = {
   setCertificates(certificates: Certificate[]): void;
   education: Education[];
   setEducation(education: Education[]): void;
+  languages: LanguageSkill[];
+  setLanguages(languages: LanguageSkill[]): void;
 };
 
 export enum Tab {
@@ -25,6 +28,7 @@ export enum Tab {
   professionalExperience = 'professionalExperience',
   certificates = 'certificates',
   education = 'education',
+  languages = 'languages',
 }
 
 const PDFInputsContainer = (props: Props) => {
@@ -37,6 +41,8 @@ const PDFInputsContainer = (props: Props) => {
     setCertificates,
     education,
     setEducation,
+    languages,
+    setLanguages,
   } = props;
 
   const [selectedTab, setSelectedTab] = useState<Tab>(
@@ -67,6 +73,8 @@ const PDFInputsContainer = (props: Props) => {
       setEducation={setEducation}
       selectedTab={selectedTab}
       setSelectedTab={setSelectedTabHandler}
+      languages={languages}
+      setLanguages={setLanguages}
     />
   );
 };

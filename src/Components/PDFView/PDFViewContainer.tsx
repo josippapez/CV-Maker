@@ -10,7 +10,7 @@ export interface ProfessionalExperience {
   endDate: string;
   description: string;
 }
-export interface Input {
+export interface GeneralInfo {
   firstName: string;
   lastName: string;
   aboutMe: string;
@@ -22,6 +22,11 @@ export interface Input {
   zip: string;
   country: string;
   website: string;
+  LinkedIn: string;
+  GitHub: string;
+  Facebook: string;
+  Instagram: string;
+  Twitter: string;
 }
 
 export interface Certificate {
@@ -41,126 +46,47 @@ export interface Education {
   description: string;
 }
 
+export enum LanguageProficiencyLevel {
+  BEGINNER = 'Beginner',
+  CONVERSATIONAL = 'Conversational',
+  FLUENT = 'Fluent',
+  NATIVE = 'Native',
+}
+
+export interface LanguageSkill {
+  name: string;
+  proficiency: LanguageProficiencyLevel;
+}
+
 const PDFView = () => {
-  const [generalInfo, setGeneralInfo] = useState<Input>({
-    firstName: 'Josip',
-    lastName: 'Papež',
-    aboutMe: `There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet`,
-    position: 'Frontend Developer',
-    email: 'papezjosip@gmail.com',
-    phone: '098 972 9176',
-    address: 'Mije Kišpatića 64',
-    city: 'Osijek',
+  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({
+    firstName: '',
+    lastName: '',
+    aboutMe: '',
+    position: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
     zip: '',
-    country: 'Hrvatska',
+    country: '',
     website: '',
+    LinkedIn: '',
+    GitHub: '',
+    Facebook: '',
+    Instagram: '',
+    Twitter: '',
   });
 
   const [professionalExperience, setProfessionalExperience] = useState<
     ProfessionalExperience[]
-  >([
-    {
-      company: 'Code Consulting Ltd.',
-      position: 'Frontend Developer',
-      location: 'Vukovar, Hrvatska',
-      startDate: new Date().toLocaleDateString('hr'),
-      endDate: new Date().toLocaleDateString('hr'),
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    },
-    {
-      company: 'Async Labs',
-      position: 'Frontend Developer',
-      location: 'Zagreb, Hrvatska',
-      startDate: new Date().toLocaleDateString('hr'),
-      endDate: new Date().toLocaleDateString('hr'),
-      description: 'Site development with React, Redux',
-    },
-    {
-      company: 'Async Labs',
-      position: 'Frontend Developer',
-      location: 'Zagreb, Hrvatska',
-      startDate: new Date().toLocaleDateString('hr'),
-      endDate: new Date().toLocaleDateString('hr'),
-      description: 'Site development with React, Redux',
-    },
-    {
-      company: 'Async Labs',
-      position: 'Frontend Developer',
-      location: 'Zagreb, Hrvatska',
-      startDate: new Date().toLocaleDateString('hr'),
-      endDate: new Date().toLocaleDateString('hr'),
-      description: 'Site development with React, Redux',
-    },
-    {
-      company: 'Async Labs',
-      position: 'Frontend Developer',
-      location: 'Zagreb, Hrvatska',
-      startDate: new Date().toLocaleDateString('hr'),
-      endDate: new Date().toLocaleDateString('hr'),
-      description: 'Site development with React, Redux',
-    },
-    {
-      company: 'Async Labs',
-      position: 'Frontend Developer',
-      location: 'Zagreb, Hrvatska',
-      startDate: new Date().toLocaleDateString('hr'),
-      endDate: new Date().toLocaleDateString('hr'),
-      description: 'Site development with React, Redux',
-    },
-    {
-      company: 'Async Labs',
-      position: 'Frontend Developer',
-      location: 'Zagreb, Hrvatska',
-      startDate: new Date().toLocaleDateString('hr'),
-      endDate: new Date().toLocaleDateString('hr'),
-      description: 'Site development with React, Redux',
-    },
-    {
-      company: 'Async Labs',
-      position: 'Frontend Developer',
-      location: 'Zagreb, Hrvatska',
-      startDate: new Date().toLocaleDateString('hr'),
-      endDate: new Date().toLocaleDateString('hr'),
-      description: 'Site development with React, Redux',
-    },
-  ]);
+  >([]);
 
-  const [certificates, setCertificates] = useState<Certificate[]>([
-    {
-      name: 'Frontend Developer',
-      date: new Date().toLocaleDateString('hr'),
-      description: 'test',
-      institution: 'test',
-    },
-    {
-      name: 'Frontend Developer',
-      date: new Date().toLocaleDateString('hr'),
-      description: 'test',
-      institution: 'test',
-    },
-  ]);
+  const [certificates, setCertificates] = useState<Certificate[]>([]);
 
-  const [education, setEducation] = useState<Education[]>([
-    {
-      school: 'University of Zagreb',
-      location: 'Zagreb, Hrvatska',
-      degree: 'Bachelor of Science',
-      fieldOfStudy: 'Computer Science',
-      startDate: new Date().toLocaleDateString('hr'),
-      endDate: new Date().toLocaleDateString('hr'),
-      description: 'test',
-    },
-    {
-      school: 'University of Zagreb',
-      location: 'Zagreb, Hrvatska',
-      degree: 'Master of Science',
-      fieldOfStudy: 'Computer Science',
-      startDate: new Date().toLocaleDateString('hr'),
-      endDate: new Date().toLocaleDateString('hr'),
-      description: 'test',
-    },
-  ]);
+  const [education, setEducation] = useState<Education[]>([]);
+
+  const [languages, setLanguages] = useState<LanguageSkill[]>([]);
 
   const [instance, updateInstance] = usePDF({
     document: CVTemplate1({
@@ -168,6 +94,7 @@ const PDFView = () => {
       professionalExperience,
       certificates,
       education,
+      languages,
     }),
   });
 
@@ -181,7 +108,7 @@ const PDFView = () => {
     updateInstanceRef.current = setTimeout(() => {
       updateInstance();
     }, 500);
-  }, [generalInfo, professionalExperience, certificates, education]);
+  }, [generalInfo, professionalExperience, certificates, education, languages]);
 
   return (
     <PDFViewPresenter
@@ -194,6 +121,8 @@ const PDFView = () => {
       certificates={certificates}
       setEducation={setEducation}
       education={education}
+      setLanguages={setLanguages}
+      languages={languages}
     />
   );
 };

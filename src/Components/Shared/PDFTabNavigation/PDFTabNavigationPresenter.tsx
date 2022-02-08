@@ -39,6 +39,10 @@ const PDFTabNavigationPresenter = (props: Props) => {
       tab: Tab.education,
       label: 'Education',
     },
+    {
+      tab: Tab.languages,
+      label: 'Languages',
+    },
   ];
 
   return (
