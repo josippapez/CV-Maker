@@ -3,6 +3,7 @@ import {
   Document as DocumentPDFView,
   Page as DocumentPageView,
 } from 'react-pdf/dist/umd/entry.webpack';
+import PDFDownload from '../PDFDownload/PDFDownload';
 import PDFInputsContainer from '../Shared/PDFInputs/PDFInputsContainer';
 import {
   Certificate,
@@ -56,6 +57,7 @@ const PDFViewPresenter = (props: Props) => {
 
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const [displayDownloadModal, setDisplayDownloadModal] = useState(false);
 
   const onDocumentLoadSuccess = useCallback(
     document => {
@@ -97,37 +99,53 @@ const PDFViewPresenter = (props: Props) => {
           onItemClick={onItemClick}
           onLoadSuccess={onDocumentLoadSuccess}
         >
-          <DocumentPageView
-            height={window.innerHeight - 100}
-            className='documentPDFView py-4'
-            renderMode='svg'
-            pageNumber={pageNumber || 1}
-          />
-          {pageNumber && numPages && (
-            <div className='page-controls'>
-              <button
-                disabled={pageNumber <= 1}
-                onClick={() => setPageNumber(pageNumber - 1)}
-                type='button'
-                aria-label='Previous page'
-              >
-                ‹
-              </button>
-              <span>
-                {pageNumber} of {numPages}
-              </span>
-              <button
-                disabled={pageNumber >= numPages}
-                onClick={() => setPageNumber(pageNumber + 1)}
-                type='button'
-                aria-label='Next page'
-              >
-                ›
-              </button>
-            </div>
+          {!pdfInstance.loading && (
+            <DocumentPageView
+              height={window.innerHeight - 100}
+              className='documentPDFView py-4'
+              renderMode='svg'
+              pageNumber={pageNumber || 1}
+            >
+              {pageNumber && numPages && (
+                <div className='document-controls'>
+                  <div className='page-controls-navigation'>
+                    <button
+                      disabled={pageNumber <= 1}
+                      onClick={() => setPageNumber(pageNumber - 1)}
+                      type='button'
+                      aria-label='Previous page'
+                    >
+                      ‹
+                    </button>
+                    <span>
+                      {pageNumber} of {numPages}
+                    </span>
+                    <button
+                      disabled={pageNumber >= numPages}
+                      onClick={() => setPageNumber(pageNumber + 1)}
+                      type='button'
+                      aria-label='Next page'
+                    >
+                      ›
+                    </button>
+                  </div>
+                  <button
+                    className='pdf-download'
+                    onClick={() => setDisplayDownloadModal(true)}
+                  />
+                </div>
+              )}
+            </DocumentPageView>
           )}
         </DocumentPDFView>
       </div>
+      {pdfInstance && pdfInstance.blob && pdfInstance.url && (
+        <PDFDownload
+          pdfInstance={{ url: pdfInstance.url, blob: pdfInstance.blob }}
+          show={displayDownloadModal}
+          closeModal={() => setDisplayDownloadModal(false)}
+        />
+      )}
     </div>
   );
 };

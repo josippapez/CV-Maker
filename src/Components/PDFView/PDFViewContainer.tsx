@@ -77,15 +77,11 @@ const PDFView = () => {
     Instagram: '',
     Twitter: '',
   });
-
   const [professionalExperience, setProfessionalExperience] = useState<
     ProfessionalExperience[]
   >([]);
-
   const [certificates, setCertificates] = useState<Certificate[]>([]);
-
   const [education, setEducation] = useState<Education[]>([]);
-
   const [languages, setLanguages] = useState<LanguageSkill[]>([]);
 
   const [instance, updateInstance] = usePDF({
