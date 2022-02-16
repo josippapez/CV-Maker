@@ -1,6 +1,7 @@
 import { usePDF } from '@react-pdf/renderer';
 import { useEffect, useRef, useState } from 'react';
 import CVTemplate1 from './CVTemplates/CVTemplate1';
+import CVTemplate2 from './CVTemplates/CVTemplate2';
 import PDFViewPresenter from './PDFViewPresenter';
 export interface ProfessionalExperience {
   company: string;
@@ -85,7 +86,7 @@ const PDFView = () => {
   const [languages, setLanguages] = useState<LanguageSkill[]>([]);
 
   const [instance, updateInstance] = usePDF({
-    document: CVTemplate1({
+    document: CVTemplate2({
       generalInfo,
       professionalExperience,
       certificates,

@@ -133,6 +133,7 @@ const PDFInputsPresenter = (props: Props) => {
             <textarea
               className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
               value={generalInfo[input.inputValue]}
+              maxLength={490}
               onChange={e => {
                 setGeneralInfo({
                   ...generalInfo,
@@ -167,7 +168,9 @@ const PDFInputsPresenter = (props: Props) => {
               >
                 <label className='w-1/4'>{input.inputName}</label>
                 <input
-                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  className={`border-2 rounded-md p-1 focus:border-slate-400 ${
+                    input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
+                  }`}
                   type='text'
                   value={experience[input.inputValue]}
                   onChange={e => {
@@ -184,6 +187,28 @@ const PDFInputsPresenter = (props: Props) => {
                     );
                   }}
                 />
+                {input.inputValue === 'endDate' && (
+                  <div className='flex items-center justify-center w-1/4'>
+                    <input
+                      type='checkbox'
+                      checked={experience.endDate === 'Present'}
+                      onChange={e => {
+                        setProfessionalExperience(
+                          professionalExperience.map((experience, i) => {
+                            if (i === index) {
+                              return {
+                                ...experience,
+                                endDate: e.target.checked ? 'Present' : '',
+                              };
+                            }
+                            return experience;
+                          })
+                        );
+                      }}
+                    />
+                    <label className='ml-2'>Present</label>
+                  </div>
+                )}
               </div>
             ))}
             <div className='flex mt-2'>
@@ -331,7 +356,9 @@ const PDFInputsPresenter = (props: Props) => {
               >
                 <label className='w-1/4'>{input.inputName}</label>
                 <input
-                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  className={`border-2 rounded-md p-1 focus:border-slate-400 ${
+                    input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
+                  }`}
                   type='text'
                   value={education[input.inputValue]}
                   onChange={e => {
@@ -348,6 +375,28 @@ const PDFInputsPresenter = (props: Props) => {
                     );
                   }}
                 />
+                {input.inputValue === 'endDate' && (
+                  <div className='flex items-center justify-center w-1/4'>
+                    <input
+                      type='checkbox'
+                      checked={education.endDate === 'Present'}
+                      onChange={e => {
+                        setEducation(
+                          educations.map((education, i) => {
+                            if (i === index) {
+                              return {
+                                ...education,
+                                endDate: e.target.checked ? 'Present' : '',
+                              };
+                            }
+                            return education;
+                          })
+                        );
+                      }}
+                    />
+                    <label className='ml-2'>Present</label>
+                  </div>
+                )}
               </div>
             ))}
             <div className='flex mt-2'>
