@@ -6,11 +6,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  mode: devMode ? "development" : "production",
-  entry: './src/index.tsx',
+  context: path.join(__dirname, '/src'),
+  entry: {
+    app: './index.js',
+  },
+  entry: path.resolve('./src/index.tsx'),
   target: 'web',
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, '/dist'),
     filename: 'index.bundle.js',
   },
   devServer: {
@@ -19,6 +22,9 @@ module.exports = {
     liveReload: true,
     hot: true,
     historyApiFallback: true,
+  },
+  watchOptions: {
+    ignored: ['**/node_modules', '**/dist', '**/.git'],
   },
   resolve: {
     fallback: {
@@ -29,7 +35,7 @@ module.exports = {
       buffer: require.resolve('buffer'),
       asset: require.resolve('assert'),
     },
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js', '.json', '.jsx'],
   },
   module: {
     rules: [
@@ -83,7 +89,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public', 'index.html'),
-      favicon: './public/favicon.ico',
+      favicon: path.resolve(__dirname, 'public', 'favicon.ico'),
       filename: 'index.html',
       manifest: './public/manifest.json',
     }),
