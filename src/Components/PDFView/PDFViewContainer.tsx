@@ -1,5 +1,14 @@
 import { usePDF } from '@react-pdf/renderer';
 import { useEffect, useRef, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  cacheCertificates,
+  cacheEducation,
+  cacheGeneralInfo,
+  cacheLanguages,
+  cacheProfessionalExperience,
+  PDFData,
+} from '../../store/reducers/pdfData';
 import CVTemplate1 from './CVTemplates/CVTemplate1';
 import CVTemplate2 from './CVTemplates/CVTemplate2';
 import PDFViewPresenter from './PDFViewPresenter';
@@ -60,30 +69,47 @@ export interface LanguageSkill {
 }
 
 const PDFView = () => {
-  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({
-    firstName: '',
-    lastName: '',
-    aboutMe: '',
-    position: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    zip: '',
-    country: '',
-    website: '',
-    LinkedIn: '',
-    GitHub: '',
-    Facebook: '',
-    Instagram: '',
-    Twitter: '',
-  });
+  const dispatch = useAppDispatch();
+  const pdfData: Partial<PDFData> = useAppSelector(state => state.pdfData);
+
+  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>(
+    pdfData.generalInfo
+      ? pdfData.generalInfo
+      : {
+          firstName: '',
+          lastName: '',
+          aboutMe: '',
+          position: '',
+          email: '',
+          phone: '',
+          address: '',
+          city: '',
+          zip: '',
+          country: '',
+          website: '',
+          LinkedIn: '',
+          GitHub: '',
+          Facebook: '',
+          Instagram: '',
+          Twitter: '',
+        }
+  );
   const [professionalExperience, setProfessionalExperience] = useState<
     ProfessionalExperience[]
-  >([]);
-  const [certificates, setCertificates] = useState<Certificate[]>([]);
-  const [education, setEducation] = useState<Education[]>([]);
-  const [languages, setLanguages] = useState<LanguageSkill[]>([]);
+  >(
+    pdfData?.professionalExperience?.length
+      ? pdfData.professionalExperience
+      : []
+  );
+  const [certificates, setCertificates] = useState<Certificate[]>(
+    pdfData.certificates?.length ? pdfData.certificates : []
+  );
+  const [education, setEducation] = useState<Education[]>(
+    pdfData.education?.length ? pdfData.education : []
+  );
+  const [languages, setLanguages] = useState<LanguageSkill[]>(
+    pdfData.languages?.length ? pdfData.languages : []
+  );
 
   const [instance, updateInstance] = usePDF({
     document: CVTemplate2({
@@ -104,6 +130,11 @@ const PDFView = () => {
     }
     updateInstanceRef.current = setTimeout(() => {
       updateInstance();
+      dispatch(cacheGeneralInfo(generalInfo));
+      dispatch(cacheProfessionalExperience(professionalExperience));
+      dispatch(cacheCertificates(certificates));
+      dispatch(cacheEducation(education));
+      dispatch(cacheLanguages(languages));
     }, 500);
   }, [generalInfo, professionalExperience, certificates, education, languages]);
 
