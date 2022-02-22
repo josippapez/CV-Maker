@@ -34,7 +34,7 @@ const NavbarPresenter = (props: Props) => {
   }, [component]);
 
   return (
-    <div className='sticky float-right right-2 top-2 w-fit transition-colors h-0 z-50'>
+    <div className='sticky float-right right-2 top-2 w-fit transition-colors h-0 z-40'>
       <div className='relative flex-col'>
         <button
           className={`${style.darkModeButton} ${

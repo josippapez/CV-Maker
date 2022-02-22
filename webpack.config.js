@@ -9,13 +9,12 @@ module.exports = {
   context: path.join(__dirname, '/src'),
   entry: {
     app: './index.tsx',
-    pdfView: './Components/PdfView/PDFViewContainer.tsx',
+    pdfView: './Components/PDFView/PDFViewContainer.tsx',
   },
-  entry: path.resolve('./src/index.tsx'),
   target: 'web',
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'index.bundle.js',
+    filename: '[name].bundle.js',
   },
   devServer: {
     static: './public',

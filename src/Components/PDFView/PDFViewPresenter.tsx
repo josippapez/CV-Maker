@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { Suspense, useCallback, useState } from 'react';
 import {
   Document as DocumentPDFView,
   Page as DocumentPageView,
@@ -77,65 +77,69 @@ const PDFViewPresenter = (props: Props) => {
   return (
     <div className='flex w-full min-h-full justify-evenly'>
       <div className='w-2/4 mr-3'>
-        <PDFInputsContainer
-          setGeneralInfo={setGeneralInfo}
-          generalInfo={generalInfo}
-          professionalExperience={professionalExperience}
-          setProfessionalExperience={setProfessionalExperience}
-          certificates={certificates}
-          setCertificates={setCertificates}
-          education={education}
-          setEducation={setEducation}
-          languages={languages}
-          setLanguages={setLanguages}
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <PDFInputsContainer
+            setGeneralInfo={setGeneralInfo}
+            generalInfo={generalInfo}
+            professionalExperience={professionalExperience}
+            setProfessionalExperience={setProfessionalExperience}
+            certificates={certificates}
+            setCertificates={setCertificates}
+            education={education}
+            setEducation={setEducation}
+            languages={languages}
+            setLanguages={setLanguages}
+          />
+        </Suspense>
       </div>
       <div className='w-2/4'>
-        <DocumentPDFView
-          {...options}
-          file={pdfInstance.url}
-          renderMode='svg'
-          className='drop-shadow-2xl flex h-screen justify-center items-center sticky top-0'
-          onItemClick={onItemClick}
-          onLoadSuccess={onDocumentLoadSuccess}
-        >
-          <DocumentPageView
-            height={window.innerHeight - 100}
-            className='documentPDFView py-4'
+        <Suspense fallback={<div>Loading...</div>}>
+          <DocumentPDFView
+            {...options}
+            file={pdfInstance.url}
             renderMode='svg'
-            pageNumber={pageNumber || 1}
+            className='drop-shadow-2xl flex h-screen justify-center items-center sticky top-0'
+            onItemClick={onItemClick}
+            onLoadSuccess={onDocumentLoadSuccess}
           >
-            {pageNumber && numPages && (
-              <div className='document-controls'>
-                <div className='page-controls-navigation'>
+            <DocumentPageView
+              height={window.innerHeight - 100}
+              className='documentPDFView py-4'
+              renderMode='svg'
+              pageNumber={pageNumber || 1}
+            >
+              {pageNumber && numPages && (
+                <div className='document-controls'>
+                  <div className='page-controls-navigation'>
+                    <button
+                      disabled={pageNumber <= 1}
+                      onClick={() => setPageNumber(pageNumber - 1)}
+                      type='button'
+                      aria-label='Previous page'
+                    >
+                      ‹
+                    </button>
+                    <span>
+                      {pageNumber} of {numPages}
+                    </span>
+                    <button
+                      disabled={pageNumber >= numPages}
+                      onClick={() => setPageNumber(pageNumber + 1)}
+                      type='button'
+                      aria-label='Next page'
+                    >
+                      ›
+                    </button>
+                  </div>
                   <button
-                    disabled={pageNumber <= 1}
-                    onClick={() => setPageNumber(pageNumber - 1)}
-                    type='button'
-                    aria-label='Previous page'
-                  >
-                    ‹
-                  </button>
-                  <span>
-                    {pageNumber} of {numPages}
-                  </span>
-                  <button
-                    disabled={pageNumber >= numPages}
-                    onClick={() => setPageNumber(pageNumber + 1)}
-                    type='button'
-                    aria-label='Next page'
-                  >
-                    ›
-                  </button>
+                    className='pdf-download'
+                    onClick={() => setDisplayDownloadModal(true)}
+                  />
                 </div>
-                <button
-                  className='pdf-download'
-                  onClick={() => setDisplayDownloadModal(true)}
-                />
-              </div>
-            )}
-          </DocumentPageView>
-        </DocumentPDFView>
+              )}
+            </DocumentPageView>
+          </DocumentPDFView>
+        </Suspense>
       </div>
       {pdfInstance && pdfInstance.blob && pdfInstance.url && (
         <PDFDownload
