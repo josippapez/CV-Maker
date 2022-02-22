@@ -15,11 +15,17 @@ const PDFDownload = (props: Props) => {
   const [cvName, setCvName] = useState('CV');
   return (
     <Modal show={show} position='center' closeModal={closeModal}>
-      <div className='w-fit h-fit bg-white p-5 flex-col'>
+      <div className='w-fit h-fit bg-white p-5 flex-col relative'>
         <div className='flex justify-between items-center'>
           <h1 className='text-2xl font-bold'>Download CV</h1>
           <button
-            className='text-2xl font-bold'
+            className='font-bold absolute top-1 right-3 hover:bg-slate-500 hover:text-white rounded-full'
+            style={{
+              lineHeight: '10px',
+              fontSize: '20px',
+              width: '30px',
+              height: '30px',
+            }}
             onClick={() => {
               closeModal();
             }}

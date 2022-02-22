@@ -1,15 +1,32 @@
+import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import LandingPage from './Components/LandingPage/LandingPage';
+import PageLoader from './Components/Shared/Loader/PageLoader';
 import NavbarContainer from './Components/Shared/Navbar/NavbarContainer';
-import PDFView from './Components/PDFView/PDFViewContainer';
+
+const LandingPage = lazy(() => import('./Components/LandingPage/LandingPage'));
+const PDFView = lazy(() => import('./Components/PDFView/PDFViewContainer'));
 
 function App() {
   return (
     <div className='h-screen'>
       <NavbarContainer />
       <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/create' element={<PDFView />} />
+        <Route
+          path='/'
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <LandingPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path='/create'
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <PDFView />
+            </Suspense>
+          }
+        />
       </Routes>
     </div>
   );

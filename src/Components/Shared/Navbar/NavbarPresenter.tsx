@@ -1,26 +1,90 @@
-import { NavLink } from 'react-router-dom';
-
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import TemplatesModal from '../../PDFView/CVTemplates/TemplatesModal';
+import style from './NavbarPresenter.module.scss';
 type Props = {
   darkTheme: { toggle(): void; enabled: string | null };
+  pathname: string;
 };
 
 const NavbarPresenter = (props: Props) => {
-  const { darkTheme } = props;
+  const { darkTheme, pathname } = props;
+  const { t, i18n } = useTranslation();
+
+  const [displayLanguageDropdown, setDisplayLanguageDropdown] =
+    useState<boolean>(false);
+  const [displayTemplateChooseModal, setDisplayTemplateChooseModal] =
+    useState<boolean>(false);
+
+  const component: { current: null | HTMLDivElement } = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        component.current &&
+        !component.current.contains(event.target as Node)
+      ) {
+        setDisplayLanguageDropdown(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [component]);
+
   return (
-    <div className='w-full transition-colors px-4 py-2 z-10 shadow-md dark:drop-shadow-md dark:bg-gray-700/95'>
-      <button
-        className='text-orange-500 bg-transparent border border-solid border-orange-500 hover:bg-orange-500 hover:text-white active:bg-orange-600 font-bold uppercase text-xs px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
-        type='button'
-        onClick={darkTheme.toggle}
-      >
-        Toggle
-      </button>
-      <NavLink
-        to='/create'
-        className='text-pink-500 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
-      >
-        Create
-      </NavLink>
+    <div className='sticky float-right right-2 top-2 w-fit transition-colors h-0 z-40'>
+      <div className='relative flex-col'>
+        <button
+          className={`${style.darkModeButton} ${
+            darkTheme.enabled !== 'enabled' ? style.lightMode : style.darkMode
+          } rounded-full shadow-md`}
+          type='button'
+          onClick={darkTheme.toggle}
+        />
+        <div ref={component} className='relative flex-row-reverse flex'>
+          <div
+            className={`${style.translateButton} ${
+              darkTheme.enabled !== 'enabled' ? style.lightMode : style.darkMode
+            } mt-3 rounded-full shadow-md relative`}
+            onClick={() => setDisplayLanguageDropdown(!displayLanguageDropdown)}
+          />
+          <div className='relative' hidden={!displayLanguageDropdown}>
+            <div className='w-fit p-3 rounded-md shadow-md bg-slate-300 dark:bg-slate-800 text-zinc-900 dark:text-zinc-100 absolute top-3 right-2'>
+              <div
+                className='cursor-pointer px-1 py-[2px] rounded-md hover:dark:bg-slate-600 hover:bg-gray-400'
+                onClick={() => {
+                  i18n.changeLanguage('eng');
+                }}
+              >
+                English
+              </div>
+              <div
+                className='cursor-pointer px-1 py-[2px] rounded-md hover:dark:bg-slate-600 hover:bg-gray-400'
+                onClick={() => {
+                  i18n.changeLanguage('hr');
+                }}
+              >
+                Croatian
+              </div>
+            </div>
+          </div>
+        </div>
+        {pathname === '/create' && (
+          <button
+            className={`${style.templateModalButton} ${
+              darkTheme.enabled !== 'enabled' ? style.lightMode : style.darkMode
+            } rounded-full shadow-md mt-3`}
+            type='button'
+            onClick={() => setDisplayTemplateChooseModal(true)}
+          />
+        )}
+        <TemplatesModal
+          closeModal={() => setDisplayTemplateChooseModal(false)}
+          show={displayTemplateChooseModal}
+        />
+      </div>
     </div>
   );
 };
