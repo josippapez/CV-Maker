@@ -9,8 +9,8 @@ import {
   cacheProfessionalExperience,
   PDFData,
 } from '../../store/reducers/pdfData';
-import CVTemplate1 from './CVTemplates/CVTemplate1';
-import CVTemplate2 from './CVTemplates/CVTemplate2';
+import { Template } from '../../store/reducers/template';
+import CVTemplate from './CVTemplates/CVTemplate';
 import PDFViewPresenter from './PDFViewPresenter';
 export interface ProfessionalExperience {
   company: string;
@@ -71,6 +71,7 @@ export interface LanguageSkill {
 const PDFView = () => {
   const dispatch = useAppDispatch();
   const pdfData: Partial<PDFData> = useAppSelector(state => state.pdfData);
+  const template: Template = useAppSelector(state => state.template);
 
   const [generalInfo, setGeneralInfo] = useState<GeneralInfo>(
     pdfData.generalInfo
@@ -112,7 +113,7 @@ const PDFView = () => {
   );
 
   const [instance, updateInstance] = usePDF({
-    document: CVTemplate2({
+    document: CVTemplate({
       generalInfo,
       professionalExperience,
       certificates,
@@ -137,6 +138,15 @@ const PDFView = () => {
       dispatch(cacheLanguages(languages));
     }, 500);
   }, [generalInfo, professionalExperience, certificates, education, languages]);
+
+  useEffect(() => {
+    if (updateInstanceRef.current) {
+      clearTimeout(updateInstanceRef.current);
+    }
+    updateInstanceRef.current = setTimeout(() => {
+      updateInstance();
+    }, 500);
+  }, [template]);
 
   return (
     <PDFViewPresenter

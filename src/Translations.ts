@@ -16,7 +16,10 @@ FilesContext.keys().forEach(file => {
     const lang = match[2]; // e.g. 'hr'
     if (lang) {
       translations[lang] = translations[lang] || {};
-      translations[lang]['translation'] = FilesContext(file);
+      translations[lang]['translation'] = {
+        ...translations[lang]['translation'],
+        ...FilesContext(file),
+      };
     }
   }
 });

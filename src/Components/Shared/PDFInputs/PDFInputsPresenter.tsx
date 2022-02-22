@@ -9,7 +9,7 @@ import {
 } from '../../PDFView/PDFViewContainer';
 import PDFTabNavigation from '../PDFTabNavigation/PDFTabNavigationContainer';
 import { Tab } from './PDFInputsContainer';
-import './PDFInputsPresenter.css';
+import style from './PDFInputsPresenter.module.scss';
 
 type Props = {
   generalInfo: GeneralInfo;
@@ -109,8 +109,8 @@ const PDFInputsPresenter = (props: Props) => {
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
-      <img src={Images.Email} alt='earth' className='earth' />
-      <div hidden={selectedTab !== Tab.generalInfo} className='tab'>
+      <img src={Images.Email} alt='earth' className={style.earth} />
+      <div hidden={selectedTab !== Tab.generalInfo} className={style.tab}>
         {arrayOfGeneralInputs.map(input => (
           <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
             <label className='w-1/4'>{input.inputName}</label>
@@ -144,15 +144,17 @@ const PDFInputsPresenter = (props: Props) => {
           </div>
         ))}
       </div>
-      <div hidden={selectedTab !== Tab.professionalExperience} className='tab'>
+      <div
+        hidden={selectedTab !== Tab.professionalExperience}
+        className={style.tab}
+      >
         {professionalExperience.map((experience, index) => (
           <div
             key={index}
             className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
           >
             <button
-              type='button'
-              className='delete-button'
+              className={style['delete-button']}
               onClick={() => {
                 setProfessionalExperience(
                   professionalExperience.filter(
@@ -252,15 +254,14 @@ const PDFInputsPresenter = (props: Props) => {
           Add experience
         </button>
       </div>
-      <div hidden={selectedTab !== Tab.certificates} className='tab'>
+      <div hidden={selectedTab !== Tab.certificates} className={style.tab}>
         {certificates.map((certificate, index) => (
           <div
             key={index}
             className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
           >
             <button
-              type='button'
-              className='delete-button'
+              className={style['delete-button']}
               onClick={() => {
                 setCertificates(
                   certificates.filter((certificate, i) => i !== index)
@@ -332,15 +333,14 @@ const PDFInputsPresenter = (props: Props) => {
           Add certificate
         </button>
       </div>
-      <div hidden={selectedTab !== Tab.education} className='tab'>
+      <div hidden={selectedTab !== Tab.education} className={style.tab}>
         {educations.map((education, index) => (
           <div
             key={index}
             className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
           >
             <button
-              type='button'
-              className='delete-button'
+              className={style['delete-button']}
               onClick={() => {
                 setEducation(
                   educations.filter(
@@ -438,15 +438,14 @@ const PDFInputsPresenter = (props: Props) => {
           Add education
         </button>
       </div>
-      <div hidden={selectedTab !== Tab.languages} className='tab'>
+      <div hidden={selectedTab !== Tab.languages} className={style.tab}>
         {languages.map((language, index) => (
           <div
             key={index}
             className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
           >
             <button
-              type='button'
-              className='delete-button'
+              className={style['delete-button']}
               onClick={() => {
                 setLanguages(languages.filter((language, i) => i !== index));
               }}

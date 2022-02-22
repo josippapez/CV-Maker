@@ -16,9 +16,7 @@ const LandingPageSections = (props: Props) => {
             key={index}
             className='flex justify-center h-screen items-center'
           >
-            <div className='flex w-full justify-center items-center'>
-              {section()}
-            </div>
+            {section()}
           </section>
         ))}
       </div>

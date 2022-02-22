@@ -4,7 +4,7 @@
   left: 50%;
   transform: translateX(-50%);
   transition: opacity ease-in-out 0.2s;
-  position: relative;
+  position: absolute;
   display: flex;
   place-content: center;
 }
@@ -34,6 +34,8 @@
 
 .documentPDFView {
   text-align: -webkit-center;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

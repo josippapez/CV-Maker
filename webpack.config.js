@@ -8,7 +8,8 @@ const devMode = process.env.NODE_ENV !== 'production';
 module.exports = {
   context: path.join(__dirname, '/src'),
   entry: {
-    app: './index.js',
+    app: './index.tsx',
+    pdfView: './Components/PdfView/PDFViewContainer.tsx',
   },
   entry: path.resolve('./src/index.tsx'),
   target: 'web',
