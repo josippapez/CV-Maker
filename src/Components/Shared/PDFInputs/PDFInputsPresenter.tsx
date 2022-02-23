@@ -1,4 +1,4 @@
-import Images from '../../../Styles/Assets/Images/Images';
+import { useTranslation } from 'react-i18next';
 import {
   Certificate,
   Education,
@@ -88,6 +88,7 @@ const arrayOfEducationInputs: Array<{
 ];
 
 const PDFInputsPresenter = (props: Props) => {
+  const { t } = useTranslation();
   const {
     generalInfo,
     setGeneralInfo,
@@ -109,11 +110,10 @@ const PDFInputsPresenter = (props: Props) => {
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
-      <img src={Images.Email} alt='earth' className={style.earth} />
       <div hidden={selectedTab !== Tab.generalInfo} className={style.tab}>
         {arrayOfGeneralInputs.map(input => (
           <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
-            <label className='w-1/4'>{input.inputName}</label>
+            <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
             <input
               className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
               type={input.type}
@@ -129,7 +129,7 @@ const PDFInputsPresenter = (props: Props) => {
         ))}
         {arrayOfGeneralTextAreas.map(input => (
           <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
-            <label className='w-1/4'>{input.inputName}</label>
+            <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
             <textarea
               className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
               value={generalInfo[input.inputValue]}
@@ -166,9 +166,9 @@ const PDFInputsPresenter = (props: Props) => {
             {arrayOfProfessionalExperienceInputs.map((input, currentIndex) => (
               <div
                 className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
-                key={index + input.inputName}
+                key={index + t(`${input.inputValue}`)}
               >
-                <label className='w-1/4'>{input.inputName}</label>
+                <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
                 <input
                   className={`border-2 rounded-md p-1 focus:border-slate-400 ${
                     input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
@@ -208,13 +208,13 @@ const PDFInputsPresenter = (props: Props) => {
                         );
                       }}
                     />
-                    <label className='ml-2'>Present</label>
+                    <label className='ml-2'>{t('present')}</label>
                   </div>
                 )}
               </div>
             ))}
             <div className='flex mt-2'>
-              <label className='w-1/4'>Description</label>
+              <label className='w-1/4'>{t('description')}</label>
               <textarea
                 className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
                 value={experience.description}
@@ -251,7 +251,7 @@ const PDFInputsPresenter = (props: Props) => {
             ]);
           }}
         >
-          Add experience
+          {t('addExperience')}
         </button>
       </div>
       <div hidden={selectedTab !== Tab.certificates} className={style.tab}>
@@ -271,9 +271,9 @@ const PDFInputsPresenter = (props: Props) => {
             {arrayOfCertificatesInputs.map((input, currentIndex) => (
               <div
                 className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
-                key={index + input.inputName}
+                key={index + t(`${input.inputValue}`)}
               >
-                <label className='w-1/4'>{input.inputName}</label>
+                <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
                 <input
                   className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
                   type='text'
@@ -295,7 +295,7 @@ const PDFInputsPresenter = (props: Props) => {
               </div>
             ))}
             <div className='flex mt-2'>
-              <label className='w-1/4'>Description</label>
+              <label className='w-1/4'>{t('description')}</label>
               <textarea
                 className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
                 value={certificate.description}
@@ -330,7 +330,7 @@ const PDFInputsPresenter = (props: Props) => {
             ]);
           }}
         >
-          Add certificate
+          {t('addCertification')}
         </button>
       </div>
       <div hidden={selectedTab !== Tab.education} className={style.tab}>
@@ -352,9 +352,9 @@ const PDFInputsPresenter = (props: Props) => {
             {arrayOfEducationInputs.map((input, currentIndex) => (
               <div
                 className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
-                key={index + input.inputName}
+                key={index + t(`${input.inputValue}`)}
               >
-                <label className='w-1/4'>{input.inputName}</label>
+                <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
                 <input
                   className={`border-2 rounded-md p-1 focus:border-slate-400 ${
                     input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
@@ -394,13 +394,13 @@ const PDFInputsPresenter = (props: Props) => {
                         );
                       }}
                     />
-                    <label className='ml-2'>Present</label>
+                    <label className='ml-2'>{t('present')}</label>
                   </div>
                 )}
               </div>
             ))}
             <div className='flex mt-2'>
-              <label className='w-1/4'>Description</label>
+              <label className='w-1/4'>{t('description')}</label>
               <textarea
                 className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
                 value={education.description}
@@ -435,7 +435,7 @@ const PDFInputsPresenter = (props: Props) => {
             ]);
           }}
         >
-          Add education
+          {t('addEducation')}
         </button>
       </div>
       <div hidden={selectedTab !== Tab.languages} className={style.tab}>
@@ -451,7 +451,7 @@ const PDFInputsPresenter = (props: Props) => {
               }}
             />
             <div className='flex'>
-              <label className='w-1/4'>Language</label>
+              <label className='w-1/4'>{t('language')}</label>
               <input
                 className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
                 type='text'
@@ -472,7 +472,7 @@ const PDFInputsPresenter = (props: Props) => {
               />
             </div>
             <div className='flex mt-2'>
-              <label className='w-1/4'>Level</label>
+              <label className='w-1/4'>{t('level')}</label>
               <select
                 className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
                 value={language.proficiency}
@@ -492,13 +492,17 @@ const PDFInputsPresenter = (props: Props) => {
                 }}
               >
                 <option value={LanguageProficiencyLevel.BEGINNER}>
-                  Beginner
+                  {t(LanguageProficiencyLevel.BEGINNER)}
                 </option>
                 <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
-                  Conversational
+                  {t(LanguageProficiencyLevel.CONVERSATIONAL)}
                 </option>
-                <option value={LanguageProficiencyLevel.FLUENT}>Fluent</option>
-                <option value={LanguageProficiencyLevel.NATIVE}>Native</option>
+                <option value={LanguageProficiencyLevel.FLUENT}>
+                  {t(LanguageProficiencyLevel.FLUENT)}
+                </option>
+                <option value={LanguageProficiencyLevel.NATIVE}>
+                  {t(LanguageProficiencyLevel.NATIVE)}
+                </option>
               </select>
             </div>
           </div>
@@ -512,7 +516,7 @@ const PDFInputsPresenter = (props: Props) => {
             ]);
           }}
         >
-          Add language
+          {t('addLanguage')}
         </button>
       </div>
     </div>

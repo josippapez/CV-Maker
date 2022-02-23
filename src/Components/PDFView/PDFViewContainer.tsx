@@ -1,5 +1,6 @@
 import { usePDF } from '@react-pdf/renderer';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   cacheCertificates,
@@ -57,10 +58,10 @@ export interface Education {
 }
 
 export enum LanguageProficiencyLevel {
-  BEGINNER = 'Beginner',
-  CONVERSATIONAL = 'Conversational',
-  FLUENT = 'Fluent',
-  NATIVE = 'Native',
+  BEGINNER = 'BEGINNER',
+  CONVERSATIONAL = 'CONVERSATIONAL',
+  FLUENT = 'FLUENT',
+  NATIVE = 'NATIVE',
 }
 
 export interface LanguageSkill {
@@ -69,6 +70,9 @@ export interface LanguageSkill {
 }
 
 const PDFView = () => {
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
+
   const dispatch = useAppDispatch();
   const pdfData: Partial<PDFData> = useAppSelector(state => state.pdfData);
   const template: Template = useAppSelector(state => state.template);
@@ -119,6 +123,8 @@ const PDFView = () => {
       certificates,
       education,
       languages,
+      t,
+      currentLanguage,
     }),
   });
 
@@ -146,7 +152,7 @@ const PDFView = () => {
     updateInstanceRef.current = setTimeout(() => {
       updateInstance();
     }, 500);
-  }, [template]);
+  }, [template, currentLanguage]);
 
   return (
     <PDFViewPresenter

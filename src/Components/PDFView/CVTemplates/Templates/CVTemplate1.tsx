@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
+import { TFunction } from 'react-i18next';
 import OpensansBold from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-Bold.ttf';
 import OpensansExtraBold from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.ttf';
 import OpensansItalic from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-Italic.ttf';
@@ -35,6 +36,7 @@ type Props = {
   certificates?: Certificate[];
   education?: Education[];
   languages?: LanguageSkill[];
+  translate: TFunction;
 };
 
 Font.register({
@@ -181,6 +183,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
     certificates,
     education,
     languages,
+    translate,
   } = props;
 
   return (
@@ -358,7 +361,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                       { marginBottom: 10, marginTop: 0 },
                     ]}
                   >
-                    Education
+                    {translate('education')}
                   </Text>
                 )}
                 <View style={[styles.column, { width: '100%' }]}>
@@ -415,7 +418,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                       { marginBottom: 10, marginTop: 0 },
                     ]}
                   >
-                    Certificates
+                    {translate('certificates')}
                   </Text>
                 )}
                 <View style={[styles.column, { width: '100%' }]}>
@@ -460,7 +463,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                   },
                 ]}
               >
-                Languages
+                {translate('languages')}
               </Text>
             </View>
             <View
