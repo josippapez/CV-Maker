@@ -1,4 +1,4 @@
-Working demo: [https://cv-maker-jp.web.app/](DEMO)
+Working demo: [DEMO](https://cv-maker-jp.web.app/)
 
 ### `npm start`
 
