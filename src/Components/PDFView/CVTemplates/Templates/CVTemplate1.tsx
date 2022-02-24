@@ -21,14 +21,7 @@ import {
   LanguageSkill,
   ProfessionalExperience,
 } from '../../PDFViewContainer';
-import Earth from '../Images/Earth';
-import Email from '../Images/Email';
-import Facebook from '../Images/Facebook';
-import GitHub from '../Images/Github';
-import Linkedin from '../Images/Linkedin';
-import Phone from '../Images/Phone';
-import Pin from '../Images/Pin';
-import Twitter from '../Images/Twitter';
+import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
 
 type Props = {
   generalInfo?: GeneralInfo;
@@ -133,6 +126,8 @@ const styles = StyleSheet.create({
   additionalInfoBarText: {
     fontSize: 11,
     marginLeft: 20,
+    textDecoration: 'none',
+    color: 'white',
   },
   companyName: {
     fontSize: 13,
@@ -197,77 +192,35 @@ const CVTemplate1 = (props: Props): JSX.Element => {
             <Text style={styles.topBarPosition}>{generalInfo?.position}</Text>
             <Text style={styles.topBarText}>{generalInfo?.aboutMe}</Text>
           </View>
-          <View
-            style={[
-              styles.additionalInfoBar,
-              styles.paddingX20,
-              styles.paddingY10,
+          <AdditionalInformation
+            generalInfo={generalInfo}
+            styles={styles}
+            itemWrapperStyle={[
               styles.row,
               {
-                flexWrap: 'wrap',
+                width: '50%',
+                marginTop: 2.5,
+                marginBottom: 2.5,
               },
             ]}
-          >
-            {[
-              {
-                icon: Email,
-                text: generalInfo?.email,
-                condition: generalInfo?.email,
-              },
-              {
-                icon: Pin,
-                text: `${generalInfo?.city}, ${generalInfo?.country}`,
-                condition: generalInfo?.city || generalInfo?.country,
-              },
-              {
-                icon: Phone,
-                text: generalInfo?.phone,
-                condition: generalInfo?.phone,
-              },
-              {
-                icon: Linkedin,
-                text: generalInfo?.LinkedIn,
-                condition: generalInfo?.LinkedIn,
-              },
-              {
-                icon: GitHub,
-                text: generalInfo?.GitHub,
-                condition: generalInfo?.GitHub,
-              },
-              {
-                icon: Facebook,
-                text: generalInfo?.Facebook,
-                condition: generalInfo?.Facebook,
-              },
-              {
-                icon: Twitter,
-                text: generalInfo?.Twitter,
-                condition: generalInfo?.Twitter,
-              },
-              {
-                icon: Earth,
-                text: generalInfo?.website,
-                condition: generalInfo?.website,
-              },
-            ].map(({ icon, text, condition }, index) =>
-              condition ? (
+            wrapper={(wrappedInfo: JSX.Element[]) => {
+              return (
                 <View
-                  key={index}
                   style={[
+                    styles.additionalInfoBar,
+                    styles.paddingX20,
+                    styles.paddingY10,
                     styles.row,
                     {
-                      width: '50%',
-                      marginTop: 2.5,
-                      marginBottom: 2.5,
+                      flexWrap: 'wrap',
                     },
                   ]}
                 >
-                  {icon({ width: 14 })}
-                  <Text style={styles.additionalInfoBarText}>{text}</Text>
+                  {wrappedInfo}
                 </View>
-              ) : null
-            )}
-          </View>
+              );
+            }}
+          />
         </View>
         <View
           style={[styles.padding20, styles.column, styles.horizontalCenter]}

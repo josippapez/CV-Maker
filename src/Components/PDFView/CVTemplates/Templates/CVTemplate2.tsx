@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
+import { TFunction } from 'react-i18next';
 import OpensansBold from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-Bold.ttf';
 import OpensansExtraBold from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.ttf';
 import OpensansItalic from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-Italic.ttf';
@@ -20,14 +21,7 @@ import {
   LanguageSkill,
   ProfessionalExperience,
 } from '../../PDFViewContainer';
-import Earth from '../Images/Earth';
-import Email from '../Images/Email';
-import Facebook from '../Images/Facebook';
-import GitHub from '../Images/Github';
-import Linkedin from '../Images/Linkedin';
-import Phone from '../Images/Phone';
-import Pin from '../Images/Pin';
-import Twitter from '../Images/Twitter';
+import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
 
 type Props = {
   generalInfo?: GeneralInfo;
@@ -35,6 +29,7 @@ type Props = {
   certificates?: Certificate[];
   education?: Education[];
   languages?: LanguageSkill[];
+  translate: TFunction;
 };
 
 Font.register({
@@ -133,6 +128,8 @@ const styles = StyleSheet.create({
   additionalInfoBarText: {
     fontSize: 11,
     marginLeft: 10,
+    textDecoration: 'none',
+    color: 'white',
   },
   mainPage: {
     width: '70%',
@@ -188,6 +185,7 @@ const CVTemplate2 = (props: Props): JSX.Element => {
     certificates,
     education,
     languages,
+    translate,
   } = props;
 
   return (
@@ -201,75 +199,33 @@ const CVTemplate2 = (props: Props): JSX.Element => {
             <Text style={[styles.topBarPosition]}>{generalInfo?.position}</Text>
             <Text style={[styles.topBarText]}>{generalInfo?.aboutMe}</Text>
           </View>
-          <View
-            style={[
-              styles.additionalInfoBar,
-              styles.column,
-              styles.marginTop10,
+          <AdditionalInformation
+            generalInfo={generalInfo}
+            styles={styles}
+            itemWrapperStyle={[
+              styles.row,
               {
-                flexWrap: 'wrap',
+                marginTop: 3.5,
+                marginBottom: 3.5,
               },
             ]}
-          >
-            {[
-              {
-                icon: Email,
-                text: generalInfo?.email,
-                condition: generalInfo?.email,
-              },
-              {
-                icon: Pin,
-                text: `${generalInfo?.city}, ${generalInfo?.country}`,
-                condition: generalInfo?.city || generalInfo?.country,
-              },
-              {
-                icon: Phone,
-                text: generalInfo?.phone,
-                condition: generalInfo?.phone,
-              },
-              {
-                icon: Linkedin,
-                text: generalInfo?.LinkedIn,
-                condition: generalInfo?.LinkedIn,
-              },
-              {
-                icon: GitHub,
-                text: generalInfo?.GitHub,
-                condition: generalInfo?.GitHub,
-              },
-              {
-                icon: Facebook,
-                text: generalInfo?.Facebook,
-                condition: generalInfo?.Facebook,
-              },
-              {
-                icon: Twitter,
-                text: generalInfo?.Twitter,
-                condition: generalInfo?.Twitter,
-              },
-              {
-                icon: Earth,
-                text: generalInfo?.website,
-                condition: generalInfo?.website,
-              },
-            ].map(({ icon, text, condition }, index) =>
-              condition ? (
+            wrapper={(wrappedInfo: JSX.Element[]) => {
+              return (
                 <View
-                  key={index}
                   style={[
-                    styles.row,
+                    styles.additionalInfoBar,
+                    styles.column,
+                    styles.marginTop10,
                     {
-                      marginTop: 3.5,
-                      marginBottom: 3.5,
+                      flexWrap: 'wrap',
                     },
                   ]}
                 >
-                  {icon({ width: 14 })}
-                  <Text style={[styles.additionalInfoBarText]}>{text}</Text>
+                  {wrappedInfo}
                 </View>
-              ) : null
-            )}
-          </View>
+              );
+            }}
+          />
           {languages && languages.length > 0 ? (
             <View wrap={false} style={[styles.marginTop10]}>
               <Text
@@ -282,7 +238,7 @@ const CVTemplate2 = (props: Props): JSX.Element => {
                   },
                 ]}
               >
-                Languages
+                {translate('languages')}
               </Text>
               <View
                 style={[
@@ -300,7 +256,7 @@ const CVTemplate2 = (props: Props): JSX.Element => {
                     <View style={[styles.column]}>
                       <Text style={[styles.companyName]}>{lang.name}</Text>
                       <Text style={[styles.companyPosition]}>
-                        {lang.proficiency}
+                        {translate(lang.proficiency)}
                       </Text>
                     </View>
                   </View>
@@ -363,7 +319,7 @@ const CVTemplate2 = (props: Props): JSX.Element => {
                         { marginBottom: 10, marginTop: 0 },
                       ]}
                     >
-                      Education
+                      {translate('education')}
                     </Text>
                   )}
                   <View style={[styles.column, { width: '100%' }]}>
@@ -412,7 +368,7 @@ const CVTemplate2 = (props: Props): JSX.Element => {
                         { marginBottom: 10, marginTop: 0 },
                       ]}
                     >
-                      Certificates
+                      {translate('certificates')}
                     </Text>
                   )}
                   <View style={[styles.column, { width: '100%' }]}>
