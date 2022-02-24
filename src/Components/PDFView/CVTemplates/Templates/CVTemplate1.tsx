@@ -480,7 +480,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                   <View style={[styles.column]}>
                     <Text style={[styles.companyName]}>{lang.name}</Text>
                     <Text style={[styles.companyPosition]}>
-                      {lang.proficiency}
+                      {translate(lang.proficiency)}
                     </Text>
                   </View>
                 </View>
