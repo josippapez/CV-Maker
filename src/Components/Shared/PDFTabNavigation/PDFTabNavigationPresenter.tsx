@@ -1,4 +1,5 @@
 import { RefObject } from 'react';
+import { useTranslation } from 'react-i18next';
 import { scrollPosition } from '../../../Hooks/usePreventBodyScroll';
 import { Tab } from '../PDFInputs/PDFInputsContainer';
 import './PDFTabNavigationPresenter.css';
@@ -21,27 +22,28 @@ const PDFTabNavigationPresenter = (props: Props) => {
     setSelectedTab,
     selectedTab,
   } = props;
+  const { t } = useTranslation();
 
   const arrayOfTabs: Array<{ tab: Tab; label: string }> = [
     {
       tab: Tab.generalInfo,
-      label: 'General Info',
+      label: t('generalInfo'),
     },
     {
       tab: Tab.professionalExperience,
-      label: 'Professional Experience',
+      label: t('professionalExperience'),
     },
     {
       tab: Tab.certificates,
-      label: 'Certificates',
+      label: t('certificates'),
     },
     {
       tab: Tab.education,
-      label: 'Education',
+      label: t('education'),
     },
     {
       tab: Tab.languages,
-      label: 'Languages',
+      label: t('languages'),
     },
   ];
 

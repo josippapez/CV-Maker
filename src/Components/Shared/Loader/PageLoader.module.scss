@@ -1,0 +1,14 @@
+.loader {
+  background-image: url('../../../Styles/Assets/Images/loading.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 200px;
+  width: 200px;
+  animation: spinner 1s infinite linear;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(1turn);
+  }
+}

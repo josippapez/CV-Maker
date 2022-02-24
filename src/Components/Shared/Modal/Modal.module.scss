@@ -1,0 +1,27 @@
+.overlay {
+  user-select: none;
+  position: fixed;
+  display: flex;
+  overflow-y: auto;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.87);
+  cursor: default;
+  z-index: 1;
+  align-items: center;
+  &.center {
+    justify-content: center;
+  }
+  &.right {
+    justify-content: right;
+  }
+  .children {
+    z-index: 2;
+    max-height: 100%;
+    cursor: default;
+  }
+}

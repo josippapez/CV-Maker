@@ -1,4 +1,4 @@
-import Images from '../../../Styles/Assets/Images/Images';
+import { useTranslation } from 'react-i18next';
 import {
   Certificate,
   Education,
@@ -9,7 +9,7 @@ import {
 } from '../../PDFView/PDFViewContainer';
 import PDFTabNavigation from '../PDFTabNavigation/PDFTabNavigationContainer';
 import { Tab } from './PDFInputsContainer';
-import './PDFInputsPresenter.css';
+import style from './PDFInputsPresenter.module.scss';
 
 type Props = {
   generalInfo: GeneralInfo;
@@ -88,6 +88,7 @@ const arrayOfEducationInputs: Array<{
 ];
 
 const PDFInputsPresenter = (props: Props) => {
+  const { t } = useTranslation();
   const {
     generalInfo,
     setGeneralInfo,
@@ -109,11 +110,10 @@ const PDFInputsPresenter = (props: Props) => {
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
-      <img src={Images.Email} alt='earth' className='earth' />
-      <div hidden={selectedTab !== Tab.generalInfo} className='tab'>
+      <div hidden={selectedTab !== Tab.generalInfo} className={style.tab}>
         {arrayOfGeneralInputs.map(input => (
           <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
-            <label className='w-1/4'>{input.inputName}</label>
+            <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
             <input
               className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
               type={input.type}
@@ -129,10 +129,11 @@ const PDFInputsPresenter = (props: Props) => {
         ))}
         {arrayOfGeneralTextAreas.map(input => (
           <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
-            <label className='w-1/4'>{input.inputName}</label>
+            <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
             <textarea
               className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
               value={generalInfo[input.inputValue]}
+              maxLength={490}
               onChange={e => {
                 setGeneralInfo({
                   ...generalInfo,
@@ -143,15 +144,17 @@ const PDFInputsPresenter = (props: Props) => {
           </div>
         ))}
       </div>
-      <div hidden={selectedTab !== Tab.professionalExperience} className='tab'>
+      <div
+        hidden={selectedTab !== Tab.professionalExperience}
+        className={style.tab}
+      >
         {professionalExperience.map((experience, index) => (
           <div
             key={index}
             className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
           >
             <button
-              type='button'
-              className='delete-button'
+              className={style['delete-button']}
               onClick={() => {
                 setProfessionalExperience(
                   professionalExperience.filter(
@@ -163,11 +166,13 @@ const PDFInputsPresenter = (props: Props) => {
             {arrayOfProfessionalExperienceInputs.map((input, currentIndex) => (
               <div
                 className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
-                key={index + input.inputName}
+                key={index + t(`${input.inputValue}`)}
               >
-                <label className='w-1/4'>{input.inputName}</label>
+                <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
                 <input
-                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  className={`border-2 rounded-md p-1 focus:border-slate-400 ${
+                    input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
+                  }`}
                   type='text'
                   value={experience[input.inputValue]}
                   onChange={e => {
@@ -184,10 +189,32 @@ const PDFInputsPresenter = (props: Props) => {
                     );
                   }}
                 />
+                {input.inputValue === 'endDate' && (
+                  <div className='flex items-center justify-center w-1/4'>
+                    <input
+                      type='checkbox'
+                      checked={experience.endDate === 'Present'}
+                      onChange={e => {
+                        setProfessionalExperience(
+                          professionalExperience.map((experience, i) => {
+                            if (i === index) {
+                              return {
+                                ...experience,
+                                endDate: e.target.checked ? 'Present' : '',
+                              };
+                            }
+                            return experience;
+                          })
+                        );
+                      }}
+                    />
+                    <label className='ml-2'>{t('present')}</label>
+                  </div>
+                )}
               </div>
             ))}
             <div className='flex mt-2'>
-              <label className='w-1/4'>Description</label>
+              <label className='w-1/4'>{t('description')}</label>
               <textarea
                 className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
                 value={experience.description}
@@ -224,18 +251,17 @@ const PDFInputsPresenter = (props: Props) => {
             ]);
           }}
         >
-          Add experience
+          {t('addExperience')}
         </button>
       </div>
-      <div hidden={selectedTab !== Tab.certificates} className='tab'>
+      <div hidden={selectedTab !== Tab.certificates} className={style.tab}>
         {certificates.map((certificate, index) => (
           <div
             key={index}
             className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
           >
             <button
-              type='button'
-              className='delete-button'
+              className={style['delete-button']}
               onClick={() => {
                 setCertificates(
                   certificates.filter((certificate, i) => i !== index)
@@ -245,9 +271,9 @@ const PDFInputsPresenter = (props: Props) => {
             {arrayOfCertificatesInputs.map((input, currentIndex) => (
               <div
                 className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
-                key={index + input.inputName}
+                key={index + t(`${input.inputValue}`)}
               >
-                <label className='w-1/4'>{input.inputName}</label>
+                <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
                 <input
                   className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
                   type='text'
@@ -269,7 +295,7 @@ const PDFInputsPresenter = (props: Props) => {
               </div>
             ))}
             <div className='flex mt-2'>
-              <label className='w-1/4'>Description</label>
+              <label className='w-1/4'>{t('description')}</label>
               <textarea
                 className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
                 value={certificate.description}
@@ -304,18 +330,17 @@ const PDFInputsPresenter = (props: Props) => {
             ]);
           }}
         >
-          Add certificate
+          {t('addCertification')}
         </button>
       </div>
-      <div hidden={selectedTab !== Tab.education} className='tab'>
+      <div hidden={selectedTab !== Tab.education} className={style.tab}>
         {educations.map((education, index) => (
           <div
             key={index}
             className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
           >
             <button
-              type='button'
-              className='delete-button'
+              className={style['delete-button']}
               onClick={() => {
                 setEducation(
                   educations.filter(
@@ -327,11 +352,13 @@ const PDFInputsPresenter = (props: Props) => {
             {arrayOfEducationInputs.map((input, currentIndex) => (
               <div
                 className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
-                key={index + input.inputName}
+                key={index + t(`${input.inputValue}`)}
               >
-                <label className='w-1/4'>{input.inputName}</label>
+                <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
                 <input
-                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  className={`border-2 rounded-md p-1 focus:border-slate-400 ${
+                    input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
+                  }`}
                   type='text'
                   value={education[input.inputValue]}
                   onChange={e => {
@@ -348,10 +375,32 @@ const PDFInputsPresenter = (props: Props) => {
                     );
                   }}
                 />
+                {input.inputValue === 'endDate' && (
+                  <div className='flex items-center justify-center w-1/4'>
+                    <input
+                      type='checkbox'
+                      checked={education.endDate === 'Present'}
+                      onChange={e => {
+                        setEducation(
+                          educations.map((education, i) => {
+                            if (i === index) {
+                              return {
+                                ...education,
+                                endDate: e.target.checked ? 'Present' : '',
+                              };
+                            }
+                            return education;
+                          })
+                        );
+                      }}
+                    />
+                    <label className='ml-2'>{t('present')}</label>
+                  </div>
+                )}
               </div>
             ))}
             <div className='flex mt-2'>
-              <label className='w-1/4'>Description</label>
+              <label className='w-1/4'>{t('description')}</label>
               <textarea
                 className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
                 value={education.description}
@@ -386,24 +435,23 @@ const PDFInputsPresenter = (props: Props) => {
             ]);
           }}
         >
-          Add education
+          {t('addEducation')}
         </button>
       </div>
-      <div hidden={selectedTab !== Tab.languages} className='tab'>
+      <div hidden={selectedTab !== Tab.languages} className={style.tab}>
         {languages.map((language, index) => (
           <div
             key={index}
             className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
           >
             <button
-              type='button'
-              className='delete-button'
+              className={style['delete-button']}
               onClick={() => {
                 setLanguages(languages.filter((language, i) => i !== index));
               }}
             />
             <div className='flex'>
-              <label className='w-1/4'>Language</label>
+              <label className='w-1/4'>{t('language')}</label>
               <input
                 className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
                 type='text'
@@ -424,7 +472,7 @@ const PDFInputsPresenter = (props: Props) => {
               />
             </div>
             <div className='flex mt-2'>
-              <label className='w-1/4'>Level</label>
+              <label className='w-1/4'>{t('level')}</label>
               <select
                 className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
                 value={language.proficiency}
@@ -444,13 +492,17 @@ const PDFInputsPresenter = (props: Props) => {
                 }}
               >
                 <option value={LanguageProficiencyLevel.BEGINNER}>
-                  Beginner
+                  {t(LanguageProficiencyLevel.BEGINNER)}
                 </option>
                 <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
-                  Conversational
+                  {t(LanguageProficiencyLevel.CONVERSATIONAL)}
                 </option>
-                <option value={LanguageProficiencyLevel.FLUENT}>Fluent</option>
-                <option value={LanguageProficiencyLevel.NATIVE}>Native</option>
+                <option value={LanguageProficiencyLevel.FLUENT}>
+                  {t(LanguageProficiencyLevel.FLUENT)}
+                </option>
+                <option value={LanguageProficiencyLevel.NATIVE}>
+                  {t(LanguageProficiencyLevel.NATIVE)}
+                </option>
               </select>
             </div>
           </div>
@@ -464,7 +516,7 @@ const PDFInputsPresenter = (props: Props) => {
             ]);
           }}
         >
-          Add language
+          {t('addLanguage')}
         </button>
       </div>
     </div>

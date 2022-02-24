@@ -1,6 +1,17 @@
 import { usePDF } from '@react-pdf/renderer';
 import { useEffect, useRef, useState } from 'react';
-import CVTemplate1 from './CVTemplates/CVTemplate1';
+import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  cacheCertificates,
+  cacheEducation,
+  cacheGeneralInfo,
+  cacheLanguages,
+  cacheProfessionalExperience,
+  PDFData,
+} from '../../store/reducers/pdfData';
+import { Template } from '../../store/reducers/template';
+import CVTemplate from './CVTemplates/CVTemplate';
 import PDFViewPresenter from './PDFViewPresenter';
 export interface ProfessionalExperience {
   company: string;
@@ -47,10 +58,10 @@ export interface Education {
 }
 
 export enum LanguageProficiencyLevel {
-  BEGINNER = 'Beginner',
-  CONVERSATIONAL = 'Conversational',
-  FLUENT = 'Fluent',
-  NATIVE = 'Native',
+  BEGINNER = 'BEGINNER',
+  CONVERSATIONAL = 'CONVERSATIONAL',
+  FLUENT = 'FLUENT',
+  NATIVE = 'NATIVE',
 }
 
 export interface LanguageSkill {
@@ -59,42 +70,61 @@ export interface LanguageSkill {
 }
 
 const PDFView = () => {
-  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({
-    firstName: '',
-    lastName: '',
-    aboutMe: '',
-    position: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    zip: '',
-    country: '',
-    website: '',
-    LinkedIn: '',
-    GitHub: '',
-    Facebook: '',
-    Instagram: '',
-    Twitter: '',
-  });
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
 
+  const dispatch = useAppDispatch();
+  const pdfData: Partial<PDFData> = useAppSelector(state => state.pdfData);
+  const template: Template = useAppSelector(state => state.template);
+
+  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>(
+    pdfData.generalInfo
+      ? pdfData.generalInfo
+      : {
+          firstName: '',
+          lastName: '',
+          aboutMe: '',
+          position: '',
+          email: '',
+          phone: '',
+          address: '',
+          city: '',
+          zip: '',
+          country: '',
+          website: '',
+          LinkedIn: '',
+          GitHub: '',
+          Facebook: '',
+          Instagram: '',
+          Twitter: '',
+        }
+  );
   const [professionalExperience, setProfessionalExperience] = useState<
     ProfessionalExperience[]
-  >([]);
-
-  const [certificates, setCertificates] = useState<Certificate[]>([]);
-
-  const [education, setEducation] = useState<Education[]>([]);
-
-  const [languages, setLanguages] = useState<LanguageSkill[]>([]);
+  >(
+    pdfData?.professionalExperience?.length
+      ? pdfData.professionalExperience
+      : []
+  );
+  const [certificates, setCertificates] = useState<Certificate[]>(
+    pdfData.certificates?.length ? pdfData.certificates : []
+  );
+  const [education, setEducation] = useState<Education[]>(
+    pdfData.education?.length ? pdfData.education : []
+  );
+  const [languages, setLanguages] = useState<LanguageSkill[]>(
+    pdfData.languages?.length ? pdfData.languages : []
+  );
 
   const [instance, updateInstance] = usePDF({
-    document: CVTemplate1({
+    document: CVTemplate({
       generalInfo,
       professionalExperience,
       certificates,
       education,
       languages,
+      t,
+      currentLanguage,
     }),
   });
 
@@ -107,8 +137,22 @@ const PDFView = () => {
     }
     updateInstanceRef.current = setTimeout(() => {
       updateInstance();
+      dispatch(cacheGeneralInfo(generalInfo));
+      dispatch(cacheProfessionalExperience(professionalExperience));
+      dispatch(cacheCertificates(certificates));
+      dispatch(cacheEducation(education));
+      dispatch(cacheLanguages(languages));
     }, 500);
   }, [generalInfo, professionalExperience, certificates, education, languages]);
+
+  useEffect(() => {
+    if (updateInstanceRef.current) {
+      clearTimeout(updateInstanceRef.current);
+    }
+    updateInstanceRef.current = setTimeout(() => {
+      updateInstance();
+    }, 500);
+  }, [template, currentLanguage]);
 
   return (
     <PDFViewPresenter
