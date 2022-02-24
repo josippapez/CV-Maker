@@ -21,13 +21,13 @@ const TemplatesModal = (props: Props) => {
       width={'33%'}
       closeModal={closeModal}
     >
-      <div className='h-full bg-slate-300 dark:bg-slate-600 p-5 flex-col relative'>
+      <div className='h-full bg-gray-300 dark:bg-gray-600 p-5 flex-col relative'>
         <div className='flex justify-between items-center'>
           <h1 className='text-2xl font-bold dark:text-white'>
             {t('chooseYourTemplate')}
           </h1>
           <button
-            className='font-bold absolute top-1 right-3 hover:bg-slate-500 hover:text-white rounded-full'
+            className='font-bold absolute top-1 right-3 hover:bg-gray-500 hover:text-white rounded-full'
             style={{
               lineHeight: '10px',
               fontSize: '20px',
@@ -47,7 +47,7 @@ const TemplatesModal = (props: Props) => {
             return (
               <div
                 key={templateName}
-                className={`${style.template} ${style[templateName]} bg-white dark:bg-gray-300 rounded-md`}
+                className={`${style.template} ${style[templateName]} bg-white dark:bg-gray-800 rounded-md`}
                 onClick={() => {
                   dispatch(setTemplate(templateName));
                   closeModal();
@@ -56,7 +56,9 @@ const TemplatesModal = (props: Props) => {
                 <div
                   className={`${style.templateImage} ${style[templateName]}`}
                 />
-                <div className={`${style.templateName}`}>{t(templateName)}</div>
+                <div className={`${style.templateName} dark:text-white`}>
+                  {t(templateName)}
+                </div>
               </div>
             );
           })}

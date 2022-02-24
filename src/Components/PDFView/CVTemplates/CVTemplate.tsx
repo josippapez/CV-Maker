@@ -1,3 +1,4 @@
+import { TFunction } from 'react-i18next';
 import { useMemo } from 'react';
 import { useAppSelector } from '../../../store/hooks';
 import { TemplateName } from '../../../store/reducers/template';
@@ -17,6 +18,8 @@ type Props = {
   certificates: Certificate[];
   education: Education[];
   languages: LanguageSkill[];
+  t: TFunction;
+  currentLanguage: string;
 };
 
 const getTemplate = (templateName: TemplateName) => {
@@ -37,6 +40,8 @@ const CVTemplate = (props: Props): JSX.Element => {
     certificates,
     education,
     languages,
+    t,
+    currentLanguage,
   } = props;
 
   const template = useAppSelector(state => state.template);
@@ -46,6 +51,7 @@ const CVTemplate = (props: Props): JSX.Element => {
     certificates,
     education,
     languages,
+    translate: t,
   };
 
   return useMemo(
@@ -57,6 +63,7 @@ const CVTemplate = (props: Props): JSX.Element => {
       certificates,
       education,
       languages,
+      currentLanguage,
     ]
   );
 };

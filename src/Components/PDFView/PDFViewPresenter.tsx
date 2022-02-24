@@ -4,6 +4,7 @@ import {
   Page as DocumentPageView,
 } from 'react-pdf/dist/umd/entry.webpack';
 import PDFDownload from '../PDFDownload/PDFDownload';
+import PageLoader from '../Shared/Loader/PageLoader';
 import PDFInputsContainer from '../Shared/PDFInputs/PDFInputsContainer';
 import {
   Certificate,
@@ -76,8 +77,8 @@ const PDFViewPresenter = (props: Props) => {
 
   return (
     <div className='flex w-full min-h-full justify-evenly'>
-      <div className='w-2/4 mr-3'>
-        <Suspense fallback={<div>Loading...</div>}>
+      <div className='w-5/12 mr-3'>
+        <Suspense fallback={<PageLoader />}>
           <PDFInputsContainer
             setGeneralInfo={setGeneralInfo}
             generalInfo={generalInfo}
@@ -92,8 +93,8 @@ const PDFViewPresenter = (props: Props) => {
           />
         </Suspense>
       </div>
-      <div className='w-2/4'>
-        <Suspense fallback={<div>Loading...</div>}>
+      <div className='w-7/12 transition-colors dark:bg-gray-700'>
+        <Suspense fallback={<PageLoader />}>
           <DocumentPDFView
             {...options}
             file={pdfInstance.url}

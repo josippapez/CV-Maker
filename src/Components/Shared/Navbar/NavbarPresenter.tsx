@@ -58,7 +58,7 @@ const NavbarPresenter = (props: Props) => {
                   i18n.changeLanguage('eng');
                 }}
               >
-                English
+                {t('English')}
               </div>
               <div
                 className='cursor-pointer px-1 py-[2px] rounded-md hover:dark:bg-slate-600 hover:bg-gray-400'
@@ -66,7 +66,7 @@ const NavbarPresenter = (props: Props) => {
                   i18n.changeLanguage('hr');
                 }}
               >
-                Croatian
+                {t('Croatian')}
               </div>
             </div>
           </div>
