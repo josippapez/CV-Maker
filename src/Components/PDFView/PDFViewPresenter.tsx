@@ -93,7 +93,7 @@ const PDFViewPresenter = (props: Props) => {
           />
         </Suspense>
       </div>
-      <div className='w-7/12 transition-colors dark:bg-gray-700'>
+      <div className='w-7/12 transition-colors dark:bg-neutral-700'>
         <Suspense fallback={<PageLoader />}>
           <DocumentPDFView
             {...options}
@@ -102,6 +102,7 @@ const PDFViewPresenter = (props: Props) => {
             className='drop-shadow-2xl flex h-screen justify-center items-center sticky top-0'
             onItemClick={onItemClick}
             onLoadSuccess={onDocumentLoadSuccess}
+            loading={<PageLoader />}
           >
             <DocumentPageView
               height={window.innerHeight - 100}

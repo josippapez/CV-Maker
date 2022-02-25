@@ -110,9 +110,12 @@ const PDFInputsPresenter = (props: Props) => {
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
-      <div hidden={selectedTab !== Tab.generalInfo} className={style.tab}>
+      <div
+        hidden={selectedTab !== Tab.generalInfo}
+        className={`p-4 ${style.tab}`}
+      >
         {arrayOfGeneralInputs.map(input => (
-          <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
+          <div key={input.inputValue} className='flex mt-2 first:mt-0'>
             <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
             <input
               className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
@@ -128,7 +131,7 @@ const PDFInputsPresenter = (props: Props) => {
           </div>
         ))}
         {arrayOfGeneralTextAreas.map(input => (
-          <div key={input.inputValue} className='flex mt-2 only:first:mt-0'>
+          <div key={input.inputValue} className='flex mt-2'>
             <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
             <textarea
               className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
