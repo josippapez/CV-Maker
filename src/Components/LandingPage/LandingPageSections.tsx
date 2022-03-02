@@ -9,17 +9,13 @@ const LandingPageSections = (props: Props) => {
 
   return useMemo(
     () => (
-      <div>
+      <>
         {landingPageSections.map((section, index) => (
-          <section
-            id={`section-${index}`}
-            key={index}
-            className='flex justify-center h-screen items-center'
-          >
+          <section id={`section-${index}`} key={index} className='h-full'>
             {section()}
           </section>
         ))}
-      </div>
+      </>
     ),
     [landingPageSections]
   );
