@@ -66,7 +66,7 @@ const LandingPage = (/* props: Props */) => {
   ];
 
   return (
-    <div className='overflow-y-hidden h-screen transition-colors bg-[#f0f0f0] dark:bg-[#3a332c]'>
+    <div className='overflow-y-hidden h-screen transition-colors bg-[#f0f0f0] dark:bg-[#3a3836]'>
       <LandingPageSections landingPageSections={landingPageSections} />
       <LandingPageScrollNavigation landingPageSections={landingPageSections} />
     </div>
