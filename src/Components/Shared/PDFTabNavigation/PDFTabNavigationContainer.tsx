@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import usePreventBodyScroll from '../../../Hooks/usePreventBodyScroll';
 import { Tab } from '../PDFInputs/PDFInputsContainer';
 import PDFTabNavigationPresenter from './PDFTabNavigationPresenter';
@@ -14,6 +14,21 @@ const PDFTabNavigation = (props: Props) => {
 
   const { disableScroll, enableScroll, position } =
     usePreventBodyScroll(horizontalScroll);
+
+  useEffect(() => {
+    disableScroll();
+    const element = document.getElementById(selectedTab);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+    enableScroll();
+  }, []);
+
+  console.log(position, selectedTab);
 
   return (
     <PDFTabNavigationPresenter

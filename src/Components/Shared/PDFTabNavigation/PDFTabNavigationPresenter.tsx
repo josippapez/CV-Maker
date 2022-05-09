@@ -48,7 +48,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
   ];
 
   return (
-    <div className='w-full relative navigation'>
+    <div className='w-full relative navigation mb-2'>
       <div className='navigation-hint'>
         {(position === scrollPosition.left ||
           position === scrollPosition.inbetween) && (
@@ -61,7 +61,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
       </div>
       <div
         ref={horizontalScroll}
-        className='overflow-auto scroll w-full min-w-full'
+        className='overflow-auto scroll w-full min-w-full flex justify-evenly'
         onMouseEnter={() => {
           disableScroll();
         }}
@@ -69,24 +69,21 @@ const PDFTabNavigationPresenter = (props: Props) => {
           enableScroll();
         }}
       >
-        <div className='border-b-4 flex'>
-          {arrayOfTabs.map(tab => (
-            <div
-              key={tab.tab}
-              className={`tab-button px-4 py-2
+        {arrayOfTabs.map(tab => (
+          <div
+            key={tab.tab}
+            id={tab.tab}
+            className={`tab-button px-4 py-2
               ${
-                selectedTab === tab.tab
-                  ? 'border-blue-500'
-                  : 'border-b-transparent'
+                selectedTab === tab.tab ? 'border-blue-500' : 'border-gray-200'
               }`}
-              onClick={() => {
-                setSelectedTab(tab.tab);
-              }}
-            >
-              {tab.label}
-            </div>
-          ))}
-        </div>
+            onClick={() => {
+              setSelectedTab(tab.tab);
+            }}
+          >
+            {tab.label}
+          </div>
+        ))}
       </div>
     </div>
   );

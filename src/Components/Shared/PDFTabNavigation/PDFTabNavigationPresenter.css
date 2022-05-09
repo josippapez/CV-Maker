@@ -1,12 +1,16 @@
 .tab-button {
   color: #1f2937;
   font-weight: bold;
-  margin-bottom: -4px;
   border-bottom-width: 4px;
   border-bottom-style: solid;
   display: flex;
   align-items: center;
   text-align: center;
+  width: min-content;
+  cursor: pointer;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 
 .scroll {
