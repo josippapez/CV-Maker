@@ -61,18 +61,17 @@ const PDFViewPresenter = (props: Props) => {
   const [displayDownloadModal, setDisplayDownloadModal] = useState(false);
 
   const onDocumentLoadSuccess = useCallback(
-    document => {
-      const { numPages: nextNumPages } = document;
-      if (pageNumber > nextNumPages) {
-        setPageNumber(nextNumPages);
+    ({ numPages }: { numPages: number }) => {
+      if (pageNumber > numPages) {
+        setPageNumber(numPages);
       }
-      setNumPages(nextNumPages);
+      setNumPages(numPages);
     },
     [pdfInstance.blob]
   );
 
-  const onItemClick = useCallback(({ pageNumber: nextPageNumber }) => {
-    setPageNumber(nextPageNumber);
+  const onItemClick = useCallback(({ pageNumber }: { pageNumber: string }) => {
+    setPageNumber(Number(pageNumber));
   }, []);
 
   return (
