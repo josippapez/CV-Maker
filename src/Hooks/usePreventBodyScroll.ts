@@ -62,6 +62,19 @@ function usePreventBodyScroll(ref: React.RefObject<HTMLElement>) {
     };
   }, [hidden]);
 
+  React.useEffect(() => {
+    if (ref.current) {
+      handleScroll(
+        new WheelEvent('wheel', {
+          deltaY: 10,
+          deltaX: 0,
+          bubbles: true,
+          cancelable: true,
+        })
+      );
+    }
+  }, []);
+
   const disableScroll = React.useCallback(() => setHidden(true), []);
   const enableScroll = React.useCallback(() => setHidden(false), []);
   return { disableScroll, enableScroll, position };

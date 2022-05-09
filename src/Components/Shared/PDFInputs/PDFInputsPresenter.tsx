@@ -116,7 +116,9 @@ const PDFInputsPresenter = (props: Props) => {
       >
         {arrayOfGeneralInputs.map(input => (
           <div key={input.inputValue} className='flex mt-2 first:mt-0'>
-            <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
+            <label className='w-1/4 font-medium self-center'>
+              {t(`${input.inputValue}`)}
+            </label>
             <input
               className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
               type={input.type}
@@ -132,7 +134,9 @@ const PDFInputsPresenter = (props: Props) => {
         ))}
         {arrayOfGeneralTextAreas.map(input => (
           <div key={input.inputValue} className='flex mt-2'>
-            <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
+            <label className='w-1/4 font-medium self-center'>
+              {t(`${input.inputValue}`)}
+            </label>
             <textarea
               className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
               value={generalInfo[input.inputValue]}
@@ -171,7 +175,9 @@ const PDFInputsPresenter = (props: Props) => {
                 className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
                 key={index + t(`${input.inputValue}`)}
               >
-                <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
+                <label className='w-1/4 font-medium self-center'>
+                  {t(`${input.inputValue}`)}
+                </label>
                 <input
                   className={`border-2 rounded-md p-1 focus:border-slate-400 ${
                     input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
@@ -217,7 +223,9 @@ const PDFInputsPresenter = (props: Props) => {
               </div>
             ))}
             <div className='flex mt-2'>
-              <label className='w-1/4'>{t('description')}</label>
+              <label className='w-1/4 font-medium self-center'>
+                {t('description')}
+              </label>
               <textarea
                 className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
                 value={experience.description}
@@ -276,7 +284,9 @@ const PDFInputsPresenter = (props: Props) => {
                 className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
                 key={index + t(`${input.inputValue}`)}
               >
-                <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
+                <label className='w-1/4 font-medium self-center'>
+                  {t(`${input.inputValue}`)}
+                </label>
                 <input
                   className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
                   type='text'
@@ -298,7 +308,9 @@ const PDFInputsPresenter = (props: Props) => {
               </div>
             ))}
             <div className='flex mt-2'>
-              <label className='w-1/4'>{t('description')}</label>
+              <label className='w-1/4 font-medium self-center'>
+                {t('description')}
+              </label>
               <textarea
                 className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
                 value={certificate.description}
@@ -357,7 +369,9 @@ const PDFInputsPresenter = (props: Props) => {
                 className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
                 key={index + t(`${input.inputValue}`)}
               >
-                <label className='w-1/4'>{t(`${input.inputValue}`)}</label>
+                <label className='w-1/4 font-medium self-center'>
+                  {t(`${input.inputValue}`)}
+                </label>
                 <input
                   className={`border-2 rounded-md p-1 focus:border-slate-400 ${
                     input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
@@ -403,7 +417,9 @@ const PDFInputsPresenter = (props: Props) => {
               </div>
             ))}
             <div className='flex mt-2'>
-              <label className='w-1/4'>{t('description')}</label>
+              <label className='w-1/4 font-medium self-center'>
+                {t('description')}
+              </label>
               <textarea
                 className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
                 value={education.description}
@@ -454,7 +470,9 @@ const PDFInputsPresenter = (props: Props) => {
               }}
             />
             <div className='flex'>
-              <label className='w-1/4'>{t('language')}</label>
+              <label className='w-1/4 font-medium self-center'>
+                {t('language')}
+              </label>
               <input
                 className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
                 type='text'
@@ -475,7 +493,9 @@ const PDFInputsPresenter = (props: Props) => {
               />
             </div>
             <div className='flex mt-2'>
-              <label className='w-1/4'>{t('level')}</label>
+              <label className='w-1/4 font-medium self-center'>
+                {t('level')}
+              </label>
               <select
                 className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
                 value={language.proficiency}

@@ -21,13 +21,13 @@ const TemplatesModal = (props: Props) => {
       width={'33%'}
       closeModal={closeModal}
     >
-      <div className='h-full bg-gray-300 dark:bg-gray-600 p-5 flex-col relative'>
+      <div className='h-full bg-gray-300 dark:bg-zinc-900 p-5 flex-col relative'>
         <div className='flex justify-between items-center'>
           <h1 className='text-2xl font-bold dark:text-white'>
             {t('chooseYourTemplate')}
           </h1>
           <button
-            className='font-bold absolute top-1 right-3 hover:bg-gray-500 hover:text-white rounded-full'
+            className='font-bold absolute top-1 right-3 hover:bg-gray-500 hover:text-white rounded-full dark:text-white'
             style={{
               lineHeight: '10px',
               fontSize: '20px',
