@@ -1,6 +1,7 @@
 import {
   Document,
   Font,
+  Image,
   Page,
   StyleSheet,
   Text,
@@ -101,9 +102,13 @@ const styles = StyleSheet.create({
   },
   topBar: {
     height: 'auto',
-    flexDirection: 'column',
+    flexDirection: 'row',
     backgroundColor: '#183042',
     color: 'white',
+  },
+  profilePicture: {
+    width: 'auto',
+    marginRight: 10,
   },
   topBarName: {
     fontSize: 20,
@@ -186,11 +191,30 @@ const CVTemplate1 = (props: Props): JSX.Element => {
       <Page size='A4' style={[styles.page]}>
         <View style={styles.personalInfo}>
           <View style={[styles.topBar, styles.padding20]}>
-            <Text style={styles.topBarName}>
-              {generalInfo?.firstName} {generalInfo?.lastName}
-            </Text>
-            <Text style={styles.topBarPosition}>{generalInfo?.position}</Text>
-            <Text style={styles.topBarText}>{generalInfo?.aboutMe}</Text>
+            {generalInfo && generalInfo.profilePicture && (
+              <View style={[styles.profilePicture]}>
+                <Image
+                  src={generalInfo.profilePicture}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 50,
+                    objectFit: 'cover',
+                  }}
+                />
+              </View>
+            )}
+            <View
+              style={{
+                flex: 1,
+              }}
+            >
+              <Text style={styles.topBarName}>
+                {generalInfo?.firstName} {generalInfo?.lastName}
+              </Text>
+              <Text style={styles.topBarPosition}>{generalInfo?.position}</Text>
+              <Text style={styles.topBarText}>{generalInfo?.aboutMe}</Text>
+            </View>
           </View>
           <AdditionalInformation
             generalInfo={generalInfo}

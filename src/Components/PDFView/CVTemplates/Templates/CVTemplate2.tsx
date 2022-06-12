@@ -1,6 +1,7 @@
 import {
   Document,
   Font,
+  Image,
   Page,
   StyleSheet,
   Text,
@@ -109,6 +110,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#183042',
     color: 'white',
   },
+  profilePicture: {
+    width: 'auto',
+    marginBottom: 10,
+  },
   topBarName: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -193,6 +198,21 @@ const CVTemplate2 = (props: Props): JSX.Element => {
       <Page size='A4' style={[styles.page, styles.row]}>
         <View style={[styles.sidebar, styles.column, styles.padding20]}>
           <View style={[styles.topBar]}>
+            {generalInfo?.profilePicture && (
+              <View style={[styles.horizontalCenter, styles.profilePicture]}>
+                <Image
+                  src={generalInfo.profilePicture}
+                  style={[
+                    {
+                      width: 100,
+                      height: 100,
+                      borderRadius: 50,
+                      objectFit: 'cover',
+                    },
+                  ]}
+                />
+              </View>
+            )}
             <Text style={styles.topBarName}>
               {generalInfo?.firstName} {generalInfo?.lastName}
             </Text>

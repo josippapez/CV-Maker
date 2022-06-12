@@ -30,7 +30,7 @@ type Props = {
 
 const arrayOfGeneralInputs: Array<{
   inputName: string;
-  inputValue: keyof GeneralInfo;
+  inputValue: keyof Omit<GeneralInfo, 'profilePicture'>;
   type: string;
 }> = [
   { inputName: 'First name', inputValue: 'firstName', type: 'text' },
@@ -49,7 +49,7 @@ const arrayOfGeneralInputs: Array<{
 
 const arrayOfGeneralTextAreas: Array<{
   inputName: string;
-  inputValue: keyof GeneralInfo;
+  inputValue: keyof Omit<GeneralInfo, 'profilePicture'>;
 }> = [{ inputName: 'About me', inputValue: 'aboutMe' }];
 
 const arrayOfProfessionalExperienceInputs: Array<{
@@ -114,6 +114,55 @@ const PDFInputsPresenter = (props: Props) => {
         hidden={selectedTab !== Tab.generalInfo}
         className={`p-4 ${style.tab}`}
       >
+        <div className='flex justify-center items-center'>
+          {generalInfo.profilePicture ? (
+            <>
+              <img
+                className='w-32 h-32 rounded-full'
+                style={{ objectFit: 'cover' }}
+                src={
+                  generalInfo.profilePicture ? generalInfo.profilePicture : ''
+                }
+                alt='profile picture'
+              />
+              <button
+                className='p-2 ml-2 rounded-full bg-red-500 text-white'
+                onClick={() => {
+                  setGeneralInfo({
+                    ...generalInfo,
+                    profilePicture: null,
+                  });
+                }}
+              >
+                {t('Remove')}
+              </button>
+            </>
+          ) : (
+            <input
+              className='w-full p-2'
+              type='file'
+              accept='image/png, image/gif, image/jpeg'
+              onChange={e => {
+                if (e.target.files) {
+                  const file = e.target.files[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onload = e => {
+                      const image = e.target?.result as string;
+                      if (image) {
+                        setGeneralInfo({
+                          ...generalInfo,
+                          profilePicture: image,
+                        });
+                      }
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                }
+              }}
+            />
+          )}
+        </div>
         {arrayOfGeneralInputs.map(input => (
           <div key={input.inputValue} className='flex mt-2 first:mt-0'>
             <label className='w-1/4 font-medium self-center'>

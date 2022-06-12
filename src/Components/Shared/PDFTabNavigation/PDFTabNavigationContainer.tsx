@@ -28,8 +28,6 @@ const PDFTabNavigation = (props: Props) => {
     enableScroll();
   }, []);
 
-  console.log(position, selectedTab);
-
   return (
     <PDFTabNavigationPresenter
       disableScroll={disableScroll}

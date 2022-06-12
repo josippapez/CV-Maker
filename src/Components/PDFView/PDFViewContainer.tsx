@@ -22,6 +22,7 @@ export interface ProfessionalExperience {
   description: string;
 }
 export interface GeneralInfo {
+  profilePicture: string | null;
   firstName: string;
   lastName: string;
   aboutMe: string;
@@ -81,6 +82,7 @@ const PDFView = () => {
     pdfData.generalInfo
       ? pdfData.generalInfo
       : {
+          profilePicture: null,
           firstName: '',
           lastName: '',
           aboutMe: '',

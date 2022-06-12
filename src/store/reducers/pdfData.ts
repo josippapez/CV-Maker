@@ -17,6 +17,7 @@ export interface PDFData {
 
 const initialState: Partial<PDFData> = {
   generalInfo: {
+    profilePicture: null,
     firstName: '',
     lastName: '',
     aboutMe: '',
