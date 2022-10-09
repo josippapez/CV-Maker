@@ -1,44 +1,123 @@
-import PropTypes from 'prop-types';
-import style from './Modal.module.scss';
+import PropTypes from "prop-types";
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
+import style from "./Modal.module.scss";
 
 interface Props {
   closeModal(): void;
-  position?: 'center' | 'left' | 'right';
+  position?: "center" | "left" | "right" | "bottom" | "top";
   children: JSX.Element;
+  contentClassname?: string;
   show: boolean;
-  height?: string;
-  width?: string;
+  width?: "screen" | string;
+  height?: "screen" | string;
+  zindex?: number;
+  animation?:
+    | "fade"
+    | "slide-left"
+    | "slide-right"
+    | "slide-top"
+    | "slide-bottom";
+  ratio?:
+    | "1 / 1"
+    | "4 / 3"
+    | "16 / 9"
+    | "16 / 10"
+    | "21 / 9"
+    | "9 / 16"
+    | "3 / 4"
+    | string;
 }
 
+let openned = 0;
+
 const Modal = (props: Props): JSX.Element => {
-  const { closeModal, position, children, show, height, width } = props;
-  return (
+  const {
+    closeModal,
+    position,
+    children,
+    show,
+    width,
+    height,
+    animation,
+    ratio,
+    contentClassname,
+    zindex,
+  } = props;
+
+  useEffect(() => {
+    if (openned === 0) {
+      document.body.style.overflow = show ? "hidden" : "auto";
+    }
+    if (show) {
+      openned++;
+    }
+    return () => {
+      if (show) {
+        openned--;
+      }
+    };
+  }, [show]);
+
+  return createPortal(
     <div
-      style={{ display: !show ? 'none' : 'flex' }}
-      aria-hidden='true'
-      role='button'
-      className={`${style.overlay} ${style[`${position}`]}`}
+      ref={el => {
+        if (el) {
+          if (show) {
+            setTimeout(() => {
+              el.style.overflow = "auto";
+            }, 250);
+          } else {
+            el.style.overflow = "hidden";
+          }
+        }
+      }}
+      id="modal-overlay"
+      style={{
+        display: !show ? "none" : "flex",
+        zIndex: zindex,
+      }}
+      aria-hidden="true"
+      role="button"
+      className={`
+        ${style.overlay}
+        ${style[`${position}`]}
+        ${style["fadeOverlay"]}
+      `}
       onMouseDown={() => closeModal()}
+      onTouchStart={e => e.stopPropagation()}
     >
       <div
-        aria-hidden='true'
-        className={`${style.children}`}
+        id="modal-children"
+        aria-hidden="true"
+        className={`
+          ${style.children}
+          ${style[`${animation}`]}
+          ${contentClassname}
+          subpixel-antialiased
+          flex flex-col
+          relative
+        `}
         onMouseDown={e => e.stopPropagation()}
         style={{
-          height: height === 'screen' ? '100vh' : height,
-          width: width === 'screen' ? '100vw' : width,
+          width: width === "screen" ? window.innerWidth + "px" : width,
+          height: height === "screen" ? '100vh' : height,
+          maxHeight: window.innerHeight + "px",
+          aspectRatio: ratio,
         }}
       >
         {children}
       </div>
-    </div>
+    </div>,
+    document.getElementById("root") as Element
   );
 };
 
 Modal.defaultProps = {
-  position: 'center',
-  height: '',
-  width: '',
+  position: "center",
+  width: "",
+  animation: "fade",
+  ratio: "",
   closeModal: () => {
     return;
   },

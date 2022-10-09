@@ -71,9 +71,9 @@ const AdditionalInformation = (props: Props) => {
           {icon({ width: 14 })}
           {text && <Text style={styles.additionalInfoBarText}>{text}</Text>}
           {link && (
-            <Link style={styles.additionalInfoBarText} src={`https://${link}`}>
-              {link}
-            </Link>
+            <Text style={styles.additionalInfoBarText} src={link}>
+              {link.replace(/(^\w+:|^)\/\//, '').replace(/(^www\.)/, '')}
+            </Text>
           )}
         </View>
       );

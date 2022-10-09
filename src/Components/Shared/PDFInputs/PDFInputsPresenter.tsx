@@ -105,7 +105,7 @@ const PDFInputsPresenter = (props: Props) => {
   } = props;
 
   return (
-    <div className='flex-col h-full p-4'>
+    <div className='flex-col h-full'>
       <PDFTabNavigation
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
@@ -251,14 +251,14 @@ const PDFInputsPresenter = (props: Props) => {
                   <div className='flex items-center justify-center w-1/4'>
                     <input
                       type='checkbox'
-                      checked={experience.endDate === 'Present'}
+                      checked={experience.endDate === t('present')}
                       onChange={e => {
                         setProfessionalExperience(
                           professionalExperience.map((experience, i) => {
                             if (i === index) {
                               return {
                                 ...experience,
-                                endDate: e.target.checked ? 'Present' : '',
+                                endDate: e.target.checked ? t('present') : '',
                               };
                             }
                             return experience;

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import useMobileView from '../../../Hooks/useMobileView';
 import { useAppDispatch } from '../../../store/hooks';
 import { setTemplate, TemplateName } from '../../../store/reducers/template';
 import Modal from '../../Shared/Modal/Modal';
@@ -10,6 +11,7 @@ type Props = {
 };
 
 const TemplatesModal = (props: Props) => {
+  const isMobileView = useMobileView();
   const { closeModal, show } = props;
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -17,8 +19,10 @@ const TemplatesModal = (props: Props) => {
     <Modal
       show={show}
       position='right'
-      height={'screen'}
-      width={'33%'}
+      animation='slide-right'
+      height='screen'
+      zindex={100}
+      width={isMobileView ? '100%' : '50rem'}
       closeModal={closeModal}
     >
       <div className='h-full bg-gray-300 dark:bg-zinc-900 p-5 flex-col relative'>

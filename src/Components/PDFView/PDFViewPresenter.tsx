@@ -1,8 +1,6 @@
 import { Suspense, useCallback, useState } from 'react';
-import {
-  Document as DocumentPDFView,
-  Page as DocumentPageView,
-} from 'react-pdf/dist/umd/entry.webpack';
+import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack5';
+import useMobileView from '../../Hooks/useMobileView';
 import PDFDownload from '../PDFDownload/PDFDownload';
 import PageLoader from '../Shared/Loader/PageLoader';
 import PDFInputsContainer from '../Shared/PDFInputs/PDFInputsContainer';
@@ -36,6 +34,8 @@ type Props = {
   setLanguages(languages: LanguageSkill[]): void;
 };
 
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+
 const options = {
   cMapUrl: 'cmaps/',
   cMapPacked: true,
@@ -56,6 +56,8 @@ const PDFViewPresenter = (props: Props) => {
     setLanguages,
   } = props;
 
+  const isMobileView = useMobileView();
+
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [displayDownloadModal, setDisplayDownloadModal] = useState(false);
@@ -75,8 +77,12 @@ const PDFViewPresenter = (props: Props) => {
   }, []);
 
   return (
-    <div className='flex w-full min-h-full justify-evenly'>
-      <div className='w-5/12 mr-3'>
+    <div
+      className={`flex w-full min-h-full ${
+        isMobileView ? 'flex-col' : 'flex-row justify-around'
+      }`}
+    >
+      <div className=''>
         <Suspense fallback={<PageLoader />}>
           <PDFInputsContainer
             setGeneralInfo={setGeneralInfo}
@@ -92,9 +98,9 @@ const PDFViewPresenter = (props: Props) => {
           />
         </Suspense>
       </div>
-      <div className='w-7/12 transition-colors dark:bg-neutral-700'>
+      <div className='transition-colors dark:bg-neutral-700'>
         <Suspense fallback={<PageLoader />}>
-          <DocumentPDFView
+          <Document
             {...options}
             file={pdfInstance.url}
             renderMode='svg'
@@ -103,11 +109,14 @@ const PDFViewPresenter = (props: Props) => {
             onLoadSuccess={onDocumentLoadSuccess}
             loading={<PageLoader />}
           >
-            <DocumentPageView
-              height={window.innerHeight - 100}
-              className='documentPDFView py-4'
+            <Page
+              height={window.innerHeight}
+              className='documentPDFView py-4 h-full w-full'
               renderMode='svg'
               pageNumber={pageNumber || 1}
+              renderInteractiveForms
+              renderAnnotationLayer
+              renderTextLayer
             >
               {pageNumber && numPages && (
                 <div className='document-controls'>
@@ -138,8 +147,8 @@ const PDFViewPresenter = (props: Props) => {
                   />
                 </div>
               )}
-            </DocumentPageView>
-          </DocumentPDFView>
+            </Page>
+          </Document>
         </Suspense>
       </div>
       {pdfInstance && pdfInstance.blob && pdfInstance.url && (
