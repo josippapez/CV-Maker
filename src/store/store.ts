@@ -1,4 +1,4 @@
-import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import {
   FLUSH,
@@ -9,7 +9,7 @@ import {
   REHYDRATE,
 } from 'redux-persist/es/constants';
 import storage from 'redux-persist/lib/storage';
-import { reducers, RootState } from './reducers/reducer';
+import { reducers } from './reducers/reducer';
 
 const persistConfig = {
   key: 'root',
@@ -35,9 +35,4 @@ export { store, persistor };
 
 export type AppDispatch = typeof store.dispatch;
 export type AppState = typeof store.getState;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+export type RootState = ReturnType<typeof store.getState>;
