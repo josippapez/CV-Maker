@@ -7,6 +7,8 @@ import {
   LanguageSkill,
   ProfessionalExperience,
 } from '../../PDFView/PDFViewContainer';
+import TextInput from '../Inputs/TextInput';
+import ToggleInput from '../Inputs/ToggleInput';
 import PDFTabNavigation from '../PDFTabNavigation/PDFTabNavigationContainer';
 import { Tab } from './PDFInputsContainer';
 import style from './PDFInputsPresenter.module.scss';
@@ -31,7 +33,7 @@ type Props = {
 const arrayOfGeneralInputs: Array<{
   inputName: string;
   inputValue: keyof Omit<GeneralInfo, 'profilePicture'>;
-  type: string;
+  type: 'text' | 'email' | 'tel' | 'number' | 'password';
 }> = [
   { inputName: 'First name', inputValue: 'firstName', type: 'text' },
   { inputName: 'Last name', inputValue: 'lastName', type: 'text' },
@@ -105,179 +107,171 @@ const PDFInputsPresenter = (props: Props) => {
   } = props;
 
   return (
-    <div className='flex-col h-full'>
+    <div className='flex flex-row h-full'>
       <PDFTabNavigation
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
-      <div
-        hidden={selectedTab !== Tab.generalInfo}
-        className={`p-4 ${style.tab}`}
-      >
-        <div className='flex justify-center items-center'>
-          {generalInfo.profilePicture ? (
-            <>
-              <img
-                className='w-32 h-32 rounded-full'
-                style={{ objectFit: 'cover' }}
-                src={
-                  generalInfo.profilePicture ? generalInfo.profilePicture : ''
-                }
-                alt='profile picture'
-              />
-              <button
-                className='p-2 ml-2 rounded-full bg-red-500 text-white'
-                onClick={() => {
-                  setGeneralInfo({
-                    ...generalInfo,
-                    profilePicture: null,
-                  });
-                }}
-              >
-                {t('Remove')}
-              </button>
-            </>
-          ) : (
-            <input
-              className='w-full p-2'
-              type='file'
-              accept='image/png, image/gif, image/jpeg'
-              onChange={e => {
-                if (e.target.files) {
-                  const file = e.target.files[0];
-                  if (file) {
-                    const reader = new FileReader();
-                    reader.onload = e => {
-                      const image = e.target?.result as string;
-                      if (image) {
-                        setGeneralInfo({
-                          ...generalInfo,
-                          profilePicture: image,
-                        });
-                      }
-                    };
-                    reader.readAsDataURL(file);
+      <div className='w-full px-4 py-8 bg-[#f7f7f7]'>
+        <div
+          className={`p-4 flex flex-col gap-6 ${style.tab} ${
+            selectedTab !== Tab.generalInfo ? style.hidden : style.selected
+          }`}
+        >
+          <div className='flex justify-center items-center'>
+            {generalInfo.profilePicture ? (
+              <>
+                <img
+                  className='w-32 h-32 rounded-full'
+                  style={{ objectFit: 'cover' }}
+                  src={
+                    generalInfo.profilePicture ? generalInfo.profilePicture : ''
                   }
-                }
-              }}
-            />
-          )}
-        </div>
-        {arrayOfGeneralInputs.map(input => (
-          <div key={input.inputValue} className='flex mt-2 first:mt-0'>
-            <label className='w-1/4 font-medium self-center'>
-              {t(`${input.inputValue}`)}
-            </label>
-            <input
-              className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  alt='profile picture'
+                />
+                <button
+                  className='p-2 ml-2 rounded-full bg-red-500 text-white'
+                  onClick={() => {
+                    setGeneralInfo({
+                      ...generalInfo,
+                      profilePicture: null,
+                    });
+                  }}
+                >
+                  {t('Remove')}
+                </button>
+              </>
+            ) : (
+              <input
+                className='w-full p-2'
+                type='file'
+                accept='image/png, image/gif, image/jpeg'
+                onChange={e => {
+                  if (e.target.files) {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onload = e => {
+                        const image = e.target?.result as string;
+                        if (image) {
+                          setGeneralInfo({
+                            ...generalInfo,
+                            profilePicture: image,
+                          });
+                        }
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }
+                }}
+              />
+            )}
+          </div>
+          {arrayOfGeneralInputs.map(input => (
+            <TextInput
+              key={input.inputValue}
+              label={t(`${input.inputValue}`)}
               type={input.type}
               value={generalInfo[input.inputValue]}
+              name={input.inputValue}
               onChange={e => {
                 setGeneralInfo({
                   ...generalInfo,
                   [input.inputValue]: e.target.value,
                 });
               }}
+              fullWidth
             />
-          </div>
-        ))}
-        {arrayOfGeneralTextAreas.map(input => (
-          <div key={input.inputValue} className='flex mt-2'>
-            <label className='w-1/4 font-medium self-center'>
-              {t(`${input.inputValue}`)}
-            </label>
-            <textarea
-              className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
+          ))}
+          {arrayOfGeneralTextAreas.map(input => (
+            <TextInput
+              key={input.inputValue}
+              label={t(`${input.inputValue}`)}
+              textarea
               value={generalInfo[input.inputValue]}
-              maxLength={490}
+              name={input.inputValue}
               onChange={e => {
                 setGeneralInfo({
                   ...generalInfo,
                   [input.inputValue]: e.target.value,
                 });
               }}
+              fullWidth
             />
-          </div>
-        ))}
-      </div>
-      <div
-        hidden={selectedTab !== Tab.professionalExperience}
-        className={style.tab}
-      >
-        {professionalExperience.map((experience, index) => (
-          <div
-            key={index}
-            className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
-          >
-            <button
-              className={style['delete-button']}
-              onClick={() => {
-                setProfessionalExperience(
-                  professionalExperience.filter(
-                    (experience, existingIndex) => existingIndex !== index
-                  )
-                );
-              }}
-            />
-            {arrayOfProfessionalExperienceInputs.map((input, currentIndex) => (
-              <div
-                className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
-                key={index + t(`${input.inputValue}`)}
-              >
-                <label className='w-1/4 font-medium self-center'>
-                  {t(`${input.inputValue}`)}
-                </label>
-                <input
-                  className={`border-2 rounded-md p-1 focus:border-slate-400 ${
-                    input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
-                  }`}
-                  type='text'
-                  value={experience[input.inputValue]}
-                  onChange={e => {
-                    setProfessionalExperience(
-                      professionalExperience.map((experience, i) => {
-                        if (i === index) {
-                          return {
-                            ...experience,
-                            [input.inputValue]: e.target.value,
-                          };
-                        }
-                        return experience;
-                      })
-                    );
-                  }}
-                />
-                {input.inputValue === 'endDate' && (
-                  <div className='flex items-center justify-center w-1/4'>
-                    <input
-                      type='checkbox'
-                      checked={experience.endDate === t('present')}
+          ))}
+        </div>
+        <div
+          hidden={selectedTab !== Tab.professionalExperience}
+          className={style.tab}
+        >
+          {professionalExperience.map((experience, index) => (
+            <div
+              key={index}
+              className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
+            >
+              <button
+                className={style['delete-button']}
+                onClick={() => {
+                  setProfessionalExperience(
+                    professionalExperience.filter(
+                      (experience, existingIndex) => existingIndex !== index
+                    )
+                  );
+                }}
+              />
+              {arrayOfProfessionalExperienceInputs.map(
+                (input, currentIndex) => (
+                  <>
+                    <TextInput
+                      key={index + '-' + t(`${input.inputValue}`)}
+                      label={t(`${input.inputValue}`)}
+                      value={experience[input.inputValue]}
+                      name={input.inputValue}
                       onChange={e => {
                         setProfessionalExperience(
                           professionalExperience.map((experience, i) => {
                             if (i === index) {
                               return {
                                 ...experience,
-                                endDate: e.target.checked ? t('present') : '',
+                                [input.inputValue]: e.target.value,
                               };
                             }
                             return experience;
                           })
                         );
                       }}
+                      fullWidth
                     />
-                    <label className='ml-2'>{t('present')}</label>
-                  </div>
-                )}
-              </div>
-            ))}
-            <div className='flex mt-2'>
-              <label className='w-1/4 font-medium self-center'>
-                {t('description')}
-              </label>
-              <textarea
-                className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
+                    {input.inputValue === 'endDate' && (
+                      <ToggleInput
+                        key={index + '-' + t(`${input.inputValue}`)}
+                        label={t('present')}
+                        name={input.inputValue}
+                        checked={experience.endDate === t('present')}
+                        onChange={e => {
+                          setProfessionalExperience(
+                            professionalExperience.map((experience, i) => {
+                              if (i === index) {
+                                return {
+                                  ...experience,
+                                  endDate: e.target.checked ? t('present') : '',
+                                };
+                              }
+                              return experience;
+                            })
+                          );
+                        }}
+                        fullWidth
+                      />
+                    )}
+                  </>
+                )
+              )}
+              <TextInput
+                key={index + '-' + t('description')}
+                label={t('description')}
                 value={experience.description}
+                name='description'
                 onChange={e => {
                   setProfessionalExperience(
                     professionalExperience.map((experience, existingIndex) => {
@@ -291,62 +285,86 @@ const PDFInputsPresenter = (props: Props) => {
                     })
                   );
                 }}
+                fullWidth
+                textarea
               />
             </div>
-          </div>
-        ))}
-        <button
-          className='w-full border-2 rounded-md p-1 focus:border-slate-400'
-          onClick={() => {
-            setProfessionalExperience([
-              ...professionalExperience,
-              {
-                company: '',
-                position: '',
-                startDate: '',
-                endDate: '',
-                description: '',
-                location: '',
-              },
-            ]);
-          }}
-        >
-          {t('addExperience')}
-        </button>
-      </div>
-      <div hidden={selectedTab !== Tab.certificates} className={style.tab}>
-        {certificates.map((certificate, index) => (
-          <div
-            key={index}
-            className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
+          ))}
+          <button
+            className='w-full border-2 rounded-md p-1 focus:border-slate-400'
+            onClick={() => {
+              setProfessionalExperience([
+                ...professionalExperience,
+                {
+                  company: '',
+                  position: '',
+                  startDate: '',
+                  endDate: '',
+                  description: '',
+                  location: '',
+                },
+              ]);
+            }}
           >
-            <button
-              className={style['delete-button']}
-              onClick={() => {
-                setCertificates(
-                  certificates.filter((certificate, i) => i !== index)
-                );
-              }}
-            />
-            {arrayOfCertificatesInputs.map((input, currentIndex) => (
-              <div
-                className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
-                key={index + t(`${input.inputValue}`)}
-              >
+            {t('addExperience')}
+          </button>
+        </div>
+        <div hidden={selectedTab !== Tab.certificates} className={style.tab}>
+          {certificates.map((certificate, index) => (
+            <div
+              key={index}
+              className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
+            >
+              <button
+                className={style['delete-button']}
+                onClick={() => {
+                  setCertificates(
+                    certificates.filter((certificate, i) => i !== index)
+                  );
+                }}
+              />
+              {arrayOfCertificatesInputs.map((input, currentIndex) => (
+                <div
+                  className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
+                  key={index + t(`${input.inputValue}`)}
+                >
+                  <label className='w-1/4 font-medium self-center'>
+                    {t(`${input.inputValue}`)}
+                  </label>
+                  <input
+                    className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                    type='text'
+                    value={certificate[input.inputValue]}
+                    onChange={e => {
+                      setCertificates(
+                        certificates.map((certificate, i) => {
+                          if (i === index) {
+                            return {
+                              ...certificate,
+                              [input.inputValue]: e.target.value,
+                            };
+                          }
+                          return certificate;
+                        })
+                      );
+                    }}
+                  />
+                </div>
+              ))}
+              <div className='flex mt-2'>
                 <label className='w-1/4 font-medium self-center'>
-                  {t(`${input.inputValue}`)}
+                  {t('description')}
                 </label>
-                <input
-                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
-                  type='text'
-                  value={certificate[input.inputValue]}
+                <textarea
+                  className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
+                  value={certificate.description}
                   onChange={e => {
                     setCertificates(
                       certificates.map((certificate, i) => {
                         if (i === index) {
                           return {
                             ...certificate,
-                            [input.inputValue]: e.target.value,
+                            description: e.target.value,
                           };
                         }
                         return certificate;
@@ -355,241 +373,219 @@ const PDFInputsPresenter = (props: Props) => {
                   }}
                 />
               </div>
-            ))}
-            <div className='flex mt-2'>
-              <label className='w-1/4 font-medium self-center'>
-                {t('description')}
-              </label>
-              <textarea
-                className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
-                value={certificate.description}
-                onChange={e => {
-                  setCertificates(
-                    certificates.map((certificate, i) => {
-                      if (i === index) {
-                        return {
-                          ...certificate,
-                          description: e.target.value,
-                        };
-                      }
-                      return certificate;
-                    })
+            </div>
+          ))}
+          <button
+            className='w-full border-2 rounded-md p-1 focus:border-slate-400'
+            onClick={() => {
+              setCertificates([
+                ...certificates,
+                {
+                  institution: '',
+                  name: '',
+                  description: '',
+                  date: '',
+                },
+              ]);
+            }}
+          >
+            {t('addCertification')}
+          </button>
+        </div>
+        <div hidden={selectedTab !== Tab.education} className={style.tab}>
+          {educations.map((education, index) => (
+            <div
+              key={index}
+              className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
+            >
+              <button
+                className={style['delete-button']}
+                onClick={() => {
+                  setEducation(
+                    educations.filter(
+                      (item, existingIndex) => existingIndex !== index
+                    )
                   );
                 }}
               />
-            </div>
-          </div>
-        ))}
-        <button
-          className='w-full border-2 rounded-md p-1 focus:border-slate-400'
-          onClick={() => {
-            setCertificates([
-              ...certificates,
-              {
-                institution: '',
-                name: '',
-                description: '',
-                date: '',
-              },
-            ]);
-          }}
-        >
-          {t('addCertification')}
-        </button>
-      </div>
-      <div hidden={selectedTab !== Tab.education} className={style.tab}>
-        {educations.map((education, index) => (
-          <div
-            key={index}
-            className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
-          >
-            <button
-              className={style['delete-button']}
-              onClick={() => {
-                setEducation(
-                  educations.filter(
-                    (item, existingIndex) => existingIndex !== index
-                  )
-                );
-              }}
-            />
-            {arrayOfEducationInputs.map((input, currentIndex) => (
-              <div
-                className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
-                key={index + t(`${input.inputValue}`)}
-              >
+              {arrayOfEducationInputs.map((input, currentIndex) => (
+                <div
+                  className={`flex ${currentIndex === 0 ? 'mt-0' : 'mt-2'}`}
+                  key={index + t(`${input.inputValue}`)}
+                >
+                  <label className='w-1/4 font-medium self-center'>
+                    {t(`${input.inputValue}`)}
+                  </label>
+                  <input
+                    className={`border-2 rounded-md p-1 focus:border-slate-400 ${
+                      input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
+                    }`}
+                    type='text'
+                    value={education[input.inputValue]}
+                    onChange={e => {
+                      setEducation(
+                        educations.map((education, i) => {
+                          if (i === index) {
+                            return {
+                              ...education,
+                              [input.inputValue]: e.target.value,
+                            };
+                          }
+                          return education;
+                        })
+                      );
+                    }}
+                  />
+                  {input.inputValue === 'endDate' && (
+                    <div className='flex items-center justify-center w-1/4'>
+                      <input
+                        type='checkbox'
+                        checked={education.endDate === 'Present'}
+                        onChange={e => {
+                          setEducation(
+                            educations.map((education, i) => {
+                              if (i === index) {
+                                return {
+                                  ...education,
+                                  endDate: e.target.checked ? 'Present' : '',
+                                };
+                              }
+                              return education;
+                            })
+                          );
+                        }}
+                      />
+                      <label className='ml-2'>{t('present')}</label>
+                    </div>
+                  )}
+                </div>
+              ))}
+              <div className='flex mt-2'>
                 <label className='w-1/4 font-medium self-center'>
-                  {t(`${input.inputValue}`)}
+                  {t('description')}
                 </label>
-                <input
-                  className={`border-2 rounded-md p-1 focus:border-slate-400 ${
-                    input.inputValue === 'endDate' ? 'w-2/4' : 'w-3/4'
-                  }`}
-                  type='text'
-                  value={education[input.inputValue]}
+                <textarea
+                  className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
+                  value={education.description}
                   onChange={e => {
                     setEducation(
-                      educations.map((education, i) => {
+                      educations.map((item, i) => {
                         if (i === index) {
-                          return {
-                            ...education,
-                            [input.inputValue]: e.target.value,
-                          };
+                          return { ...item, description: e.target.value };
                         }
-                        return education;
+                        return item;
                       })
                     );
                   }}
                 />
-                {input.inputValue === 'endDate' && (
-                  <div className='flex items-center justify-center w-1/4'>
-                    <input
-                      type='checkbox'
-                      checked={education.endDate === 'Present'}
-                      onChange={e => {
-                        setEducation(
-                          educations.map((education, i) => {
-                            if (i === index) {
-                              return {
-                                ...education,
-                                endDate: e.target.checked ? 'Present' : '',
-                              };
-                            }
-                            return education;
-                          })
-                        );
-                      }}
-                    />
-                    <label className='ml-2'>{t('present')}</label>
-                  </div>
-                )}
               </div>
-            ))}
-            <div className='flex mt-2'>
-              <label className='w-1/4 font-medium self-center'>
-                {t('description')}
-              </label>
-              <textarea
-                className='w-3/4 border-2 rounded-md p-1 max-h-64 min-h-[8rem] focus:border-slate-400'
-                value={education.description}
-                onChange={e => {
-                  setEducation(
-                    educations.map((item, i) => {
-                      if (i === index) {
-                        return { ...item, description: e.target.value };
-                      }
-                      return item;
-                    })
-                  );
-                }}
-              />
             </div>
-          </div>
-        ))}
-        <button
-          className='w-full border-2 rounded-md p-1 focus:border-slate-400'
-          onClick={() => {
-            setEducation([
-              ...educations,
-              {
-                location: '',
-                school: '',
-                degree: '',
-                fieldOfStudy: '',
-                startDate: '',
-                endDate: '',
-                description: '',
-              },
-            ]);
-          }}
-        >
-          {t('addEducation')}
-        </button>
-      </div>
-      <div hidden={selectedTab !== Tab.languages} className={style.tab}>
-        {languages.map((language, index) => (
-          <div
-            key={index}
-            className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
+          ))}
+          <button
+            className='w-full border-2 rounded-md p-1 focus:border-slate-400'
+            onClick={() => {
+              setEducation([
+                ...educations,
+                {
+                  location: '',
+                  school: '',
+                  degree: '',
+                  fieldOfStudy: '',
+                  startDate: '',
+                  endDate: '',
+                  description: '',
+                },
+              ]);
+            }}
           >
-            <button
-              className={style['delete-button']}
-              onClick={() => {
-                setLanguages(languages.filter((language, i) => i !== index));
-              }}
-            />
-            <div className='flex'>
-              <label className='w-1/4 font-medium self-center'>
-                {t('language')}
-              </label>
-              <input
-                className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
-                type='text'
-                value={language.name}
-                onChange={e => {
-                  setLanguages(
-                    languages.map((language, i) => {
-                      if (i === index) {
-                        return {
-                          ...language,
-                          name: e.target.value,
-                        };
-                      }
-                      return language;
-                    })
-                  );
+            {t('addEducation')}
+          </button>
+        </div>
+        <div hidden={selectedTab !== Tab.languages} className={style.tab}>
+          {languages.map((language, index) => (
+            <div
+              key={index}
+              className='mt-2 p-4 only:first:mt-0 relative focus-within:bg-slate-200 rounded-md'
+            >
+              <button
+                className={style['delete-button']}
+                onClick={() => {
+                  setLanguages(languages.filter((language, i) => i !== index));
                 }}
               />
+              <div className='flex'>
+                <label className='w-1/4 font-medium self-center'>
+                  {t('language')}
+                </label>
+                <input
+                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  type='text'
+                  value={language.name}
+                  onChange={e => {
+                    setLanguages(
+                      languages.map((language, i) => {
+                        if (i === index) {
+                          return {
+                            ...language,
+                            name: e.target.value,
+                          };
+                        }
+                        return language;
+                      })
+                    );
+                  }}
+                />
+              </div>
+              <div className='flex mt-2'>
+                <label className='w-1/4 font-medium self-center'>
+                  {t('level')}
+                </label>
+                <select
+                  className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+                  value={language.proficiency}
+                  onChange={e => {
+                    setLanguages(
+                      languages.map((language, i) => {
+                        if (i === index) {
+                          return {
+                            name: language.name,
+                            proficiency: e.target
+                              .value as LanguageProficiencyLevel,
+                          };
+                        }
+                        return language;
+                      })
+                    );
+                  }}
+                >
+                  <option value={LanguageProficiencyLevel.BEGINNER}>
+                    {t(LanguageProficiencyLevel.BEGINNER)}
+                  </option>
+                  <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
+                    {t(LanguageProficiencyLevel.CONVERSATIONAL)}
+                  </option>
+                  <option value={LanguageProficiencyLevel.FLUENT}>
+                    {t(LanguageProficiencyLevel.FLUENT)}
+                  </option>
+                  <option value={LanguageProficiencyLevel.NATIVE}>
+                    {t(LanguageProficiencyLevel.NATIVE)}
+                  </option>
+                </select>
+              </div>
             </div>
-            <div className='flex mt-2'>
-              <label className='w-1/4 font-medium self-center'>
-                {t('level')}
-              </label>
-              <select
-                className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
-                value={language.proficiency}
-                onChange={e => {
-                  setLanguages(
-                    languages.map((language, i) => {
-                      if (i === index) {
-                        return {
-                          name: language.name,
-                          proficiency: e.target
-                            .value as LanguageProficiencyLevel,
-                        };
-                      }
-                      return language;
-                    })
-                  );
-                }}
-              >
-                <option value={LanguageProficiencyLevel.BEGINNER}>
-                  {t(LanguageProficiencyLevel.BEGINNER)}
-                </option>
-                <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
-                  {t(LanguageProficiencyLevel.CONVERSATIONAL)}
-                </option>
-                <option value={LanguageProficiencyLevel.FLUENT}>
-                  {t(LanguageProficiencyLevel.FLUENT)}
-                </option>
-                <option value={LanguageProficiencyLevel.NATIVE}>
-                  {t(LanguageProficiencyLevel.NATIVE)}
-                </option>
-              </select>
-            </div>
-          </div>
-        ))}
-        <button
-          className='w-full border-2 rounded-md p-1 focus:border-slate-400'
-          onClick={() => {
-            setLanguages([
-              ...languages,
-              { name: '', proficiency: LanguageProficiencyLevel.BEGINNER },
-            ]);
-          }}
-        >
-          {t('addLanguage')}
-        </button>
+          ))}
+          <button
+            className='w-full border-2 rounded-md p-1 focus:border-slate-400'
+            onClick={() => {
+              setLanguages([
+                ...languages,
+                { name: '', proficiency: LanguageProficiencyLevel.BEGINNER },
+              ]);
+            }}
+          >
+            {t('addLanguage')}
+          </button>
+        </div>
       </div>
     </div>
   );

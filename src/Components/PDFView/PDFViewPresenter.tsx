@@ -79,10 +79,10 @@ const PDFViewPresenter = (props: Props) => {
   return (
     <div
       className={`flex w-full min-h-full ${
-        isMobileView ? 'flex-col' : 'flex-row justify-around'
+        isMobileView ? 'flex-col' : 'flex-row'
       }`}
     >
-      <div className=''>
+      <div className={`${isMobileView ? 'w-full' : 'w-5/12'}`}>
         <Suspense fallback={<PageLoader />}>
           <PDFInputsContainer
             setGeneralInfo={setGeneralInfo}
@@ -98,7 +98,11 @@ const PDFViewPresenter = (props: Props) => {
           />
         </Suspense>
       </div>
-      <div className='transition-colors dark:bg-neutral-700'>
+      <div
+        className={`transition-colors dark:bg-neutral-700 ${
+          isMobileView ? 'w-full' : 'w-7/12'
+        }`}
+      >
         <Suspense fallback={<PageLoader />}>
           <Document
             {...options}

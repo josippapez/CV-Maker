@@ -2,7 +2,7 @@ import { RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { scrollPosition } from '../../../Hooks/usePreventBodyScroll';
 import { Tab } from '../PDFInputs/PDFInputsContainer';
-import './PDFTabNavigationPresenter.css';
+import style from './PDFTabNavigationPresenter.module.scss';
 
 type Props = {
   position: scrollPosition | null;
@@ -48,8 +48,8 @@ const PDFTabNavigationPresenter = (props: Props) => {
   ];
 
   return (
-    <div className='w-full relative navigation mb-2'>
-      <div className='navigation-hint'>
+    <div className='p-4 w-52 relative shadow-sm'>
+      {/* <div className='navigation-hint'>
         {(position === scrollPosition.left ||
           position === scrollPosition.inbetween) && (
           <div className='left-arrow' />
@@ -58,25 +58,27 @@ const PDFTabNavigationPresenter = (props: Props) => {
           position === scrollPosition.inbetween) && (
           <div className='right-arrow' />
         )}
-      </div>
+      </div> */}
       <div
-        ref={horizontalScroll}
-        className='overflow-auto scroll w-full min-w-full flex justify-evenly'
-        onMouseEnter={() => {
-          disableScroll();
-        }}
-        onMouseLeave={() => {
-          enableScroll();
-        }}
+        // ref={horizontalScroll}
+        className='overflow-auto scroll w-full min-w-full flex flex-col justify-evenly items-center gap-6'
+        // onMouseEnter={() => {
+        //   disableScroll();
+        // }}
+        // onMouseLeave={() => {
+        //   enableScroll();
+        // }}
       >
         {arrayOfTabs.map(tab => (
           <div
             key={tab.tab}
             id={tab.tab}
-            className={`tab-button px-4 py-2
-              ${
-                selectedTab === tab.tab ? 'border-blue-500' : 'border-gray-200'
-              }`}
+            className={`${
+              selectedTab === tab.tab
+                ? style.selected + ' ' + style['tab-button']
+                : style['tab-button']
+            } px-2 py-2
+        `}
             onClick={() => {
               setSelectedTab(tab.tab);
             }}

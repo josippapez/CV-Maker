@@ -1,5 +1,10 @@
 .tab {
-  animation: 0.5s cubic-bezier(0.25, 1, 0.3, 1) wipe-in-down both;
+  &.selected {
+  }
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .delete-button {
