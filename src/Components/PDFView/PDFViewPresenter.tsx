@@ -9,8 +9,8 @@ import {
   Education,
   GeneralInfo,
   LanguageSkill,
-  ProfessionalExperience,
-} from './PDFViewContainer';
+  ProfessionalExperience
+} from './models';
 import './PDFViewPresenter.css';
 
 type Props = {

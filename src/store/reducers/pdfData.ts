@@ -5,7 +5,7 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
-} from '../../Components/PDFView/PDFViewContainer';
+} from '../../Components/PDFView/models';
 
 export interface PDFData {
   generalInfo: GeneralInfo;

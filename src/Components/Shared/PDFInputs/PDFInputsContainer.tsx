@@ -5,7 +5,7 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
-} from '../../PDFView/PDFViewContainer';
+} from '../../PDFView/models';
 import PDFInputsPresenter from './PDFInputsPresenter';
 
 type Props = {

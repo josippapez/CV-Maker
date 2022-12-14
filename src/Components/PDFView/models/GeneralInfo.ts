@@ -1,0 +1,19 @@
+export interface GeneralInfo {
+  profilePicture: string | null;
+  firstName: string;
+  lastName: string;
+  aboutMe: string;
+  position: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  zip: string;
+  country: string;
+  website: string;
+  LinkedIn: string;
+  GitHub: string;
+  Facebook: string;
+  Instagram: string;
+  Twitter: string;
+}

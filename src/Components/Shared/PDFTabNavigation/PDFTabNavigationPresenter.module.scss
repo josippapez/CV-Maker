@@ -12,58 +12,13 @@
   min-height: 80px;
   min-width: 100%;
   width: 100%;
-  &.selected {
-    background-color: #f7f7f7;
+  transition: all 0.2s ease-in-out;
+  &:hover{
+    background-color: #f6f6f6;
     border-radius: 6px;
   }
-}
-
-.scroll {
-  position: relative;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-.scroll::-webkit-scrollbar {
-  display: none;
-}
-.scroll:hover {
-}
-
-.navigation:hover .navigation-hint {
-  display: block;
-}
-
-.scroll-x {
-}
-.scroll-x-left {
-}
-.scroll-x-right {
-}
-
-.navigation-hint {
-  display: none;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-}
-.left-arrow,
-.right-arrow {
-  height: 100%;
-  width: 28px;
-  position: relative;
-  background-repeat: no-repeat;
-  z-index: 1;
-  background-color: #ffffff67;
-}
-.left-arrow {
-  backdrop-filter: blur(1px);
-  background-image: url('../../../Styles/Assets/Images/left-arrow.svg');
-  background-position: center;
-  float: left;
-}
-.right-arrow {
-  backdrop-filter: blur(1px);
-  background-image: url('../../../Styles/Assets/Images/right-arrow.svg');
-  background-position: center;
-  float: right;
+  &.selected {
+    background-color: #e9e9e9;
+    border-radius: 6px;
+  }
 }

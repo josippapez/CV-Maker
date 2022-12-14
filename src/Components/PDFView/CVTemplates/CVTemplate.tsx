@@ -8,7 +8,7 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
-} from '../PDFViewContainer';
+} from '../models';
 import CVTemplate1 from './Templates/CVTemplate1';
 import CVTemplate2 from './Templates/CVTemplate2';
 

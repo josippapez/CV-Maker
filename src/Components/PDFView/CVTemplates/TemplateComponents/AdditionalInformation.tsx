@@ -1,6 +1,6 @@
-import { Link, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
-import { GeneralInfo } from '../../PDFViewContainer';
+import { GeneralInfo } from '../../models';
 import Earth from '../Images/Earth';
 import Email from '../Images/Email';
 import Facebook from '../Images/Facebook';

@@ -5,23 +5,12 @@ import { Tab } from '../PDFInputs/PDFInputsContainer';
 import style from './PDFTabNavigationPresenter.module.scss';
 
 type Props = {
-  position: scrollPosition | null;
-  disableScroll: () => void;
-  enableScroll: () => void;
   setSelectedTab: (tab: Tab) => void;
   selectedTab: Tab;
-  horizontalScroll: RefObject<HTMLDivElement>;
 };
 
 const PDFTabNavigationPresenter = (props: Props) => {
-  const {
-    position,
-    disableScroll,
-    enableScroll,
-    horizontalScroll,
-    setSelectedTab,
-    selectedTab,
-  } = props;
+  const { setSelectedTab, selectedTab } = props;
   const { t } = useTranslation();
 
   const arrayOfTabs: Array<{ tab: Tab; label: string }> = [
@@ -49,26 +38,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
 
   return (
     <div className='p-4 w-52 relative shadow-sm'>
-      {/* <div className='navigation-hint'>
-        {(position === scrollPosition.left ||
-          position === scrollPosition.inbetween) && (
-          <div className='left-arrow' />
-        )}
-        {(position === scrollPosition.right ||
-          position === scrollPosition.inbetween) && (
-          <div className='right-arrow' />
-        )}
-      </div> */}
-      <div
-        // ref={horizontalScroll}
-        className='overflow-auto scroll w-full min-w-full flex flex-col justify-evenly items-center gap-6'
-        // onMouseEnter={() => {
-        //   disableScroll();
-        // }}
-        // onMouseLeave={() => {
-        //   enableScroll();
-        // }}
-      >
+      <div className='overflow-auto scroll w-full min-w-full flex flex-col justify-evenly items-center gap-6'>
         {arrayOfTabs.map(tab => (
           <div
             key={tab.tab}

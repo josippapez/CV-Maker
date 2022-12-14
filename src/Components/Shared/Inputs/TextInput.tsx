@@ -17,6 +17,7 @@ type Props = {
   className?: string;
   fullWidth?: boolean;
   textarea?: boolean;
+  inline?: boolean;
 };
 
 const TextInput = (props: Props) => {
@@ -35,10 +36,13 @@ const TextInput = (props: Props) => {
     className,
     fullWidth,
     textarea,
+    inline,
   } = props;
   return (
     <div
-      className={`flex flex-col ${fullWidth ? 'w-full' : ''} drop-shadow-sm`}
+      className={`flex ${inline ? 'flex-row items-center gap-4' : 'flex-col'} ${
+        fullWidth ? 'w-full' : ''
+      } drop-shadow-sm`}
     >
       {label && <label className='font-medium text-gray-700'>{label}</label>}
       {textarea && (

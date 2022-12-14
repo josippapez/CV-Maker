@@ -21,7 +21,7 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
-} from '../../PDFViewContainer';
+} from '../../models';
 import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
 
 type Props = {

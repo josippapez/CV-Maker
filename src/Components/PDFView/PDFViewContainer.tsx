@@ -12,63 +12,14 @@ import {
 } from '../../store/reducers/pdfData';
 import { Template } from '../../store/reducers/template';
 import CVTemplate from './CVTemplates/CVTemplate';
+import {
+  Certificate,
+  Education,
+  GeneralInfo,
+  LanguageSkill,
+  ProfessionalExperience,
+} from './models';
 import PDFViewPresenter from './PDFViewPresenter';
-export interface ProfessionalExperience {
-  company: string;
-  location: string;
-  position: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-}
-export interface GeneralInfo {
-  profilePicture: string | null;
-  firstName: string;
-  lastName: string;
-  aboutMe: string;
-  position: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  zip: string;
-  country: string;
-  website: string;
-  LinkedIn: string;
-  GitHub: string;
-  Facebook: string;
-  Instagram: string;
-  Twitter: string;
-}
-
-export interface Certificate {
-  name: string;
-  date: string;
-  institution: string;
-  description: string;
-}
-
-export interface Education {
-  school: string;
-  location: string;
-  degree: string;
-  fieldOfStudy: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-}
-
-export enum LanguageProficiencyLevel {
-  BEGINNER = 'BEGINNER',
-  CONVERSATIONAL = 'CONVERSATIONAL',
-  FLUENT = 'FLUENT',
-  NATIVE = 'NATIVE',
-}
-
-export interface LanguageSkill {
-  name: string;
-  proficiency: LanguageProficiencyLevel;
-}
 
 const PDFView = () => {
   const { t, i18n } = useTranslation();
