@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text, View, Link } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
 import { GeneralInfo } from '../../models';
 import Earth from '../Images/Earth';
@@ -71,9 +71,16 @@ const AdditionalInformation = (props: Props) => {
           {icon({ width: 14 })}
           {text && <Text style={styles.additionalInfoBarText}>{text}</Text>}
           {link && (
-            <Text style={styles.additionalInfoBarText} src={link}>
-              {link.replace(/(^\w+:|^)\/\//, '').replace(/(^www\.)/, '')}
-            </Text>
+            <Link
+              src={link}
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              <Text style={styles.additionalInfoBarText}>
+                {link.replace(/(^\w+:|^)\/\//, '').replace(/(^www\.)/, '')}
+              </Text>
+            </Link>
           )}
         </View>
       );

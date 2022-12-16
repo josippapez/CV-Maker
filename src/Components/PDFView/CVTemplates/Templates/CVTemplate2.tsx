@@ -216,6 +216,17 @@ const CVTemplate2 = (props: Props): JSX.Element => {
             <Text style={styles.topBarName}>
               {generalInfo?.firstName} {generalInfo?.lastName}
             </Text>
+            <Text
+              style={[
+                {
+                  fontWeight: 'light',
+                  fontSize: 11,
+                  paddingTop: 5,
+                },
+              ]}
+            >
+              {generalInfo?.dob}
+            </Text>
             <Text style={[styles.topBarPosition]}>{generalInfo?.position}</Text>
             <Text style={[styles.topBarText]}>{generalInfo?.aboutMe}</Text>
           </View>

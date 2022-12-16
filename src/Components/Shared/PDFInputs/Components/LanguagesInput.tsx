@@ -24,7 +24,7 @@ export const LanguagesInput = (props: Props) => {
     <div hidden={!selectedTab}>
       {languages.map((language, index) => (
         <motion.div
-          key={index}
+          key={index + '-' + 'LanguagesInput'}
           initial={combinedStyleInitial}
           animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
           transition={{ duration: 0.2 }}
@@ -38,7 +38,7 @@ export const LanguagesInput = (props: Props) => {
           />
           <div className='flex'>
             <TextInput
-              key={index + '-' + t('language')}
+              key={index + '-' + 'LanguagesInput' + '-' + t('language')}
               label={t('language')}
               value={language.name}
               name='language'

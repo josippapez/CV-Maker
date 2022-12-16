@@ -32,19 +32,6 @@
   border-radius: 4px;
 }
 
-.documentPDFView {
-  text-align: -webkit-center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* .react-pdf__Page__canvas {
-  width: 100% !important;
-  height: 100% !important;
-} */
-
 .pdf-download {
   background: url('../../Styles/Assets/Images/downloadDocument.svg');
   background-repeat: no-repeat;

@@ -35,7 +35,6 @@ type Props = {
 };
 
 const PDFInputsPresenter = (props: Props) => {
-  const { t } = useTranslation();
   const {
     generalInfo,
     setGeneralInfo,

@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
 import { GeneralInfo } from '../../../PDFView/models';
 import TextInput from '../../Inputs/TextInput';
-import style from '../PDFInputsPresenter.module.scss';
 
 interface Props {
   selectedTab: boolean;
@@ -18,6 +17,7 @@ const arrayOfGeneralInputs: Array<{
 }> = [
   { inputName: 'First name', inputValue: 'firstName', type: 'text' },
   { inputName: 'Last name', inputValue: 'lastName', type: 'text' },
+  { inputName: 'Date of birth', inputValue: 'dob', type: 'text' },
   { inputName: 'Position', inputValue: 'position', type: 'text' },
   { inputName: 'Email', inputValue: 'email', type: 'email' },
   { inputName: 'Phone', inputValue: 'phone', type: 'text' },
@@ -46,6 +46,7 @@ export const GeneralInput = (props: Props) => {
     <div hidden={!selectedTab}>
       <div className='flex flex-col gap-6'>
         <motion.div
+          key={'GeneralInput'}
           initial={combinedStyleInitial}
           animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
           transition={{ duration: 0.2 }}
@@ -101,7 +102,7 @@ export const GeneralInput = (props: Props) => {
         </motion.div>
         {arrayOfGeneralInputs.map((input, index) => (
           <motion.div
-            key={input.inputValue}
+            key={index + '-' + 'GeneralInput' + '-' + t(`${input.inputValue}`)}
             animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
             initial={combinedStyleInitial}
             transition={{
@@ -124,9 +125,9 @@ export const GeneralInput = (props: Props) => {
             />
           </motion.div>
         ))}
-        {arrayOfGeneralTextAreas.map(input => (
+        {arrayOfGeneralTextAreas.map((input, index) => (
           <motion.div
-            key={input.inputValue}
+            key={index + '-' + 'GeneralInput' + '-' + t(`${input.inputValue}`)}
             animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
             initial={combinedStyleInitial}
             transition={{
@@ -135,7 +136,6 @@ export const GeneralInput = (props: Props) => {
             }}
           >
             <TextInput
-              key={input.inputValue}
               label={t(`${input.inputValue}`)}
               textarea
               value={generalInfo[input.inputValue]}

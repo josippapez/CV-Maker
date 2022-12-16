@@ -36,6 +36,7 @@ const PDFView = () => {
           profilePicture: null,
           firstName: '',
           lastName: '',
+          dob: '',
           aboutMe: '',
           position: '',
           email: '',

@@ -2,6 +2,7 @@ export interface GeneralInfo {
   profilePicture: string | null;
   firstName: string;
   lastName: string;
+  dob: string;
   aboutMe: string;
   position: string;
   email: string;

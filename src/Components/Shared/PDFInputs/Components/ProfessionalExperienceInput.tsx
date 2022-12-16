@@ -38,7 +38,7 @@ export const ProfessionalExperienceInput = (props: Props) => {
     <div hidden={!selectedTab}>
       {professionalExperience.map((experience, index) => (
         <motion.div
-          key={index}
+          key={index + '-' + 'professionalExperience'}
           initial={combinedStyleInitial}
           animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
           transition={{ duration: 0.2 }}
@@ -57,7 +57,9 @@ export const ProfessionalExperienceInput = (props: Props) => {
           {arrayOfProfessionalExperienceInputs.map((input, currentIndex) => (
             <>
               <TextInput
-                key={index + '-' + t(`${input.inputValue}`)}
+                key={
+                  index + '-' + 'professionalExperience' + '-' + currentIndex
+                }
                 label={t(`${input.inputValue}`)}
                 value={experience[input.inputValue]}
                 name={input.inputValue}
@@ -78,7 +80,9 @@ export const ProfessionalExperienceInput = (props: Props) => {
               />
               {input.inputValue === 'endDate' && (
                 <ToggleInput
-                  key={index + '-' + t(`${input.inputValue}`)}
+                  key={
+                    index + '-' + 'professionalExperience' + '-' + currentIndex
+                  }
                   label={t('present')}
                   name={input.inputValue}
                   checked={experience.endDate === t('present')}
@@ -101,7 +105,13 @@ export const ProfessionalExperienceInput = (props: Props) => {
             </>
           ))}
           <TextInput
-            key={index + '-' + t('description')}
+            key={
+              index +
+              '-' +
+              'professionalExperience' +
+              '-' +
+              (arrayOfProfessionalExperienceInputs.length - 1)
+            }
             label={t('description')}
             value={experience.description}
             name='description'

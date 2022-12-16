@@ -1,6 +1,7 @@
 {
   "firstName": "Ime",
   "lastName": "Prezime",
+  "dob": "Datum rođenja",
   "email": "E-mail",
   "phone": "Telefon",
   "address": "Adresa",

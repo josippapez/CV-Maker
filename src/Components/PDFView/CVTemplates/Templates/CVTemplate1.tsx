@@ -209,9 +209,28 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                 flex: 1,
               }}
             >
-              <Text style={styles.topBarName}>
-                {generalInfo?.firstName} {generalInfo?.lastName}
-              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}
+              >
+                <Text style={styles.topBarName}>
+                  {generalInfo?.firstName} {generalInfo?.lastName}
+                </Text>
+                <Text
+                  style={[
+                    {
+                      fontWeight: 'light',
+                      fontSize: 11,
+                      paddingLeft: 20,
+                      paddingBottom: 3,
+                      alignSelf: 'flex-end',
+                    },
+                  ]}
+                >
+                  {generalInfo?.dob}
+                </Text>
+              </View>
               <Text style={styles.topBarPosition}>{generalInfo?.position}</Text>
               <Text style={styles.topBarText}>{generalInfo?.aboutMe}</Text>
             </View>

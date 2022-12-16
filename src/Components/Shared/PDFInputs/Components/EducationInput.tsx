@@ -31,11 +31,12 @@ export const EducationInput = (props: Props) => {
     amountY: 10,
   });
   const { selectedTab, setEducation, educations } = props;
+
   return (
     <div hidden={!selectedTab}>
       {educations.map((education, index) => (
         <motion.div
-          key={index}
+          key={index + '-' + 'EducationInput'}
           initial={combinedStyleInitial}
           animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
           transition={{ duration: 0.2 }}
@@ -54,7 +55,7 @@ export const EducationInput = (props: Props) => {
           {arrayOfEducationInputs.map((input, currentIndex) => (
             <>
               <TextInput
-                key={index + t(`${input.inputValue}`)}
+                key={index + '-' + 'EducationInput' + '-' + currentIndex}
                 label={t(`${input.inputValue}`)}
                 value={education[input.inputValue]}
                 name={input.inputValue}
@@ -75,7 +76,7 @@ export const EducationInput = (props: Props) => {
               />
               {input.inputValue === 'endDate' && (
                 <ToggleInput
-                  key={index + '-' + t(`${input.inputValue}`)}
+                  key={index + '-' + 'EducationInput' + '-' + currentIndex}
                   label={t('present')}
                   name={input.inputValue}
                   checked={education.endDate === t('present')}
@@ -98,6 +99,13 @@ export const EducationInput = (props: Props) => {
             </>
           ))}
           <TextInput
+            key={
+              index +
+              '-' +
+              'EducationInput' +
+              '-' +
+              (arrayOfEducationInputs.length - 1)
+            }
             label={t('description')}
             value={education.description}
             name='education-description'

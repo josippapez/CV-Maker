@@ -31,10 +31,10 @@ export const CertificatesInput = (props: Props) => {
     <div hidden={!selectedTab}>
       {certificates.map((certificate, index) => (
         <motion.div
+          key={index + '-' + 'CertificatesInput'}
           initial={combinedStyleInitial}
           animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
           transition={{ duration: 0.2 }}
-          key={index}
           className='flex flex-col gap-4 p-4 relative focus-within:bg-slate-200 rounded-md'
         >
           <button
@@ -47,7 +47,7 @@ export const CertificatesInput = (props: Props) => {
           />
           {arrayOfCertificatesInputs.map((input, currentIndex) => (
             <TextInput
-              key={index + t(`${input.inputValue}`)}
+              key={index + '-' + 'CertificatesInput' + '-' + currentIndex}
               label={t(`${input.inputValue}`)}
               value={certificate[input.inputValue]}
               name={input.inputValue}
@@ -68,6 +68,13 @@ export const CertificatesInput = (props: Props) => {
             />
           ))}
           <TextInput
+            key={
+              index +
+              '-' +
+              'CertificatesInput' +
+              '-' +
+              (arrayOfCertificatesInputs.length - 1)
+            }
             label={t('description')}
             value={certificate.description}
             name='certificate-description'

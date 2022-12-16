@@ -2,6 +2,7 @@
   "firstName": "First name",
   "lastName": "Last name",
   "email": "Email",
+  "dob": "Date of birth",
   "phone": "Phone",
   "address": "Address",
   "address1": "Address 1",

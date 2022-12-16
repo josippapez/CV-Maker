@@ -20,6 +20,7 @@ const initialState: Partial<PDFData> = {
     profilePicture: null,
     firstName: '',
     lastName: '',
+    dob: '',
     aboutMe: '',
     position: '',
     email: '',

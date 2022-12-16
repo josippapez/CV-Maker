@@ -1,5 +1,5 @@
 import { Suspense, useCallback, useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack5';
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';
 import useMobileView from '../../Hooks/useMobileView';
 import PDFDownload from '../PDFDownload/PDFDownload';
 import PageLoader from '../Shared/Loader/PageLoader';
@@ -9,9 +9,11 @@ import {
   Education,
   GeneralInfo,
   LanguageSkill,
-  ProfessionalExperience
+  ProfessionalExperience,
 } from './models';
 import './PDFViewPresenter.css';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 type Props = {
   pdfInstance: {
@@ -33,8 +35,6 @@ type Props = {
   languages: LanguageSkill[];
   setLanguages(languages: LanguageSkill[]): void;
 };
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 const options = {
   cMapUrl: 'cmaps/',
@@ -107,20 +107,22 @@ const PDFViewPresenter = (props: Props) => {
           <Document
             {...options}
             file={pdfInstance.url}
-            renderMode='svg'
-            className='drop-shadow-2xl flex h-screen justify-center items-center sticky top-0'
+            renderMode='canvas'
+            className='drop-shadow-2xl flex h-screen justify-center items-center'
             onItemClick={onItemClick}
             onLoadSuccess={onDocumentLoadSuccess}
             loading={<PageLoader />}
           >
+            {/* //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore */}
             <Page
-              height={window.innerHeight}
-              className='documentPDFView py-4 h-full w-full'
-              renderMode='svg'
+              height={window.innerHeight - 40}
+              className='documentPDFView'
+              renderMode='canvas'
               pageNumber={pageNumber || 1}
+              renderTextLayer
               renderInteractiveForms
               renderAnnotationLayer
-              renderTextLayer
             >
               {pageNumber && numPages && (
                 <div className='document-controls'>
