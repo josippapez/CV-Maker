@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   companyName: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
   },
   companyPosition: {},
@@ -418,6 +418,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
               {
                 backgroundColor: '#13171a',
                 overflow: 'hidden',
+                flexGrow: 1,
               },
             ]}
           >
@@ -485,23 +486,16 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                       {translate('education')}
                     </Text>
                   )}
-                  <View style={[styles.column, { width: '100%' }]}>
+                  <View style={[styles.column]}>
                     <Text style={[styles.educationSchool]}>{edu.school}</Text>
+                    <Text style={[styles.educationDuration]}>
+                      {edu.startDate} - {edu.endDate}
+                    </Text>
                     <Text style={[styles.educationDegree]}>
                       {edu.degree}, {edu.fieldOfStudy}
                     </Text>
                     <Text style={[styles.educationLocation]}>
                       {edu.location}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.educationDuration,
-                        {
-                          marginTop: 10,
-                        },
-                      ]}
-                    >
-                      {edu.startDate} - {edu.endDate}
                     </Text>
                     <Text style={[styles.educationDescription]}>
                       {edu.description}
@@ -577,7 +571,9 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                         },
                       ]}
                     >
-                      <Text style={[styles.certificateDuration]}>{cert.date}</Text>
+                      <Text style={[styles.certificateDuration]}>
+                        {cert.date}
+                      </Text>
                     </View>
                     <Text style={[styles.certificateDescription]}>
                       {cert.description}
