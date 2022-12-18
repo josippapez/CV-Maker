@@ -38,6 +38,13 @@
       428
     );
   }
+  &.CVTemplate3 {
+    @include div-same-size-as-background-img(
+      '../../../Styles/Assets/Images/Template3.png',
+      336,
+      428
+    );
+  }
 }
 
 .templateName {

@@ -1,11 +1,10 @@
 import Scrollbars from 'react-custom-scrollbars';
-import { useTranslation } from 'react-i18next';
 import {
   Certificate,
   Education,
   GeneralInfo,
   LanguageSkill,
-  ProfessionalExperience,
+  ProfessionalExperience
 } from '../../PDFView/models';
 import PDFTabNavigation from '../PDFTabNavigation/PDFTabNavigationContainer';
 import {
@@ -13,7 +12,7 @@ import {
   EducationInput,
   GeneralInput,
   LanguagesInput,
-  ProfessionalExperienceInput,
+  ProfessionalExperienceInput
 } from './Components';
 import { Tab } from './PDFInputsContainer';
 
@@ -68,15 +67,15 @@ const PDFInputsPresenter = (props: Props) => {
             setProfessionalExperience={setProfessionalExperience}
             selectedTab={selectedTab === Tab.professionalExperience}
           />
-          <CertificatesInput
-            certificates={certificates}
-            setCertificates={setCertificates}
-            selectedTab={selectedTab === Tab.certificates}
-          />
           <EducationInput
             educations={educations}
             setEducation={setEducation}
             selectedTab={selectedTab === Tab.education}
+          />
+          <CertificatesInput
+            certificates={certificates}
+            setCertificates={setCertificates}
+            selectedTab={selectedTab === Tab.certificates}
           />
           <LanguagesInput
             languages={languages}

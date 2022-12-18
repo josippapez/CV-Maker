@@ -12,7 +12,9 @@
 
 body {
   margin: 0;
-  font-family: 'Inter-variable', sans-serif;
+  font-family: 'Unbounded-variable', sans-serif;
+  font-size: 13px;
+  line-height: 2;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -38,6 +40,6 @@ textarea {
 }
 
 @font-face {
-  font-family: 'Inter-variable';
-  src: url('./Styles/Assets/Fonts/Inter-VariableFont.ttf');
+  font-family: 'Unbounded-variable';
+  src: url('./Styles/Assets/Fonts/Unbounded-VariableFont_wght.ttf');
 }

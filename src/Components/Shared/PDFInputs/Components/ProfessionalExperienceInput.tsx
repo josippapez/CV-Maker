@@ -1,10 +1,10 @@
+import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import useAnimation from '../../../../Hooks/useAnimation';
+import { ReactComponent as DeleteIcon } from '../../../../Styles/Assets/Images/deleteIcon.svg';
 import { ProfessionalExperience } from '../../../PDFView/models';
 import TextInput from '../../Inputs/TextInput';
 import ToggleInput from '../../Inputs/ToggleInput';
-import style from '../PDFInputsPresenter.module.scss';
-import { motion } from 'framer-motion';
-import useAnimation from '../../../../Hooks/useAnimation';
 
 interface Props {
   selectedTab: boolean;
@@ -42,10 +42,10 @@ export const ProfessionalExperienceInput = (props: Props) => {
           initial={combinedStyleInitial}
           animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
           transition={{ duration: 0.2 }}
-          className='flex flex-col gap-4 p-4 relative focus-within:bg-slate-200 rounded-md'
+          className='flex flex-col gap-4 p-4 relative focus-within:bg-slate-200 rounded-md border border-gray-400 first:mt-0 mt-4'
         >
           <button
-            className={style['delete-button']}
+            className='absolute top-0 right-0'
             onClick={() => {
               setProfessionalExperience(
                 professionalExperience.filter(
@@ -53,7 +53,9 @@ export const ProfessionalExperienceInput = (props: Props) => {
                 )
               );
             }}
-          />
+          >
+            <DeleteIcon className='hover:stroke-red-600' width={30} height={30} />
+          </button>
           {arrayOfProfessionalExperienceInputs.map((input, currentIndex) => (
             <>
               <TextInput

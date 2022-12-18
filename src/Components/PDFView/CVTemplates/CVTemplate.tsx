@@ -11,6 +11,7 @@ import {
 } from '../models';
 import CVTemplate1 from './Templates/CVTemplate1';
 import CVTemplate2 from './Templates/CVTemplate2';
+import CVTemplate3 from './Templates/CVTemplate3';
 
 type OptionType = {
   generalInfo: GeneralInfo;
@@ -37,6 +38,8 @@ const getTemplate = (templateName: TemplateName, options: OptionType) => {
       return <CVTemplate1 {...options} />;
     case TemplateName.CVTemplate2:
       return <CVTemplate2 {...options} />;
+    case TemplateName.CVTemplate3:
+      return <CVTemplate3 {...options} />;
     default:
       return <CVTemplate1 {...options} />;
   }

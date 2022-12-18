@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
+import { ReactComponent as DeleteIcon } from '../../../../Styles/Assets/Images/deleteIcon.svg';
 import {
   LanguageProficiencyLevel,
   LanguageSkill,
 } from '../../../PDFView/models';
 import TextInput from '../../Inputs/TextInput';
-import style from '../PDFInputsPresenter.module.scss';
 
 interface Props {
   selectedTab: boolean;
@@ -28,14 +28,20 @@ export const LanguagesInput = (props: Props) => {
           initial={combinedStyleInitial}
           animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
           transition={{ duration: 0.2 }}
-          className='flex flex-col gap-4 p-4 relative focus-within:bg-slate-200 rounded-md'
+          className='flex flex-col gap-4 p-4 relative focus-within:bg-slate-200 border-t py-4 border-gray-400 first:mt-0 mt-4'
         >
           <button
-            className={style['delete-button']}
+            className='absolute top-0 right-0'
             onClick={() => {
               setLanguages(languages.filter((language, i) => i !== index));
             }}
-          />
+          >
+            <DeleteIcon
+              className='hover:stroke-red-600'
+              width={30}
+              height={30}
+            />
+          </button>
           <div className='flex'>
             <TextInput
               key={index + '-' + 'LanguagesInput' + '-' + t('language')}

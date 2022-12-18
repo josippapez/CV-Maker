@@ -23,12 +23,12 @@ const PDFTabNavigationPresenter = (props: Props) => {
       label: t('professionalExperience'),
     },
     {
-      tab: Tab.certificates,
-      label: t('certificates'),
-    },
-    {
       tab: Tab.education,
       label: t('education'),
+    },
+    {
+      tab: Tab.certificates,
+      label: t('certificates'),
     },
     {
       tab: Tab.languages,

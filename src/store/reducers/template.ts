@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export enum TemplateName {
   CVTemplate1 = 'CVTemplate1',
   CVTemplate2 = 'CVTemplate2',
+  CVTemplate3 = 'CVTemplate3',
 }
 
 export interface Template {

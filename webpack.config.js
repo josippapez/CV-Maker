@@ -88,8 +88,24 @@ module.exports = (env, argv) => {
           type: 'asset/resource',
         },
         {
-          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          test: /\.(png|jpg|jpeg|gif)$/i,
           type: 'asset/resource',
+        },
+        {
+          test: /\.svg$/i,
+          issuer: /\.[jt]sx?$/,
+          resourceQuery: { not: [/url/] },
+          use: [{
+            loader: '@svgr/webpack',
+            options: {
+              exportType: 'named',
+            }
+          }],
+        },
+        {
+          test: /\.svg$/i,
+          type: 'asset/resource',
+          resourceQuery: /url/,
         },
       ],
     },

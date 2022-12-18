@@ -52,4 +52,5 @@
 .documentPDFView:hover .document-controls,
 .document-controls:hover {
   opacity: 1;
+  z-index: 1;
 }
