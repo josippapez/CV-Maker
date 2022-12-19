@@ -1,14 +1,9 @@
 import {
-  Defs,
   Document,
   Font,
   Image,
-  LinearGradient,
   Page,
-  Rect,
-  Stop,
   StyleSheet,
-  Svg,
   Text,
   View,
 } from '@react-pdf/renderer';
@@ -27,10 +22,6 @@ import {
   LanguageSkill,
   ProfessionalExperience,
 } from '../../models';
-import { BlobBottomLeft } from '../Images/BlobBottomLeft';
-import { BlobTopLeft } from '../Images/BlobTopLeft';
-import { BlobTopRight } from '../Images/BlobTopRight';
-import { LayeredWaves } from '../Images/LayeredWaves';
 import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
 
 type Props = {
@@ -167,7 +158,7 @@ const styles = StyleSheet.create({
   },
   companyName: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: 'medium',
   },
   companyPosition: {},
   companyDescription: {
@@ -229,7 +220,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderRadius: 3,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: '#818181',
     padding: '5px 15px',
   },
   languageName: {
@@ -242,7 +233,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const CVTemplate3 = (props: Props): JSX.Element => {
+const CVTemplate4 = (props: Props): JSX.Element => {
   const {
     generalInfo,
     professionalExperience,
@@ -259,38 +250,10 @@ const CVTemplate3 = (props: Props): JSX.Element => {
           style={[
             styles.personalInfo,
             styles.paddingX40,
-            styles.marginBottom20,
+            { paddingTop: 40, paddingBottom: 20 },
           ]}
         >
-          {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore */}
-          <Svg
-            viewBox='0 0 595 200'
-            width={595}
-            height={200}
-            style={{
-              position: 'absolute',
-            }}
-          >
-            <Defs>
-              {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore */}
-              <LinearGradient id='myLinearGradient' x1={1} x2={0} y1={0} y2={1}>
-                <Stop offset={0.5} stopOpacity={1} stopColor='#242424' />
-                <Stop offset={0.7} stopOpacity={1} stopColor='#13171a' />
-                <Stop offset={1} stopOpacity={1} stopColor='#13171a' />
-              </LinearGradient>
-            </Defs>
-
-            <Rect
-              x={0}
-              y={0}
-              width='100%'
-              height='100%'
-              fill="url('#myLinearGradient')"
-            />
-          </Svg>
-          <View style={[styles.topBar, { paddingTop: 40, paddingBottom: 10 }]}>
+          <View style={[styles.topBar]}>
             {generalInfo && generalInfo.profilePicture && (
               <View style={[styles.profilePicture]}>
                 <Image
@@ -367,11 +330,17 @@ const CVTemplate3 = (props: Props): JSX.Element => {
         {professionalExperience && professionalExperience.length > 0 && (
           <View
             style={[
-              styles.marginBottom20,
+              styles.paddingY10,
               styles.paddingX40,
               styles.column,
               styles.horizontalCenter,
-              { flexShrink: 1 },
+              {
+                flexGrow: 1,
+                flexShrink: 1,
+                backgroundColor: '#ededed',
+                color: 'black',
+                justifyContent: 'center'
+              },
             ]}
           >
             {professionalExperience?.map((experience, index) => (
@@ -380,10 +349,9 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                 key={index}
                 style={[
                   styles.row,
+                  styles.paddingY10,
                   {
-                    marginTop: index === 0 ? 0 : 20,
-                    marginBottom:
-                      index === professionalExperience.length - 1 ? 0 : 10,
+                    borderTop: index === 0 ? 'none' : '1px solid #d8d8d8',
                   },
                 ]}
               >
@@ -397,7 +365,9 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                   </Text>
                 </View>
 
-                <View style={[styles.column, { width: '50%' }]}>
+                <View
+                  style={[styles.column, styles.paddingX20, { width: '50%' }]}
+                >
                   <Text style={[styles.companyPosition]}>
                     {experience.position}
                   </Text>
@@ -409,83 +379,41 @@ const CVTemplate3 = (props: Props): JSX.Element => {
             ))}
           </View>
         )}
-        {education && education?.length > 0 ? (
-          <View
-            style={[
-              styles.paddingY20,
-              styles.paddingX40,
-              styles.column,
-              {
-                backgroundColor: '#13171a',
-                overflow: 'hidden',
-                flexGrow: 1,
-              },
-            ]}
-          >
-            {education?.map((edu, index) => (
-              <>
-                {index === 0 && (
-                  <View
-                    wrap={false}
-                    style={{
-                      position: 'absolute',
-                      width: 595,
-                      height: 100,
-                      zIndex: -1,
-                      top: 0,
-                    }}
-                  >
-                    <BlobTopRight />
-                  </View>
-                )}
-                {index === education.length - 1 &&
-                  (certificates && certificates.length > 0 ? (
-                    <View
-                      wrap={false}
-                      style={{
-                        position: 'absolute',
-                        width: 595,
-                        height: 100,
-                        zIndex: -1,
-                        bottom: 0,
-                      }}
-                    >
-                      <BlobBottomLeft />
-                    </View>
-                  ) : (
-                    <View
-                      wrap={false}
-                      style={{
-                        position: 'absolute',
-                        width: 595,
-                        height: 100,
-                        zIndex: -1,
-                        bottom: 0,
-                      }}
-                    >
-                      <LayeredWaves />
-                    </View>
-                  ))}
+        <View wrap={false} style={[styles.row, { flexGrow: 1 }]}>
+          {education && education.length > 0 && (
+            <View
+              style={[
+                styles.paddingY20,
+                certificates && certificates.length > 0
+                  ? { paddingLeft: 40, paddingRight: 20, width: '50%' }
+                  : styles.paddingX40,
+                styles.column,
+                {
+                  backgroundColor: '#fcfcfc',
+                  color: 'black',
+                  overflow: 'hidden',
+                  position: 'relative',
+                },
+              ]}
+            >
+              <Text style={[styles.sectionTitle]}>
+                {translate('education')}
+              </Text>
+              {education.map((edu, index) => (
                 <View
-                  wrap={false}
                   key={index}
                   style={[
                     styles.column,
                     {
-                      marginTop: index === 0 ? 0 : 20,
+                      marginTop:
+                        education.length > 1
+                          ? index !== education.length - 1
+                            ? 20
+                            : 0
+                          : 20,
                     },
                   ]}
                 >
-                  {index === 0 && (
-                    <Text
-                      style={[
-                        styles.sectionTitle,
-                        { marginBottom: 10, marginTop: 0 },
-                      ]}
-                    >
-                      {translate('education')}
-                    </Text>
-                  )}
                   <View style={[styles.column]}>
                     <Text style={[styles.educationSchool]}>{edu.school}</Text>
                     <Text style={[styles.educationDuration]}>
@@ -502,97 +430,82 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                     </Text>
                   </View>
                 </View>
-              </>
-            ))}
-          </View>
-        ) : null}
-        {certificates && certificates.length > 0 ? (
-          <View
-            wrap={false}
-            style={[
-              styles.paddingY20,
-              styles.paddingX40,
-              styles.column,
-              { backgroundColor: '#13171a', overflow: 'hidden', flexGrow: 5 },
-            ]}
-          >
-            <View
-              wrap={false}
-              style={{
-                position: 'absolute',
-                width: 595,
-                height: 100,
-                zIndex: -1,
-                bottom: 0,
-              }}
-            >
-              <LayeredWaves />
+              ))}
             </View>
-            {certificates.map((cert, index) => (
-              <>
-                {index === 0 && (
+          )}
+          {certificates && certificates.length > 0 && (
+            <View
+              style={[
+                styles.paddingY20,
+                education && education.length > 0
+                  ? {
+                      paddingLeft: 20,
+                      paddingRight: 40,
+                      width: '50%',
+                      left: -0.5,
+                    }
+                  : styles.paddingX40,
+                styles.column,
+                {
+                  backgroundColor: '#e7e4e4',
+                  color: 'black',
+                },
+              ]}
+            >
+              {certificates.map((cert, index) => (
+                <>
                   <View
-                    wrap={false}
-                    style={{
-                      position: 'absolute',
-                      width: 595,
-                      height: 100,
-                      zIndex: -1,
-                      top: 0,
-                    }}
+                    key={index}
+                    style={[
+                      {
+                        marginTop: index === 0 ? 0 : 20,
+                      },
+                    ]}
                   >
-                    <BlobTopLeft />
-                  </View>
-                )}
-                <View
-                  wrap={false}
-                  key={index}
-                  style={[
-                    {
-                      marginTop: index === 0 ? 0 : 20,
-                    },
-                  ]}
-                >
-                  {index === 0 && (
-                    <Text style={[styles.sectionTitle, styles.marginBottom20]}>
-                      {translate('certificates')}
-                    </Text>
-                  )}
-                  <View style={[styles.column]}>
-                    <Text style={[styles.certificateName]}>{cert.name}</Text>
-                    <Text style={[styles.certificateInstitution]}>
-                      {cert.institution}
-                    </Text>
-                    <View
-                      style={[
-                        styles.row,
-                        {
-                          paddingBottom: 2,
-                        },
-                      ]}
-                    >
-                      <Text style={[styles.certificateDuration]}>
-                        {cert.date}
+                    {index === 0 && (
+                      <Text
+                        style={[styles.sectionTitle, styles.marginBottom20]}
+                      >
+                        {translate('certificates')}
+                      </Text>
+                    )}
+                    <View style={[styles.column]}>
+                      <Text style={[styles.certificateName]}>{cert.name}</Text>
+                      <Text style={[styles.certificateInstitution]}>
+                        {cert.institution}
+                      </Text>
+                      <View
+                        style={[
+                          styles.row,
+                          {
+                            paddingBottom: 2,
+                          },
+                        ]}
+                      >
+                        <Text style={[styles.certificateDuration]}>
+                          {cert.date}
+                        </Text>
+                      </View>
+                      <Text style={[styles.certificateDescription]}>
+                        {cert.description}
                       </Text>
                     </View>
-                    <Text style={[styles.certificateDescription]}>
-                      {cert.description}
-                    </Text>
                   </View>
-                </View>
-              </>
-            ))}
-          </View>
-        ) : null}
-        {languages && languages.length > 0 ? (
+                </>
+              ))}
+            </View>
+          )}
+        </View>
+        {languages && languages.length > 0 && (
           <View
             wrap={false}
             style={[
               styles.paddingY20,
               styles.paddingX40,
               {
-                backgroundColor: '#3b3b3b',
-                flexGrow: 1,
+                backgroundColor: '#ededed',
+                flex: 5,
+                color: 'black',
               },
             ]}
           >
@@ -626,10 +539,10 @@ const CVTemplate3 = (props: Props): JSX.Element => {
               ))}
             </View>
           </View>
-        ) : null}
+        )}
       </Page>
     </Document>
   );
 };
 
-export default CVTemplate3;
+export default CVTemplate4;

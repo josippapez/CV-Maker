@@ -46,20 +46,20 @@ const TemplatesModal = (props: Props) => {
           </button>
         </div>
         <div className='flex justify-center items-center'>
-          {Object.keys(TemplateName).map(key => {
-            const templateName = key as TemplateName;
+          {Object.entries(TemplateName).map(value => {
+            const templateName = value[1];
             return (
               <div
                 key={templateName}
-                className={`${style.template} ${style[templateName]} bg-white dark:bg-gray-800 rounded-md`}
+                className={`${style.template} ${
+                  style[value[0]]
+                } bg-white dark:bg-gray-800 rounded-md`}
                 onClick={() => {
                   dispatch(setTemplate(templateName));
                   closeModal();
                 }}
               >
-                <div
-                  className={`${style.templateImage} ${style[templateName]}`}
-                />
+                <div className={`${style.templateImage} ${style[value[0]]}`} />
                 <div className={`${style.templateName} dark:text-white`}>
                   {t(templateName)}
                 </div>
