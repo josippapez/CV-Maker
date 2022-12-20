@@ -36,7 +36,7 @@ const arrayOfGeneralTextAreas: Array<{
 }> = [{ inputName: 'About me', inputValue: 'aboutMe' }];
 
 export const GeneralInput = (props: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });

@@ -95,12 +95,14 @@ module.exports = (env, argv) => {
           test: /\.svg$/i,
           issuer: /\.[jt]sx?$/,
           resourceQuery: { not: [/url/] },
-          use: [{
-            loader: '@svgr/webpack',
-            options: {
-              exportType: 'named',
-            }
-          }],
+          use: [
+            {
+              loader: '@svgr/webpack',
+              options: {
+                exportType: 'named',
+              },
+            },
+          ],
         },
         {
           test: /\.svg$/i,
@@ -113,6 +115,9 @@ module.exports = (env, argv) => {
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
         process: 'process/browser.js',
+      }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(argv.mode),
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'public', 'index.html'),
