@@ -70,7 +70,7 @@ const TextInput = (props: Props) => {
           required={required}
           rows={5}
           maxLength={490}
-          className={`sm:text-sm border rounded-md h-auto max-h-64 p-2 focus:ring-indigo-500 focus:border-indigo-500 w-full
+          className={`sm:text-sm rounded-md h-auto max-h-64 p-2 ring-0 focus:ring-indigo-500 focus:ring-2 w-full transition-all duration-300 ease-in-out
         ${
           error
             ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
@@ -100,12 +100,12 @@ const TextInput = (props: Props) => {
           }}
           disabled={disabled}
           required={required}
-          className={`sm:text-sm border rounded-md h-10 px-4 focus:ring-indigo-500 focus:border-indigo-500 w-full
-        ${
-          error
-            ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
-            : 'border-gray-300'
-        } ${className || ''}`}
+          className={`sm:text-sm rounded-md h-10 px-4 ring-0 focus:ring-indigo-500 focus:ring-2 w-full transition-all duration-300 ease-in-out
+          ${
+            error
+              ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
+              : 'border-gray-300'
+          } ${className || ''}`}
         />
       )}
       {error && <p className='mt-2 text-sm text-red-600'>{error}</p>}

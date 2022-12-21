@@ -56,7 +56,7 @@ const PDFInputsPresenter = (props: Props) => {
         selectedTab={selectedTab}
       />
       <Scrollbars autoHide>
-        <div className='w-full min-h-full px-4 py-8 bg-[#f7f7f7]'>
+        <div className='w-full min-h-full p-10 bg-[#f7f7f7]'>
           <GeneralInput
             generalInfo={generalInfo}
             setGeneralInfo={setGeneralInfo}

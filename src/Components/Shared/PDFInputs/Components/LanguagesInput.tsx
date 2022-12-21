@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
-import { ReactComponent as DeleteIcon } from '../../../../Styles/Assets/Images/deleteIcon.svg';
 import {
   LanguageProficiencyLevel,
   LanguageSkill,
 } from '../../../PDFView/models';
 import TextInput from '../../Inputs/TextInput';
+import { AddNewButton } from './AddNewButton';
+import { DeleteButton } from './DeleteButton';
 
 interface Props {
   selectedTab: boolean;
@@ -28,20 +29,13 @@ export const LanguagesInput = (props: Props) => {
           initial={combinedStyleInitial}
           animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
           transition={{ duration: 0.2 }}
-          className='flex flex-col gap-4 p-4 relative focus-within:bg-slate-200 border-t py-4 border-gray-400 first:mt-0 mt-4'
+          className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4'
         >
-          <button
-            className='absolute top-0 right-0'
+          <DeleteButton
             onClick={() => {
               setLanguages(languages.filter((language, i) => i !== index));
             }}
-          >
-            <DeleteIcon
-              className='hover:stroke-red-600'
-              width={30}
-              height={30}
-            />
-          </button>
+          />
           <div className='flex'>
             <TextInput
               key={index + '-' + 'LanguagesInput' + '-' + t('language')}
@@ -101,17 +95,15 @@ export const LanguagesInput = (props: Props) => {
           </div>
         </motion.div>
       ))}
-      <button
-        className='w-full border-2 rounded-md p-1 focus:border-slate-400'
+      <AddNewButton
         onClick={() => {
           setLanguages([
             ...languages,
             { name: '', proficiency: LanguageProficiencyLevel.BEGINNER },
           ]);
         }}
-      >
-        {t('addLanguage')}
-      </button>
+        title={t('addLanguage')}
+      />
     </div>
   );
 };

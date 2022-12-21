@@ -5,8 +5,10 @@
 /.pnp
 .pnp.js
 
+/.firebase
 fbConfig.ts
 firebase-debug.log
+firestore-debug.log
 
 # testing
 /coverage

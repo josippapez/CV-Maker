@@ -12,6 +12,7 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
+import { Fragment } from 'react';
 import { TFunction } from 'react-i18next';
 import UnboundedBold from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-Bold.ttf';
 import UnboundedExtraBold from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-ExtraBold.ttf';
@@ -377,7 +378,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
             {professionalExperience?.map((experience, index) => (
               <View
                 wrap={false}
-                key={index}
+                key={`experience-${index}`}
                 style={[
                   styles.row,
                   {
@@ -423,9 +424,10 @@ const CVTemplate3 = (props: Props): JSX.Element => {
             ]}
           >
             {education?.map((edu, index) => (
-              <>
+              <Fragment key={`edu-${index}`}>
                 {index === 0 && (
                   <View
+                    key={`edu-${index}-blobTopRight`}
                     wrap={false}
                     style={{
                       position: 'absolute',
@@ -441,6 +443,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                 {index === education.length - 1 &&
                   (certificates && certificates.length > 0 ? (
                     <View
+                      key={`edu-${index}-blobBottomLeft`}
                       wrap={false}
                       style={{
                         position: 'absolute',
@@ -454,6 +457,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                     </View>
                   ) : (
                     <View
+                      key={`edu-${index}-LayeredWaves`}
                       wrap={false}
                       style={{
                         position: 'absolute',
@@ -468,7 +472,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                   ))}
                 <View
                   wrap={false}
-                  key={index}
+                  key={`edu-${index}`}
                   style={[
                     styles.column,
                     {
@@ -502,7 +506,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                     </Text>
                   </View>
                 </View>
-              </>
+              </Fragment>
             ))}
           </View>
         ) : null}
@@ -529,9 +533,10 @@ const CVTemplate3 = (props: Props): JSX.Element => {
               <LayeredWaves />
             </View>
             {certificates.map((cert, index) => (
-              <>
+              <Fragment key={`cert-${index}`}>
                 {index === 0 && (
                   <View
+                    key={`cert-${index}-blobTopLeft`}
                     wrap={false}
                     style={{
                       position: 'absolute',
@@ -546,7 +551,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                 )}
                 <View
                   wrap={false}
-                  key={index}
+                  key={`cert-${index}`}
                   style={[
                     {
                       marginTop: index === 0 ? 0 : 20,
@@ -580,7 +585,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                     </Text>
                   </View>
                 </View>
-              </>
+              </Fragment>
             ))}
           </View>
         ) : null}
@@ -617,7 +622,10 @@ const CVTemplate3 = (props: Props): JSX.Element => {
               ]}
             >
               {languages.map((lang, index) => (
-                <View key={index} style={[styles.column, styles.languageCard]}>
+                <View
+                  key={`lang-${index}`}
+                  style={[styles.column, styles.languageCard]}
+                >
                   <Text style={[styles.languageName]}>{lang.name}</Text>
                   <Text style={[styles.languageLevel]}>
                     {translate(lang.proficiency)}

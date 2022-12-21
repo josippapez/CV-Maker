@@ -83,7 +83,7 @@ const PDFViewPresenter = (props: Props) => {
       }`}
     >
       <div className={`${isMobileView ? 'w-full' : 'w-5/12'}`}>
-        <Suspense fallback={<PageLoader />}>
+        <Suspense fallback={<PageLoader isLoading />}>
           <PDFInputsContainer
             setGeneralInfo={setGeneralInfo}
             generalInfo={generalInfo}
@@ -103,7 +103,6 @@ const PDFViewPresenter = (props: Props) => {
           isMobileView ? 'w-full' : 'w-7/12'
         }`}
       >
-        <Suspense fallback={<PageLoader />}>
           <Document
             {...options}
             file={pdfInstance.url}
@@ -111,7 +110,7 @@ const PDFViewPresenter = (props: Props) => {
             className='drop-shadow-2xl flex h-screen justify-center items-center'
             onItemClick={onItemClick}
             onLoadSuccess={onDocumentLoadSuccess}
-            loading={<PageLoader />}
+            loading={<PageLoader isLoading />}
           >
             {/* //eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore */}
@@ -155,7 +154,6 @@ const PDFViewPresenter = (props: Props) => {
               )}
             </Page>
           </Document>
-        </Suspense>
       </div>
       {pdfInstance && pdfInstance.blob && pdfInstance.url && (
         <PDFDownload

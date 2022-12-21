@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
-import { ReactComponent as DeleteIcon } from '../../../../Styles/Assets/Images/deleteIcon.svg';
 import { Education } from '../../../PDFView/models';
 import TextInput from '../../Inputs/TextInput';
 import ToggleInput from '../../Inputs/ToggleInput';
+import { AddNewButton } from './AddNewButton';
+import { DeleteButton } from './DeleteButton';
 
 interface Props {
   selectedTab: boolean;
@@ -36,14 +37,13 @@ export const EducationInput = (props: Props) => {
     <div hidden={!selectedTab}>
       {educations.map((education, index) => (
         <motion.div
-          key={index + '-' + 'EducationInput'}
+          key={`EducationInput-${index}`}
           initial={combinedStyleInitial}
           animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
           transition={{ duration: 0.2 }}
-          className='flex flex-col gap-4 p-4 relative focus-within:bg-slate-200 rounded-md border border-gray-400 first:mt-0 mt-4'
+          className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4'
         >
-          <button
-            className='absolute top-0 right-0'
+          <DeleteButton
             onClick={() => {
               setEducation(
                 educations.filter(
@@ -51,17 +51,10 @@ export const EducationInput = (props: Props) => {
                 )
               );
             }}
-          >
-            <DeleteIcon
-              className='hover:stroke-red-600'
-              width={30}
-              height={30}
-            />
-          </button>
+          />
           {arrayOfEducationInputs.map((input, currentIndex) => (
-            <>
+            <div key={`input-${index}-${currentIndex}`}>
               <TextInput
-                key={index + '-' + 'EducationInput' + '-' + currentIndex}
                 label={t(`${input.inputValue}`)}
                 value={education[input.inputValue]}
                 name={input.inputValue}
@@ -82,10 +75,10 @@ export const EducationInput = (props: Props) => {
               />
               {input.inputValue === 'endDate' && (
                 <ToggleInput
-                  key={index + '-' + 'EducationInput' + '-' + currentIndex}
                   label={t('present')}
                   name={input.inputValue}
                   checked={education.endDate === t('present')}
+                  wrapperClassName='mt-4'
                   onChange={e => {
                     setEducation(
                       educations.map((education, i) => {
@@ -102,16 +95,10 @@ export const EducationInput = (props: Props) => {
                   fullWidth
                 />
               )}
-            </>
+            </div>
           ))}
           <TextInput
-            key={
-              index +
-              '-' +
-              'EducationInput' +
-              '-' +
-              (arrayOfEducationInputs.length - 1)
-            }
+            key={`${index}-${arrayOfEducationInputs.length - 1}-input`}
             label={t('description')}
             value={education.description}
             name='education-description'
@@ -130,8 +117,7 @@ export const EducationInput = (props: Props) => {
           />
         </motion.div>
       ))}
-      <button
-        className='w-full border-2 rounded-md p-1 focus:border-slate-400'
+      <AddNewButton
         onClick={() => {
           setEducation([
             ...educations,
@@ -146,9 +132,8 @@ export const EducationInput = (props: Props) => {
             },
           ]);
         }}
-      >
-        {t('addEducation')}
-      </button>
+        title={t('addEducation')}
+      />
     </div>
   );
 };

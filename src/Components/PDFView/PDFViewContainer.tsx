@@ -1,16 +1,13 @@
 import { usePDF } from '@react-pdf/renderer';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  cacheCertificates,
-  cacheEducation,
-  cacheGeneralInfo,
-  cacheLanguages,
-  cacheProfessionalExperience,
-  PDFData,
-} from '../../store/reducers/pdfData';
-import { Template } from '../../store/reducers/template';
+  getDataForUser,
+  saveDataForUser,
+} from '../../store/actions/syncActions';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { cacheAllData, PDFData } from '../../store/reducers/pdfData';
+import PageLoader from '../Shared/Loader/PageLoader';
 import CVTemplate from './CVTemplates/CVTemplate';
 import {
   Certificate,
@@ -26,49 +23,36 @@ const PDFView = () => {
   const currentLanguage = i18n.language;
 
   const dispatch = useAppDispatch();
-  const pdfData: Partial<PDFData> = useAppSelector(state => state.pdfData);
-  const template: Template = useAppSelector(state => state.template);
+  const pdfData = useAppSelector(state => state.pdfData);
+  const template = useAppSelector(state => state.template);
+  const user = useAppSelector(state => state.user.user);
 
-  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>(
-    pdfData.generalInfo
-      ? pdfData.generalInfo
-      : {
-          profilePicture: null,
-          firstName: '',
-          lastName: '',
-          dob: '',
-          aboutMe: '',
-          position: '',
-          email: '',
-          phone: '',
-          address: '',
-          city: '',
-          zip: '',
-          country: '',
-          website: '',
-          LinkedIn: '',
-          GitHub: '',
-          Facebook: '',
-          Instagram: '',
-          Twitter: '',
-        }
-  );
+  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({
+    profilePicture: undefined,
+    firstName: '',
+    lastName: '',
+    dob: '',
+    aboutMe: '',
+    position: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    zip: '',
+    country: '',
+    website: '',
+    LinkedIn: '',
+    GitHub: '',
+    Facebook: '',
+    Instagram: '',
+    Twitter: '',
+  });
   const [professionalExperience, setProfessionalExperience] = useState<
     ProfessionalExperience[]
-  >(
-    pdfData?.professionalExperience?.length
-      ? pdfData.professionalExperience
-      : []
-  );
-  const [certificates, setCertificates] = useState<Certificate[]>(
-    pdfData.certificates?.length ? pdfData.certificates : []
-  );
-  const [education, setEducation] = useState<Education[]>(
-    pdfData.education?.length ? pdfData.education : []
-  );
-  const [languages, setLanguages] = useState<LanguageSkill[]>(
-    pdfData.languages?.length ? pdfData.languages : []
-  );
+  >([]);
+  const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [education, setEducation] = useState<Education[]>([]);
+  const [languages, setLanguages] = useState<LanguageSkill[]>([]);
 
   const [instance, updateInstance] = usePDF({
     document: CVTemplate({
@@ -91,12 +75,17 @@ const PDFView = () => {
     }
     updateInstanceRef.current = setTimeout(() => {
       updateInstance();
-      dispatch(cacheGeneralInfo(generalInfo));
-      dispatch(cacheProfessionalExperience(professionalExperience));
-      dispatch(cacheCertificates(certificates));
-      dispatch(cacheEducation(education));
-      dispatch(cacheLanguages(languages));
-    }, 500);
+      dispatch(
+        cacheAllData({
+          generalInfo,
+          professionalExperience,
+          certificates,
+          education,
+          languages,
+        } as PDFData)
+      );
+      dispatch(saveDataForUser());
+    }, 800);
   }, [generalInfo, professionalExperience, certificates, education, languages]);
 
   useEffect(() => {
@@ -108,20 +97,37 @@ const PDFView = () => {
     }, 500);
   }, [template, currentLanguage]);
 
+  useEffect(() => {
+    dispatch(getDataForUser());
+  }, [user]);
+
+  useEffect(() => {
+    if (pdfData) {
+      if (pdfData.generalInfo) setGeneralInfo(pdfData.generalInfo);
+      if (pdfData.professionalExperience)
+        setProfessionalExperience(pdfData.professionalExperience);
+      if (pdfData.certificates) setCertificates(pdfData.certificates);
+      if (pdfData.education) setEducation(pdfData.education);
+      if (pdfData.languages) setLanguages(pdfData.languages);
+    }
+  }, [pdfData]);
+
   return (
-    <PDFViewPresenter
-      pdfInstance={instance}
-      setGeneralInfo={setGeneralInfo}
-      generalInfo={generalInfo}
-      setProfessionalExperience={setProfessionalExperience}
-      professionalExperience={professionalExperience}
-      setCertificates={setCertificates}
-      certificates={certificates}
-      setEducation={setEducation}
-      education={education}
-      setLanguages={setLanguages}
-      languages={languages}
-    />
+    <PageLoader isLoading={pdfData.loading}>
+      <PDFViewPresenter
+        pdfInstance={instance}
+        setGeneralInfo={setGeneralInfo}
+        generalInfo={generalInfo}
+        setProfessionalExperience={setProfessionalExperience}
+        professionalExperience={professionalExperience}
+        setCertificates={setCertificates}
+        certificates={certificates}
+        setEducation={setEducation}
+        education={education}
+        setLanguages={setLanguages}
+        languages={languages}
+      />
+    </PageLoader>
   );
 };
 
