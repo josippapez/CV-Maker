@@ -19,7 +19,7 @@ import {
 import PDFViewPresenter from './PDFViewPresenter';
 
 const PDFView = () => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('CVTemplates');
   const currentLanguage = i18n.language;
 
   const dispatch = useAppDispatch();

@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const LanguagesInput = (props: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('LanguagesInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });

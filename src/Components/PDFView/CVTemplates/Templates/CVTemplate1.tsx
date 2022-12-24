@@ -2,6 +2,7 @@ import {
   Document,
   Font,
   Image,
+  Link,
   Page,
   StyleSheet,
   Text,
@@ -23,6 +24,7 @@ import {
   ProfessionalExperience,
 } from '../../models';
 import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
+import { TextDisplay } from '../TemplateComponents/TextDisplay';
 
 type Props = {
   generalInfo?: GeneralInfo;
@@ -57,6 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'white',
     fontFamily: 'Opensans',
+    fontSize: 11,
   },
   column: {
     flexDirection: 'column',
@@ -120,7 +123,6 @@ const styles = StyleSheet.create({
   },
   topBarText: {
     marginTop: 10,
-    fontSize: 11,
   },
   additionalInfoBar: {
     maxHeight: 150,
@@ -129,7 +131,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   additionalInfoBarText: {
-    fontSize: 11,
     marginLeft: 20,
     textDecoration: 'none',
     color: 'white',
@@ -139,11 +140,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   companyPosition: {
-    fontSize: 11,
     fontWeight: 'medium',
   },
   companyDescription: {
-    fontSize: 11,
     marginTop: 10,
   },
   customTimeline: {
@@ -153,12 +152,26 @@ const styles = StyleSheet.create({
     marginRight: 40,
   },
   companyLocation: {
-    fontSize: 11,
     marginTop: 0,
   },
   companyDuration: {
-    fontSize: 11,
     marginTop: 0,
+  },
+  educationSchool: {
+    marginBottom: 5,
+    fontWeight: 'medium',
+  },
+  educationDegree: {
+    fontWeight: 'extralight',
+  },
+  educationDuration: {
+    fontWeight: 'light',
+  },
+  educationLocation: {
+    fontWeight: 'extralight',
+  },
+  educationDescription: {
+    marginTop: 10,
   },
   sectionTitle: {
     fontSize: 13,
@@ -214,10 +227,10 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                   flexDirection: 'row',
                 }}
               >
-                <Text style={styles.topBarName}>
+                <TextDisplay style={styles.topBarName}>
                   {generalInfo?.firstName} {generalInfo?.lastName}
-                </Text>
-                <Text
+                </TextDisplay>
+                <TextDisplay
                   style={[
                     {
                       fontWeight: 'light',
@@ -229,10 +242,14 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                   ]}
                 >
                   {generalInfo?.dob}
-                </Text>
+                </TextDisplay>
               </View>
-              <Text style={styles.topBarPosition}>{generalInfo?.position}</Text>
-              <Text style={styles.topBarText}>{generalInfo?.aboutMe}</Text>
+              <TextDisplay style={styles.topBarPosition}>
+                {generalInfo?.position}
+              </TextDisplay>
+              <TextDisplay style={styles.topBarText}>
+                {generalInfo?.aboutMe}
+              </TextDisplay>
             </View>
           </View>
           <AdditionalInformation
@@ -284,7 +301,9 @@ const CVTemplate1 = (props: Props): JSX.Element => {
             >
               <View style={[styles.column, styles.customTimeline]}></View>
               <View style={[styles.column, { width: '100%' }]}>
-                <Text style={[styles.companyName]}>{experience.company}</Text>
+                <TextDisplay style={[styles.companyName]}>
+                  {experience.company}
+                </TextDisplay>
                 <View style={[styles.row]}>
                   <View
                     style={[
@@ -298,9 +317,9 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                       },
                     ]}
                   />
-                  <Text style={[styles.companyPosition, { left: -17 }]}>
+                  <TextDisplay style={[styles.companyPosition, { left: -17 }]}>
                     {experience.position}
-                  </Text>
+                  </TextDisplay>
                 </View>
                 <View
                   style={[
@@ -314,16 +333,20 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                     },
                   ]}
                 >
-                  <Text style={[styles.companyDuration, styles.lightGrayText]}>
+                  <TextDisplay
+                    style={[styles.companyDuration, styles.lightGrayText]}
+                  >
                     {experience.startDate} - {experience.endDate}
-                  </Text>
-                  <Text style={[styles.companyLocation, styles.lightGrayText]}>
+                  </TextDisplay>
+                  <TextDisplay
+                    style={[styles.companyLocation, styles.lightGrayText]}
+                  >
                     {experience.location}
-                  </Text>
+                  </TextDisplay>
                 </View>
-                <Text style={[styles.companyDescription]}>
+                <TextDisplay style={[styles.companyDescription]}>
                   {experience.description}
-                </Text>
+                </TextDisplay>
               </View>
             </View>
           ))}
@@ -350,7 +373,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                 ]}
               >
                 {index === 0 && (
-                  <Text
+                  <TextDisplay
                     style={[
                       styles.sectionTitle,
                       styles.lightGrayText,
@@ -358,29 +381,42 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                     ]}
                   >
                     {translate('education')}
-                  </Text>
+                  </TextDisplay>
                 )}
                 <View style={[styles.column, { width: '100%' }]}>
-                  <Text style={[styles.companyName]}>{edu.school}</Text>
-                  <Text style={[styles.companyPosition]}>
-                    {edu.degree}, {edu.fieldOfStudy}
-                  </Text>
-                  <Text style={[styles.companyLocation]}>{edu.location}</Text>
-                  <Text
-                    style={[
-                      styles.companyDuration,
-                      styles.lightGrayText,
-                      {
-                        marginTop: 10,
-                        fontStyle: 'italic',
-                      },
-                    ]}
-                  >
+                  <TextDisplay style={[styles.educationSchool]}>
+                    {edu.course ? edu.course : edu.school}
+                  </TextDisplay>
+                  <TextDisplay style={[styles.educationDuration]}>
                     {edu.startDate} - {edu.endDate}
-                  </Text>
-                  <Text style={[styles.companyDescription]}>
+                  </TextDisplay>
+                  <TextDisplay style={[styles.educationDegree]}>
+                    {`${edu.degree} ${
+                      edu.fieldOfStudy && `, ${edu.fieldOfStudy}`
+                    }`}
+                  </TextDisplay>
+                  {edu.url && (
+                    <Link
+                      src={edu.url}
+                      style={{
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <Text
+                        style={[styles.educationDegree, { color: 'black' }]}
+                      >
+                        {edu.url
+                          .replace(/(^\w+:|^)\/\//, '')
+                          .replace(/(^www\.)/, '')}
+                      </Text>
+                    </Link>
+                  )}
+                  <TextDisplay style={[styles.educationLocation]}>
+                    {edu.location}
+                  </TextDisplay>
+                  <TextDisplay style={[styles.educationDescription]}>
                     {edu.description}
-                  </Text>
+                  </TextDisplay>
                 </View>
               </View>
             ))}
@@ -407,7 +443,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                 ]}
               >
                 {index === 0 && (
-                  <Text
+                  <TextDisplay
                     style={[
                       styles.sectionTitle,
                       styles.lightGrayText,
@@ -415,13 +451,15 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                     ]}
                   >
                     {translate('certificates')}
-                  </Text>
+                  </TextDisplay>
                 )}
                 <View style={[styles.column, { width: '100%' }]}>
-                  <Text style={[styles.companyName]}>{cert.name}</Text>
-                  <Text style={[styles.companyPosition]}>
+                  <TextDisplay style={[styles.companyName]}>
+                    {cert.name}
+                  </TextDisplay>
+                  <TextDisplay style={[styles.companyPosition]}>
                     {cert.institution}
-                  </Text>
+                  </TextDisplay>
                   <View
                     style={[
                       styles.row,
@@ -432,15 +470,15 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                       },
                     ]}
                   >
-                    <Text
+                    <TextDisplay
                       style={[styles.companyDuration, styles.lightGrayText]}
                     >
                       {cert.date}
-                    </Text>
+                    </TextDisplay>
                   </View>
-                  <Text style={[styles.companyDescription]}>
+                  <TextDisplay style={[styles.companyDescription]}>
                     {cert.description}
-                  </Text>
+                  </TextDisplay>
                 </View>
               </View>
             ))}
@@ -449,7 +487,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
         {languages && languages.length > 0 ? (
           <View wrap={false} style={[styles.paddingX20, styles.marginTop10]}>
             <View style={{ alignItems: 'center' }}>
-              <Text
+              <TextDisplay
                 style={[
                   styles.sectionTitle,
                   styles.lightGrayText,
@@ -460,7 +498,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                 ]}
               >
                 {translate('languages')}
-              </Text>
+              </TextDisplay>
             </View>
             <View
               style={[
@@ -474,10 +512,12 @@ const CVTemplate1 = (props: Props): JSX.Element => {
               {languages.map((lang, index) => (
                 <View key={index} style={[styles.column, styles.languageCard]}>
                   <View style={[styles.column]}>
-                    <Text style={[styles.companyName]}>{lang.name}</Text>
-                    <Text style={[styles.companyPosition]}>
+                    <TextDisplay style={[styles.companyName]}>
+                      {lang.name}
+                    </TextDisplay>
+                    <TextDisplay style={[styles.companyPosition]}>
                       {translate(lang.proficiency)}
-                    </Text>
+                    </TextDisplay>
                   </View>
                 </View>
               ))}

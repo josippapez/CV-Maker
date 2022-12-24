@@ -1,0 +1,20 @@
+{
+  "firstName": "First name",
+  "lastName": "Last name",
+  "email": "Email",
+  "dob": "Date of birth",
+  "position": "Position",
+  "phone": "Phone",
+  "address": "Address",
+  "address1": "Address 1",
+  "address2": "Address 2",
+  "city": "City",
+  "zip": "Zip code",
+  "country": "Country",
+  "website": "Website",
+  "linkedIn": "LinkedIn",
+  "facebook": "Facebook",
+  "twitter": "Twitter",
+  "github": "Github",
+  "aboutMe": "About me"
+}

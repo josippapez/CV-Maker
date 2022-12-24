@@ -8,7 +8,7 @@ import LandingPageSections from './LandingPageSections';
 /* type Props = {}; */
 
 const LandingPage = (/* props: Props */) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('LandingPage');
   const LandingHeader = () => {
     return (
       <div className='flex justify-center items-center h-full p-5'>

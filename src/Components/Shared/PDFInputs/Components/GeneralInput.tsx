@@ -37,7 +37,7 @@ const arrayOfGeneralTextAreas: Array<{
 }> = [{ inputName: 'About me', inputValue: 'aboutMe' }];
 
 export const GeneralInput = (props: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('GeneralInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
@@ -125,7 +125,7 @@ export const GeneralInput = (props: Props) => {
               label={t(`${input.inputValue}`)}
               type={input.type}
               value={generalInfo[input.inputValue]}
-              name={input.inputValue}
+              name={input.inputName}
               onChange={e => {
                 setGeneralInfo({
                   ...generalInfo,
@@ -150,7 +150,7 @@ export const GeneralInput = (props: Props) => {
               label={t(`${input.inputValue}`)}
               textarea
               value={generalInfo[input.inputValue]}
-              name={input.inputValue}
+              name={input.inputName}
               onChange={e => {
                 setGeneralInfo({
                   ...generalInfo,

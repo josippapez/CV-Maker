@@ -50,7 +50,7 @@ const PDFInputsPresenter = (props: Props) => {
   } = props;
 
   return (
-    <div className='flex flex-row h-full'>
+    <div className='flex flex-row h-full w-full'>
       <PDFTabNavigation
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
@@ -82,6 +82,7 @@ const PDFInputsPresenter = (props: Props) => {
             setLanguages={setLanguages}
             selectedTab={selectedTab === Tab.languages}
           />
+          {/* TODO: Add skills input */}
         </div>
       </Scrollbars>
     </div>

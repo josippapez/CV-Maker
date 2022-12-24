@@ -1,13 +1,17 @@
 {
   "hosting": {
     "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
-    ],
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    ]
   },
   "firestore": {
     "rules": "firestore.rules",
@@ -30,5 +34,8 @@
     "hosting": {
       "port": 5000
     }
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

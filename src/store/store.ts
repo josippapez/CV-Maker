@@ -5,7 +5,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import {
   connectFirestoreEmulator,
-  getFirestore as GetFirestore,
+  getFirestore,
 } from 'firebase/firestore';
 import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 import { connectStorageEmulator, getStorage } from 'firebase/storage';
@@ -34,9 +34,9 @@ if (firebase.apps.length === 0) {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  const db = GetFirestore();
+  const db = getFirestore();
   connectFirestoreEmulator(db, 'localhost', 8080);
-  const functions = getFunctions(firebase.app());
+  const functions = getFunctions();
   connectFunctionsEmulator(functions, 'localhost', 5001);
   const auth = getAuth();
   connectAuthEmulator(auth, 'http://localhost:9099');

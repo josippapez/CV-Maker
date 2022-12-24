@@ -1,22 +1,18 @@
-@mixin div-same-size-as-background-img($url, $height, $width) {
+@mixin div-same-size-as-background-img($url) {
   background-image: url($url);
   background-size: contain;
   background-repeat: no-repeat;
-  width: 100%;
-  height: 0;
-  padding-top: calc($height / $width) * 100%;
+  background-position: center center;
 }
 
 .template {
-  box-sizing: content-box;
   overflow: hidden;
-  box-shadow: 0px 0px 10px #0000001a;
-  box-sizing: border-box;
   width: 50%;
   margin: 10px;
   flex-wrap: wrap;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  padding: 10px;
   &:hover {
     transform: scale(1.05);
   }
@@ -26,30 +22,23 @@
   padding: 50%;
   &.CVTemplate1 {
     @include div-same-size-as-background-img(
-      '../../../Styles/Assets/Images/Template1.png',
-      336,
-      428
+      '../../../Styles/Assets/Images/Template1.png'
     );
   }
   &.CVTemplate2 {
     @include div-same-size-as-background-img(
-      '../../../Styles/Assets/Images/Template2.png',
-      336,
-      428
+      '../../../Styles/Assets/Images/Template2.png'
     );
   }
   &.CVTemplate3 {
     @include div-same-size-as-background-img(
-      '../../../Styles/Assets/Images/Template3.png',
-      336,
-      428
+      '../../../Styles/Assets/Images/Template3.png'
     );
   }
 }
 
 .templateName {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1rem;
   text-align: center;
   margin-top: 10px;
 }

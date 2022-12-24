@@ -23,7 +23,7 @@ const arrayOfCertificatesInputs: Array<{
 ];
 
 export const CertificatesInput = (props: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('CertificatesInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });

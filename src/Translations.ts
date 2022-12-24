@@ -3,7 +3,7 @@ import FilesContext from './FilesContext';
 const localeRegex = /.*\/i18n\/(.*)\.([A-Za-z-]+)\.json$/;
 const translations: {
   [key: string]: {
-    translation: {
+    [key: string]: {
       [key: string]: string;
     };
   };
@@ -16,10 +16,7 @@ FilesContext.keys().forEach(file => {
     const lang = match[2]; // e.g. 'hr'
     if (lang) {
       translations[lang] = translations[lang] || {};
-      translations[lang]['translation'] = {
-        ...translations[lang]['translation'],
-        ...FilesContext(file),
-      };
+      translations[lang][namespace] = FilesContext(file);
     }
   }
 });

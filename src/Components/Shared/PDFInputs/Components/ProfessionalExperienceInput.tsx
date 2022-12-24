@@ -28,7 +28,7 @@ const arrayOfProfessionalExperienceInputs: Array<{
 ];
 
 export const ProfessionalExperienceInput = (props: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('ProfessionalExperienceInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
