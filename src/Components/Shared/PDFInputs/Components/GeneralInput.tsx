@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
 import { ReactComponent as Plus } from '../../../../Styles/Assets/Images/plus.svg';
 import { GeneralInfo } from '../../../PDFView/models';
+import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import TextInput from '../../Inputs/TextInput';
 
 interface Props {
   selectedTab: boolean;
-  generalInfo: GeneralInfo;
-  setGeneralInfo: (generalInfo: GeneralInfo) => void;
 }
 
 const arrayOfGeneralInputs: Array<{
@@ -37,11 +37,13 @@ const arrayOfGeneralTextAreas: Array<{
 }> = [{ inputName: 'About me', inputValue: 'aboutMe' }];
 
 export const GeneralInput = (props: Props) => {
+  const { generalInfo, setGeneralInfo } = useContext(PDFViewContext);
   const { t } = useTranslation('GeneralInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
-  const { selectedTab, generalInfo, setGeneralInfo } = props;
+
+  const { selectedTab } = props;
 
   return (
     <div hidden={!selectedTab}>

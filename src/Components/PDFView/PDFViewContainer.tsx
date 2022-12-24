@@ -1,5 +1,5 @@
 import { usePDF } from '@react-pdf/renderer';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   getDataForUser,
@@ -9,16 +9,18 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { cacheAllData, PDFData } from '../../store/reducers/pdfData';
 import PageLoader from '../Shared/Loader/PageLoader';
 import CVTemplate from './CVTemplates/CVTemplate';
-import {
-  Certificate,
-  Education,
-  GeneralInfo,
-  LanguageSkill,
-  ProfessionalExperience,
-} from './models';
 import PDFViewPresenter from './PDFViewPresenter';
+import { PDFViewContext } from './PDFViewProvider';
 
 const PDFView = () => {
+  const {
+    certificates,
+    education,
+    generalInfo,
+    languages,
+    professionalExperience,
+    skills,
+  } = useContext(PDFViewContext);
   const { t, i18n } = useTranslation('CVTemplates');
   const currentLanguage = i18n.language;
 
@@ -27,33 +29,6 @@ const PDFView = () => {
   const template = useAppSelector(state => state.template);
   const user = useAppSelector(state => state.user.user);
 
-  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({
-    profilePicture: undefined,
-    firstName: '',
-    lastName: '',
-    dob: '',
-    aboutMe: '',
-    position: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    zip: '',
-    country: '',
-    website: '',
-    LinkedIn: '',
-    GitHub: '',
-    Facebook: '',
-    Instagram: '',
-    Twitter: '',
-  });
-  const [professionalExperience, setProfessionalExperience] = useState<
-    ProfessionalExperience[]
-  >([]);
-  const [certificates, setCertificates] = useState<Certificate[]>([]);
-  const [education, setEducation] = useState<Education[]>([]);
-  const [languages, setLanguages] = useState<LanguageSkill[]>([]);
-
   const [instance, updateInstance] = usePDF({
     document: CVTemplate({
       generalInfo,
@@ -61,6 +36,7 @@ const PDFView = () => {
       certificates,
       education,
       languages,
+      skills,
       t,
       currentLanguage,
     }),
@@ -82,11 +58,19 @@ const PDFView = () => {
           certificates,
           education,
           languages,
+          skills,
         } as PDFData)
       );
       dispatch(saveDataForUser());
     }, 800);
-  }, [generalInfo, professionalExperience, certificates, education, languages]);
+  }, [
+    generalInfo,
+    professionalExperience,
+    certificates,
+    education,
+    languages,
+    skills,
+  ]);
 
   useEffect(() => {
     if (updateInstanceRef.current) {
@@ -101,32 +85,9 @@ const PDFView = () => {
     dispatch(getDataForUser());
   }, [user]);
 
-  useEffect(() => {
-    if (pdfData) {
-      if (pdfData.generalInfo) setGeneralInfo(pdfData.generalInfo);
-      if (pdfData.professionalExperience)
-        setProfessionalExperience(pdfData.professionalExperience);
-      if (pdfData.certificates) setCertificates(pdfData.certificates);
-      if (pdfData.education) setEducation(pdfData.education);
-      if (pdfData.languages) setLanguages(pdfData.languages);
-    }
-  }, [pdfData]);
-
   return (
     <PageLoader isLoading={pdfData.loading}>
-      <PDFViewPresenter
-        pdfInstance={instance}
-        setGeneralInfo={setGeneralInfo}
-        generalInfo={generalInfo}
-        setProfessionalExperience={setProfessionalExperience}
-        professionalExperience={professionalExperience}
-        setCertificates={setCertificates}
-        certificates={certificates}
-        setEducation={setEducation}
-        education={education}
-        setLanguages={setLanguages}
-        languages={languages}
-      />
+      <PDFViewPresenter pdfInstance={instance} />
     </PageLoader>
   );
 };

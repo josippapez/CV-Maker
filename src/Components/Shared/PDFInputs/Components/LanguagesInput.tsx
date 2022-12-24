@@ -1,26 +1,26 @@
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
-import {
-  LanguageProficiencyLevel,
-  LanguageSkill,
-} from '../../../PDFView/models';
+import { LanguageProficiencyLevel } from '../../../PDFView/models';
+import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import TextInput from '../../Inputs/TextInput';
 import { AddNewButton } from './AddNewButton';
 import { DeleteButton } from './DeleteButton';
 
 interface Props {
   selectedTab: boolean;
-  setLanguages: (languages: LanguageSkill[]) => void;
-  languages: LanguageSkill[];
 }
 
 export const LanguagesInput = (props: Props) => {
+  const { languages, setLanguages } = useContext(PDFViewContext);
   const { t } = useTranslation('LanguagesInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
-  const { selectedTab, setLanguages, languages } = props;
+
+  const { selectedTab } = props;
+
   return (
     <div hidden={!selectedTab}>
       {languages.map((language, index) => (

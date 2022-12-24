@@ -32,6 +32,7 @@ type Props = {
   certificates?: Certificate[];
   education?: Education[];
   languages?: LanguageSkill[];
+  skills: string[];
   translate: TFunction;
 };
 
@@ -193,6 +194,21 @@ const styles = StyleSheet.create({
     color: '#3B93D5',
     padding: '5px 7px',
   },
+  skill: {
+    width: 'auto',
+    height: 'auto',
+    margin: '0 5px 5px 0',
+    backgroundColor: 'transparent',
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: 'white',
+    padding: '5px 15px',
+  },
+  skillText: {
+    fontSize: 9,
+    fontWeight: 'normal',
+    color: 'white'
+  },
 });
 
 const CVTemplate2 = (props: Props): JSX.Element => {
@@ -202,6 +218,7 @@ const CVTemplate2 = (props: Props): JSX.Element => {
     certificates,
     education,
     languages,
+    skills,
     translate,
   } = props;
 
@@ -246,6 +263,27 @@ const CVTemplate2 = (props: Props): JSX.Element => {
               {generalInfo?.aboutMe}
             </TextDisplay>
           </View>
+          {skills && skills.length > 0 && (
+            <View
+              style={[
+                styles.row,
+                styles.marginTop10,
+                {
+                  flexWrap: 'wrap',
+                },
+              ]}
+            >
+              {skills.map((skill: string, index: number) => {
+                return (
+                  <View key={index} style={[styles.skill]}>
+                    <TextDisplay style={[styles.skillText]}>
+                      {skill}
+                    </TextDisplay>
+                  </View>
+                );
+              })}
+            </View>
+          )}
           <AdditionalInformation
             generalInfo={generalInfo}
             styles={styles}

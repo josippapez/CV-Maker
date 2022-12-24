@@ -23,18 +23,6 @@ type Props = {
     url: string | null;
     error: string | null;
   };
-  setGeneralInfo(generalInfo: GeneralInfo): void;
-  generalInfo: GeneralInfo;
-  setProfessionalExperience(
-    professionalExperience: ProfessionalExperience[]
-  ): void;
-  professionalExperience: ProfessionalExperience[];
-  certificates: Certificate[];
-  education: Education[];
-  setCertificates(certificates: Certificate[]): void;
-  setEducation(education: Education[]): void;
-  languages: LanguageSkill[];
-  setLanguages(languages: LanguageSkill[]): void;
 };
 
 const options = {
@@ -43,19 +31,7 @@ const options = {
 };
 
 const PDFViewPresenter = (props: Props) => {
-  const {
-    pdfInstance,
-    generalInfo,
-    setGeneralInfo,
-    professionalExperience,
-    setProfessionalExperience,
-    certificates,
-    setCertificates,
-    education,
-    setEducation,
-    languages,
-    setLanguages,
-  } = props;
+  const { pdfInstance } = props;
 
   const windowSize = useWindowSize();
   const isMobileView = useMobileView();
@@ -86,18 +62,7 @@ const PDFViewPresenter = (props: Props) => {
     >
       <div className={`${isMobileView ? 'w-full' : 'w-5/12'}`}>
         <Suspense fallback={<PageLoader isLoading />}>
-          <PDFInputsContainer
-            setGeneralInfo={setGeneralInfo}
-            generalInfo={generalInfo}
-            professionalExperience={professionalExperience}
-            setProfessionalExperience={setProfessionalExperience}
-            certificates={certificates}
-            setCertificates={setCertificates}
-            education={education}
-            setEducation={setEducation}
-            languages={languages}
-            setLanguages={setLanguages}
-          />
+          <PDFInputsContainer />
         </Suspense>
       </div>
       <div

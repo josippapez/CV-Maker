@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
 import { ProfessionalExperience } from '../../../PDFView/models';
+import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import TextInput from '../../Inputs/TextInput';
 import ToggleInput from '../../Inputs/ToggleInput';
 import { AddNewButton } from './AddNewButton';
@@ -9,10 +11,6 @@ import { DeleteButton } from './DeleteButton';
 
 interface Props {
   selectedTab: boolean;
-  setProfessionalExperience: (
-    professionalExperience: ProfessionalExperience[]
-  ) => void;
-  professionalExperience: ProfessionalExperience[];
 }
 
 const arrayOfProfessionalExperienceInputs: Array<{
@@ -28,12 +26,14 @@ const arrayOfProfessionalExperienceInputs: Array<{
 ];
 
 export const ProfessionalExperienceInput = (props: Props) => {
+  const { setProfessionalExperience, professionalExperience } =
+    useContext(PDFViewContext);
   const { t } = useTranslation('ProfessionalExperienceInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
-  const { selectedTab, setProfessionalExperience, professionalExperience } =
-    props;
+
+  const { selectedTab } = props;
 
   return (
     <div hidden={!selectedTab}>

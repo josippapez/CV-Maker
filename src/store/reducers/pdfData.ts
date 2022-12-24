@@ -16,6 +16,7 @@ export interface PDFData {
   loading: boolean;
   initialLoad: boolean;
   timestamp: number;
+  skills: string[];
 }
 
 const initialState: PDFData = {
@@ -36,13 +37,13 @@ const initialState: PDFData = {
     LinkedIn: '',
     GitHub: '',
     Facebook: '',
-    Instagram: '',
     Twitter: '',
   },
   professionalExperience: [],
   certificates: [],
   education: [],
   languages: [],
+  skills: [],
   loading: false,
   initialLoad: true,
   timestamp: 0,
@@ -65,6 +66,7 @@ export const pdfData = createSlice({
       state.certificates = action.payload.certificates;
       state.education = action.payload.education;
       state.languages = action.payload.languages;
+      state.skills = action.payload.skills;
     },
     cacheGeneralInfo: (state, action: PayloadAction<GeneralInfo>) => {
       state.generalInfo = action.payload;
@@ -83,6 +85,9 @@ export const pdfData = createSlice({
     },
     cacheLanguages: (state, action: PayloadAction<LanguageSkill[]>) => {
       state.languages = action.payload;
+    },
+    cacheSkills: (state, action: PayloadAction<string[]>) => {
+      state.skills = action.payload;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;

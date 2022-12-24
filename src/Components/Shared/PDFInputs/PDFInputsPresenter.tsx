@@ -1,88 +1,39 @@
 import Scrollbars from 'react-custom-scrollbars';
-import {
-  Certificate,
-  Education,
-  GeneralInfo,
-  LanguageSkill,
-  ProfessionalExperience
-} from '../../PDFView/models';
-import PDFTabNavigation from '../PDFTabNavigation/PDFTabNavigationContainer';
+import PDFTabNavigationPresenter from '../PDFTabNavigation/PDFTabNavigationPresenter';
 import {
   CertificatesInput,
   EducationInput,
   GeneralInput,
   LanguagesInput,
-  ProfessionalExperienceInput
+  ProfessionalExperienceInput,
+  SkillsInput,
 } from './Components';
 import { Tab } from './PDFInputsContainer';
 
 type Props = {
-  generalInfo: GeneralInfo;
-  setGeneralInfo: (generalInfo: GeneralInfo) => void;
-  professionalExperience: ProfessionalExperience[];
-  setProfessionalExperience: (
-    professionalExperience: ProfessionalExperience[]
-  ) => void;
   selectedTab: Tab;
   setSelectedTab: (tab: Tab) => void;
-  certificates: Certificate[];
-  setCertificates: (certificates: Certificate[]) => void;
-  educations: Education[];
-  setEducation: (education: Education[]) => void;
-  languages: LanguageSkill[];
-  setLanguages: (languages: LanguageSkill[]) => void;
 };
 
 const PDFInputsPresenter = (props: Props) => {
-  const {
-    generalInfo,
-    setGeneralInfo,
-    professionalExperience,
-    setProfessionalExperience,
-    setSelectedTab,
-    selectedTab,
-    certificates,
-    setCertificates,
-    educations,
-    setEducation,
-    languages,
-    setLanguages,
-  } = props;
+  const { setSelectedTab, selectedTab } = props;
 
   return (
     <div className='flex flex-row h-full w-full'>
-      <PDFTabNavigation
+      <PDFTabNavigationPresenter
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
       <Scrollbars autoHide>
         <div className='w-full min-h-full p-10 bg-[#f7f7f7]'>
-          <GeneralInput
-            generalInfo={generalInfo}
-            setGeneralInfo={setGeneralInfo}
-            selectedTab={selectedTab === Tab.generalInfo}
-          />
+          <GeneralInput selectedTab={selectedTab === Tab.generalInfo} />
           <ProfessionalExperienceInput
-            professionalExperience={professionalExperience}
-            setProfessionalExperience={setProfessionalExperience}
             selectedTab={selectedTab === Tab.professionalExperience}
           />
-          <EducationInput
-            educations={educations}
-            setEducation={setEducation}
-            selectedTab={selectedTab === Tab.education}
-          />
-          <CertificatesInput
-            certificates={certificates}
-            setCertificates={setCertificates}
-            selectedTab={selectedTab === Tab.certificates}
-          />
-          <LanguagesInput
-            languages={languages}
-            setLanguages={setLanguages}
-            selectedTab={selectedTab === Tab.languages}
-          />
-          {/* TODO: Add skills input */}
+          <EducationInput selectedTab={selectedTab === Tab.education} />
+          <CertificatesInput selectedTab={selectedTab === Tab.certificates} />
+          <LanguagesInput selectedTab={selectedTab === Tab.languages} />
+          <SkillsInput selectedTab={selectedTab === Tab.skills} />
         </div>
       </Scrollbars>
     </div>

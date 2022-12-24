@@ -15,6 +15,5 @@ export interface GeneralInfo {
   LinkedIn: string;
   GitHub: string;
   Facebook: string;
-  Instagram: string;
   Twitter: string;
 }

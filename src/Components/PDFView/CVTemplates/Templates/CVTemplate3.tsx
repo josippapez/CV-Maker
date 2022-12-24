@@ -42,6 +42,7 @@ type Props = {
   certificates?: Certificate[];
   education?: Education[];
   languages?: LanguageSkill[];
+  skills?: string[];
   translate: TFunction;
 };
 
@@ -242,6 +243,20 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: 'extralight',
   },
+  skill: {
+    width: 'auto',
+    height: 'auto',
+    margin: '0 10px 10px 0',
+    backgroundColor: 'transparent',
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: 'white',
+    padding: '5px 15px',
+  },
+  skillText: {
+    fontSize: 9,
+    fontWeight: 'normal',
+  },
 });
 
 const CVTemplate3 = (props: Props): JSX.Element => {
@@ -251,6 +266,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
     certificates,
     education,
     languages,
+    skills,
     translate,
   } = props;
 
@@ -341,6 +357,43 @@ const CVTemplate3 = (props: Props): JSX.Element => {
               </TextDisplay>
             </View>
           </View>
+          {skills && skills.length > 0 && (
+            <View
+              style={[
+                styles.row,
+                styles.marginTop10,
+                {
+                  flexWrap: 'wrap',
+                },
+              ]}
+            >
+              {skills.map((skill: string, index: number) => {
+                return (
+                  <View
+                    key={index}
+                    style={[
+                      styles.skill,
+                      {
+                        backgroundColor: '#242424',
+                        borderColor: '#242424',
+                      },
+                    ]}
+                  >
+                    <TextDisplay
+                      style={[
+                        styles.skillText,
+                        {
+                          color: 'white',
+                        },
+                      ]}
+                    >
+                      {skill}
+                    </TextDisplay>
+                  </View>
+                );
+              })}
+            </View>
+          )}
           <AdditionalInformation
             generalInfo={generalInfo}
             styles={styles}
@@ -357,10 +410,10 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                 <View
                   style={[
                     styles.additionalInfoBar,
-                    styles.paddingY10,
                     styles.row,
                     {
                       flexWrap: 'wrap',
+                      marginBottom: 10,
                     },
                   ]}
                 >
@@ -430,9 +483,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
               },
             ]}
           >
-            <TextDisplay
-              style={[styles.sectionTitle]}
-            >
+            <TextDisplay style={[styles.sectionTitle]}>
               {translate('education')}
             </TextDisplay>
             {education?.map((edu, index) => (

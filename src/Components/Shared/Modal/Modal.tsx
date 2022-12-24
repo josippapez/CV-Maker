@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import useWindowSize from '../../../Hooks/useWindowSize';
 import style from './Modal.module.scss';
-import { motion } from 'framer-motion';
 
 interface Props {
   closeModal(): void;
@@ -130,77 +129,84 @@ const Modal = (props: Props): JSX.Element => {
   const animate = getAnimation();
 
   return createPortal(
-    <motion.div
-      initial={'hide'}
-      animate={show ? 'show' : 'hide'}
-      variants={{
-        show: {
-          opacity: 1,
-          zIndex: zindex ?? 'auto',
-          display: 'flex',
-          transition: {
-            duration: 0.15,
-          },
-        },
-        hide: {
-          opacity: 0,
-          display: 'none',
-          transition: {
-            delay: 0.2,
-          },
-        },
-      }}
-      ref={el => {
-        if (el) {
-          if (show) {
-            setTimeout(() => {
-              el.style.overflow = 'auto';
-            }, 250);
-          } else {
-            el.style.overflow = 'hidden';
-          }
-        }
-      }}
-      id='modal-overlay'
-      aria-hidden='true'
-      role='button'
-      className={`
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={'hide'}
+          animate={'show'}
+          exit={'hide'}
+          variants={{
+            show: {
+              opacity: 1,
+              transition: {
+                duration: 0.15,
+              }
+            },
+            hide: {
+              opacity: 0,
+              transition: {
+                duration: 0.05,
+                delay: 0.15,
+              }
+            },
+          }}
+          ref={el => {
+            if (el) {
+              if (show) {
+                setTimeout(() => {
+                  el.style.overflow = 'auto';
+                }, 250);
+              } else {
+                el.style.overflow = 'hidden';
+              }
+            }
+          }}
+          style={{
+            zIndex: zindex,
+          }}
+          id='modal-overlay'
+          aria-hidden='true'
+          role='button'
+          className={`
         ${style.overlay}
         ${style[`${position}`]}
       `}
-      onMouseDown={() => closeModal()}
-      onTouchStart={e => e.stopPropagation()}
-    >
-      <motion.div
-        initial={'hide'}
-        animate={show ? 'show' : 'hide'}
-        exit={'hide'}
-        variants={animate}
-        id='modal-children'
-        aria-hidden='true'
-        className={`
+          onMouseDown={() => closeModal()}
+          onTouchStart={e => e.stopPropagation()}
+        >
+          <motion.div
+            initial={'hide'}
+            animate={'show'}
+            exit={'hide'}
+            variants={animate}
+            id='modal-children'
+            aria-hidden='true'
+            className={`
           ${style.children}
           ${contentClassname}
           subpixel-antialiased
           flex flex-col
           relative
         `}
-        onMouseDown={e => e.stopPropagation()}
-        style={{
-          width: width === 'screen' ? windowSize.width + 'px' : width,
-          height: height === 'screen' ? '100vh' : height,
-          maxHeight: windowSize.height + 'px',
-          aspectRatio: ratio,
-        }}
-      >
-        {children}
-      </motion.div>
-    </motion.div>,
+            onMouseDown={e => e.stopPropagation()}
+            style={{
+              width: width === 'screen' ? windowSize.width + 'px' : width,
+              height: height === 'screen' ? '100vh' : height,
+              maxHeight: windowSize.height + 'px',
+              aspectRatio: ratio,
+            }}
+          >
+            {children}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
     document.getElementById('root') as Element
   );
 };
 
 Modal.defaultProps = {
+  zindex: 30,
   position: 'center',
   width: '',
   animation: 'fade',
@@ -208,12 +214,6 @@ Modal.defaultProps = {
   closeModal: () => {
     return;
   },
-};
-
-Modal.propTypes = {
-  closeModal: PropTypes.func,
-  position: PropTypes.string,
-  children: PropTypes.shape({}).isRequired,
 };
 
 export default Modal;

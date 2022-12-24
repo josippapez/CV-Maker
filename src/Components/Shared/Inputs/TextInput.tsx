@@ -18,6 +18,7 @@ type Props = {
   fullWidth?: boolean;
   textarea?: boolean;
   inline?: boolean;
+  onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const TextInput = (props: Props) => {
@@ -37,6 +38,7 @@ const TextInput = (props: Props) => {
     fullWidth,
     textarea,
     inline,
+    onKeyPress,
   } = props;
   return (
     <div
@@ -97,6 +99,11 @@ const TextInput = (props: Props) => {
 
             e.preventDefault();
             onBlur(e);
+          }}
+          onKeyDown={e => {
+            if (!onKeyPress) return;
+
+            onKeyPress(e);
           }}
           disabled={disabled}
           required={required}

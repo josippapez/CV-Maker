@@ -4,6 +4,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PDFViewProvider } from './Components/PDFView/PDFViewProvider';
 import PageLoader from './Components/Shared/Loader/PageLoader';
 import NavbarContainer from './Components/Shared/Navbar/NavbarContainer';
 import { useAppDispatch } from './store/hooks';
@@ -63,7 +64,9 @@ function App() {
           path='/create'
           element={
             <Suspense fallback={<PageLoader isLoading />}>
-              <PDFView />
+              <PDFViewProvider>
+                <PDFView />
+              </PDFViewProvider>
             </Suspense>
           }
         />

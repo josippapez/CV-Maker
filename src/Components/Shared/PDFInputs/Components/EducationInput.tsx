@@ -1,35 +1,34 @@
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Education } from '../../../PDFView/models';
+import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import { AddNewButton } from './AddNewButton';
 import EducationItem from './EducationItem';
 
 interface Props {
   selectedTab: boolean;
-  setEducation: (educations: Education[]) => void;
-  educations: Education[];
 }
 
 export const EducationInput = (props: Props) => {
+  const { education, setEducation } = useContext(PDFViewContext);
   const { t } = useTranslation('EducationInput');
 
-  const { selectedTab, setEducation, educations } = props;
+  const { selectedTab } = props;
 
   return (
     <div hidden={!selectedTab}>
-      {educations.map((education, index) => (
+      {education.map((item, index) => (
         <EducationItem
           key={`EducationInput-${index}`}
-          education={education}
-          educations={educations}
+          education={item}
+          educationList={education}
           setEducation={setEducation}
-          selectedTab={selectedTab}
           index={index}
         />
       ))}
       <AddNewButton
         onClick={() => {
           setEducation([
-            ...educations,
+            ...education,
             {
               url: '',
               course: '',

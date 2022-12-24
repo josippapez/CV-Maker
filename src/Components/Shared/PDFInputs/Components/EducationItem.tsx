@@ -8,11 +8,10 @@ import ToggleInput from '../../Inputs/ToggleInput';
 import { DeleteButton } from './DeleteButton';
 
 interface Props {
-  selectedTab: boolean;
   education: Education;
   index: number;
   setEducation: (educations: Education[]) => void;
-  educations: Education[];
+  educationList: Education[];
 }
 
 const arrayOfEducationInputs: Array<{
@@ -41,7 +40,7 @@ const arrayOfCourseInputs: Array<{
 
 const EducationItem = (props: Props) => {
   const { t } = useTranslation('EducationInput');
-  const { education, index, setEducation, educations, selectedTab } = props;
+  const { education, index, setEducation, educationList } = props;
 
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
@@ -62,7 +61,7 @@ const EducationItem = (props: Props) => {
     selectedEducationIndex: number
   ) => {
     setEducation(
-      educations.map((education, index) => {
+      educationList.map((education, index) => {
         if (index === selectedEducationIndex) {
           return {
             url: '',
@@ -89,14 +88,14 @@ const EducationItem = (props: Props) => {
     <motion.div
       key={`EducationInput-${index}`}
       initial={combinedStyleInitial}
-      animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
+      animate={combinedStyleFinal}
       transition={{ duration: 0.2 }}
       className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4'
     >
       <DeleteButton
         onClick={() => {
           setEducation(
-            educations.filter((item, existingIndex) => existingIndex !== index)
+            educationList.filter((item, existingIndex) => existingIndex !== index)
           );
         }}
       />
@@ -130,7 +129,7 @@ const EducationItem = (props: Props) => {
             name={input.inputName}
             onChange={e => {
               setEducation(
-                educations.map((education, i) => {
+                educationList.map((education, i) => {
                   if (i === index) {
                     return {
                       ...education,
@@ -151,7 +150,7 @@ const EducationItem = (props: Props) => {
               wrapperClassName='mt-4'
               onChange={e => {
                 setEducation(
-                  educations.map((education, i) => {
+                  educationList.map((education, i) => {
                     if (i === index) {
                       return {
                         ...education,
@@ -174,7 +173,7 @@ const EducationItem = (props: Props) => {
         name='education-description'
         onChange={e => {
           setEducation(
-            educations.map((item, i) => {
+            educationList.map((item, i) => {
               if (i === index) {
                 return { ...item, description: e.target.value };
               }

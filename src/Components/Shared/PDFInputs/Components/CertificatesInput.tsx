@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
 import { Certificate } from '../../../PDFView/models';
+import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import TextInput from '../../Inputs/TextInput';
 import { AddNewButton } from './AddNewButton';
 import { DeleteButton } from './DeleteButton';
 
 interface Props {
   selectedTab: boolean;
-  setCertificates: (certificates: Certificate[]) => void;
-  certificates: Certificate[];
 }
 
 const arrayOfCertificatesInputs: Array<{
@@ -23,11 +23,14 @@ const arrayOfCertificatesInputs: Array<{
 ];
 
 export const CertificatesInput = (props: Props) => {
+  const { setCertificates, certificates } = useContext(PDFViewContext);
   const { t } = useTranslation('CertificatesInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
-  const { selectedTab, setCertificates, certificates } = props;
+
+  const { selectedTab } = props;
+
   return (
     <div hidden={!selectedTab}>
       {certificates.map((certificate, index) => (
