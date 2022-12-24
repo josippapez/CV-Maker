@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId}{
+    	allow create
+      allow read: if isAuthenticated()
+      allow write, update: if isAuthorized(userId)
+    }
+    match /user-data/{userId}{
+    	allow create
+      allow read: if isAuthenticated()
+      allow write, update: if isAuthorized(userId)
+    }
+
+    function isAuthorized(id) {
+    	return request.auth != null && request.auth.uid == id
+    }
+
+    function isAuthenticated() {
+    	return request.auth != null && request.auth.uid != null;
+    }
+  }
+}

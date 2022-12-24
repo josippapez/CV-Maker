@@ -1,0 +1,14 @@
+{
+  "school": "Škola",
+  "degree": "Stručna sprema",
+  "fieldOfStudy": "Polje studija",
+  "location": "Lokacija",
+  "startDate": "Početak",
+  "endDate": "Kraj",
+  "present": "Trenutno",
+  "description": "Opis",
+  "addEducation": "Dodaj obrazovanje",
+
+  "course": "Tečaj",
+  "url": "URL (Link na stranicu tečaja)"
+}

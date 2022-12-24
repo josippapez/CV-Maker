@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
+import { ReactComponent as Plus } from '../../../../Styles/Assets/Images/plus.svg';
 import { GeneralInfo } from '../../../PDFView/models';
+import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import TextInput from '../../Inputs/TextInput';
 
 interface Props {
   selectedTab: boolean;
-  generalInfo: GeneralInfo;
-  setGeneralInfo: (generalInfo: GeneralInfo) => void;
 }
 
 const arrayOfGeneralInputs: Array<{
@@ -36,11 +37,13 @@ const arrayOfGeneralTextAreas: Array<{
 }> = [{ inputName: 'About me', inputValue: 'aboutMe' }];
 
 export const GeneralInput = (props: Props) => {
-  const { t } = useTranslation();
+  const { generalInfo, setGeneralInfo } = useContext(PDFViewContext);
+  const { t } = useTranslation('GeneralInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
-  const { selectedTab, generalInfo, setGeneralInfo } = props;
+
+  const { selectedTab } = props;
 
   return (
     <div hidden={!selectedTab}>
@@ -55,7 +58,7 @@ export const GeneralInput = (props: Props) => {
           {generalInfo.profilePicture ? (
             <>
               <img
-                className='w-32 h-32 rounded-full'
+                className='w-24 h-24 rounded-3xl'
                 style={{ objectFit: 'cover' }}
                 src={
                   generalInfo.profilePicture ? generalInfo.profilePicture : ''
@@ -67,7 +70,7 @@ export const GeneralInput = (props: Props) => {
                 onClick={() => {
                   setGeneralInfo({
                     ...generalInfo,
-                    profilePicture: null,
+                    profilePicture: undefined,
                   });
                 }}
               >
@@ -75,29 +78,39 @@ export const GeneralInput = (props: Props) => {
               </button>
             </>
           ) : (
-            <input
-              className='w-full p-2'
-              type='file'
-              accept='image/png, image/gif, image/jpeg'
-              onChange={e => {
-                if (e.target.files) {
-                  const file = e.target.files[0];
-                  if (file) {
-                    const reader = new FileReader();
-                    reader.onload = e => {
-                      const image = e.target?.result as string;
-                      if (image) {
-                        setGeneralInfo({
-                          ...generalInfo,
-                          profilePicture: image,
-                        });
-                      }
-                    };
-                    reader.readAsDataURL(file);
+            <>
+              <label
+                htmlFor='profilePicture'
+                className='flex justify-center items-center cursor-pointer w-24 h-24 bg-blue-100 rounded-3xl border border-dashed border-blue-500 hover:bg-blue-300'
+              >
+                <Plus height={30} className='fill-blue-600' />
+              </label>
+              <input
+                className='hidden'
+                type='file'
+                id='profilePicture'
+                name='profilePicture'
+                accept='image/png, image/gif, image/jpeg'
+                onChange={e => {
+                  if (e.target.files) {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onload = e => {
+                        const image = e.target?.result as string;
+                        if (image) {
+                          setGeneralInfo({
+                            ...generalInfo,
+                            profilePicture: image,
+                          });
+                        }
+                      };
+                      reader.readAsDataURL(file);
+                    }
                   }
-                }
-              }}
-            />
+                }}
+              />
+            </>
           )}
         </motion.div>
         {arrayOfGeneralInputs.map((input, index) => (
@@ -114,7 +127,7 @@ export const GeneralInput = (props: Props) => {
               label={t(`${input.inputValue}`)}
               type={input.type}
               value={generalInfo[input.inputValue]}
-              name={input.inputValue}
+              name={input.inputName}
               onChange={e => {
                 setGeneralInfo({
                   ...generalInfo,
@@ -139,7 +152,7 @@ export const GeneralInput = (props: Props) => {
               label={t(`${input.inputValue}`)}
               textarea
               value={generalInfo[input.inputValue]}
-              name={input.inputValue}
+              name={input.inputName}
               onChange={e => {
                 setGeneralInfo({
                   ...generalInfo,

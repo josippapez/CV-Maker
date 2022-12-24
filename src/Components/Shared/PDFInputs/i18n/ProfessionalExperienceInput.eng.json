@@ -1,0 +1,10 @@
+{
+  "company": "Company",
+  "position": "Position",
+  "location": "Location",
+  "startDate": "Start date",
+  "endDate": "End date",
+  "present": "Present",
+  "description": "Description",
+  "addExperience": "Add experience"
+}

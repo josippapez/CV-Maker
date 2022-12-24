@@ -11,6 +11,7 @@ type Props = {
   required?: boolean;
   className?: string;
   fullWidth?: boolean;
+  wrapperClassName?: string;
 };
 
 const ToggleInput = (props: Props) => {
@@ -27,10 +28,13 @@ const ToggleInput = (props: Props) => {
     className,
     fullWidth,
     checked,
+    wrapperClassName,
   } = props;
   return (
     <div
-      className={`flex flex-col ${fullWidth ? 'w-full' : ''} drop-shadow-sm`}
+      className={`flex flex-col ${
+        fullWidth ? 'w-full' : ''
+      } drop-shadow-sm ${wrapperClassName}`}
     >
       {label && <label className='font-medium text-gray-700'>{label}</label>}
       <input

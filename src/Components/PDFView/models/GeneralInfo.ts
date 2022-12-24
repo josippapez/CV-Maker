@@ -1,5 +1,5 @@
 export interface GeneralInfo {
-  profilePicture: string | null;
+  profilePicture?: string;
   firstName: string;
   lastName: string;
   dob: string;
@@ -15,6 +15,5 @@ export interface GeneralInfo {
   LinkedIn: string;
   GitHub: string;
   Facebook: string;
-  Instagram: string;
   Twitter: string;
 }

@@ -20,6 +20,7 @@ type OptionType = {
   certificates: Certificate[];
   education: Education[];
   languages: LanguageSkill[];
+  skills: string[];
   translate: TFunction;
 };
 
@@ -31,6 +32,7 @@ type Props = {
   languages: LanguageSkill[];
   t: TFunction;
   currentLanguage: string;
+  skills: string[];
 };
 
 const getTemplate = (templateName: TemplateName, options: OptionType) => {
@@ -55,6 +57,7 @@ const CVTemplate = (props: Props): JSX.Element => {
     certificates,
     education,
     languages,
+    skills,
     t,
     currentLanguage,
   } = props;
@@ -66,6 +69,7 @@ const CVTemplate = (props: Props): JSX.Element => {
     certificates,
     education,
     languages,
+    skills,
     translate: t,
   };
 
@@ -79,6 +83,7 @@ const CVTemplate = (props: Props): JSX.Element => {
       education,
       languages,
       currentLanguage,
+      skills,
     ]
   );
 };

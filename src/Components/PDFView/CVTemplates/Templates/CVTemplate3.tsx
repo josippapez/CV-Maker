@@ -4,6 +4,7 @@ import {
   Font,
   Image,
   LinearGradient,
+  Link,
   Page,
   Rect,
   Stop,
@@ -12,6 +13,7 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
+import { Fragment } from 'react';
 import { TFunction } from 'react-i18next';
 import UnboundedBold from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-Bold.ttf';
 import UnboundedExtraBold from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-ExtraBold.ttf';
@@ -32,6 +34,7 @@ import { BlobTopLeft } from '../Images/BlobTopLeft';
 import { BlobTopRight } from '../Images/BlobTopRight';
 import { LayeredWaves } from '../Images/LayeredWaves';
 import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
+import { TextDisplay } from '../TemplateComponents/TextDisplay';
 
 type Props = {
   generalInfo?: GeneralInfo;
@@ -39,6 +42,7 @@ type Props = {
   certificates?: Certificate[];
   education?: Education[];
   languages?: LanguageSkill[];
+  skills?: string[];
   translate: TFunction;
 };
 
@@ -162,7 +166,6 @@ const styles = StyleSheet.create({
   },
   additionalInfoBarText: {
     marginLeft: 20,
-    textDecoration: 'none',
     color: 'white',
   },
   companyName: {
@@ -240,6 +243,20 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: 'extralight',
   },
+  skill: {
+    width: 'auto',
+    height: 'auto',
+    margin: '0 10px 10px 0',
+    backgroundColor: 'transparent',
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: 'white',
+    padding: '5px 15px',
+  },
+  skillText: {
+    fontSize: 9,
+    fontWeight: 'normal',
+  },
 });
 
 const CVTemplate3 = (props: Props): JSX.Element => {
@@ -249,6 +266,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
     certificates,
     education,
     languages,
+    skills,
     translate,
   } = props;
 
@@ -314,10 +332,10 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                   flexDirection: 'row',
                 }}
               >
-                <Text style={styles.topBarName}>
+                <TextDisplay style={styles.topBarName}>
                   {generalInfo?.firstName} {generalInfo?.lastName}
-                </Text>
-                <Text
+                </TextDisplay>
+                <TextDisplay
                   style={[
                     {
                       fontWeight: 'light',
@@ -329,12 +347,53 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                   ]}
                 >
                   {generalInfo?.dob}
-                </Text>
+                </TextDisplay>
               </View>
-              <Text style={styles.topBarPosition}>{generalInfo?.position}</Text>
-              <Text style={styles.topBarText}>{generalInfo?.aboutMe}</Text>
+              <TextDisplay style={styles.topBarPosition}>
+                {generalInfo?.position}
+              </TextDisplay>
+              <TextDisplay style={styles.topBarText}>
+                {generalInfo?.aboutMe}
+              </TextDisplay>
             </View>
           </View>
+          {skills && skills.length > 0 && (
+            <View
+              style={[
+                styles.row,
+                styles.marginTop10,
+                {
+                  flexWrap: 'wrap',
+                },
+              ]}
+            >
+              {skills.map((skill: string, index: number) => {
+                return (
+                  <View
+                    key={index}
+                    style={[
+                      styles.skill,
+                      {
+                        backgroundColor: '#242424',
+                        borderColor: '#242424',
+                      },
+                    ]}
+                  >
+                    <TextDisplay
+                      style={[
+                        styles.skillText,
+                        {
+                          color: 'white',
+                        },
+                      ]}
+                    >
+                      {skill}
+                    </TextDisplay>
+                  </View>
+                );
+              })}
+            </View>
+          )}
           <AdditionalInformation
             generalInfo={generalInfo}
             styles={styles}
@@ -351,10 +410,10 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                 <View
                   style={[
                     styles.additionalInfoBar,
-                    styles.paddingY10,
                     styles.row,
                     {
                       flexWrap: 'wrap',
+                      marginBottom: 10,
                     },
                   ]}
                 >
@@ -377,7 +436,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
             {professionalExperience?.map((experience, index) => (
               <View
                 wrap={false}
-                key={index}
+                key={`experience-${index}`}
                 style={[
                   styles.row,
                   {
@@ -388,22 +447,24 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                 ]}
               >
                 <View style={[styles.column, { width: '50%' }]}>
-                  <Text style={[styles.companyName]}>{experience.company}</Text>
-                  <Text style={[styles.companyDuration]}>
+                  <TextDisplay style={[styles.companyName]}>
+                    {experience.company}
+                  </TextDisplay>
+                  <TextDisplay style={[styles.companyDuration]}>
                     {experience.startDate} - {experience.endDate}
-                  </Text>
-                  <Text style={[styles.companyLocation]}>
+                  </TextDisplay>
+                  <TextDisplay style={[styles.companyLocation]}>
                     {experience.location}
-                  </Text>
+                  </TextDisplay>
                 </View>
 
                 <View style={[styles.column, { width: '50%' }]}>
-                  <Text style={[styles.companyPosition]}>
+                  <TextDisplay style={[styles.companyPosition]}>
                     {experience.position}
-                  </Text>
-                  <Text style={[styles.companyDescription]}>
+                  </TextDisplay>
+                  <TextDisplay style={[styles.companyDescription]}>
                     {experience.description}
-                  </Text>
+                  </TextDisplay>
                 </View>
               </View>
             ))}
@@ -422,10 +483,14 @@ const CVTemplate3 = (props: Props): JSX.Element => {
               },
             ]}
           >
+            <TextDisplay style={[styles.sectionTitle]}>
+              {translate('education')}
+            </TextDisplay>
             {education?.map((edu, index) => (
-              <>
+              <Fragment key={`edu-${index}`}>
                 {index === 0 && (
                   <View
+                    key={`edu-${index}-blobTopRight`}
                     wrap={false}
                     style={{
                       position: 'absolute',
@@ -441,6 +506,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                 {index === education.length - 1 &&
                   (certificates && certificates.length > 0 ? (
                     <View
+                      key={`edu-${index}-blobBottomLeft`}
                       wrap={false}
                       style={{
                         position: 'absolute',
@@ -454,6 +520,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                     </View>
                   ) : (
                     <View
+                      key={`edu-${index}-LayeredWaves`}
                       wrap={false}
                       style={{
                         position: 'absolute',
@@ -468,41 +535,51 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                   ))}
                 <View
                   wrap={false}
-                  key={index}
+                  key={`edu-${index}`}
                   style={[
                     styles.column,
                     {
-                      marginTop: index === 0 ? 0 : 20,
+                      marginTop: 20,
                     },
                   ]}
                 >
-                  {index === 0 && (
-                    <Text
-                      style={[
-                        styles.sectionTitle,
-                        { marginBottom: 10, marginTop: 0 },
-                      ]}
-                    >
-                      {translate('education')}
-                    </Text>
-                  )}
                   <View style={[styles.column]}>
-                    <Text style={[styles.educationSchool]}>{edu.school}</Text>
-                    <Text style={[styles.educationDuration]}>
+                    <TextDisplay style={[styles.educationSchool]}>
+                      {edu.course ? edu.course : edu.school}
+                    </TextDisplay>
+                    <TextDisplay style={[styles.educationDuration]}>
                       {edu.startDate} - {edu.endDate}
-                    </Text>
-                    <Text style={[styles.educationDegree]}>
-                      {edu.degree}, {edu.fieldOfStudy}
-                    </Text>
-                    <Text style={[styles.educationLocation]}>
+                    </TextDisplay>
+                    <TextDisplay style={[styles.educationDegree]}>
+                      {`${edu.degree} ${
+                        edu.fieldOfStudy && `, ${edu.fieldOfStudy}`
+                      }`}
+                    </TextDisplay>
+                    {edu.url && (
+                      <Link
+                        src={edu.url}
+                        style={{
+                          textDecoration: 'none',
+                        }}
+                      >
+                        <Text
+                          style={[styles.educationDegree, { color: 'white' }]}
+                        >
+                          {edu.url
+                            .replace(/(^\w+:|^)\/\//, '')
+                            .replace(/(^www\.)/, '')}
+                        </Text>
+                      </Link>
+                    )}
+                    <TextDisplay style={[styles.educationLocation]}>
                       {edu.location}
-                    </Text>
-                    <Text style={[styles.educationDescription]}>
+                    </TextDisplay>
+                    <TextDisplay style={[styles.educationDescription]}>
                       {edu.description}
-                    </Text>
+                    </TextDisplay>
                   </View>
                 </View>
-              </>
+              </Fragment>
             ))}
           </View>
         ) : null}
@@ -529,9 +606,10 @@ const CVTemplate3 = (props: Props): JSX.Element => {
               <LayeredWaves />
             </View>
             {certificates.map((cert, index) => (
-              <>
+              <Fragment key={`cert-${index}`}>
                 {index === 0 && (
                   <View
+                    key={`cert-${index}-blobTopLeft`}
                     wrap={false}
                     style={{
                       position: 'absolute',
@@ -546,7 +624,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                 )}
                 <View
                   wrap={false}
-                  key={index}
+                  key={`cert-${index}`}
                   style={[
                     {
                       marginTop: index === 0 ? 0 : 20,
@@ -554,15 +632,19 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                   ]}
                 >
                   {index === 0 && (
-                    <Text style={[styles.sectionTitle, styles.marginBottom20]}>
+                    <TextDisplay
+                      style={[styles.sectionTitle, styles.marginBottom20]}
+                    >
                       {translate('certificates')}
-                    </Text>
+                    </TextDisplay>
                   )}
                   <View style={[styles.column]}>
-                    <Text style={[styles.certificateName]}>{cert.name}</Text>
-                    <Text style={[styles.certificateInstitution]}>
+                    <TextDisplay style={[styles.certificateName]}>
+                      {cert.name}
+                    </TextDisplay>
+                    <TextDisplay style={[styles.certificateInstitution]}>
                       {cert.institution}
-                    </Text>
+                    </TextDisplay>
                     <View
                       style={[
                         styles.row,
@@ -571,16 +653,16 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                         },
                       ]}
                     >
-                      <Text style={[styles.certificateDuration]}>
+                      <TextDisplay style={[styles.certificateDuration]}>
                         {cert.date}
-                      </Text>
+                      </TextDisplay>
                     </View>
-                    <Text style={[styles.certificateDescription]}>
+                    <TextDisplay style={[styles.certificateDescription]}>
                       {cert.description}
-                    </Text>
+                    </TextDisplay>
                   </View>
                 </View>
-              </>
+              </Fragment>
             ))}
           </View>
         ) : null}
@@ -597,7 +679,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
             ]}
           >
             <View>
-              <Text
+              <TextDisplay
                 style={[
                   styles.sectionTitle,
                   {
@@ -606,7 +688,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                 ]}
               >
                 {translate('languages')}
-              </Text>
+              </TextDisplay>
             </View>
             <View
               style={[
@@ -617,11 +699,16 @@ const CVTemplate3 = (props: Props): JSX.Element => {
               ]}
             >
               {languages.map((lang, index) => (
-                <View key={index} style={[styles.column, styles.languageCard]}>
-                  <Text style={[styles.languageName]}>{lang.name}</Text>
-                  <Text style={[styles.languageLevel]}>
+                <View
+                  key={`lang-${index}`}
+                  style={[styles.column, styles.languageCard]}
+                >
+                  <TextDisplay style={[styles.languageName]}>
+                    {lang.name}
+                  </TextDisplay>
+                  <TextDisplay style={[styles.languageLevel]}>
                     {translate(lang.proficiency)}
-                  </Text>
+                  </TextDisplay>
                 </View>
               ))}
             </View>

@@ -67,7 +67,7 @@ const AdditionalInformation = (props: Props) => {
     })
     .map(({ icon, text, link }, index) => {
       return (
-        <View key={index} style={itemWrapperStyle}>
+        <View key={`additionalInfo-${index}`} style={itemWrapperStyle}>
           {icon({ width: 14 })}
           {text && <Text style={styles.additionalInfoBarText}>{text}</Text>}
           {link && (

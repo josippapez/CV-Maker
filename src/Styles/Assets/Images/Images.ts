@@ -1,15 +1,13 @@
-import LeftArrow from './left-arrow.svg?url';
-import RightArrow from './right-arrow.svg?url';
 import Desk from './Desk.jpg';
 import PagesImage from './pages.svg?url';
 import Notebook from './Notebook.jpg';
+import Logout from './logout.svg?url';
 
 const Images = {
-  LeftArrow,
-  RightArrow,
   Desk,
   PagesImage,
   Notebook,
+  Logout
 };
 
 export default Images;

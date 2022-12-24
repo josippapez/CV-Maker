@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
-import { ReactComponent as DeleteIcon } from '../../../../Styles/Assets/Images/deleteIcon.svg';
 import { Certificate } from '../../../PDFView/models';
+import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import TextInput from '../../Inputs/TextInput';
+import { AddNewButton } from './AddNewButton';
+import { DeleteButton } from './DeleteButton';
 
 interface Props {
   selectedTab: boolean;
-  setCertificates: (certificates: Certificate[]) => void;
-  certificates: Certificate[];
 }
 
 const arrayOfCertificatesInputs: Array<{
@@ -22,11 +23,14 @@ const arrayOfCertificatesInputs: Array<{
 ];
 
 export const CertificatesInput = (props: Props) => {
-  const { t } = useTranslation();
+  const { setCertificates, certificates } = useContext(PDFViewContext);
+  const { t } = useTranslation('CertificatesInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
-  const { selectedTab, setCertificates, certificates } = props;
+
+  const { selectedTab } = props;
+
   return (
     <div hidden={!selectedTab}>
       {certificates.map((certificate, index) => (
@@ -35,22 +39,15 @@ export const CertificatesInput = (props: Props) => {
           initial={combinedStyleInitial}
           animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
           transition={{ duration: 0.2 }}
-          className='flex flex-col gap-4 p-4 relative focus-within:bg-slate-200 rounded-md border border-gray-400 first:mt-0 mt-4'
+          className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4 transition-all'
         >
-          <button
-            className='absolute top-0 right-0'
+          <DeleteButton
             onClick={() => {
               setCertificates(
                 certificates.filter((certificate, i) => i !== index)
               );
             }}
-          >
-            <DeleteIcon
-              className='hover:stroke-red-600'
-              width={30}
-              height={30}
-            />
-          </button>
+          />
           {arrayOfCertificatesInputs.map((input, currentIndex) => (
             <TextInput
               key={index + '-' + 'CertificatesInput' + '-' + currentIndex}
@@ -102,8 +99,7 @@ export const CertificatesInput = (props: Props) => {
           />
         </motion.div>
       ))}
-      <button
-        className='w-full border-2 rounded-md p-1 focus:border-slate-400'
+      <AddNewButton
         onClick={() => {
           setCertificates([
             ...certificates,
@@ -115,9 +111,8 @@ export const CertificatesInput = (props: Props) => {
             },
           ]);
         }}
-      >
-        {t('addCertification')}
-      </button>
+        title={t('addCertification')}
+      />
     </div>
   );
 };

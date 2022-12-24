@@ -1,0 +1,14 @@
+{
+  "location": "Location",
+  "startDate": "Start date",
+  "endDate": "End date",
+  "present": "Present",
+  "description": "Description",
+  "school": "School",
+  "degree": "Degree",
+  "fieldOfStudy": "Field of study",
+  "addEducation": "Add education",
+
+  "course": "Course",
+  "url": "URL (Link to course page)"
+}

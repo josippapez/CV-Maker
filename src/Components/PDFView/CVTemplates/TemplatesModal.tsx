@@ -13,7 +13,7 @@ type Props = {
 const TemplatesModal = (props: Props) => {
   const isMobileView = useMobileView();
   const { closeModal, show } = props;
-  const { t } = useTranslation();
+  const { t } = useTranslation('CVTemplates');
   const dispatch = useAppDispatch();
   return (
     <Modal
@@ -25,7 +25,7 @@ const TemplatesModal = (props: Props) => {
       width={isMobileView ? '100%' : '50rem'}
       closeModal={closeModal}
     >
-      <div className='h-full bg-gray-300 dark:bg-zinc-900 p-5 flex-col relative'>
+      <div className='h-full bg-[#f7f7f7] dark:bg-zinc-900 p-5 flex-col relative'>
         <div className='flex justify-between items-center'>
           <h1 className='text-2xl font-bold dark:text-white'>
             {t('chooseYourTemplate')}
@@ -45,7 +45,7 @@ const TemplatesModal = (props: Props) => {
             &times;
           </button>
         </div>
-        <div className='flex justify-center items-center'>
+        <div className='flex justify-center items-center mt-3'>
           {Object.entries(TemplateName).map(value => {
             const templateName = value[1];
             return (
@@ -53,7 +53,7 @@ const TemplatesModal = (props: Props) => {
                 key={templateName}
                 className={`${style.template} ${
                   style[value[0]]
-                } bg-white dark:bg-gray-800 rounded-md`}
+                } rounded-md hover:ring-2 hover:ring-blue-400 cursor-pointer transition-all`}
                 onClick={() => {
                   dispatch(setTemplate(templateName));
                   closeModal();
