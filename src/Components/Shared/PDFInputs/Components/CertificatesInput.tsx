@@ -8,10 +8,6 @@ import TextInput from '../../Inputs/TextInput';
 import { AddNewButton } from './AddNewButton';
 import { DeleteButton } from './DeleteButton';
 
-interface Props {
-  selectedTab: boolean;
-}
-
 const arrayOfCertificatesInputs: Array<{
   inputName: string;
   inputValue: keyof Certificate;
@@ -22,22 +18,26 @@ const arrayOfCertificatesInputs: Array<{
   { inputName: 'Institution', inputValue: 'institution', type: 'text' },
 ];
 
-export const CertificatesInput = (props: Props) => {
+export const CertificatesInput = () => {
   const { setCertificates, certificates } = useContext(PDFViewContext);
   const { t } = useTranslation('CertificatesInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
 
-  const { selectedTab } = props;
-
   return (
-    <div hidden={!selectedTab}>
+    <motion.div
+      initial={combinedStyleInitial}
+      animate={combinedStyleFinal}
+      exit={combinedStyleInitial}
+      transition={{ duration: 0.1, when: 'beforeChildren' }}
+    >
       {certificates.map((certificate, index) => (
         <motion.div
           key={index + '-' + 'CertificatesInput'}
           initial={combinedStyleInitial}
-          animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
+          animate={combinedStyleFinal}
+          exit={combinedStyleInitial}
           transition={{ duration: 0.2 }}
           className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4 transition-all'
         >
@@ -113,6 +113,6 @@ export const CertificatesInput = (props: Props) => {
         }}
         title={t('addCertification')}
       />
-    </div>
+    </motion.div>
   );
 };

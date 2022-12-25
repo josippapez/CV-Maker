@@ -33,6 +33,6 @@ export const DeleteButton = (props: Props) => {
 DeleteButton.defaultProps = {
   positionTop: '1rem',
   positionRight: '1rem',
-  color: 'white',
+  color: 'gray',
   colorHover: 'hover:stroke-red-600',
 };

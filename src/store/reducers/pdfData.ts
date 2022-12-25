@@ -5,6 +5,7 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
+  Skill,
 } from '../../Components/PDFView/models';
 
 export interface PDFData {
@@ -16,7 +17,7 @@ export interface PDFData {
   loading: boolean;
   initialLoad: boolean;
   timestamp: number;
-  skills: string[];
+  skills: Skill[];
 }
 
 const initialState: PDFData = {
@@ -86,7 +87,7 @@ export const pdfData = createSlice({
     cacheLanguages: (state, action: PayloadAction<LanguageSkill[]>) => {
       state.languages = action.payload;
     },
-    cacheSkills: (state, action: PayloadAction<string[]>) => {
+    cacheSkills: (state, action: PayloadAction<Skill[]>) => {
       state.skills = action.payload;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {

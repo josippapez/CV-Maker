@@ -11,11 +11,6 @@ export const saveDataForUser = () => {
 
     const data = Object.keys(getState().pdfData).reduce((acc, key) => {
       if (key !== 'timestamp' && key !== 'loading') {
-        if (key === 'generalInfo') {
-          const { profilePicture, ...rest } = getState().pdfData[key];
-          return { ...acc, [key]: rest };
-        }
-
         return { ...acc, [key]: getState().pdfData[key as keyof PDFData] };
       } else {
         return acc;

@@ -9,10 +9,6 @@ import ToggleInput from '../../Inputs/ToggleInput';
 import { AddNewButton } from './AddNewButton';
 import { DeleteButton } from './DeleteButton';
 
-interface Props {
-  selectedTab: boolean;
-}
-
 const arrayOfProfessionalExperienceInputs: Array<{
   inputName: string;
   inputValue: keyof ProfessionalExperience;
@@ -25,7 +21,7 @@ const arrayOfProfessionalExperienceInputs: Array<{
   { inputName: 'End date', inputValue: 'endDate', type: 'date' },
 ];
 
-export const ProfessionalExperienceInput = (props: Props) => {
+export const ProfessionalExperienceInput = () => {
   const { setProfessionalExperience, professionalExperience } =
     useContext(PDFViewContext);
   const { t } = useTranslation('ProfessionalExperienceInput');
@@ -33,15 +29,19 @@ export const ProfessionalExperienceInput = (props: Props) => {
     amountY: 10,
   });
 
-  const { selectedTab } = props;
-
   return (
-    <div hidden={!selectedTab}>
+    <motion.div
+    initial={combinedStyleInitial}
+    animate={combinedStyleFinal}
+    exit={combinedStyleInitial}
+    transition={{ duration: 0.1, when: 'beforeChildren' }}
+    >
       {professionalExperience.map((experience, index) => (
         <motion.div
           key={`professionalExperience-${index}`}
           initial={combinedStyleInitial}
-          animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
+          animate={combinedStyleFinal}
+          exit={combinedStyleInitial}
           transition={{ duration: 0.2 }}
           className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4'
         >
@@ -140,6 +140,6 @@ export const ProfessionalExperienceInput = (props: Props) => {
         }}
         title={t('addExperience')}
       />
-    </div>
+    </motion.div>
   );
 };

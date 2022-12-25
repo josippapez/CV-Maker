@@ -1,21 +1,25 @@
+import { motion } from 'framer-motion';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import useAnimation from '../../../../Hooks/useAnimation';
 import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import { AddNewButton } from './AddNewButton';
 import EducationItem from './EducationItem';
 
-interface Props {
-  selectedTab: boolean;
-}
-
-export const EducationInput = (props: Props) => {
+export const EducationInput = () => {
   const { education, setEducation } = useContext(PDFViewContext);
   const { t } = useTranslation('EducationInput');
-
-  const { selectedTab } = props;
+  const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
+    amountY: 10,
+  });
 
   return (
-    <div hidden={!selectedTab}>
+    <motion.div
+      initial={combinedStyleInitial}
+      animate={combinedStyleFinal}
+      exit={combinedStyleInitial}
+      transition={{ duration: 0.1, when: 'beforeChildren' }}
+    >
       {education.map((item, index) => (
         <EducationItem
           key={`EducationInput-${index}`}
@@ -44,6 +48,6 @@ export const EducationInput = (props: Props) => {
         }}
         title={t('addEducation')}
       />
-    </div>
+    </motion.div>
   );
 };

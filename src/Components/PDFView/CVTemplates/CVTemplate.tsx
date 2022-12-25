@@ -8,6 +8,7 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
+  Skill,
 } from '../models';
 import CVTemplate1 from './Templates/CVTemplate1';
 import CVTemplate2 from './Templates/CVTemplate2';
@@ -20,7 +21,7 @@ type OptionType = {
   certificates: Certificate[];
   education: Education[];
   languages: LanguageSkill[];
-  skills: string[];
+  skills: Skill[];
   translate: TFunction;
 };
 
@@ -32,7 +33,7 @@ type Props = {
   languages: LanguageSkill[];
   t: TFunction;
   currentLanguage: string;
-  skills: string[];
+  skills: Skill[];
 };
 
 const getTemplate = (templateName: TemplateName, options: OptionType) => {

@@ -22,6 +22,7 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
+  Skill,
 } from '../../models';
 import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
 import { TextDisplay } from '../TemplateComponents/TextDisplay';
@@ -32,7 +33,7 @@ type Props = {
   certificates?: Certificate[];
   education?: Education[];
   languages?: LanguageSkill[];
-  skills: string[];
+  skills: Skill[];
   translate: TFunction;
 };
 
@@ -273,11 +274,11 @@ const CVTemplate2 = (props: Props): JSX.Element => {
                 },
               ]}
             >
-              {skills.map((skill: string, index: number) => {
+               {skills.map((skill: Skill, index: number) => {
                 return (
                   <View key={index} style={[styles.skill]}>
                     <TextDisplay style={[styles.skillText]}>
-                      {skill}
+                      {skill.name}
                     </TextDisplay>
                   </View>
                 );
@@ -415,7 +416,7 @@ const CVTemplate2 = (props: Props): JSX.Element => {
                         edu.fieldOfStudy && `, ${edu.fieldOfStudy}`
                       }`}
                     </TextDisplay>
-                    {edu.url && (
+                    {edu?.url !== '' && (
                       <Link
                         src={edu.url}
                         style={{

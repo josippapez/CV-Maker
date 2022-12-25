@@ -8,6 +8,7 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
+  Skill,
 } from './models';
 
 export const PDFViewContext = createContext<{
@@ -23,8 +24,8 @@ export const PDFViewContext = createContext<{
   setEducation: (education: Education[]) => void;
   languages: LanguageSkill[];
   setLanguages: (languages: LanguageSkill[]) => void;
-  skills: string[];
-  setSkills: (skills: string[]) => void;
+  skills: Skill[];
+  setSkills: (skills: Skill[]) => void;
 }>({
   generalInfo: {
     firstName: '',
@@ -102,7 +103,7 @@ export const PDFViewProvider = ({
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [education, setEducation] = useState<Education[]>([]);
   const [languages, setLanguages] = useState<LanguageSkill[]>([]);
-  const [skills, setSkills] = useState<string[]>([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
 
   useEffect(() => {
     if (pdfData) {

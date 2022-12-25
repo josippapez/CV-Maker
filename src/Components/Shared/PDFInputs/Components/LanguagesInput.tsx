@@ -8,26 +8,26 @@ import TextInput from '../../Inputs/TextInput';
 import { AddNewButton } from './AddNewButton';
 import { DeleteButton } from './DeleteButton';
 
-interface Props {
-  selectedTab: boolean;
-}
-
-export const LanguagesInput = (props: Props) => {
+export const LanguagesInput = () => {
   const { languages, setLanguages } = useContext(PDFViewContext);
   const { t } = useTranslation('LanguagesInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
 
-  const { selectedTab } = props;
-
   return (
-    <div hidden={!selectedTab}>
+    <motion.div
+      initial={combinedStyleInitial}
+      animate={combinedStyleFinal}
+      exit={combinedStyleInitial}
+      transition={{ duration: 0.1, when: 'beforeChildren' }}
+    >
       {languages.map((language, index) => (
         <motion.div
           key={index + '-' + 'LanguagesInput'}
           initial={combinedStyleInitial}
-          animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
+          animate={combinedStyleFinal}
+          exit={combinedStyleInitial}
           transition={{ duration: 0.2 }}
           className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4'
         >
@@ -104,6 +104,6 @@ export const LanguagesInput = (props: Props) => {
         }}
         title={t('addLanguage')}
       />
-    </div>
+    </motion.div>
   );
 };

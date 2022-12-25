@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import Compressor from 'compressorjs';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
@@ -6,10 +7,6 @@ import { ReactComponent as Plus } from '../../../../Styles/Assets/Images/plus.sv
 import { GeneralInfo } from '../../../PDFView/models';
 import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import TextInput from '../../Inputs/TextInput';
-
-interface Props {
-  selectedTab: boolean;
-}
 
 const arrayOfGeneralInputs: Array<{
   inputName: string;
@@ -36,22 +33,27 @@ const arrayOfGeneralTextAreas: Array<{
   inputValue: keyof Omit<GeneralInfo, 'profilePicture'>;
 }> = [{ inputName: 'About me', inputValue: 'aboutMe' }];
 
-export const GeneralInput = (props: Props) => {
+export const GeneralInput = () => {
   const { generalInfo, setGeneralInfo } = useContext(PDFViewContext);
   const { t } = useTranslation('GeneralInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
 
-  const { selectedTab } = props;
-
   return (
-    <div hidden={!selectedTab}>
-      <div className='flex flex-col gap-6'>
+    <motion.div
+      className='flex flex-col gap-6'
+      initial={combinedStyleInitial}
+      animate={combinedStyleFinal}
+      exit={combinedStyleInitial}
+      transition={{ duration: 0.1 }}
+    >
+      <AnimatePresence>
         <motion.div
           key={'GeneralInput'}
           initial={combinedStyleInitial}
-          animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
+          animate={combinedStyleFinal}
+          exit={combinedStyleInitial}
           transition={{ duration: 0.2 }}
           className='flex justify-center items-center'
         >
@@ -94,19 +96,47 @@ export const GeneralInput = (props: Props) => {
                 onChange={e => {
                   if (e.target.files) {
                     const file = e.target.files[0];
-                    if (file) {
+
+                    if (!file) {
+                      return;
+                    }
+
+                    if (file.size < 1000000) {
                       const reader = new FileReader();
-                      reader.onload = e => {
-                        const image = e.target?.result as string;
-                        if (image) {
+                      reader.readAsDataURL(file);
+                      reader.onload = () => {
+                        if (typeof reader.result === 'string') {
                           setGeneralInfo({
                             ...generalInfo,
-                            profilePicture: image,
+                            profilePicture: reader.result,
                           });
                         }
                       };
-                      reader.readAsDataURL(file);
+                      return;
                     }
+
+                    const compressor = new Compressor(file, {
+                      quality: 0.6,
+                      success(result) {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(result);
+                        reader.onload = () => {
+                          if (typeof reader.result === 'string') {
+                            setGeneralInfo({
+                              ...generalInfo,
+                              profilePicture: reader.result,
+                            });
+                          }
+                        };
+                        reader.onerror = error => {
+
+                          compressor.abort();
+                        };
+                      },
+                      error(err) {
+                        console.log(err.message);
+                      },
+                    });
                   }
                 }}
               />
@@ -116,8 +146,9 @@ export const GeneralInput = (props: Props) => {
         {arrayOfGeneralInputs.map((input, index) => (
           <motion.div
             key={index + '-' + 'GeneralInput' + '-' + t(`${input.inputValue}`)}
-            animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
+            animate={combinedStyleFinal}
             initial={combinedStyleInitial}
+            exit={combinedStyleInitial}
             transition={{
               delay: (index + 1) * 0.035,
               duration: 0.2,
@@ -141,8 +172,9 @@ export const GeneralInput = (props: Props) => {
         {arrayOfGeneralTextAreas.map((input, index) => (
           <motion.div
             key={index + '-' + 'GeneralInput' + '-' + t(`${input.inputValue}`)}
-            animate={selectedTab ? combinedStyleFinal : combinedStyleInitial}
+            animate={combinedStyleFinal}
             initial={combinedStyleInitial}
+            exit={combinedStyleInitial}
             transition={{
               delay: (arrayOfGeneralInputs.length + 1) * 0.035,
               duration: 0.2,
@@ -163,7 +195,7 @@ export const GeneralInput = (props: Props) => {
             />
           </motion.div>
         ))}
-      </div>
-    </div>
+      </AnimatePresence>
+    </motion.div>
   );
 };

@@ -9,11 +9,7 @@ type Props = {
 export const TextDisplay = (props: Props) => {
   const { style, children } = props;
 
-  return (
-    <>
-      {children && children !== '' && children !== ' ' && (
-        <Text style={style}>{children}</Text>
-      )}
-    </>
-  );
+  return children && children !== '' && children !== ' ' ? (
+    <Text style={style}>{children}</Text>
+  ) : null;
 };
