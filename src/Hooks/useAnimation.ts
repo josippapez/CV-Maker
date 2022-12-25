@@ -1,10 +1,15 @@
 interface Props {
   amountX?: number;
   amountY?: number;
+  combinedTransition?: {
+    type?: 'spring' | 'tween' | 'keyframes' | 'inertia' | 'just';
+    duration: number;
+    delay?: number;
+  };
 }
 
 const useAnimation = (props: Props) => {
-  const { amountX, amountY } = props;
+  const { amountX, amountY, combinedTransition } = props;
 
   const fadeStyleInitial = {
     opacity: 0,

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 type Props = {
-  landingPageSections: { (): React.ReactNode }[];
+  landingPageSections: React.FC[];
 };
 
 const LandingPageSections = (props: Props) => {
@@ -10,9 +10,9 @@ const LandingPageSections = (props: Props) => {
   return useMemo(
     () => (
       <>
-        {landingPageSections.map((section, index) => (
+        {landingPageSections.map((LPSection, index) => (
           <section id={`section-${index}`} key={index} className='h-full'>
-            {section()}
+            <LPSection />
           </section>
         ))}
       </>

@@ -1,5 +1,8 @@
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
+import useAnimation from '../../Hooks/useAnimation';
 import Images from '../../Styles/Assets/Images/Images';
 import style from './LandingPage.module.scss';
 import LandingPageScrollNavigation from './LandingPageScrollNavigation';
@@ -9,29 +12,61 @@ import LandingPageSections from './LandingPageSections';
 
 const LandingPage = (/* props: Props */) => {
   const { t } = useTranslation('LandingPage');
+  const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
+    amountY: 10,
+  });
+
   const LandingHeader = () => {
+    const componentRef = useRef(null);
+    const inview = useInView(componentRef);
+
     return (
-      <div className='flex justify-center items-center h-full p-5'>
+      <div
+        ref={componentRef}
+        className='flex justify-center items-center h-full p-5'
+      >
         <div className='flex-col w-full'>
           <div className='flex justify-center items-center'>
-            <header className='w-2/6 text-6xl text-center font-bold text-blue-900 dark:text-white'>
+            <motion.header
+              initial={combinedStyleInitial}
+              animate={inview ? combinedStyleFinal : combinedStyleInitial}
+              transition={{ duration: 0.5 }}
+              className='w-2/6 text-6xl text-center font-bold text-blue-900 dark:text-white'
+            >
               {t('pageName')}
-            </header>
-            <img src={Images.PagesImage} alt='Page Logo' className='w-2/6' />
+            </motion.header>
+            <motion.img
+              initial={combinedStyleInitial}
+              animate={inview ? combinedStyleFinal : combinedStyleInitial}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              src={Images.PagesImage}
+              alt='Page Logo'
+              className='w-2/6'
+            />
           </div>
-          <div className='w-full text-center'>
+          <motion.div
+            className='w-full text-center'
+            initial={combinedStyleInitial}
+            animate={inview ? combinedStyleFinal : combinedStyleInitial}
+            transition={{ duration: 0.5, delay: 1 }}
+          >
             <NavLink to='/create' className={style.createYourCVLink}>
               {t('createYourCV')}
             </NavLink>
-          </div>
+          </motion.div>
         </div>
       </div>
     );
   };
 
   const LandingPageInfoSection = () => {
+    const componentRef = useRef(null);
+    const inview = useInView(componentRef);
     return (
-      <div className='flex justify-center items-center h-full p-5 bg-[#fbe5c4] dark:bg-[#c0ad8f]'>
+      <div
+        ref={componentRef}
+        className='flex justify-center items-center h-full p-5 bg-[#fbe5c4] dark:bg-[#c0ad8f]'
+      >
         <img
           src={Images.Desk}
           alt='Page Logo'
@@ -45,8 +80,13 @@ const LandingPage = (/* props: Props */) => {
   };
 
   const LandingPageTemplatesSection = () => {
+    const componentRef = useRef(null);
+    const inview = useInView(componentRef);
     return (
-      <div className='flex justify-center items-center h-full p-5 bg-[#e6cfad] dark:bg-[#a08e72]'>
+      <div
+        ref={componentRef}
+        className='flex justify-center items-center h-full p-5 bg-[#e6cfad] dark:bg-[#a08e72]'
+      >
         <div className='w-2/6 text-xl text-blue-900 dark:text-white'>
           {t('templatesDescription')}
         </div>
@@ -59,7 +99,7 @@ const LandingPage = (/* props: Props */) => {
     );
   };
 
-  const landingPageSections: { (): React.ReactNode }[] = [
+  const landingPageSections: React.FC[] = [
     LandingHeader,
     LandingPageInfoSection,
     LandingPageTemplatesSection,

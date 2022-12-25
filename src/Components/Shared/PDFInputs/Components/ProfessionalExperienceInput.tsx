@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
@@ -13,12 +13,19 @@ const arrayOfProfessionalExperienceInputs: Array<{
   inputName: string;
   inputValue: keyof ProfessionalExperience;
   type: string;
+  textarea?: boolean;
 }> = [
   { inputName: 'Company', inputValue: 'company', type: 'text' },
   { inputName: 'Position', inputValue: 'position', type: 'text' },
   { inputName: 'Location', inputValue: 'location', type: 'text' },
   { inputName: 'Start date', inputValue: 'startDate', type: 'date' },
   { inputName: 'End date', inputValue: 'endDate', type: 'date' },
+  {
+    inputName: 'Description',
+    inputValue: 'description',
+    type: 'text',
+    textarea: true,
+  },
 ];
 
 export const ProfessionalExperienceInput = () => {
@@ -31,10 +38,10 @@ export const ProfessionalExperienceInput = () => {
 
   return (
     <motion.div
-    initial={combinedStyleInitial}
-    animate={combinedStyleFinal}
-    exit={combinedStyleInitial}
-    transition={{ duration: 0.1, when: 'beforeChildren' }}
+      initial={combinedStyleInitial}
+      animate={combinedStyleFinal}
+      exit={combinedStyleInitial}
+      transition={{ duration: 0.1, when: 'beforeChildren' }}
     >
       {professionalExperience.map((experience, index) => (
         <motion.div
@@ -42,7 +49,7 @@ export const ProfessionalExperienceInput = () => {
           initial={combinedStyleInitial}
           animate={combinedStyleFinal}
           exit={combinedStyleInitial}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.2, when: 'beforeChildren' }}
           className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4'
         >
           <DeleteButton
@@ -54,40 +61,29 @@ export const ProfessionalExperienceInput = () => {
               );
             }}
           />
-          {arrayOfProfessionalExperienceInputs.map((input, currentIndex) => (
-            <div key={`professionalExperience-${index}-${currentIndex}-input`}>
-              <TextInput
-                label={t(`${input.inputValue}`)}
-                value={experience[input.inputValue]}
-                name={input.inputValue}
-                onChange={e => {
-                  setProfessionalExperience(
-                    professionalExperience.map((experience, i) => {
-                      if (i === index) {
-                        return {
-                          ...experience,
-                          [input.inputValue]: e.target.value,
-                        };
-                      }
-                      return experience;
-                    })
-                  );
+          <AnimatePresence>
+            {arrayOfProfessionalExperienceInputs.map((input, currentIndex) => (
+              <motion.div
+                key={`professionalExperience-${index}-${currentIndex}-input`}
+                initial={combinedStyleInitial}
+                animate={combinedStyleFinal}
+                exit={combinedStyleInitial}
+                transition={{
+                  duration: 0.2,
+                  delay: currentIndex * 0.05,
                 }}
-                fullWidth
-              />
-              {input.inputValue === 'endDate' && (
-                <ToggleInput
-                  label={t('present')}
+              >
+                <TextInput
+                  label={t(`${input.inputValue}`)}
+                  value={experience[input.inputValue]}
                   name={input.inputValue}
-                  checked={experience.endDate === t('present')}
-                  wrapperClassName='mt-4'
                   onChange={e => {
                     setProfessionalExperience(
                       professionalExperience.map((experience, i) => {
                         if (i === index) {
                           return {
                             ...experience,
-                            endDate: e.target.checked ? t('present') : '',
+                            [input.inputValue]: e.target.value,
                           };
                         }
                         return experience;
@@ -95,33 +91,33 @@ export const ProfessionalExperienceInput = () => {
                     );
                   }}
                   fullWidth
+                  textarea={input.textarea}
                 />
-              )}
-            </div>
-          ))}
-          <TextInput
-            key={`professionalExperience-${index}-${
-              arrayOfProfessionalExperienceInputs.length - 1
-            }-input`}
-            label={t('description')}
-            value={experience.description}
-            name='description'
-            onChange={e => {
-              setProfessionalExperience(
-                professionalExperience.map((experience, existingIndex) => {
-                  if (existingIndex === index) {
-                    return {
-                      ...experience,
-                      description: e.target.value,
-                    };
-                  }
-                  return experience;
-                })
-              );
-            }}
-            fullWidth
-            textarea
-          />
+                {input.inputValue === 'endDate' && (
+                  <ToggleInput
+                    label={t('present')}
+                    name={input.inputValue}
+                    checked={experience.endDate === t('present')}
+                    wrapperClassName='mt-4'
+                    onChange={e => {
+                      setProfessionalExperience(
+                        professionalExperience.map((experience, i) => {
+                          if (i === index) {
+                            return {
+                              ...experience,
+                              endDate: e.target.checked ? t('present') : '',
+                            };
+                          }
+                          return experience;
+                        })
+                      );
+                    }}
+                    fullWidth
+                  />
+                )}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </motion.div>
       ))}
       <AddNewButton

@@ -416,7 +416,7 @@ const CVTemplate2 = (props: Props): JSX.Element => {
                         edu.fieldOfStudy && `, ${edu.fieldOfStudy}`
                       }`}
                     </TextDisplay>
-                    {edu?.url !== '' && (
+                    {edu.url && edu.url !== '' && (
                       <Link
                         src={edu.url}
                         style={{
