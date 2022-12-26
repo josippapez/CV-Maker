@@ -1,6 +1,8 @@
 import {
   Document,
   Font,
+  Image,
+  Link,
   Page,
   StyleSheet,
   Text,
@@ -20,15 +22,10 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
-} from '../../PDFViewContainer';
-import Earth from '../Images/Earth';
-import Email from '../Images/Email';
-import Facebook from '../Images/Facebook';
-import GitHub from '../Images/Github';
-import Linkedin from '../Images/Linkedin';
-import Phone from '../Images/Phone';
-import Pin from '../Images/Pin';
-import Twitter from '../Images/Twitter';
+  Skill,
+} from '../../models';
+import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
+import { TextDisplay } from '../TemplateComponents/TextDisplay';
 
 type Props = {
   generalInfo?: GeneralInfo;
@@ -36,6 +33,7 @@ type Props = {
   certificates?: Certificate[];
   education?: Education[];
   languages?: LanguageSkill[];
+  skills: Skill[];
   translate: TFunction;
 };
 
@@ -63,6 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'white',
     fontFamily: 'Opensans',
+    fontSize: 11,
   },
   column: {
     flexDirection: 'column',
@@ -103,14 +102,18 @@ const styles = StyleSheet.create({
   },
   personalInfo: {
     maxHeight: 400,
+    backgroundColor: '#183042',
     height: 'auto',
     minHeight: 150,
   },
   topBar: {
     height: 'auto',
-    flexDirection: 'column',
-    backgroundColor: '#183042',
+    flexDirection: 'row',
     color: 'white',
+  },
+  profilePicture: {
+    width: 'auto',
+    marginRight: 10,
   },
   topBarName: {
     fontSize: 20,
@@ -122,7 +125,6 @@ const styles = StyleSheet.create({
   },
   topBarText: {
     marginTop: 10,
-    fontSize: 11,
   },
   additionalInfoBar: {
     maxHeight: 150,
@@ -131,19 +133,18 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   additionalInfoBarText: {
-    fontSize: 11,
     marginLeft: 20,
+    textDecoration: 'none',
+    color: 'white',
   },
   companyName: {
     fontSize: 13,
     fontWeight: 'bold',
   },
   companyPosition: {
-    fontSize: 11,
     fontWeight: 'medium',
   },
   companyDescription: {
-    fontSize: 11,
     marginTop: 10,
   },
   customTimeline: {
@@ -153,12 +154,26 @@ const styles = StyleSheet.create({
     marginRight: 40,
   },
   companyLocation: {
-    fontSize: 11,
     marginTop: 0,
   },
   companyDuration: {
-    fontSize: 11,
     marginTop: 0,
+  },
+  educationSchool: {
+    marginBottom: 5,
+    fontWeight: 'medium',
+  },
+  educationDegree: {
+    fontWeight: 'extralight',
+  },
+  educationDuration: {
+    fontWeight: 'light',
+  },
+  educationLocation: {
+    fontWeight: 'extralight',
+  },
+  educationDescription: {
+    marginTop: 10,
   },
   sectionTitle: {
     fontSize: 13,
@@ -174,6 +189,21 @@ const styles = StyleSheet.create({
     color: '#3B93D5',
     padding: '5px 15px',
   },
+  skill: {
+    width: 'auto',
+    height: 'auto',
+    margin: '0 10px 10px 0',
+    backgroundColor: 'transparent',
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: 'white',
+    padding: '5px 15px',
+  },
+  skillText: {
+    fontSize: 9,
+    fontWeight: 'normal',
+    color: 'white',
+  },
 });
 
 const CVTemplate1 = (props: Props): JSX.Element => {
@@ -183,6 +213,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
     certificates,
     education,
     languages,
+    skills,
     translate,
   } = props;
 
@@ -191,83 +222,104 @@ const CVTemplate1 = (props: Props): JSX.Element => {
       <Page size='A4' style={[styles.page]}>
         <View style={styles.personalInfo}>
           <View style={[styles.topBar, styles.padding20]}>
-            <Text style={styles.topBarName}>
-              {generalInfo?.firstName} {generalInfo?.lastName}
-            </Text>
-            <Text style={styles.topBarPosition}>{generalInfo?.position}</Text>
-            <Text style={styles.topBarText}>{generalInfo?.aboutMe}</Text>
-          </View>
-          <View
-            style={[
-              styles.additionalInfoBar,
-              styles.paddingX20,
-              styles.paddingY10,
-              styles.row,
-              {
-                flexWrap: 'wrap',
-              },
-            ]}
-          >
-            {[
-              {
-                icon: Email,
-                text: generalInfo?.email,
-                condition: generalInfo?.email,
-              },
-              {
-                icon: Pin,
-                text: `${generalInfo?.city}, ${generalInfo?.country}`,
-                condition: generalInfo?.city || generalInfo?.country,
-              },
-              {
-                icon: Phone,
-                text: generalInfo?.phone,
-                condition: generalInfo?.phone,
-              },
-              {
-                icon: Linkedin,
-                text: generalInfo?.LinkedIn,
-                condition: generalInfo?.LinkedIn,
-              },
-              {
-                icon: GitHub,
-                text: generalInfo?.GitHub,
-                condition: generalInfo?.GitHub,
-              },
-              {
-                icon: Facebook,
-                text: generalInfo?.Facebook,
-                condition: generalInfo?.Facebook,
-              },
-              {
-                icon: Twitter,
-                text: generalInfo?.Twitter,
-                condition: generalInfo?.Twitter,
-              },
-              {
-                icon: Earth,
-                text: generalInfo?.website,
-                condition: generalInfo?.website,
-              },
-            ].map(({ icon, text, condition }, index) =>
-              condition ? (
-                <View
-                  key={index}
+            {generalInfo && generalInfo.profilePicture && (
+              <View style={[styles.profilePicture]}>
+                <Image
+                  src={generalInfo.profilePicture}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 50,
+                    objectFit: 'cover',
+                  }}
+                />
+              </View>
+            )}
+            <View
+              style={{
+                flex: 1,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}
+              >
+                <TextDisplay style={styles.topBarName}>
+                  {generalInfo?.firstName} {generalInfo?.lastName}
+                </TextDisplay>
+                <TextDisplay
                   style={[
-                    styles.row,
                     {
-                      width: '50%',
-                      marginTop: 2.5,
-                      marginBottom: 2.5,
+                      fontWeight: 'light',
+                      fontSize: 11,
+                      paddingLeft: 20,
+                      paddingBottom: 3,
+                      alignSelf: 'flex-end',
                     },
                   ]}
                 >
-                  {icon({ width: 14 })}
-                  <Text style={styles.additionalInfoBarText}>{text}</Text>
-                </View>
-              ) : null
-            )}
+                  {generalInfo?.dob}
+                </TextDisplay>
+              </View>
+              <TextDisplay style={styles.topBarPosition}>
+                {generalInfo?.position}
+              </TextDisplay>
+              <TextDisplay style={styles.topBarText}>
+                {generalInfo?.aboutMe}
+              </TextDisplay>
+            </View>
           </View>
+          {skills && skills.length > 0 && (
+            <View
+              style={[
+                styles.row,
+                styles.paddingX20,
+                {
+                  flexWrap: 'wrap',
+                },
+              ]}
+            >
+              {skills.map((skill: Skill, index: number) => {
+                return (
+                  <View key={index} style={[styles.skill]}>
+                    <TextDisplay style={[styles.skillText]}>
+                      {skill.name}
+                    </TextDisplay>
+                  </View>
+                );
+              })}
+            </View>
+          )}
+          <AdditionalInformation
+            generalInfo={generalInfo}
+            styles={styles}
+            itemWrapperStyle={[
+              styles.row,
+              {
+                width: '50%',
+                marginTop: 2.5,
+                marginBottom: 2.5,
+              },
+            ]}
+            wrapper={(wrappedInfo: JSX.Element[]) => {
+              return (
+                <View
+                  style={[
+                    styles.additionalInfoBar,
+                    styles.paddingX20,
+                    styles.paddingY10,
+                    styles.row,
+                    {
+                      flexWrap: 'wrap',
+                    },
+                  ]}
+                >
+                  {wrappedInfo}
+                </View>
+              );
+            }}
+          />
         </View>
         <View
           style={[styles.padding20, styles.column, styles.horizontalCenter]}
@@ -288,7 +340,9 @@ const CVTemplate1 = (props: Props): JSX.Element => {
             >
               <View style={[styles.column, styles.customTimeline]}></View>
               <View style={[styles.column, { width: '100%' }]}>
-                <Text style={[styles.companyName]}>{experience.company}</Text>
+                <TextDisplay style={[styles.companyName]}>
+                  {experience.company}
+                </TextDisplay>
                 <View style={[styles.row]}>
                   <View
                     style={[
@@ -302,9 +356,9 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                       },
                     ]}
                   />
-                  <Text style={[styles.companyPosition, { left: -17 }]}>
+                  <TextDisplay style={[styles.companyPosition, { left: -17 }]}>
                     {experience.position}
-                  </Text>
+                  </TextDisplay>
                 </View>
                 <View
                   style={[
@@ -318,16 +372,20 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                     },
                   ]}
                 >
-                  <Text style={[styles.companyDuration, styles.lightGrayText]}>
+                  <TextDisplay
+                    style={[styles.companyDuration, styles.lightGrayText]}
+                  >
                     {experience.startDate} - {experience.endDate}
-                  </Text>
-                  <Text style={[styles.companyLocation, styles.lightGrayText]}>
+                  </TextDisplay>
+                  <TextDisplay
+                    style={[styles.companyLocation, styles.lightGrayText]}
+                  >
                     {experience.location}
-                  </Text>
+                  </TextDisplay>
                 </View>
-                <Text style={[styles.companyDescription]}>
+                <TextDisplay style={[styles.companyDescription]}>
                   {experience.description}
-                </Text>
+                </TextDisplay>
               </View>
             </View>
           ))}
@@ -354,7 +412,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                 ]}
               >
                 {index === 0 && (
-                  <Text
+                  <TextDisplay
                     style={[
                       styles.sectionTitle,
                       styles.lightGrayText,
@@ -362,29 +420,42 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                     ]}
                   >
                     {translate('education')}
-                  </Text>
+                  </TextDisplay>
                 )}
                 <View style={[styles.column, { width: '100%' }]}>
-                  <Text style={[styles.companyName]}>{edu.school}</Text>
-                  <Text style={[styles.companyPosition]}>
-                    {edu.degree}, {edu.fieldOfStudy}
-                  </Text>
-                  <Text style={[styles.companyLocation]}>{edu.location}</Text>
-                  <Text
-                    style={[
-                      styles.companyDuration,
-                      styles.lightGrayText,
-                      {
-                        marginTop: 10,
-                        fontStyle: 'italic',
-                      },
-                    ]}
-                  >
+                  <TextDisplay style={[styles.educationSchool]}>
+                    {edu.course ? edu.course : edu.school}
+                  </TextDisplay>
+                  <TextDisplay style={[styles.educationDuration]}>
                     {edu.startDate} - {edu.endDate}
-                  </Text>
-                  <Text style={[styles.companyDescription]}>
+                  </TextDisplay>
+                  <TextDisplay style={[styles.educationDegree]}>
+                    {`${edu.degree} ${
+                      edu.fieldOfStudy && `, ${edu.fieldOfStudy}`
+                    }`}
+                  </TextDisplay>
+                  {edu.url && edu.url !== '' && (
+                    <Link
+                      src={edu.url}
+                      style={{
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <Text
+                        style={[styles.educationDegree, { color: 'black' }]}
+                      >
+                        {edu.url
+                          .replace(/(^\w+:|^)\/\//, '')
+                          .replace(/(^www\.)/, '')}
+                      </Text>
+                    </Link>
+                  )}
+                  <TextDisplay style={[styles.educationLocation]}>
+                    {edu.location}
+                  </TextDisplay>
+                  <TextDisplay style={[styles.educationDescription]}>
                     {edu.description}
-                  </Text>
+                  </TextDisplay>
                 </View>
               </View>
             ))}
@@ -411,7 +482,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                 ]}
               >
                 {index === 0 && (
-                  <Text
+                  <TextDisplay
                     style={[
                       styles.sectionTitle,
                       styles.lightGrayText,
@@ -419,13 +490,15 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                     ]}
                   >
                     {translate('certificates')}
-                  </Text>
+                  </TextDisplay>
                 )}
                 <View style={[styles.column, { width: '100%' }]}>
-                  <Text style={[styles.companyName]}>{cert.name}</Text>
-                  <Text style={[styles.companyPosition]}>
+                  <TextDisplay style={[styles.companyName]}>
+                    {cert.name}
+                  </TextDisplay>
+                  <TextDisplay style={[styles.companyPosition]}>
                     {cert.institution}
-                  </Text>
+                  </TextDisplay>
                   <View
                     style={[
                       styles.row,
@@ -436,15 +509,15 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                       },
                     ]}
                   >
-                    <Text
+                    <TextDisplay
                       style={[styles.companyDuration, styles.lightGrayText]}
                     >
                       {cert.date}
-                    </Text>
+                    </TextDisplay>
                   </View>
-                  <Text style={[styles.companyDescription]}>
+                  <TextDisplay style={[styles.companyDescription]}>
                     {cert.description}
-                  </Text>
+                  </TextDisplay>
                 </View>
               </View>
             ))}
@@ -453,7 +526,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
         {languages && languages.length > 0 ? (
           <View wrap={false} style={[styles.paddingX20, styles.marginTop10]}>
             <View style={{ alignItems: 'center' }}>
-              <Text
+              <TextDisplay
                 style={[
                   styles.sectionTitle,
                   styles.lightGrayText,
@@ -464,7 +537,7 @@ const CVTemplate1 = (props: Props): JSX.Element => {
                 ]}
               >
                 {translate('languages')}
-              </Text>
+              </TextDisplay>
             </View>
             <View
               style={[
@@ -478,10 +551,12 @@ const CVTemplate1 = (props: Props): JSX.Element => {
               {languages.map((lang, index) => (
                 <View key={index} style={[styles.column, styles.languageCard]}>
                   <View style={[styles.column]}>
-                    <Text style={[styles.companyName]}>{lang.name}</Text>
-                    <Text style={[styles.companyPosition]}>
+                    <TextDisplay style={[styles.companyName]}>
+                      {lang.name}
+                    </TextDisplay>
+                    <TextDisplay style={[styles.companyPosition]}>
                       {translate(lang.proficiency)}
-                    </Text>
+                    </TextDisplay>
                   </View>
                 </View>
               ))}

@@ -2,20 +2,14 @@
   box-sizing: content-box;
   position: relative;
   padding: 5px;
-  height: 30px;
-  width: 30px;
-  background-size: 30px;
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: all 0.15s ease-in-out;
   &.lightMode {
-    background-image: url('../../../Styles/Assets/Images/moon.svg');
+    // background-image: url('../../../Styles/Assets/Images/moon.svg');
     -webkit-box-shadow: 0px 0px 12px 4px #999999;
     box-shadow: 0px 0px 12px 4px #999999;
     background-color: #b8b8b8;
   }
   &.darkMode {
-    background-image: url('../../../Styles/Assets/Images/sun.svg');
+    // background-image: url('../../../Styles/Assets/Images/sun.svg');
     -webkit-box-shadow: 0px 0px 12px 4px #616161;
     box-shadow: 0px 0px 12px 4px #616161;
     background-color: #616161;
@@ -31,7 +25,6 @@
   background-size: 30px;
   background-repeat: no-repeat;
   background-position: center;
-  transition: all 0.15s ease-in-out;
   cursor: pointer;
   &.lightMode {
     -webkit-box-shadow: 0px 0px 12px 4px #999999;
@@ -56,7 +49,6 @@
   background-size: 30px;
   background-repeat: no-repeat;
   background-position: center;
-  transition: all 0.15s ease-in-out;
   &.lightMode {
     -webkit-box-shadow: 0px 0px 12px 4px #999999;
     box-shadow: 0px 0px 12px 4px #999999;

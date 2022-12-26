@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { G, Path, Rect, Svg } from '@react-pdf/renderer';
 
 const Phone = (props: { width?: number; height?: number }) => {

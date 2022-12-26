@@ -1,14 +1,18 @@
 import style from './PageLoader.module.scss';
+interface Props {
+  children?: React.ReactNode;
+  isLoading: boolean;
+}
 
-type Props = {};
-
-const PageLoader = (props: Props) => {
-  return (
+const PageLoader = ({ children, isLoading }: Props) => {
+  return isLoading ? (
     <div
-      className={`dark:bg-slate-600 w-screen h-screen flex justify-center items-center z-50`}
+      className={`fixed top-0 right-0 left-0 bottom-0 dark:bg-neutral-700 w-full h-full flex justify-center items-center z-50`}
     >
       <div className={`${style.loader}`} />
     </div>
+  ) : (
+    <>{children}</>
   );
 };
 

@@ -2,26 +2,39 @@
   user-select: none;
   position: fixed;
   display: flex;
-  overflow-y: auto;
-  width: 100vw;
-  height: 100vh;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.87);
+  background: rgba(17, 21, 24, 0.616);
   cursor: default;
   z-index: 1;
   align-items: center;
+
   &.center {
     justify-content: center;
   }
   &.right {
-    justify-content: right;
+    justify-content: end;
+  }
+  &.bottom {
+    align-items: end;
+    justify-content: center;
+  }
+  &.top {
+    align-items: start;
+    justify-content: center;
   }
   .children {
     z-index: 2;
-    max-height: 100%;
     cursor: default;
+
+    // transform: scaleX(var(--scale-x)) scaleY(var(--scale-y));
+  }
+  .children > * {
+    width: 100%;
+  }
+  .children > * > *[class*="modal-body"] {
+    flex-grow: 1;
   }
 }

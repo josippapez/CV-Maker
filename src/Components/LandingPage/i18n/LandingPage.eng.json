@@ -1,4 +1,6 @@
 {
   "pageName": "CV Maker",
-  "createYourCV": "Create your CV"
+  "createYourCV": "Create your CV",
+  "createYourCVDescription": "Create your CV in just a few minutes with our easy-to-use CV maker. You can fill out your CV and download it as a PDF file.",
+  "templatesDescription": "Choose from a variety of templates to create your CV. Template can be changed at any time without losing your progress."
 }

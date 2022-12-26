@@ -1,5 +1,6 @@
-Working demo: [DEMO](https://cv-maker-jp.web.app/)
+### Working demo: [DEMO](https://cv-maker-jp.web.app/)
 
+### Made using TailwindCSS, React, Redux, i18n, webpack.
 ### `npm start`
 
 Runs the app in the development mode.\
