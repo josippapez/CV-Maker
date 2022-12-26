@@ -2,7 +2,7 @@ import disableScroll from 'disable-scroll';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 type Props = {
-  landingPageSections: React.FC[];
+  landingPageSections: React.FC<{ props: any; ref: any }>[];
 };
 
 const LandingPageScrollNavigation = (props: Props) => {

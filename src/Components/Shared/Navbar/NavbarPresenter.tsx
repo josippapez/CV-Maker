@@ -12,7 +12,7 @@ type Props = {
 
 const NavbarPresenter = (props: Props) => {
   const { darkTheme, pathname } = props;
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('Navbar');
 
   const [displayLanguageDropdown, setDisplayLanguageDropdown] =
     useState<boolean>(false);
@@ -65,7 +65,7 @@ const NavbarPresenter = (props: Props) => {
               <div
                 className='cursor-pointer px-1 py-[2px] rounded-md hover:dark:bg-slate-600 hover:bg-gray-400'
                 onClick={() => {
-                  i18n.changeLanguage('eng');
+                  i18n.changeLanguage('en-US');
                   setDisplayLanguageDropdown(false);
                 }}
               >

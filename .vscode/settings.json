@@ -1,0 +1,26 @@
+{
+  "i18n-ally.autoDetection": true,
+  "i18n-ally.localesPaths": [
+    "src/Components/LandingPage/i18n",
+    "src/Components/PDFView/CVTemplates/i18n",
+    "src/Components/Shared/PDFInputs/i18n",
+    "src/Components/Shared/Navbar/i18n",
+    "src/Components/Shared/PDFTabNavigation/i18n"
+  ],
+  "i18n-ally.enabledParsers": ["js", "json"],
+  "i18n-ally.enabledFrameworks": ["react", "i18next"],
+  "i18n-ally.namespace": true,
+  "i18n-ally.pathMatcher": "{namespace}.{locale}.{ext}",
+  "i18n-ally.keystyle": "nested",
+  // "i18n-ally.regex.key": "{namespace}.{key}",
+  // "i18n-ally.regex.usageMatch": ["{namespace}.{key}"],
+  "i18n-ally.translate.engines": ["google"],
+  "i18n-ally.translate.parallels": 5,
+  "i18n-ally.annotations": true,
+  "i18n-ally.theme.annotation": "rgba(153, 153, 153, .8)",
+  "i18n-ally.theme.annotationBorder": "rgba(153, 153, 153, .8)",
+  "i18n-ally.theme.annotationMissing": "#d37070",
+  "i18n-ally.theme.annotationMissingBorder": "#d37070",
+  "i18n-ally.displayLanguage": "en-US",
+  "i18n-ally.sourceLanguage": "en-US"
+}

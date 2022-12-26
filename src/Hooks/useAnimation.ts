@@ -29,6 +29,11 @@ const useAnimation = (props: Props) => {
     x: 0,
   };
 
+  const slideStyleInitialReverse = {
+    y: amountY ? -amountY : 0,
+    x: amountX ? -amountX : 0,
+  };
+
   return {
     fadeStyleInitial,
     fadeStyleFinal,
@@ -40,6 +45,14 @@ const useAnimation = (props: Props) => {
     },
     combinedStyleFinal: {
       ...fadeStyleFinal,
+      ...slideStyleFinal,
+    },
+    combinedStyleInitialReverse: {
+      ...fadeStyleInitial,
+      ...slideStyleInitialReverse,
+    },
+    combinedStyleFinalReverse: {
+      ...fadeStyleInitial,
       ...slideStyleFinal,
     },
   };
