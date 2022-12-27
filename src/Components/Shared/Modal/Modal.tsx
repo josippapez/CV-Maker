@@ -30,7 +30,7 @@ interface Props {
     | string;
 }
 
-// const openned = 0;
+let openned = 0;
 
 const Modal = (props: Props): JSX.Element => {
   const windowSize = useWindowSize();
@@ -47,19 +47,19 @@ const Modal = (props: Props): JSX.Element => {
     zindex,
   } = props;
 
-  // useEffect(() => {
-  //   if (openned === 0) {
-  //     document.body.style.overflow = show ? 'hidden' : 'auto';
-  //   }
-  //   if (show) {
-  //     openned++;
-  //   }
-  //   return () => {
-  //     if (show) {
-  //       openned--;
-  //     }
-  //   };
-  // }, [show]);
+  useEffect(() => {
+    if (openned === 0) {
+      document.body.style.overflow = show ? 'hidden' : 'auto';
+    }
+    if (show) {
+      openned++;
+    }
+    return () => {
+      if (show) {
+        openned--;
+      }
+    };
+  }, [show]);
 
   const getAnimation = () => {
     const transition = {
@@ -107,6 +107,17 @@ const Modal = (props: Props): JSX.Element => {
           },
           hide: {
             y: '100%',
+            transition,
+          },
+        };
+      case 'fade':
+        return {
+          show: {
+            opacity: 1,
+            transition,
+          },
+          hide: {
+            opacity: 0,
             transition,
           },
         };
@@ -181,7 +192,7 @@ const Modal = (props: Props): JSX.Element => {
             `}
             onMouseDown={e => e.stopPropagation()}
             style={{
-              width: width === 'screen' ? windowSize.width + 'px' : width,
+              width: width === 'screen' ? '100vw' : width,
               height: height === 'screen' ? '100vh' : height,
               maxHeight: windowSize.height + 'px',
               aspectRatio: ratio,
@@ -199,9 +210,8 @@ const Modal = (props: Props): JSX.Element => {
 Modal.defaultProps = {
   zindex: 30,
   position: 'center',
-  width: '',
-  animation: 'fade',
-  ratio: '',
+  width: 'auto',
+  ratio: 'auto',
   closeModal: () => {
     return;
   },

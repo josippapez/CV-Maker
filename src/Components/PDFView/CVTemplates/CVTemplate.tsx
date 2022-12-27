@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { TFunction } from 'react-i18next';
-import { useAppSelector } from '../../../store/hooks';
 import { Template, TemplateName } from '../../../store/reducers/template';
 import {
   Certificate,

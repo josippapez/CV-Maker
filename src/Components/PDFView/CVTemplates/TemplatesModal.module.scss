@@ -7,9 +7,7 @@
 
 .template {
   overflow: hidden;
-  width: 50%;
   margin: 10px;
-  flex-wrap: wrap;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   padding: 10px;
@@ -19,7 +17,8 @@
 }
 
 .templateImage {
-  padding: 50%;
+  width: 320px;
+  height: 410px;
   &.CVTemplate1 {
     @include div-same-size-as-background-img(
       '../../../Styles/Assets/Images/Template1.png'

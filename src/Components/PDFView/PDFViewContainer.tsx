@@ -10,7 +10,6 @@ import {
 } from '../../store/actions/syncActions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { cacheAllData, PDFData } from '../../store/reducers/pdfData';
-import PageLoader from '../Shared/Loader/PageLoader';
 import CVTemplate from './CVTemplates/CVTemplate';
 import PDFViewPresenter from './PDFViewPresenter';
 import { PDFViewContext } from './PDFViewProvider';
@@ -28,12 +27,13 @@ const PDFView = () => {
     template,
     setAllData,
     setTemplate,
+    loaded,
+    setLoaded,
   } = useContext(PDFViewContext);
   const { t, i18n } = useTranslation('CVTemplates');
   const currentLanguage = i18n.language;
 
   const dispatch = useAppDispatch();
-  const pdfData = useAppSelector(state => state.pdfData);
   const user = useAppSelector(state => state.user.user);
 
   const [instance, updateInstance] = usePDF({
@@ -58,6 +58,9 @@ const PDFView = () => {
       clearTimeout(updateInstanceRef.current);
     }
     updateInstanceRef.current = setTimeout(() => {
+      if (!loaded) {
+        setLoaded(true);
+      }
       updateInstance();
 
       if (isPDFPreview) return;
@@ -109,9 +112,7 @@ const PDFView = () => {
   }, []);
 
   return (
-    <PageLoader isLoading={pdfData.loading}>
-      <PDFViewPresenter pdfInstance={instance} isPDFPreview={isPDFPreview} />
-    </PageLoader>
+    <PDFViewPresenter pdfInstance={instance} isPDFPreview={isPDFPreview} />
   );
 };
 

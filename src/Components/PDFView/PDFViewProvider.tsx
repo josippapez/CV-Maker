@@ -1,6 +1,6 @@
 // create context for pdf view
 
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 import { useAppSelector } from '../../store/hooks';
 import { Template, TemplateName } from '../../store/reducers/template';
 import {
@@ -38,6 +38,8 @@ export const PDFViewContext = createContext<{
     skills: Skill[];
     template: Template;
   }) => void;
+  loaded: boolean;
+  setLoaded: (loaded: boolean) => void;
 }>({
   generalInfo: {
     firstName: '',
@@ -89,6 +91,10 @@ export const PDFViewContext = createContext<{
   setAllData: () => {
     return;
   },
+  loaded: false,
+  setLoaded: () => {
+    return;
+  },
 });
 
 export const PDFViewProvider = ({
@@ -129,6 +135,7 @@ export const PDFViewProvider = ({
   const [template, setTemplate] = useState<Template>({
     templateName: TemplateName.CVTemplate1,
   });
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (pdfData) {
@@ -181,6 +188,8 @@ export const PDFViewProvider = ({
         template,
         setTemplate,
         setAllData,
+        loaded,
+        setLoaded,
       }}
     >
       {children}

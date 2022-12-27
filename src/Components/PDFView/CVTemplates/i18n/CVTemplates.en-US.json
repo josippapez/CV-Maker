@@ -3,5 +3,9 @@
   "skills": "Skills",
   "languages": "Languages",
   "certificates": "Certificates",
-  "education": "Education"
+  "education": "Education",
+  "BEGINNER": "Beginner",
+  "CONVERSATIONAL": "Conversational",
+  "NATIVE": "Native",
+  "FLUENT": "Fluent"
 }

@@ -76,7 +76,7 @@ export const GeneralInput = () => {
                   });
                 }}
               >
-                {t('Remove')}
+                {t('remove')}
               </button>
             </>
           ) : (

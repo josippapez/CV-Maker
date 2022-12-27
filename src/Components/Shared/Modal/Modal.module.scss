@@ -32,6 +32,7 @@
     // transform: scaleX(var(--scale-x)) scaleY(var(--scale-y));
   }
   .children > * {
+    flex-grow: 1;
     width: 100%;
   }
   .children > * > *[class*="modal-body"] {
