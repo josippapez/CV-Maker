@@ -4,16 +4,11 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import useMobileView from '../../Hooks/useMobileView';
 import useWindowSize from '../../Hooks/useWindowSize';
+import { useAppSelector } from '../../store/hooks';
 import PDFDownload from '../PDFDownload/PDFDownload';
 import PageLoader from '../Shared/Loader/PageLoader';
 import PDFInputsContainer from '../Shared/PDFInputs/PDFInputsContainer';
-import {
-  Certificate,
-  Education,
-  GeneralInfo,
-  LanguageSkill,
-  ProfessionalExperience,
-} from './models';
+import { Tooltip } from '../Shared/Tootlip/Tooltip';
 import './PDFViewPresenter.css';
 
 type Props = {
@@ -23,6 +18,7 @@ type Props = {
     url: string | null;
     error: string | null;
   };
+  isPDFPreview: boolean;
 };
 
 const options = {
@@ -31,7 +27,7 @@ const options = {
 };
 
 const PDFViewPresenter = (props: Props) => {
-  const { pdfInstance } = props;
+  const { pdfInstance, isPDFPreview } = props;
 
   const windowSize = useWindowSize();
   const isMobileView = useMobileView();
@@ -39,6 +35,9 @@ const PDFViewPresenter = (props: Props) => {
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [displayDownloadModal, setDisplayDownloadModal] = useState(false);
+
+  const user = useAppSelector(state => state.user.user);
+  const userIsLoggedIn = !!user.id;
 
   const onDocumentLoadSuccess = useCallback(
     ({ numPages }: { numPages: number }) => {
@@ -60,14 +59,16 @@ const PDFViewPresenter = (props: Props) => {
         isMobileView ? 'flex-col' : 'flex-row'
       }`}
     >
-      <div className={`${isMobileView ? 'w-full' : 'w-5/12'}`}>
-        <Suspense fallback={<PageLoader isLoading />}>
-          <PDFInputsContainer />
-        </Suspense>
-      </div>
+      {!isPDFPreview && (
+        <div className={`${isMobileView ? 'w-full' : 'w-5/12'}`}>
+          <Suspense fallback={<PageLoader isLoading />}>
+            <PDFInputsContainer />
+          </Suspense>
+        </div>
+      )}
       <div
         className={`transition-colors dark:bg-neutral-700 ${
-          isMobileView ? 'w-full' : 'w-7/12'
+          isMobileView || isPDFPreview ? 'w-full' : 'w-7/12'
         }`}
       >
         <Document
@@ -117,6 +118,23 @@ const PDFViewPresenter = (props: Props) => {
                   className='pdf-download'
                   onClick={() => setDisplayDownloadModal(true)}
                 />
+                {userIsLoggedIn && (
+                  <Tooltip
+                    tooltipText={'Copied link to clipboard'}
+                    position='top'
+                    showOnClick
+                  >
+                    <button
+                      className='pdf-share'
+                      onClick={() => {
+                        // copy to clipboard
+                        navigator.clipboard.writeText(
+                          `${window.location.origin}/cv/${user.id}`
+                        );
+                      }}
+                    />
+                  </Tooltip>
+                )}
               </div>
             )}
           </Page>

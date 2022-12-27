@@ -30,7 +30,7 @@ interface Props {
     | string;
 }
 
-let openned = 0;
+// const openned = 0;
 
 const Modal = (props: Props): JSX.Element => {
   const windowSize = useWindowSize();
@@ -47,19 +47,19 @@ const Modal = (props: Props): JSX.Element => {
     zindex,
   } = props;
 
-  useEffect(() => {
-    if (openned === 0) {
-      document.body.style.overflow = show ? 'hidden' : 'auto';
-    }
-    if (show) {
-      openned++;
-    }
-    return () => {
-      if (show) {
-        openned--;
-      }
-    };
-  }, [show]);
+  // useEffect(() => {
+  //   if (openned === 0) {
+  //     document.body.style.overflow = show ? 'hidden' : 'auto';
+  //   }
+  //   if (show) {
+  //     openned++;
+  //   }
+  //   return () => {
+  //     if (show) {
+  //       openned--;
+  //     }
+  //   };
+  // }, [show]);
 
   const getAnimation = () => {
     const transition = {
@@ -140,26 +140,15 @@ const Modal = (props: Props): JSX.Element => {
               opacity: 1,
               transition: {
                 duration: 0.15,
-              }
+              },
             },
             hide: {
               opacity: 0,
               transition: {
                 duration: 0.05,
                 delay: 0.15,
-              }
+              },
             },
-          }}
-          ref={el => {
-            if (el) {
-              if (show) {
-                setTimeout(() => {
-                  el.style.overflow = 'auto';
-                }, 250);
-              } else {
-                el.style.overflow = 'hidden';
-              }
-            }
           }}
           style={{
             zIndex: zindex,
@@ -168,9 +157,10 @@ const Modal = (props: Props): JSX.Element => {
           aria-hidden='true'
           role='button'
           className={`
-        ${style.overlay}
-        ${style[`${position}`]}
-      `}
+            overflow-hidden
+            ${style.overlay}
+            ${style[`${position}`]}
+          `}
           onMouseDown={() => closeModal()}
           onTouchStart={e => e.stopPropagation()}
         >
@@ -182,12 +172,13 @@ const Modal = (props: Props): JSX.Element => {
             id='modal-children'
             aria-hidden='true'
             className={`
-          ${style.children}
-          ${contentClassname}
-          subpixel-antialiased
-          flex flex-col
-          relative
-        `}
+              overflow-auto
+              ${style.children}
+              ${contentClassname}
+              subpixel-antialiased
+              flex flex-col
+              relative
+            `}
             onMouseDown={e => e.stopPropagation()}
             style={{
               width: width === 'screen' ? windowSize.width + 'px' : width,

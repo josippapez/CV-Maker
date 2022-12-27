@@ -1,7 +1,10 @@
 import { usePDF } from '@react-pdf/renderer';
 import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import {
+  DocumentPDFData,
+  getCVPreviewForUser,
   getDataForUser,
   saveDataForUser,
 } from '../../store/actions/syncActions';
@@ -13,6 +16,8 @@ import PDFViewPresenter from './PDFViewPresenter';
 import { PDFViewContext } from './PDFViewProvider';
 
 const PDFView = () => {
+  const params = useParams();
+  const isPDFPreview = !!params.userId;
   const {
     certificates,
     education,
@@ -20,13 +25,15 @@ const PDFView = () => {
     languages,
     professionalExperience,
     skills,
+    template,
+    setAllData,
+    setTemplate,
   } = useContext(PDFViewContext);
   const { t, i18n } = useTranslation('CVTemplates');
   const currentLanguage = i18n.language;
 
   const dispatch = useAppDispatch();
   const pdfData = useAppSelector(state => state.pdfData);
-  const template = useAppSelector(state => state.template);
   const user = useAppSelector(state => state.user.user);
 
   const [instance, updateInstance] = usePDF({
@@ -37,6 +44,7 @@ const PDFView = () => {
       education,
       languages,
       skills,
+      template,
       t,
       currentLanguage,
     }),
@@ -51,6 +59,9 @@ const PDFView = () => {
     }
     updateInstanceRef.current = setTimeout(() => {
       updateInstance();
+
+      if (isPDFPreview) return;
+
       dispatch(
         cacheAllData({
           generalInfo,
@@ -70,6 +81,7 @@ const PDFView = () => {
     education,
     languages,
     skills,
+    template,
   ]);
 
   useEffect(() => {
@@ -79,15 +91,26 @@ const PDFView = () => {
     updateInstanceRef.current = setTimeout(() => {
       updateInstance();
     }, 500);
-  }, [template, currentLanguage]);
+  }, [currentLanguage]);
 
   useEffect(() => {
     dispatch(getDataForUser());
   }, [user]);
 
+  useEffect(() => {
+    if (isPDFPreview) {
+      if (!params.userId) return;
+
+      getCVPreviewForUser(params.userId, (data: DocumentPDFData) => {
+        setTemplate(data.template);
+        setAllData(data);
+      });
+    }
+  }, []);
+
   return (
     <PageLoader isLoading={pdfData.loading}>
-      <PDFViewPresenter pdfInstance={instance} />
+      <PDFViewPresenter pdfInstance={instance} isPDFPreview={isPDFPreview} />
     </PageLoader>
   );
 };

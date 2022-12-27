@@ -2,6 +2,7 @@
 
 import { createContext, useEffect, useState } from 'react';
 import { useAppSelector } from '../../store/hooks';
+import { Template, TemplateName } from '../../store/reducers/template';
 import {
   Certificate,
   Education,
@@ -26,6 +27,17 @@ export const PDFViewContext = createContext<{
   setLanguages: (languages: LanguageSkill[]) => void;
   skills: Skill[];
   setSkills: (skills: Skill[]) => void;
+  template: Template;
+  setTemplate: (template: Template) => void;
+  setAllData: (data: {
+    generalInfo: GeneralInfo;
+    professionalExperience: ProfessionalExperience[];
+    certificates: Certificate[];
+    education: Education[];
+    languages: LanguageSkill[];
+    skills: Skill[];
+    template: Template;
+  }) => void;
 }>({
   generalInfo: {
     firstName: '',
@@ -68,6 +80,15 @@ export const PDFViewContext = createContext<{
   setSkills: () => {
     return;
   },
+  template: {
+    templateName: TemplateName.CVTemplate1,
+  },
+  setTemplate: () => {
+    return;
+  },
+  setAllData: () => {
+    return;
+  },
 });
 
 export const PDFViewProvider = ({
@@ -76,6 +97,7 @@ export const PDFViewProvider = ({
   children: React.ReactNode;
 }) => {
   const pdfData = useAppSelector(state => state.pdfData);
+  const templateData = useAppSelector(state => state.template);
 
   const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({
     profilePicture: undefined,
@@ -104,6 +126,9 @@ export const PDFViewProvider = ({
   const [education, setEducation] = useState<Education[]>([]);
   const [languages, setLanguages] = useState<LanguageSkill[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
+  const [template, setTemplate] = useState<Template>({
+    templateName: TemplateName.CVTemplate1,
+  });
 
   useEffect(() => {
     if (pdfData) {
@@ -115,7 +140,28 @@ export const PDFViewProvider = ({
       if (pdfData.languages) setLanguages(pdfData.languages);
       if (pdfData.skills) setSkills(pdfData.skills);
     }
-  }, [pdfData]);
+    if (templateData) {
+      if (templateData.templateName) setTemplate(templateData);
+    }
+  }, [pdfData, templateData]);
+
+  const setAllData = (data: {
+    generalInfo: GeneralInfo;
+    professionalExperience: ProfessionalExperience[];
+    certificates: Certificate[];
+    education: Education[];
+    languages: LanguageSkill[];
+    skills: Skill[];
+    template: Template;
+  }) => {
+    setGeneralInfo(data.generalInfo);
+    setProfessionalExperience(data.professionalExperience);
+    setCertificates(data.certificates);
+    setEducation(data.education);
+    setLanguages(data.languages);
+    setSkills(data.skills);
+    setTemplate(data.template);
+  };
 
   return (
     <PDFViewContext.Provider
@@ -132,6 +178,9 @@ export const PDFViewProvider = ({
         setLanguages,
         skills,
         setSkills,
+        template,
+        setTemplate,
+        setAllData,
       }}
     >
       {children}

@@ -129,7 +129,6 @@ export const GeneralInput = () => {
                           }
                         };
                         reader.onerror = error => {
-
                           compressor.abort();
                         };
                       },
@@ -144,56 +143,62 @@ export const GeneralInput = () => {
           )}
         </motion.div>
         {arrayOfGeneralInputs.map((input, index) => (
-          <motion.div
+          <AnimatePresence
             key={index + '-' + 'GeneralInput' + '-' + t(`${input.inputValue}`)}
-            animate={combinedStyleFinal}
-            initial={combinedStyleInitial}
-            exit={combinedStyleInitial}
-            transition={{
-              delay: (index + 1) * 0.035,
-              duration: 0.2,
-            }}
           >
-            <TextInput
-              label={t(`${input.inputValue}`)}
-              type={input.type}
-              value={generalInfo[input.inputValue]}
-              name={input.inputName}
-              onChange={e => {
-                setGeneralInfo({
-                  ...generalInfo,
-                  [input.inputValue]: e.target.value,
-                });
+            <motion.div
+              animate={combinedStyleFinal}
+              initial={combinedStyleInitial}
+              exit={combinedStyleInitial}
+              transition={{
+                delay: (index + 1) * 0.035,
+                duration: 0.2,
               }}
-              fullWidth
-            />
-          </motion.div>
+            >
+              <TextInput
+                label={t(`${input.inputValue}`)}
+                type={input.type}
+                value={generalInfo[input.inputValue]}
+                name={input.inputName}
+                onChange={e => {
+                  setGeneralInfo({
+                    ...generalInfo,
+                    [input.inputValue]: e.target.value,
+                  });
+                }}
+                fullWidth
+              />
+            </motion.div>
+          </AnimatePresence>
         ))}
         {arrayOfGeneralTextAreas.map((input, index) => (
-          <motion.div
+          <AnimatePresence
             key={index + '-' + 'GeneralInput' + '-' + t(`${input.inputValue}`)}
-            animate={combinedStyleFinal}
-            initial={combinedStyleInitial}
-            exit={combinedStyleInitial}
-            transition={{
-              delay: (arrayOfGeneralInputs.length + 1) * 0.035,
-              duration: 0.2,
-            }}
           >
-            <TextInput
-              label={t(`${input.inputValue}`)}
-              textarea
-              value={generalInfo[input.inputValue]}
-              name={input.inputName}
-              onChange={e => {
-                setGeneralInfo({
-                  ...generalInfo,
-                  [input.inputValue]: e.target.value,
-                });
+            <motion.div
+              animate={combinedStyleFinal}
+              initial={combinedStyleInitial}
+              exit={combinedStyleInitial}
+              transition={{
+                delay: (arrayOfGeneralInputs.length + 1) * 0.035,
+                duration: 0.2,
               }}
-              fullWidth
-            />
-          </motion.div>
+            >
+              <TextInput
+                label={t(`${input.inputValue}`)}
+                textarea
+                value={generalInfo[input.inputValue]}
+                name={input.inputName}
+                onChange={e => {
+                  setGeneralInfo({
+                    ...generalInfo,
+                    [input.inputValue]: e.target.value,
+                  });
+                }}
+                fullWidth
+              />
+            </motion.div>
+          </AnimatePresence>
         ))}
       </AnimatePresence>
     </motion.div>

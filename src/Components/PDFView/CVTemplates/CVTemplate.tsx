@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { TFunction } from 'react-i18next';
 import { useAppSelector } from '../../../store/hooks';
-import { TemplateName } from '../../../store/reducers/template';
+import { Template, TemplateName } from '../../../store/reducers/template';
 import {
   Certificate,
   Education,
@@ -22,6 +22,7 @@ type OptionType = {
   education: Education[];
   languages: LanguageSkill[];
   skills: Skill[];
+  template: Template;
   translate: TFunction;
 };
 
@@ -31,6 +32,7 @@ type Props = {
   certificates: Certificate[];
   education: Education[];
   languages: LanguageSkill[];
+  template: Template;
   t: TFunction;
   currentLanguage: string;
   skills: Skill[];
@@ -59,11 +61,11 @@ const CVTemplate = (props: Props): JSX.Element => {
     education,
     languages,
     skills,
+    template,
     t,
     currentLanguage,
   } = props;
 
-  const template = useAppSelector(state => state.template);
   const options: OptionType = {
     generalInfo,
     professionalExperience,
@@ -71,6 +73,7 @@ const CVTemplate = (props: Props): JSX.Element => {
     education,
     languages,
     skills,
+    template,
     translate: t,
   };
 
