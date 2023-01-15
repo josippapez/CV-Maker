@@ -10,26 +10,37 @@ const {
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const dependencies = require('./package.json').dependencies;
+delete dependencies['@svgr/webpack'];
+delete dependencies['react-scripts'];
+delete dependencies['web-vitals'];
+delete dependencies['firebase'];
+const listDependencies = Object.keys(dependencies);
+listDependencies.push(
+  'firebase/compat/app',
+  'firebase/compat/auth',
+  'firebase/compat/firestore',
+  'firebase/firestore',
+);
+
 module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
   console.log('devMode', devMode);
   return {
     context: path.join(__dirname, '/src'),
     entry: {
-      app: { import: './index.tsx', dependOn: 'react-vendors' },
-      'react-vendors': [
-        'react',
-        'react-dom',
-        'react-router-dom',
-        'react-redux',
-        'redux',
-      ],
+      app: {
+        import: './index.tsx',
+        dependOn: 'react-vendors',
+      },
+      'react-vendors': listDependencies,
     },
     target: 'web',
     output: {
       path: path.join(__dirname, '/dist'),
       filename: '[name].bundle.js',
       publicPath: '/',
+      clean: true,
     },
     devServer: {
       static: './public',
@@ -87,10 +98,16 @@ module.exports = (env, argv) => {
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/i,
           type: 'asset/resource',
+          generator: {
+            filename: 'fonts/[hash][ext][query]',
+          },
         },
         {
           test: /\.(png|jpg|jpeg|gif)$/i,
           type: 'asset/resource',
+          generator: {
+            filename: 'images/[hash][ext][query]',
+          },
         },
         {
           test: /\.svg$/i,
@@ -108,6 +125,9 @@ module.exports = (env, argv) => {
         {
           test: /\.svg$/i,
           type: 'asset/resource',
+          generator: {
+            filename: 'images/[hash][ext][query]',
+          },
           resourceQuery: /url/,
         },
       ],
@@ -155,11 +175,20 @@ module.exports = (env, argv) => {
             ),
             to: 'cmaps/',
           },
+          {
+            from: path.join(
+              path.dirname(require.resolve('pdfjs-dist/package.json')),
+              'build',
+              'pdf.worker.min.js'
+            ),
+          },
         ],
       }),
     ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
     optimization: {
+      usedExports: true,
       minimize: !devMode,
+      moduleIds: 'deterministic',
       minimizer: [
         new TerserPlugin({
           terserOptions: {
@@ -182,6 +211,6 @@ module.exports = (env, argv) => {
         }),
       ],
     },
-    devtool: 'source-map',
+    devtool: devMode ? 'inline-source-map' : 'source-map',
   };
 };

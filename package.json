@@ -6,9 +6,7 @@
     "@react-pdf/renderer": "^3.0.1",
     "@reduxjs/toolkit": "^1.8.5",
     "@svgr/webpack": "^6.5.1",
-    "assert": "^2.0.0",
     "axios": "^1.2.1",
-    "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "compressorjs": "^1.1.1",
     "disable-scroll": "^0.6.0",
@@ -28,9 +26,6 @@
     "react-scripts": "^5.0.1",
     "react-toastify": "^9.1.1",
     "redux-persist": "^6.0.0",
-    "stream-browserify": "^3.0.0",
-    "style-loader": "^3.3.1",
-    "util": "^0.12.4",
     "web-vitals": "^3.0.3"
   },
   "scripts": {
@@ -60,6 +55,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "http://localhost:3000",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -92,6 +88,7 @@
     "sass": "^1.55.0",
     "sass-loader": "^13.0.2",
     "source-map-loader": "^4.0.0",
+    "style-loader": "^3.3.1",
     "svg-inline-loader": "^0.8.2",
     "svg-url-loader": "^8.0.0",
     "tailwindcss": "^3.2.4",
