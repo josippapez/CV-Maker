@@ -43,6 +43,7 @@ export const EducationInput = () => {
               startDate: '',
               endDate: '',
               description: '',
+              currentlyEnrolled: false,
             },
           ]);
         }}

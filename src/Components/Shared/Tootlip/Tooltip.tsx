@@ -1,23 +1,38 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ReactNode, useCallback, useState } from 'react';
+import { ReactNode, useCallback, useRef, useState } from 'react';
 
 type Props = {
   children: ReactNode;
   tooltipText: string;
   delayShow?: number;
   position?: 'top' | 'bottom' | 'left' | 'right';
+  showOnClick?: boolean;
 };
 
 export const Tooltip = (props: Props) => {
-  const { children, tooltipText, delayShow } = props;
+  const { children, tooltipText, delayShow, showOnClick } = props;
   const [showTooltip, setShowTooltip] = useState(false);
+  const updateInstanceRef: { current: null | ReturnType<typeof setTimeout> } =
+    useRef(null);
 
-  const handleMouseEnter = useCallback(() => {
+  const handleShow = useCallback(() => {
     setShowTooltip(true);
   }, []);
 
-  const handleMouseLeave = useCallback(() => {
+  const handleHide = useCallback(() => {
     setShowTooltip(false);
+  }, []);
+
+  const handleClicked = useCallback(() => {
+    if (updateInstanceRef.current) {
+      clearTimeout(updateInstanceRef.current);
+    }
+
+    setShowTooltip(true);
+
+    updateInstanceRef.current = setTimeout(() => {
+      setShowTooltip(false);
+    }, 1000);
   }, []);
 
   const getPostion = useCallback(() => {
@@ -37,7 +52,11 @@ export const Tooltip = (props: Props) => {
 
   return (
     <div className='flex'>
-      <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <div
+        onMouseEnter={!showOnClick ? handleShow : undefined}
+        onMouseLeave={!showOnClick ? handleHide : undefined}
+        onClick={showOnClick ? handleClicked : undefined}
+      >
         {children}
       </div>
       <AnimatePresence>

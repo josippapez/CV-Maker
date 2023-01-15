@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PDFViewProvider } from './Components/PDFView/PDFViewProvider';
 import PageLoader from './Components/Shared/Loader/PageLoader';
-import NavbarContainer from './Components/Shared/Navbar/NavbarContainer';
+import NavbarPresenter from './Components/Shared/Navbar/NavbarPresenter';
 import { useAppDispatch } from './store/hooks';
 import { resetUser } from './store/reducers/user';
 
@@ -50,7 +50,7 @@ function App() {
   return (
     <div className='h-screen'>
       <ToastContainer />
-      <NavbarContainer />
+      <NavbarPresenter />
       <Routes>
         <Route
           path='/'
@@ -62,6 +62,16 @@ function App() {
         />
         <Route
           path='/create'
+          element={
+            <Suspense fallback={<PageLoader isLoading />}>
+              <PDFViewProvider>
+                <PDFView />
+              </PDFViewProvider>
+            </Suspense>
+          }
+        />
+        <Route
+          path='/cv/:userId'
           element={
             <Suspense fallback={<PageLoader isLoading />}>
               <PDFViewProvider>

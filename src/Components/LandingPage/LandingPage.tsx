@@ -1,5 +1,5 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import useAnimation from '../../Hooks/useAnimation';
@@ -8,29 +8,29 @@ import style from './LandingPage.module.scss';
 import LandingPageScrollNavigation from './LandingPageScrollNavigation';
 import LandingPageSections from './LandingPageSections';
 
-/* type Props = {}; */
-
-const LandingPage = (/* props: Props */) => {
+const LandingPage = () => {
   const { t } = useTranslation('LandingPage');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
+  const horizontalAnimation = useAnimation({
+    amountX: 10,
+  });
 
-  const LandingHeader = () => {
-    const componentRef = useRef(null);
-    const inview = useInView(componentRef);
+  const LandingHeader = forwardRef((props: any, ref: any) => {
+    const inview = useInView(ref, {
+      once: true,
+      amount: 0.75,
+    });
 
     return (
-      <div
-        ref={componentRef}
-        className='flex justify-center items-center h-full p-5'
-      >
-        <div className='flex-col w-full'>
+      <div ref={ref} className='flex justify-center items-center h-full'>
+        <div className='flex flex-col w-full'>
           <div className='flex justify-center items-center'>
             <motion.header
               initial={combinedStyleInitial}
               animate={inview ? combinedStyleFinal : combinedStyleInitial}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.2 }}
               className='w-2/6 text-6xl text-center font-bold text-blue-900 dark:text-white'
             >
               {t('pageName')}
@@ -38,17 +38,17 @@ const LandingPage = (/* props: Props */) => {
             <motion.img
               initial={combinedStyleInitial}
               animate={inview ? combinedStyleFinal : combinedStyleInitial}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
               src={Images.PagesImage}
               alt='Page Logo'
               className='w-2/6'
             />
           </div>
           <motion.div
-            className='w-full text-center'
+            className='text-center'
             initial={combinedStyleInitial}
             animate={inview ? combinedStyleFinal : combinedStyleInitial}
-            transition={{ duration: 0.5, delay: 1 }}
+            transition={{ duration: 0.2, delay: 0.7 }}
           >
             <NavLink to='/create' className={style.createYourCVLink}>
               {t('createYourCV')}
@@ -57,49 +57,88 @@ const LandingPage = (/* props: Props */) => {
         </div>
       </div>
     );
-  };
+  });
+  LandingHeader.displayName = 'LandingHeader';
 
-  const LandingPageInfoSection = () => {
-    const componentRef = useRef(null);
-    const inview = useInView(componentRef);
+  const LandingPageInfoSection = forwardRef((props: any, ref: any) => {
+    const inview = useInView(ref, {
+      amount: 0.75,
+    });
+
     return (
       <div
-        ref={componentRef}
-        className='flex justify-center items-center h-full p-5 bg-[#fbe5c4] dark:bg-[#c0ad8f]'
+        ref={ref}
+        className='flex justify-center items-center h-full bg-[#fbe5c4] dark:bg-[#c0ad8f]'
       >
-        <img
+        <motion.img
           src={Images.Desk}
           alt='Page Logo'
           className='w-3/5 m-5 rounded-lg shadow-lg'
+          initial={horizontalAnimation.combinedStyleInitialReverse}
+          animate={
+            inview
+              ? horizontalAnimation.combinedStyleFinal
+              : horizontalAnimation.combinedStyleInitialReverse
+          }
+          transition={{ duration: 0.2 }}
         />
-        <div className='w-2/6 text-xl text-blue-900 dark:text-white'>
+        <motion.div
+          className='w-2/6 text-xl text-blue-900 dark:text-white'
+          initial={horizontalAnimation.combinedStyleInitial}
+          animate={
+            inview
+              ? horizontalAnimation.combinedStyleFinal
+              : horizontalAnimation.combinedStyleInitial
+          }
+          transition={{ duration: 0.2 }}
+        >
           {t('createYourCVDescription')}
-        </div>
+        </motion.div>
       </div>
     );
-  };
+  });
+  LandingPageInfoSection.displayName = 'LandingPageInfoSection';
 
-  const LandingPageTemplatesSection = () => {
-    const componentRef = useRef(null);
-    const inview = useInView(componentRef);
+  const LandingPageTemplatesSection = forwardRef((props: any, ref: any) => {
+    const inview = useInView(ref, {
+      amount: 0.75,
+    });
+
     return (
       <div
-        ref={componentRef}
-        className='flex justify-center items-center h-full p-5 bg-[#e6cfad] dark:bg-[#a08e72]'
+        ref={ref}
+        className='flex justify-center items-center h-full bg-[#e6cfad] dark:bg-[#a08e72]'
       >
-        <div className='w-2/6 text-xl text-blue-900 dark:text-white'>
+        <motion.div
+          className='w-2/6 text-xl text-blue-900 dark:text-white'
+          initial={horizontalAnimation.combinedStyleInitialReverse}
+          animate={
+            inview
+              ? horizontalAnimation.combinedStyleFinal
+              : horizontalAnimation.combinedStyleInitialReverse
+          }
+          transition={{ duration: 0.2 }}
+        >
           {t('templatesDescription')}
-        </div>
-        <img
+        </motion.div>
+        <motion.img
           src={Images.Notebook}
           alt='Page Logo'
           className='w-3/5 m-5 rounded-lg shadow-lg'
+          initial={horizontalAnimation.combinedStyleInitial}
+          animate={
+            inview
+              ? horizontalAnimation.combinedStyleFinal
+              : horizontalAnimation.combinedStyleInitial
+          }
+          transition={{ duration: 0.2 }}
         />
       </div>
     );
-  };
+  });
+  LandingPageTemplatesSection.displayName = 'LandingPageTemplatesSection';
 
-  const landingPageSections: React.FC[] = [
+  const landingPageSections = [
     LandingHeader,
     LandingPageInfoSection,
     LandingPageTemplatesSection,

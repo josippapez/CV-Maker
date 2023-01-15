@@ -5,6 +5,7 @@ import {
   getFirestore,
   setDoc,
   updateDoc,
+  onSnapshot,
 } from 'firebase/firestore';
 import { AppDispatch, AppState } from './../store';
 
@@ -83,6 +84,30 @@ export const FirebaseCollectionActions = (collectionName: string) => {
           onSuccess();
         }
         return data;
+      } catch (error) {
+        console.log(error);
+        if (onError) {
+          onError();
+        }
+      }
+    },
+    listenById: async (
+      id: string,
+      setState: (data: any) => void,
+      onSuccess?: () => void,
+      onError?: () => void
+    ) => {
+      try {
+        const docRef = doc(getFirestore(), collectionName, id);
+        const unsubscribe = onSnapshot(docRef, doc => {
+          if (doc.exists()) {
+            setState(doc.data());
+          }
+        });
+        if (onSuccess) {
+          onSuccess();
+        }
+        return unsubscribe;
       } catch (error) {
         console.log(error);
         if (onError) {

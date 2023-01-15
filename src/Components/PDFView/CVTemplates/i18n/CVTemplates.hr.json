@@ -3,5 +3,10 @@
   "skills": "Vještine",
   "languages": "Jezici",
   "certificates": "Certifikati",
-  "education": "Obrazovanje"
+  "education": "Obrazovanje",
+  "present": "Trenutno",
+  "BEGINNER": "Početnik",
+  "CONVERSATIONAL": "Razgovorni",
+  "NATIVE": "Materinji",
+  "FLUENT": "Tečan"
 }

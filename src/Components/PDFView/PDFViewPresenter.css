@@ -45,7 +45,20 @@
   margin-left: 10px;
 }
 
-.pdf-download:hover {
+.pdf-share {
+  background: url('../../Styles/Assets/Images/share.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.pdf-download:hover, .pdf-share:hover {
   background-color: #e6e6e6;
 }
 

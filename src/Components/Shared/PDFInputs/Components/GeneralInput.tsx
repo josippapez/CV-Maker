@@ -6,16 +6,17 @@ import useAnimation from '../../../../Hooks/useAnimation';
 import { ReactComponent as Plus } from '../../../../Styles/Assets/Images/plus.svg';
 import { GeneralInfo } from '../../../PDFView/models';
 import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
+import { DateInput } from '../../Inputs/DateInput';
 import TextInput from '../../Inputs/TextInput';
 
 const arrayOfGeneralInputs: Array<{
   inputName: string;
   inputValue: keyof Omit<GeneralInfo, 'profilePicture'>;
-  type: 'text' | 'email' | 'tel' | 'number' | 'password';
+  type: 'text' | 'date' | 'email' | 'tel' | 'number' | 'password';
 }> = [
   { inputName: 'First name', inputValue: 'firstName', type: 'text' },
   { inputName: 'Last name', inputValue: 'lastName', type: 'text' },
-  { inputName: 'Date of birth', inputValue: 'dob', type: 'text' },
+  { inputName: 'Date of birth', inputValue: 'dob', type: 'date' },
   { inputName: 'Position', inputValue: 'position', type: 'text' },
   { inputName: 'Email', inputValue: 'email', type: 'email' },
   { inputName: 'Phone', inputValue: 'phone', type: 'text' },
@@ -58,32 +59,40 @@ export const GeneralInput = () => {
           className='flex justify-center items-center'
         >
           {generalInfo.profilePicture ? (
-            <>
-              <img
-                className='w-24 h-24 rounded-3xl'
-                style={{ objectFit: 'cover' }}
-                src={
-                  generalInfo.profilePicture ? generalInfo.profilePicture : ''
-                }
-                alt='profile picture'
-              />
-              <button
-                className='p-2 ml-2 rounded-full bg-red-500 text-white'
-                onClick={() => {
-                  setGeneralInfo({
-                    ...generalInfo,
-                    profilePicture: undefined,
-                  });
-                }}
-              >
-                {t('Remove')}
-              </button>
-            </>
+            <div className='flex flex-col w-full'>
+              <label className='font-medium text-gray-700'>
+                {t('profilePicture')}
+              </label>
+              <div className='flex flex-row justify-center'>
+                <img
+                  className='w-24 h-24 rounded-3xl'
+                  style={{ objectFit: 'cover' }}
+                  src={
+                    generalInfo.profilePicture ? generalInfo.profilePicture : ''
+                  }
+                  alt='profile picture'
+                />
+                <button
+                  className='p-2 ml-2 rounded-full bg-red-500 text-white self-center h-fit'
+                  onClick={() => {
+                    setGeneralInfo({
+                      ...generalInfo,
+                      profilePicture: undefined,
+                    });
+                  }}
+                >
+                  {t('remove')}
+                </button>
+              </div>
+            </div>
           ) : (
-            <>
+            <div className='flex flex-col w-full'>
+              <label className='font-medium text-gray-700'>
+                {t('profilePicture')}
+              </label>
               <label
                 htmlFor='profilePicture'
-                className='flex justify-center items-center cursor-pointer w-24 h-24 bg-blue-100 rounded-3xl border border-dashed border-blue-500 hover:bg-blue-300'
+                className='flex justify-center self-center items-center cursor-pointer w-24 h-24 bg-blue-100 rounded-3xl border border-dashed border-blue-500 hover:bg-blue-300'
               >
                 <Plus height={30} className='fill-blue-600' />
               </label>
@@ -129,7 +138,6 @@ export const GeneralInput = () => {
                           }
                         };
                         reader.onerror = error => {
-
                           compressor.abort();
                         };
                       },
@@ -140,60 +148,85 @@ export const GeneralInput = () => {
                   }
                 }}
               />
-            </>
+            </div>
           )}
         </motion.div>
         {arrayOfGeneralInputs.map((input, index) => (
-          <motion.div
+          <AnimatePresence
             key={index + '-' + 'GeneralInput' + '-' + t(`${input.inputValue}`)}
-            animate={combinedStyleFinal}
-            initial={combinedStyleInitial}
-            exit={combinedStyleInitial}
-            transition={{
-              delay: (index + 1) * 0.035,
-              duration: 0.2,
-            }}
           >
-            <TextInput
-              label={t(`${input.inputValue}`)}
-              type={input.type}
-              value={generalInfo[input.inputValue]}
-              name={input.inputName}
-              onChange={e => {
-                setGeneralInfo({
-                  ...generalInfo,
-                  [input.inputValue]: e.target.value,
-                });
+            <motion.div
+              animate={combinedStyleFinal}
+              initial={combinedStyleInitial}
+              exit={combinedStyleInitial}
+              transition={{
+                delay: (index + 1) * 0.035,
+                duration: 0.2,
               }}
-              fullWidth
-            />
-          </motion.div>
+            >
+              {input.type === 'date' ? (
+                <DateInput
+                  label={t(`${input.inputValue}`)}
+                  value={generalInfo[input.inputValue]}
+                  setData={date => {
+                    setGeneralInfo({
+                      ...generalInfo,
+                      [input.inputValue]: date,
+                    });
+                  }}
+                  resetData={() => {
+                    setGeneralInfo({
+                      ...generalInfo,
+                      [input.inputValue]: undefined,
+                    });
+                  }}
+                  startYear={new Date().getFullYear() - 18}
+                />
+              ) : (
+                <TextInput
+                  label={t(`${input.inputValue}`)}
+                  type={input.type}
+                  value={generalInfo[input.inputValue]}
+                  name={input.inputName}
+                  onChange={e => {
+                    setGeneralInfo({
+                      ...generalInfo,
+                      [input.inputValue]: e.target.value,
+                    });
+                  }}
+                />
+              )}
+            </motion.div>
+          </AnimatePresence>
         ))}
         {arrayOfGeneralTextAreas.map((input, index) => (
-          <motion.div
+          <AnimatePresence
             key={index + '-' + 'GeneralInput' + '-' + t(`${input.inputValue}`)}
-            animate={combinedStyleFinal}
-            initial={combinedStyleInitial}
-            exit={combinedStyleInitial}
-            transition={{
-              delay: (arrayOfGeneralInputs.length + 1) * 0.035,
-              duration: 0.2,
-            }}
           >
-            <TextInput
-              label={t(`${input.inputValue}`)}
-              textarea
-              value={generalInfo[input.inputValue]}
-              name={input.inputName}
-              onChange={e => {
-                setGeneralInfo({
-                  ...generalInfo,
-                  [input.inputValue]: e.target.value,
-                });
+            <motion.div
+              animate={combinedStyleFinal}
+              initial={combinedStyleInitial}
+              exit={combinedStyleInitial}
+              transition={{
+                delay: (arrayOfGeneralInputs.length + 1) * 0.035,
+                duration: 0.2,
               }}
-              fullWidth
-            />
-          </motion.div>
+            >
+              <TextInput
+                label={t(`${input.inputValue}`)}
+                textarea
+                value={generalInfo[input.inputValue]}
+                name={input.inputName}
+                onChange={e => {
+                  setGeneralInfo({
+                    ...generalInfo,
+                    [input.inputValue]: e.target.value,
+                  });
+                }}
+                fullWidth
+              />
+            </motion.div>
+          </AnimatePresence>
         ))}
       </AnimatePresence>
     </motion.div>

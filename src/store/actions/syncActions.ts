@@ -1,7 +1,14 @@
+import i18next from 'i18next';
 import { toast } from 'react-toastify';
 import { cacheAllData, PDFData, setLoading } from '../reducers/pdfData';
+import { setTemplate, Template, TemplateName } from '../reducers/template';
 import { AppDispatch, AppState } from '../store';
 import { FirebaseCollectionActions } from './FirebaseCollectionActions';
+
+export interface DocumentPDFData extends PDFData {
+  template: Template;
+  language: string;
+}
 
 export const saveDataForUser = () => {
   return (dispatch: AppDispatch, getState: AppState) => {
@@ -17,9 +24,16 @@ export const saveDataForUser = () => {
       }
     }, {});
 
+    localStorage.setItem('language', i18next.language);
+
     dispatch(
       add(
-        { ...data, timestamp: Date.now() },
+        {
+          ...data,
+          template: getState().template,
+          timestamp: Date.now(),
+          language: i18next.language,
+        },
         () => {
           console.log('saved user data');
         },
@@ -60,7 +74,7 @@ export const deleteDataForUser = () => {
 
 export const getDataForUser = () => {
   return (dispatch: AppDispatch, getState: AppState) => {
-    const { id } = getState().user.user;
+    const id = getState().user.user.id;
 
     if (!id) return;
 
@@ -92,10 +106,26 @@ export const getDataForUser = () => {
         return;
       }
 
-      const pdfData = data as PDFData;
+      const pdfData = data;
+
+      i18next.changeLanguage(pdfData.language);
 
       dispatch(setLoading(false));
-      dispatch(cacheAllData(pdfData));
+      dispatch(cacheAllData(pdfData as PDFData));
+      dispatch(setTemplate(pdfData.template.templateName as TemplateName));
     });
   };
+};
+
+export const getCVPreviewForUser = async (
+  userId: string,
+  setState: (data: any) => void
+) => {
+  const id = userId;
+
+  if (!id) return;
+
+  const { listenById } = FirebaseCollectionActions('user-data');
+
+  return listenById(id, setState);
 };

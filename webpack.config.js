@@ -29,6 +29,7 @@ module.exports = (env, argv) => {
     output: {
       path: path.join(__dirname, '/dist'),
       filename: '[name].bundle.js',
+      publicPath: '/',
     },
     devServer: {
       static: './public',

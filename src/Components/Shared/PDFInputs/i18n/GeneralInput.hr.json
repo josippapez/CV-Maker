@@ -1,4 +1,5 @@
 {
+  "profilePicture": "Profilna slika",
   "firstName": "Ime",
   "lastName": "Prezime",
   "dob": "Datum rođenja",
@@ -16,5 +17,6 @@
   "facebook": "Facebook",
   "twitter": "Twitter",
   "github": "GitHub",
-  "aboutMe": "O meni"
+  "aboutMe": "O meni",
+  "remove": "Ukloni"
 }

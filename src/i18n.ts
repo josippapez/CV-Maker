@@ -9,6 +9,7 @@ i18next
   .init({
     debug: false,
     fallbackLng: 'hr',
+    lng: localStorage.getItem('language') || 'hr',
     interpolation: {
       escapeValue: false,
     },

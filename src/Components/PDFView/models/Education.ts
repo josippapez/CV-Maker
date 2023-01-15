@@ -7,5 +7,6 @@ export interface Education {
   fieldOfStudy: string;
   startDate: string;
   endDate: string;
+  currentlyEnrolled: boolean;
   description: string;
 }

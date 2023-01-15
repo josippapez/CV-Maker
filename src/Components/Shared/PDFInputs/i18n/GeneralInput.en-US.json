@@ -1,4 +1,5 @@
 {
+  "profilePicture": "Profile picture",
   "firstName": "First name",
   "lastName": "Last name",
   "email": "Email",
@@ -16,5 +17,6 @@
   "facebook": "Facebook",
   "twitter": "Twitter",
   "github": "Github",
-  "aboutMe": "About me"
+  "aboutMe": "About me",
+  "remove": "Remove"
 }

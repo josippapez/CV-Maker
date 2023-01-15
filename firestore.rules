@@ -7,8 +7,7 @@ service cloud.firestore {
       allow write, update: if isAuthorized(userId)
     }
     match /user-data/{userId}{
-    	allow create
-      allow read: if isAuthenticated()
+    	allow create, read
       allow write, update: if isAuthorized(userId)
     }
 

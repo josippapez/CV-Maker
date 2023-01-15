@@ -1,9 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import useMobileView from '../../../Hooks/useMobileView';
-import { useAppDispatch } from '../../../store/hooks';
-import { setTemplate, TemplateName } from '../../../store/reducers/template';
 import Modal from '../../Shared/Modal/Modal';
-import style from './TemplatesModal.module.scss';
+import Carousell from './Carousell';
 
 type Props = {
   closeModal(): void;
@@ -11,21 +8,19 @@ type Props = {
 };
 
 const TemplatesModal = (props: Props) => {
-  const isMobileView = useMobileView();
   const { closeModal, show } = props;
   const { t } = useTranslation('CVTemplates');
-  const dispatch = useAppDispatch();
   return (
     <Modal
       show={show}
-      position='right'
-      animation='slide-right'
+      animation='fade'
+      position='center'
       height='screen'
+      width='screen'
       zindex={100}
-      width={isMobileView ? '100%' : '50rem'}
       closeModal={closeModal}
     >
-      <div className='h-full bg-[#f7f7f7] dark:bg-zinc-900 p-5 flex-col relative'>
+      <div className='bg-[#000000dc] p-5 flex-col relative'>
         <div className='flex justify-between items-center'>
           <h1 className='text-2xl font-bold dark:text-white'>
             {t('chooseYourTemplate')}
@@ -45,28 +40,7 @@ const TemplatesModal = (props: Props) => {
             &times;
           </button>
         </div>
-        <div className='flex justify-center items-center mt-3'>
-          {Object.entries(TemplateName).map(value => {
-            const templateName = value[1];
-            return (
-              <div
-                key={templateName}
-                className={`${style.template} ${
-                  style[value[0]]
-                } rounded-md hover:ring-2 hover:ring-blue-400 cursor-pointer transition-all`}
-                onClick={() => {
-                  dispatch(setTemplate(templateName));
-                  closeModal();
-                }}
-              >
-                <div className={`${style.templateImage} ${style[value[0]]}`} />
-                <div className={`${style.templateName} dark:text-white`}>
-                  {t(templateName)}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <Carousell closeModal={closeModal} />
       </div>
     </Modal>
   );

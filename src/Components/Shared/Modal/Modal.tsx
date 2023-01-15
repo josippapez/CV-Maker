@@ -110,6 +110,17 @@ const Modal = (props: Props): JSX.Element => {
             transition,
           },
         };
+      case 'fade':
+        return {
+          show: {
+            opacity: 1,
+            transition,
+          },
+          hide: {
+            opacity: 0,
+            transition,
+          },
+        };
       default:
         return {
           show: {
@@ -140,26 +151,15 @@ const Modal = (props: Props): JSX.Element => {
               opacity: 1,
               transition: {
                 duration: 0.15,
-              }
+              },
             },
             hide: {
               opacity: 0,
               transition: {
                 duration: 0.05,
                 delay: 0.15,
-              }
+              },
             },
-          }}
-          ref={el => {
-            if (el) {
-              if (show) {
-                setTimeout(() => {
-                  el.style.overflow = 'auto';
-                }, 250);
-              } else {
-                el.style.overflow = 'hidden';
-              }
-            }
           }}
           style={{
             zIndex: zindex,
@@ -168,9 +168,10 @@ const Modal = (props: Props): JSX.Element => {
           aria-hidden='true'
           role='button'
           className={`
-        ${style.overlay}
-        ${style[`${position}`]}
-      `}
+            overflow-hidden
+            ${style.overlay}
+            ${style[`${position}`]}
+          `}
           onMouseDown={() => closeModal()}
           onTouchStart={e => e.stopPropagation()}
         >
@@ -182,15 +183,16 @@ const Modal = (props: Props): JSX.Element => {
             id='modal-children'
             aria-hidden='true'
             className={`
-          ${style.children}
-          ${contentClassname}
-          subpixel-antialiased
-          flex flex-col
-          relative
-        `}
+              overflow-auto
+              ${style.children}
+              ${contentClassname}
+              subpixel-antialiased
+              flex flex-col
+              relative
+            `}
             onMouseDown={e => e.stopPropagation()}
             style={{
-              width: width === 'screen' ? windowSize.width + 'px' : width,
+              width: width === 'screen' ? '100vw' : width,
               height: height === 'screen' ? '100vh' : height,
               maxHeight: windowSize.height + 'px',
               aspectRatio: ratio,
@@ -208,9 +210,8 @@ const Modal = (props: Props): JSX.Element => {
 Modal.defaultProps = {
   zindex: 30,
   position: 'center',
-  width: '',
-  animation: 'fade',
-  ratio: '',
+  width: 'auto',
+  ratio: 'auto',
   closeModal: () => {
     return;
   },
