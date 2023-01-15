@@ -132,7 +132,6 @@ const PDFViewPresenter = (props: Props) => {
                       <button
                         className='pdf-share'
                         onClick={() => {
-                          // copy to clipboard
                           navigator.clipboard.writeText(
                             `${window.location.origin}/cv/${user.id}`
                           );

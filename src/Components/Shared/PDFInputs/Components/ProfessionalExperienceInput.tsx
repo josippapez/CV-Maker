@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
 import { ProfessionalExperience } from '../../../PDFView/models';
 import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
+import { DateInput } from '../../Inputs/DateInput';
 import TextInput from '../../Inputs/TextInput';
 import ToggleInput from '../../Inputs/ToggleInput';
 import { AddNewButton } from './AddNewButton';
@@ -20,6 +21,7 @@ const arrayOfProfessionalExperienceInputs: Array<{
   { inputName: 'Location', inputValue: 'location', type: 'text' },
   { inputName: 'Start date', inputValue: 'startDate', type: 'date' },
   { inputName: 'End date', inputValue: 'endDate', type: 'date' },
+  { inputName: 'Present', inputValue: 'currentlyEnrolled', type: 'toggle' },
   {
     inputName: 'Description',
     inputValue: 'description',
@@ -73,31 +75,75 @@ export const ProfessionalExperienceInput = () => {
                   delay: currentIndex * 0.05,
                 }}
               >
-                <TextInput
-                  label={t(`${input.inputValue}`)}
-                  value={experience[input.inputValue]}
-                  name={input.inputValue}
-                  onChange={e => {
-                    setProfessionalExperience(
-                      professionalExperience.map((experience, i) => {
-                        if (i === index) {
-                          return {
-                            ...experience,
-                            [input.inputValue]: e.target.value,
-                          };
-                        }
-                        return experience;
-                      })
-                    );
-                  }}
-                  fullWidth
-                  textarea={input.textarea}
-                />
-                {input.inputValue === 'endDate' && (
+                {input.type === 'date' ? (
+                  <DateInput
+                    monthsPicker
+                    disabled={
+                      experience.currentlyEnrolled &&
+                      input.inputValue === 'endDate'
+                    }
+                    label={t(`${input.inputValue}`)}
+                    value={experience[input.inputValue] as string}
+                    setData={date => {
+                      setProfessionalExperience(
+                        professionalExperience.map((experience, i) => {
+                          if (i === index) {
+                            return {
+                              ...experience,
+                              [input.inputValue]: date,
+                            };
+                          }
+                          return experience;
+                        })
+                      );
+                    }}
+                    resetData={() => {
+                      setProfessionalExperience(
+                        professionalExperience.map((experience, i) => {
+                          if (i === index) {
+                            return {
+                              ...experience,
+                              [input.inputValue]: '',
+                            };
+                          }
+                          return experience;
+                        })
+                      );
+                    }}
+                    format={{
+                      month: 'short',
+                      year: 'numeric',
+                    }}
+                  />
+                ) : (
+                  input.type !== 'toggle' && (
+                    <TextInput
+                      label={t(`${input.inputValue}`)}
+                      value={experience[input.inputValue] as string}
+                      name={input.inputValue}
+                      onChange={e => {
+                        setProfessionalExperience(
+                          professionalExperience.map((experience, i) => {
+                            if (i === index) {
+                              return {
+                                ...experience,
+                                [input.inputValue]: e.target.value,
+                              };
+                            }
+                            return experience;
+                          })
+                        );
+                      }}
+                      fullWidth
+                      textarea={input.textarea}
+                    />
+                  )
+                )}
+                {input.type === 'toggle' && (
                   <ToggleInput
-                    label={t('present')}
+                    label={t(`${input.inputValue}`)}
                     name={input.inputValue}
-                    checked={experience.endDate === t('present')}
+                    checked={experience.currentlyEnrolled}
                     wrapperClassName='mt-4'
                     onChange={e => {
                       setProfessionalExperience(
@@ -105,7 +151,7 @@ export const ProfessionalExperienceInput = () => {
                           if (i === index) {
                             return {
                               ...experience,
-                              endDate: e.target.checked ? t('present') : '',
+                              currentlyEnrolled: e.target.checked,
                             };
                           }
                           return experience;
@@ -131,6 +177,7 @@ export const ProfessionalExperienceInput = () => {
               endDate: '',
               description: '',
               location: '',
+              currentlyEnrolled: false,
             },
           ]);
         }}

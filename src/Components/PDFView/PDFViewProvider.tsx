@@ -1,6 +1,4 @@
-// create context for pdf view
-
-import { createContext, useEffect, useRef, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { useAppSelector } from '../../store/hooks';
 import { Template, TemplateName } from '../../store/reducers/template';
 import {

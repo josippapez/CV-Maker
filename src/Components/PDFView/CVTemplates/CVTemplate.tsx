@@ -23,6 +23,7 @@ type OptionType = {
   skills: Skill[];
   template: Template;
   translate: TFunction;
+  locale: string;
 };
 
 type Props = {
@@ -74,6 +75,7 @@ const CVTemplate = (props: Props): JSX.Element => {
     skills,
     template,
     translate: t,
+    locale: currentLanguage
   };
 
   return useMemo(

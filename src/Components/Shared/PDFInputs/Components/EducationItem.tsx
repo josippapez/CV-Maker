@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
 import { Education } from '../../../PDFView/models';
+import { DateInput } from '../../Inputs/DateInput';
 import TextInput from '../../Inputs/TextInput';
 import ToggleInput from '../../Inputs/ToggleInput';
 import { DeleteButton } from './DeleteButton';
@@ -25,6 +26,11 @@ const arrayOfEducationInputs: Array<{
   { inputName: 'fieldOfStudy', inputValue: 'fieldOfStudy', type: 'text' },
   { inputName: 'startDate', inputValue: 'startDate', type: 'date' },
   { inputName: 'endDate', inputValue: 'endDate', type: 'date' },
+  {
+    inputName: 'currentlyEnrolled',
+    inputValue: 'currentlyEnrolled',
+    type: 'toggle',
+  },
 ];
 
 const arrayOfCourseInputs: Array<{
@@ -36,6 +42,11 @@ const arrayOfCourseInputs: Array<{
   { inputName: 'url', inputValue: 'url', type: 'text' },
   { inputName: 'startDate', inputValue: 'startDate', type: 'date' },
   { inputName: 'endDate', inputValue: 'endDate', type: 'date' },
+  {
+    inputName: 'currentlyEnrolled',
+    inputValue: 'currentlyEnrolled',
+    type: 'toggle',
+  },
 ];
 
 const EducationItem = (props: Props) => {
@@ -73,6 +84,7 @@ const EducationItem = (props: Props) => {
             startDate: '',
             endDate: '',
             description: '',
+            currentlyEnrolled: false,
           };
         }
         return education;
@@ -83,6 +95,23 @@ const EducationItem = (props: Props) => {
     }
     return setSelectedEducation('course');
   };
+
+  const handleSetData = useCallback(
+    (value: string | boolean, inputName: string) => {
+      setEducation(
+        educationList.map((education, i) => {
+          if (i === index) {
+            return {
+              ...education,
+              [inputName]: value,
+            };
+          }
+          return education;
+        })
+      );
+    },
+    [educationList, index]
+  );
 
   return (
     <motion.div
@@ -95,7 +124,9 @@ const EducationItem = (props: Props) => {
       <DeleteButton
         onClick={() => {
           setEducation(
-            educationList.filter((item, existingIndex) => existingIndex !== index)
+            educationList.filter(
+              (item, existingIndex) => existingIndex !== index
+            )
           );
         }}
       />
@@ -123,44 +154,39 @@ const EducationItem = (props: Props) => {
       </div>
       {getEducationInputs().map((input, currentIndex) => (
         <div key={`input-${index}-${currentIndex}`}>
-          <TextInput
-            label={t(`${input.inputName}`)}
-            value={education[input.inputValue]}
-            name={input.inputName}
-            onChange={e => {
-              setEducation(
-                educationList.map((education, i) => {
-                  if (i === index) {
-                    return {
-                      ...education,
-                      [input.inputValue]: e.target.value,
-                    };
-                  }
-                  return education;
-                })
-              );
-            }}
-            fullWidth
-          />
-          {input.inputValue === 'endDate' && (
+          {input.type === 'date' ? (
+            <DateInput
+              monthsPicker
+              disabled={
+                education.currentlyEnrolled && input.inputValue === 'endDate'
+              }
+              label={t(`${input.inputValue}`)}
+              value={education[input.inputValue] as string}
+              setData={date => handleSetData(date, input.inputValue)}
+              resetData={() => handleSetData('', input.inputValue)}
+              format={{
+                month: 'short',
+                year: 'numeric',
+              }}
+            />
+          ) : (
+            input.type !== 'toggle' && (
+              <TextInput
+                label={t(`${input.inputName}`)}
+                value={education[input.inputValue] as string}
+                name={input.inputName}
+                onChange={e => handleSetData(e.target.value, input.inputValue)}
+                fullWidth
+              />
+            )
+          )}
+          {input.type === 'toggle' && (
             <ToggleInput
               label={t('present')}
               name={input.inputName}
-              checked={education.endDate === t('present')}
+              checked={education.currentlyEnrolled}
               wrapperClassName='mt-4'
-              onChange={e => {
-                setEducation(
-                  educationList.map((education, i) => {
-                    if (i === index) {
-                      return {
-                        ...education,
-                        endDate: e.target.checked ? t('present') : '',
-                      };
-                    }
-                    return education;
-                  })
-                );
-              }}
+              onChange={e => handleSetData(e.target.checked, input.inputValue)}
               fullWidth
             />
           )}

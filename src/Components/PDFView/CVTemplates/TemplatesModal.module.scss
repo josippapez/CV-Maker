@@ -34,6 +34,11 @@
       '../../../Styles/Assets/Images/Template3.png'
     );
   }
+  &.CVTemplate4 {
+    @include div-same-size-as-background-img(
+      '../../../Styles/Assets/Images/Template4.png'
+    );
+  }
 }
 
 .templateName {

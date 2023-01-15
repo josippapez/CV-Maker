@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
 import { Certificate } from '../../../PDFView/models';
 import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
+import { DateInput } from '../../Inputs/DateInput';
 import TextInput from '../../Inputs/TextInput';
 import { AddNewButton } from './AddNewButton';
 import { DeleteButton } from './DeleteButton';
@@ -24,6 +25,20 @@ export const CertificatesInput = () => {
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });
+
+  const handleSaveData = (value: string, index: number, inputName: string) => {
+    setCertificates(
+      certificates.map((certificate, i) => {
+        if (i === index) {
+          return {
+            ...certificate,
+            [inputName]: value,
+          };
+        }
+        return certificate;
+      })
+    );
+  };
 
   return (
     <motion.div
@@ -49,26 +64,34 @@ export const CertificatesInput = () => {
             }}
           />
           {arrayOfCertificatesInputs.map((input, currentIndex) => (
-            <TextInput
-              key={index + '-' + 'CertificatesInput' + '-' + currentIndex}
-              label={t(`${input.inputValue}`)}
-              value={certificate[input.inputValue]}
-              name={input.inputValue}
-              onChange={e => {
-                setCertificates(
-                  certificates.map((certificate, i) => {
-                    if (i === index) {
-                      return {
-                        ...certificate,
-                        [input.inputValue]: e.target.value,
-                      };
-                    }
-                    return certificate;
-                  })
-                );
-              }}
-              fullWidth
-            />
+            <>
+              {input.type === 'date' ? (
+                <DateInput
+                  monthsPicker
+                  label={t(`${input.inputValue}`)}
+                  value={certificate[input.inputValue] as string}
+                  setData={date =>
+                    handleSaveData(date, index, input.inputValue)
+                  }
+                  resetData={() => handleSaveData('', index, input.inputValue)}
+                  format={{
+                    month: 'short',
+                    year: 'numeric',
+                  }}
+                />
+              ) : (
+                <TextInput
+                  key={index + '-' + 'CertificatesInput' + '-' + currentIndex}
+                  label={t(`${input.inputValue}`)}
+                  value={certificate[input.inputValue]}
+                  name={input.inputValue}
+                  onChange={e =>
+                    handleSaveData(e.target.value, index, input.inputValue)
+                  }
+                  fullWidth
+                />
+              )}
+            </>
           ))}
           <TextInput
             key={
@@ -81,19 +104,7 @@ export const CertificatesInput = () => {
             label={t('description')}
             value={certificate.description}
             name='certificate-description'
-            onChange={e => {
-              setCertificates(
-                certificates.map((certificate, i) => {
-                  if (i === index) {
-                    return {
-                      ...certificate,
-                      description: e.target.value,
-                    };
-                  }
-                  return certificate;
-                })
-              );
-            }}
+            onChange={e => handleSaveData(e.target.value, index, 'description')}
             fullWidth
             textarea
           />

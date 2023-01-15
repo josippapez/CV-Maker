@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { toast } from 'react-toastify';
 import { cacheAllData, PDFData, setLoading } from '../reducers/pdfData';
 import { setTemplate, Template, TemplateName } from '../reducers/template';
@@ -6,6 +7,7 @@ import { FirebaseCollectionActions } from './FirebaseCollectionActions';
 
 export interface DocumentPDFData extends PDFData {
   template: Template;
+  language: string;
 }
 
 export const saveDataForUser = () => {
@@ -22,12 +24,15 @@ export const saveDataForUser = () => {
       }
     }, {});
 
+    localStorage.setItem('language', i18next.language);
+
     dispatch(
       add(
         {
           ...data,
           template: getState().template,
           timestamp: Date.now(),
+          language: i18next.language,
         },
         () => {
           console.log('saved user data');
@@ -102,6 +107,8 @@ export const getDataForUser = () => {
       }
 
       const pdfData = data;
+
+      i18next.changeLanguage(pdfData.language);
 
       dispatch(setLoading(false));
       dispatch(cacheAllData(pdfData as PDFData));

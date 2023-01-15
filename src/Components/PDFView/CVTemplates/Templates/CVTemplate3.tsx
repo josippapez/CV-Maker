@@ -13,8 +13,8 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
+import { DateTime } from 'luxon';
 import { Fragment } from 'react';
-import { TFunction } from 'react-i18next';
 import UnboundedBold from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-Bold.ttf';
 import UnboundedExtraBold from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-ExtraBold.ttf';
 import UnboundedExtraLight from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-ExtraLight.ttf';
@@ -22,30 +22,14 @@ import UnboundedLight from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-Li
 import UnboundedMedium from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-Medium.ttf';
 import UnboundedRegular from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-Regular.ttf';
 import UnboundedSemiBold from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-SemiBold.ttf';
-import {
-  Certificate,
-  Education,
-  GeneralInfo,
-  LanguageSkill,
-  ProfessionalExperience,
-  Skill,
-} from '../../models';
+import { Skill } from '../../models';
 import { BlobBottomLeft } from '../Images/BlobBottomLeft';
 import { BlobTopLeft } from '../Images/BlobTopLeft';
 import { BlobTopRight } from '../Images/BlobTopRight';
 import { LayeredWaves } from '../Images/LayeredWaves';
 import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
 import { TextDisplay } from '../TemplateComponents/TextDisplay';
-
-type Props = {
-  generalInfo?: GeneralInfo;
-  professionalExperience?: ProfessionalExperience[];
-  certificates?: Certificate[];
-  education?: Education[];
-  languages?: LanguageSkill[];
-  skills?: Skill[];
-  translate: TFunction;
-};
+import { DefaultProps } from './CVTemplateProps';
 
 Font.register({
   family: 'Unbounded',
@@ -260,7 +244,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const CVTemplate3 = (props: Props): JSX.Element => {
+const CVTemplate3 = (props: DefaultProps): JSX.Element => {
   const {
     generalInfo,
     professionalExperience,
@@ -269,6 +253,7 @@ const CVTemplate3 = (props: Props): JSX.Element => {
     languages,
     skills,
     translate,
+    locale,
   } = props;
 
   return (
@@ -347,7 +332,10 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                     },
                   ]}
                 >
-                  {generalInfo?.dob}
+                  {generalInfo?.dob &&
+                    DateTime.fromISO(generalInfo?.dob)
+                      .setLocale(locale)
+                      .toLocaleString()}
                 </TextDisplay>
               </View>
               <TextDisplay style={styles.topBarPosition}>
@@ -452,7 +440,20 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                     {experience.company}
                   </TextDisplay>
                   <TextDisplay style={[styles.companyDuration]}>
-                    {experience.startDate} - {experience.endDate}
+                    {experience.startDate &&
+                      DateTime.fromISO(experience.startDate)
+                        .setLocale(locale)
+                        .toLocaleString({
+                          month: 'short',
+                          year: 'numeric',
+                        })}{' '}
+                    -{' '}
+                    {experience.currentlyEnrolled
+                      ? translate('present')
+                      : experience.endDate &&
+                        DateTime.fromISO(experience.endDate)
+                          .setLocale(locale)
+                          .toLocaleString({ month: 'short', year: 'numeric' })}
                   </TextDisplay>
                   <TextDisplay style={[styles.companyLocation]}>
                     {experience.location}
@@ -549,7 +550,23 @@ const CVTemplate3 = (props: Props): JSX.Element => {
                       {edu.course ? edu.course : edu.school}
                     </TextDisplay>
                     <TextDisplay style={[styles.educationDuration]}>
-                      {edu.startDate} - {edu.endDate}
+                      {edu.startDate &&
+                        DateTime.fromISO(edu.startDate)
+                          .setLocale(locale)
+                          .toLocaleString({
+                            month: 'short',
+                            year: 'numeric',
+                          })}{' '}
+                      -{' '}
+                      {edu.currentlyEnrolled
+                        ? translate('present')
+                        : edu.endDate &&
+                          DateTime.fromISO(edu.endDate)
+                            .setLocale(locale)
+                            .toLocaleString({
+                              month: 'short',
+                              year: 'numeric',
+                            })}
                     </TextDisplay>
                     <TextDisplay style={[styles.educationDegree]}>
                       {`${edu.degree} ${

@@ -85,16 +85,8 @@ const PDFView = () => {
     languages,
     skills,
     template,
+    currentLanguage
   ]);
-
-  useEffect(() => {
-    if (updateInstanceRef.current) {
-      clearTimeout(updateInstanceRef.current);
-    }
-    updateInstanceRef.current = setTimeout(() => {
-      updateInstance();
-    }, 500);
-  }, [currentLanguage]);
 
   useEffect(() => {
     dispatch(getDataForUser());
@@ -107,6 +99,7 @@ const PDFView = () => {
       getCVPreviewForUser(params.userId, (data: DocumentPDFData) => {
         setTemplate(data.template);
         setAllData(data);
+        i18n.changeLanguage(data.language);
       });
     }
   }, []);
