@@ -71,7 +71,7 @@ const DatePickerHeader = (props: Props) => {
         </div>
       ) : null}
       {!hideYear && setSelectedYear && selectedYear ? (
-        <div className='flex items-center w-[165px] rounded-md h-10'>
+        <div className='flex items-center rounded-md h-10'>
           <button
             onClick={() => {
               setSelectedYear(selectedYear - 1);

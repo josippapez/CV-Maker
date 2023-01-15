@@ -2,8 +2,8 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const BundleAnalyzerPlugin =
-//   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const {
   DuplicateReporterPlugin,
 } = require('duplicate-dependencies-webpack-plugin');
@@ -161,10 +161,10 @@ module.exports = (env, argv) => {
               minifyURLs: true,
             },
       }),
-      // new BundleAnalyzerPlugin({
-      //   analyzerMode: 'server',
-      //   openAnalyzer: false,
-      // }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'server',
+        openAnalyzer: false,
+      }),
       new DuplicateReporterPlugin(),
       new CopyWebpackPlugin({
         patterns: [

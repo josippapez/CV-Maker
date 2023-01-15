@@ -196,6 +196,7 @@ const Modal = (props: Props): JSX.Element => {
               height: height === 'screen' ? '100vh' : height,
               maxHeight: windowSize.height + 'px',
               aspectRatio: ratio,
+              zIndex: zindex ? zindex + 1 : 'auto',
             }}
           >
             {children}

@@ -27,7 +27,7 @@ const Carousell = (props: Props) => {
             }}
           >
             <div className={`${style.templateImage} ${style[value[0]]}`} />
-            <div className={`${style.templateName} dark:text-white`}>
+            <div className={`${style.templateName} text-white`}>
               {t(templateName)}
             </div>
           </div>

@@ -20,9 +20,9 @@ const TemplatesModal = (props: Props) => {
       zindex={100}
       closeModal={closeModal}
     >
-      <div className='bg-[#000000dc] p-5 flex-col relative'>
+      <div className='bg-[#000000e8] p-5 flex-col relative'>
         <div className='flex justify-between items-center'>
-          <h1 className='text-2xl font-bold dark:text-white'>
+          <h1 className='text-2xl font-bold text-white'>
             {t('chooseYourTemplate')}
           </h1>
           <button

@@ -12,7 +12,7 @@ import { Tooltip } from '../Shared/Tootlip/Tooltip';
 import './PDFViewPresenter.css';
 import { PDFViewContext } from './PDFViewProvider';
 
-pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 type Props = {
   pdfInstance: {
