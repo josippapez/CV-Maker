@@ -1,5 +1,5 @@
 import { Suspense, useCallback, useContext, useState } from 'react';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';
+import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack5';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import useMobileView from '../../Hooks/useMobileView';
@@ -11,6 +11,8 @@ import PDFInputsContainer from '../Shared/PDFInputs/PDFInputsContainer';
 import { Tooltip } from '../Shared/Tootlip/Tooltip';
 import './PDFViewPresenter.css';
 import { PDFViewContext } from './PDFViewProvider';
+
+pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
 type Props = {
   pdfInstance: {
