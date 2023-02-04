@@ -30,7 +30,7 @@ interface Props {
     | string;
 }
 
-let openned = 0;
+let opened = 0;
 
 const Modal = (props: Props): JSX.Element => {
   const windowSize = useWindowSize();
@@ -48,15 +48,15 @@ const Modal = (props: Props): JSX.Element => {
   } = props;
 
   useEffect(() => {
-    if (openned === 0) {
+    if (opened === 0) {
       document.body.style.overflow = show ? 'hidden' : 'auto';
     }
     if (show) {
-      openned++;
+      opened++;
     }
     return () => {
       if (show) {
-        openned--;
+        opened--;
       }
     };
   }, [show]);
@@ -186,9 +186,9 @@ const Modal = (props: Props): JSX.Element => {
               overflow-auto
               ${style.children}
               ${contentClassname}
-              subpixel-antialiased
-              flex flex-col
               relative
+              flex flex-col
+              subpixel-antialiased
             `}
             onMouseDown={e => e.stopPropagation()}
             style={{

@@ -7,7 +7,7 @@ type Props = {
   closeModal(): void;
 };
 
-const Carousell = (props: Props) => {
+const Carousel = (props: Props) => {
   const { t } = useTranslation('CVTemplates');
   const { closeModal } = props;
   const dispatch = useAppDispatch();
@@ -37,4 +37,4 @@ const Carousell = (props: Props) => {
   );
 };
 
-export default Carousell;
+export default Carousel;

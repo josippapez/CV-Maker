@@ -1,15 +1,15 @@
 .overlay {
-  user-select: none;
-  position: fixed;
   display: flex;
+  position: fixed;
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(17, 21, 24, 0.616);
-  cursor: default;
-  z-index: 1;
+  left: 0;
   align-items: center;
+  z-index: 1;
+  cursor: default;
+  background: rgba(17, 21, 24, 0.616);
+  user-select: none;
 
   &.center {
     justify-content: center;
@@ -18,12 +18,12 @@
     justify-content: end;
   }
   &.bottom {
-    align-items: end;
     justify-content: center;
+    align-items: end;
   }
   &.top {
-    align-items: start;
     justify-content: center;
+    align-items: start;
   }
   .children {
     z-index: 2;
@@ -35,7 +35,7 @@
     flex-grow: 1;
     width: 100%;
   }
-  .children > * > *[class*="modal-body"] {
+  .children > * > *[class*='modal-body'] {
     flex-grow: 1;
   }
 }

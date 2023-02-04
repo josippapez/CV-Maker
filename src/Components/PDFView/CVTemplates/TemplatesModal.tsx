@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import Modal from '../../Shared/Modal/Modal';
-import Carousell from './Carousell';
+import Carousel from './Carousel';
 
 type Props = {
   closeModal(): void;
@@ -40,7 +40,7 @@ const TemplatesModal = (props: Props) => {
             &times;
           </button>
         </div>
-        <Carousell closeModal={closeModal} />
+        <Carousel closeModal={closeModal} />
       </div>
     </Modal>
   );
