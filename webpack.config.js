@@ -182,6 +182,14 @@ module.exports = (env, argv) => {
               'pdf.worker.min.js'
             ),
           },
+          {
+            from: path.join(__dirname, 'public', 'robots.txt'),
+            to: 'robots.txt',
+          },
+          {
+            from: path.join(__dirname, 'public', 'sitemap.xml'),
+            to: 'sitemap.xml',
+          },
         ],
       }),
     ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),

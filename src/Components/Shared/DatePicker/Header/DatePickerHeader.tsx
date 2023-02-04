@@ -27,13 +27,13 @@ const DatePickerHeader = (props: Props) => {
 
   return (
     <div
-      className={`flex justify-center select-none gap-3 drop-shadow-md ${className}`}
+      className={`flex select-none justify-center gap-3 drop-shadow-md ${className}`}
     >
       {!hideMonth && setSelectedMonth && selectedMonth ? (
         <div
           className={`flex items-center ${
             mobileView ? 'w-[165px]' : 'w-36'
-          } rounded-md h-10`}
+          } h-10 rounded-md`}
         >
           <button
             onClick={() => {
@@ -46,11 +46,11 @@ const DatePickerHeader = (props: Props) => {
               }
               setSelectedMonth(selectedMonth - 1);
             }}
-            className='hover:bg-stone-200 p-2 transition-all rounded-l-md'
+            className='rounded-l-md p-2 transition-all hover:bg-stone-200'
           >
             <ArrowLeft height={30} />
           </button>
-          <h2 className='w-full text-center px-5 select-none font-bold'>
+          <h2 className='w-full select-none px-5 text-center font-bold'>
             {selectedMonth}
           </h2>
           <button
@@ -64,30 +64,30 @@ const DatePickerHeader = (props: Props) => {
               }
               setSelectedMonth(selectedMonth + 1);
             }}
-            className='hover:bg-stone-200 p-2 transition-all rounded-r-md'
+            className='rounded-r-md p-2 transition-all hover:bg-stone-200'
           >
             <ArrowRight height={30} />
           </button>
         </div>
       ) : null}
       {!hideYear && setSelectedYear && selectedYear ? (
-        <div className='flex items-center rounded-md h-10'>
+        <div className='flex h-10 items-center rounded-md'>
           <button
             onClick={() => {
               setSelectedYear(selectedYear - 1);
             }}
-            className='hover:bg-stone-200 p-2 transition-all rounded-l-md'
+            className='rounded-l-md p-2 transition-all hover:bg-stone-200'
           >
             <ArrowLeft height={30} />
           </button>
-          <h2 className='w-full text-center px-5 select-none font-bold'>
+          <h2 className='w-full select-none px-5 text-center font-bold'>
             {selectedYear}
           </h2>
           <button
             onClick={() => {
               setSelectedYear(selectedYear + 1);
             }}
-            className='hover:bg-stone-200 p-2 transition-all rounded-r-md'
+            className='rounded-r-md p-2 transition-all hover:bg-stone-200'
           >
             <ArrowRight height={30} />
           </button>

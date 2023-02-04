@@ -54,7 +54,7 @@ export const CertificatesInput = () => {
           animate={combinedStyleFinal}
           exit={combinedStyleInitial}
           transition={{ duration: 0.2 }}
-          className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4 transition-all'
+          className='relative mt-4 flex flex-col gap-4 rounded-md p-10 transition-all first:mt-0 focus-within:bg-green-100'
         >
           <DeleteButton
             onClick={() => {

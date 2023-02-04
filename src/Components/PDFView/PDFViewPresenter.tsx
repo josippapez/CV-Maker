@@ -59,7 +59,7 @@ const PDFViewPresenter = (props: Props) => {
 
   return (
     <div
-      className={`flex w-full min-h-full ${
+      className={`flex min-h-full w-full ${
         isMobileView ? 'flex-col' : 'flex-row'
       }`}
     >
@@ -82,7 +82,7 @@ const PDFViewPresenter = (props: Props) => {
             {...options}
             file={pdfInstance.url}
             renderMode='canvas'
-            className='drop-shadow-2xl flex h-screen justify-center items-center'
+            className='flex h-screen items-center justify-center drop-shadow-2xl'
             onItemClick={onItemClick}
             onLoadSuccess={onDocumentLoadSuccess}
             loading={<PageLoader isLoading />}
