@@ -1,16 +1,16 @@
 @mixin div-same-size-as-background-img($url) {
   background-image: url($url);
+  background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center center;
 }
 
 .template {
-  overflow: hidden;
-  margin: 10px;
-  cursor: pointer;
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  margin: 10px;
   padding: 10px;
+  overflow: hidden;
   &:hover {
     transform: scale(1.05);
   }
@@ -42,7 +42,7 @@
 }
 
 .templateName {
+  margin-top: 10px;
   font-size: 1rem;
   text-align: center;
-  margin-top: 10px;
 }

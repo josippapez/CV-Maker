@@ -1,5 +1,5 @@
+import { TFunction } from 'i18next';
 import { useMemo } from 'react';
-import { TFunction } from 'react-i18next';
 import { Template, TemplateName } from '../../../store/reducers/template';
 import {
   Certificate,
@@ -75,7 +75,7 @@ const CVTemplate = (props: Props): JSX.Element => {
     skills,
     template,
     translate: t,
-    locale: currentLanguage
+    locale: currentLanguage,
   };
 
   return useMemo(

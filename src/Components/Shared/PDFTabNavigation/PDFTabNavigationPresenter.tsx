@@ -41,7 +41,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
           height={30}
           width={35}
           strokeWidth={2.5}
-          className='stroke-gray-700 fill-gray-700'
+          className='fill-gray-700 stroke-gray-700'
         />
       ),
     },
@@ -70,12 +70,12 @@ const PDFTabNavigationPresenter = (props: Props) => {
   ];
 
   return (
-    <div className='p-6 w-32 relative shadow-sm z-10'>
-      <div className='flex flex-col justify-between h-full'>
-        <div className='w-full min-w-full flex flex-col justify-evenly items-center gap-2'>
+    <div className='relative z-10 w-32 p-6 shadow-sm'>
+      <div className='flex h-full flex-col justify-between'>
+        <div className='flex w-full min-w-full flex-col items-center justify-evenly gap-2'>
           {user.email ? (
             <button
-              className={`p-4 mt-4 mb-4 bg-[#f5f5f5] hover:bg-gray-100 rounded-full focus:outline-none focus:shadow-outline  transition-all ease-in-out duration-300`}
+              className={`focus:shadow-outline mt-4 mb-4 rounded-full bg-[#f5f5f5] p-4 transition-all duration-300  ease-in-out hover:bg-gray-100 focus:outline-none`}
               type='button'
               onClick={() => {
                 dispatch(logout());
@@ -85,13 +85,13 @@ const PDFTabNavigationPresenter = (props: Props) => {
             </button>
           ) : (
             <button
-              className={`p-4 mt-4 mb-4 bg-[#f5f5f5] hover:bg-gray-100 rounded-full focus:outline-none focus:shadow-outline  transition-all ease-in-out duration-300`}
+              className={`focus:shadow-outline mt-4 mb-4 rounded-full bg-[#f5f5f5] p-4 transition-all duration-300  ease-in-out hover:bg-gray-100 focus:outline-none`}
               type='button'
               onClick={() => {
                 signInWithGoogle();
               }}
             >
-              <Google height={24} className='block m-auto' />
+              <Google height={24} className='m-auto block' />
             </button>
           )}
           {arrayOfTabs.map((tab, index) => (
@@ -110,12 +110,12 @@ const PDFTabNavigationPresenter = (props: Props) => {
                     selectedTab === tab.tab
                       ? 'bg-[#f3f3f3]'
                       : 'hover:bg-gray-100'
-                  } p-4 font-bold flex
-                items-center justify-center
-                text-center rounded-md text-sm
-                cursor-pointer select-none
-                focus:outline-none focus:shadow-outline
-                transition-all ease-in-out duration-300
+                  } focus:shadow-outline flex cursor-pointer
+                select-none items-center
+                justify-center rounded-md p-4
+                text-center text-sm
+                font-bold transition-all
+                duration-300 ease-in-out focus:outline-none
               `}
                   onClick={() => {
                     setSelectedTab(tab.tab);
@@ -125,7 +125,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
                 </div>
                 {selectedTab === tab.tab && (
                   <motion.div
-                    className='absolute top-0 left-[-20px] w-1 h-full bg-blue-800 rounded-full'
+                    className='absolute top-0 left-[-20px] h-full w-1 rounded-full bg-blue-800'
                     layoutId='bar'
                   ></motion.div>
                 )}
@@ -133,7 +133,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
             </motion.div>
           ))}
         </div>
-        <div className='w-full min-w-full flex flex-col justify-evenly items-center gap-2'>
+        <div className='flex w-full min-w-full flex-col items-center justify-evenly gap-2'>
           <motion.div
             key='language'
             initial={{ opacity: 0, y: -10 }}
@@ -143,10 +143,10 @@ const PDFTabNavigationPresenter = (props: Props) => {
           >
             <ChangeLanguageButton
               dropdownPosition='right'
-              className='p-4 font-bold rounded-md text-sm
-            cursor-pointer select-none
-            focus:outline-none focus:shadow-outline
-            transition-all ease-in-out duration-300 hover:bg-gray-100'
+              className='focus:shadow-outline cursor-pointer select-none rounded-md
+            p-4 text-sm
+            font-bold transition-all
+            duration-300 ease-in-out hover:bg-gray-100 focus:outline-none'
             />
           </motion.div>
           <motion.div
@@ -161,10 +161,10 @@ const PDFTabNavigationPresenter = (props: Props) => {
           >
             <TemplatesButton
               iconClassname='stroke-gray-700'
-              className='p-4 font-bold rounded-md text-sm
-              cursor-pointer select-none
-              focus:outline-none focus:shadow-outline
-              transition-all ease-in-out duration-300 hover:bg-gray-100'
+              className='focus:shadow-outline cursor-pointer select-none rounded-md
+              p-4 text-sm
+              font-bold transition-all
+              duration-300 ease-in-out hover:bg-gray-100 focus:outline-none'
               onClick={() => setDisplayTemplateChooseModal(true)}
             />
           </motion.div>
