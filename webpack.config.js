@@ -1,3 +1,4 @@
+/** @type {import('webpack').Configuration} */
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -10,30 +11,13 @@ const {
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const dependencies = require('./package.json').dependencies;
-delete dependencies['@svgr/webpack'];
-delete dependencies['react-scripts'];
-delete dependencies['web-vitals'];
-delete dependencies['firebase'];
-const listDependencies = Object.keys(dependencies);
-listDependencies.push(
-  'firebase/compat/app',
-  'firebase/compat/auth',
-  'firebase/compat/firestore',
-  'firebase/firestore',
-);
-
 module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
   console.log('devMode', devMode);
   return {
     context: path.join(__dirname, '/src'),
     entry: {
-      app: {
-        import: './index.tsx',
-        dependOn: 'react-vendors',
-      },
-      'react-vendors': listDependencies,
+      app: './index.tsx',
     },
     target: 'web',
     output: {
@@ -130,13 +114,18 @@ module.exports = (env, argv) => {
           },
           resourceQuery: /url/,
         },
+        {
+          test: /\.svg$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: 'images/[hash][ext][query]',
+          },
+          issuer: /\.(scss|css)$/,
+          loader: 'svg-inline-loader',
+        },
       ],
     },
     plugins: [
-      new webpack.ProvidePlugin({
-        Buffer: ['buffer', 'Buffer'],
-        process: 'process/browser.js',
-      }),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(argv.mode),
       }),
@@ -194,6 +183,47 @@ module.exports = (env, argv) => {
       }),
     ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
     optimization: {
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          vendors: {
+            // test react, react-dom, react-router-dom, disable-scroll
+            test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom|disable-scroll)[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+          pdfjs: {
+            // test pdfjs
+            test: /[\\/]node_modules[\\/](pdfjs-dist)[\\/]/,
+            name: 'pdfjs',
+            chunks: 'all',
+          },
+          reactPDF: {
+            // test react-pdf and @react-pdf/renderer
+            test: /[\\/]node_modules[\\/](react-pdf|@react-pdf\/renderer)[\\/]/,
+            name: 'reactPDF',
+            chunks: 'all',
+          },
+          i18next: {
+            // test i18next
+            test: /[\\/]node_modules[\\/](i18next|react-i18next|i18next-intervalplural-postprocessor)[\\/]/,
+            name: 'i18next',
+            chunks: 'all',
+          },
+          firebase: {
+            // test 'firebase/compat/app' 'firebase/compat/auth' 'firebase/compat/firestore' 'firebase/firestore'
+            test: /[\\/]node_modules[\\/](firebase\/compat\/app|firebase\/compat\/auth|firebase\/compat\/firestore|firebase\/firestore)[\\/]/,
+            name: 'firebase',
+            chunks: 'all',
+          },
+          createPage: {
+            test: /[\\/]node_modules[\\/](@reduxjs\/toolkit|react-redux|redux-persist|compressorjs|axios)[\\/]/,
+            name: 'createPage',
+            chunks: 'all',
+          },
+        },
+      },
+      runtimeChunk: true,
       usedExports: true,
       minimize: !devMode,
       moduleIds: 'deterministic',

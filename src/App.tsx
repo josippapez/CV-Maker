@@ -1,6 +1,6 @@
 import { getAuth, onAuthStateChanged, onIdTokenChanged } from 'firebase/auth';
 import Cookies from 'js-cookie';
-import { lazy, Suspense, useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import DatePicker from '../DatePicker/DatePicker';
 import MonthsPicker from '../MonthsPicker/MonthsPicker';
 
@@ -22,7 +21,6 @@ type Props = {
 };
 
 export const DateInput = (props: Props) => {
-  const { i18n } = useTranslation();
   const {
     label,
     value,
@@ -36,6 +34,19 @@ export const DateInput = (props: Props) => {
     monthsPicker,
   } = props;
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [displayedDate, setDisplayedDate] = useState<string | undefined>(value);
+  console.log(value, displayedDate);
+
+  const handleReset = () => {
+    setDisplayedDate(undefined);
+    resetData();
+  };
+
+  const handleSetData = (date: string) => {
+    setDisplayedDate(date);
+    setData(date);
+  };
+
   return (
     <div
       className={`flex ${inline ? 'flex-row items-center gap-4' : 'flex-col'} ${
@@ -46,36 +57,34 @@ export const DateInput = (props: Props) => {
       <input
         disabled={disabled}
         type='button'
-        className='disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed
-        flex flex-row items-center justify-between rounded-md
-        h-10 px-4 ring-0 focus:ring-indigo-500 focus:ring-2 w-full
-        transition-all duration-300 ease-in-out bg-white hover:cursor-pointer'
+        className='flex h-10 w-full
+        flex-row items-center justify-between rounded-md bg-white
+        px-4 ring-0 transition-all duration-300 ease-in-out hover:cursor-pointer
+        focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500'
         onClick={() => setShowDatePicker(true)}
-        value={
-          value
-            ? DateTime.fromISO(value)
-                .setLocale(i18n.language)
-                .toLocaleString(format)
+        defaultValue={
+          displayedDate
+            ? DateTime.fromISO(displayedDate).toLocaleString(format)
             : ''
         }
       />
       {monthsPicker ? (
         <MonthsPicker
           startYear={startYear}
-          initialDate={value}
+          initialDate={displayedDate}
           showMonthsPicker={showDatePicker}
           closeMonthsPicker={() => setShowDatePicker(false)}
-          resetData={resetData}
-          setDate={setData}
+          resetData={handleReset}
+          setDate={handleSetData}
         />
       ) : (
         <DatePicker
           startYear={startYear}
-          initialDate={value}
+          initialDate={displayedDate}
           showDatePicker={showDatePicker}
           closeDatePicker={() => setShowDatePicker(false)}
-          resetData={resetData}
-          setDate={setData}
+          resetData={handleReset}
+          setDate={handleSetData}
         />
       )}
     </div>

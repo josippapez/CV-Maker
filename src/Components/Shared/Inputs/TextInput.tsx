@@ -87,7 +87,7 @@ const TextInput = (props: Props) => {
           name={name}
           id={id}
           autoComplete={name}
-          value={value}
+          defaultValue={value}
           onChange={e => {
             if (!onChange) return;
 
