@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '../../store/hooks';
 import { Template, TemplateName } from '../../store/reducers/template';
 import {
@@ -9,6 +9,7 @@ import {
   ProfessionalExperience,
   Skill,
 } from './models';
+import { useDebouncedValue } from '../../Hooks/useDebouncedValue';
 
 export const PDFViewContext = createContext<{
   generalInfo: GeneralInfo;
@@ -103,7 +104,7 @@ export const PDFViewProvider = ({
   const pdfData = useAppSelector(state => state.pdfData);
   const templateData = useAppSelector(state => state.template);
 
-  const [generalInfo, setGeneralInfo] = useState<GeneralInfo>({
+  const [generalInfo, setGeneralInfo] = useDebouncedValue<GeneralInfo>({
     profilePicture: undefined,
     firstName: '',
     lastName: '',
@@ -123,14 +124,14 @@ export const PDFViewProvider = ({
     Twitter: '',
   });
 
-  const [professionalExperience, setProfessionalExperience] = useState<
+  const [professionalExperience, setProfessionalExperience] = useDebouncedValue<
     ProfessionalExperience[]
   >([]);
-  const [certificates, setCertificates] = useState<Certificate[]>([]);
-  const [education, setEducation] = useState<Education[]>([]);
-  const [languages, setLanguages] = useState<LanguageSkill[]>([]);
-  const [skills, setSkills] = useState<Skill[]>([]);
-  const [template, setTemplate] = useState<Template>({
+  const [certificates, setCertificates] = useDebouncedValue<Certificate[]>([]);
+  const [education, setEducation] = useDebouncedValue<Education[]>([]);
+  const [languages, setLanguages] = useDebouncedValue<LanguageSkill[]>([]);
+  const [skills, setSkills] = useDebouncedValue<Skill[]>([]);
+  const [template, setTemplate] = useDebouncedValue<Template>({
     templateName: TemplateName.CVTemplate1,
   });
   const [loaded, setLoaded] = useState(false);
@@ -168,28 +169,40 @@ export const PDFViewProvider = ({
     setTemplate(data.template);
   };
 
+  const providerValues = useMemo(
+    () => ({
+      generalInfo,
+      setGeneralInfo,
+      professionalExperience,
+      setProfessionalExperience,
+      certificates,
+      setCertificates,
+      education,
+      setEducation,
+      languages,
+      setLanguages,
+      skills,
+      setSkills,
+      template,
+      setTemplate,
+      setAllData,
+      loaded,
+      setLoaded,
+    }),
+    [
+      generalInfo,
+      professionalExperience,
+      certificates,
+      education,
+      languages,
+      skills,
+      template,
+      loaded,
+    ]
+  );
+
   return (
-    <PDFViewContext.Provider
-      value={{
-        generalInfo,
-        setGeneralInfo,
-        professionalExperience,
-        setProfessionalExperience,
-        certificates,
-        setCertificates,
-        education,
-        setEducation,
-        languages,
-        setLanguages,
-        skills,
-        setSkills,
-        template,
-        setTemplate,
-        setAllData,
-        loaded,
-        setLoaded,
-      }}
-    >
+    <PDFViewContext.Provider value={providerValues}>
       {children}
     </PDFViewContext.Provider>
   );

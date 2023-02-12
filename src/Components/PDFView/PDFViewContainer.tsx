@@ -1,5 +1,5 @@
 import { usePDF } from '@react-pdf/renderer';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import {
@@ -9,7 +9,7 @@ import {
   saveDataForUser,
 } from '../../store/actions/syncActions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { cacheAllData, PDFData } from '../../store/reducers/pdfData';
+import { PDFData, cacheAllData } from '../../store/reducers/pdfData';
 import CVTemplate from './CVTemplates/CVTemplate';
 import PDFViewPresenter from './PDFViewPresenter';
 import { PDFViewContext } from './PDFViewProvider';
@@ -50,33 +50,25 @@ const PDFView = () => {
     }),
   });
 
-  const updateInstanceRef: { current: null | ReturnType<typeof setTimeout> } =
-    useRef(null);
-
   useEffect(() => {
-    if (updateInstanceRef.current) {
-      clearTimeout(updateInstanceRef.current);
+    if (!loaded) {
+      setLoaded(true);
     }
-    updateInstanceRef.current = setTimeout(() => {
-      if (!loaded) {
-        setLoaded(true);
-      }
-      updateInstance();
+    updateInstance();
 
-      if (isPDFPreview) return;
+    if (isPDFPreview) return;
 
-      dispatch(
-        cacheAllData({
-          generalInfo,
-          professionalExperience,
-          certificates,
-          education,
-          languages,
-          skills,
-        } as PDFData)
-      );
-      dispatch(saveDataForUser());
-    }, 800);
+    dispatch(
+      cacheAllData({
+        generalInfo,
+        professionalExperience,
+        certificates,
+        education,
+        languages,
+        skills,
+      } as PDFData)
+    );
+    dispatch(saveDataForUser());
   }, [
     generalInfo,
     professionalExperience,
@@ -85,7 +77,7 @@ const PDFView = () => {
     languages,
     skills,
     template,
-    currentLanguage
+    currentLanguage,
   ]);
 
   useEffect(() => {

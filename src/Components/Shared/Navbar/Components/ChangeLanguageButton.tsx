@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as Translate } from '../../../../Styles/Assets/Images/translate.svg';
+import { Settings } from 'luxon';
 
 interface Props {
   dropdownPosition?: 'left' | 'right';
@@ -51,21 +52,23 @@ const ChangeLanguageButton = (props: Props) => {
         hidden={!displayLanguageDropdown}
       >
         <div
-          className={`w-fit p-3 rounded-md bg-slate-300 dark:bg-slate-800 text-zinc-900 dark:text-zinc-100`}
+          className={`w-fit rounded-md bg-slate-300 p-3 text-zinc-900 dark:bg-slate-800 dark:text-zinc-100`}
         >
           <div
-            className='cursor-pointer px-1 py-[2px] rounded-md hover:dark:bg-slate-600 hover:bg-gray-400'
+            className='cursor-pointer rounded-md px-1 py-[2px] hover:bg-gray-400 hover:dark:bg-slate-600'
             onClick={() => {
               i18n.changeLanguage('en-US');
+              Settings.defaultLocale = 'en-US';
               setDisplayLanguageDropdown(false);
             }}
           >
             {t('English')}
           </div>
           <div
-            className='cursor-pointer px-1 py-[2px] rounded-md hover:dark:bg-slate-600 hover:bg-gray-400'
+            className='cursor-pointer rounded-md px-1 py-[2px] hover:bg-gray-400 hover:dark:bg-slate-600'
             onClick={() => {
               i18n.changeLanguage('hr');
+              Settings.defaultLocale = 'hr';
               setDisplayLanguageDropdown(false);
             }}
           >

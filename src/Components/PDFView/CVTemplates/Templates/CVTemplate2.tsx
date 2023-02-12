@@ -242,8 +242,7 @@ const CVTemplate2 = (props: DefaultProps): JSX.Element => {
             >
               {generalInfo?.dob &&
                 DateTime.fromISO(generalInfo?.dob)
-                  .setLocale(locale)
-                  .toLocaleString()}
+                .toLocaleString()}
             </TextDisplay>
             <TextDisplay style={[styles.topBarPosition]}>
               {generalInfo?.position}
@@ -368,18 +367,16 @@ const CVTemplate2 = (props: DefaultProps): JSX.Element => {
                     {experience.location},{' '}
                     {experience.startDate &&
                       DateTime.fromISO(experience.startDate)
-                        .setLocale(locale)
-                        .toLocaleString({
-                          month: 'short',
-                          year: 'numeric',
-                        })}{' '}
+                      .toLocaleString({
+                        month: 'short',
+                        year: 'numeric',
+                      })}{' '}
                     -{' '}
                     {experience.currentlyEnrolled
                       ? translate('present')
                       : experience.endDate &&
                         DateTime.fromISO(experience.endDate)
-                          .setLocale(locale)
-                          .toLocaleString({ month: 'short', year: 'numeric' })}
+                        .toLocaleString({ month: 'short', year: 'numeric' })}
                   </TextDisplay>
                   <TextDisplay style={[styles.companyDescription]}>
                     {experience.description}
@@ -412,21 +409,19 @@ const CVTemplate2 = (props: DefaultProps): JSX.Element => {
                     <TextDisplay style={[styles.educationDuration]}>
                       {edu.startDate &&
                         DateTime.fromISO(edu.startDate)
-                          .setLocale(locale)
-                          .toLocaleString({
-                            month: 'short',
-                            year: 'numeric',
-                          })}{' '}
+                        .toLocaleString({
+                          month: 'short',
+                          year: 'numeric',
+                        })}{' '}
                       -{' '}
                       {edu.currentlyEnrolled
                         ? translate('present')
                         : edu.endDate &&
                           DateTime.fromISO(edu.endDate)
-                            .setLocale(locale)
-                            .toLocaleString({
-                              month: 'short',
-                              year: 'numeric',
-                            })}
+                          .toLocaleString({
+                            month: 'short',
+                            year: 'numeric',
+                          })}
                     </TextDisplay>
                     <TextDisplay style={[styles.educationDegree]}>
                       {`${edu.degree} ${

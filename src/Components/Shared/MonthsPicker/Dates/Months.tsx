@@ -1,9 +1,5 @@
 import { DateTime, Info } from 'luxon';
-import { useTranslation } from 'react-i18next';
-import {
-  useCalculateEachDayOfMonth,
-  Day,
-} from '../../../../Hooks/calculateEachDayOfMonth';
+import { useCalculateEachDayOfMonth } from '../../../../Hooks/calculateEachDayOfMonth';
 import style from './Months.module.scss';
 
 type Props = {
@@ -27,8 +23,6 @@ const Months = (props: Props) => {
     showPreviousYear,
   } = props;
 
-  const { i18n } = useTranslation();
-
   const displayMonths = (year: number, index: number) => {
     if (customDisplayDate) {
       return customDisplayDate(year, index);
@@ -41,11 +35,10 @@ const Months = (props: Props) => {
 
     const disabled = disabledCondition;
 
-    return Info.months(undefined, { locale: i18n.language }).map(
-      (month, index) => (
-        <div
-          key={gridIndex + index}
-          className={`transition-all text-center cursor-pointer hover:bg-indigo-200 hover:rounded-md
+    return Info.months().map((month, index) => (
+      <div
+        key={gridIndex + index}
+        className={`cursor-pointer text-center transition-all hover:rounded-md hover:bg-indigo-200
           ${
             thisMonth ===
               DateTime.fromObject({
@@ -62,24 +55,23 @@ const Months = (props: Props) => {
                 month: index + 1,
               }).toISODate() && 'bg-indigo-500 text-white'
           }
-          font-bold select-none p-3 text-sm
+          select-none p-3 text-sm font-bold
           `}
-          onMouseUp={() => {
-            if (!disabled && setDate) {
-              setDate(
-                DateTime.fromObject({
-                  day: 1,
-                  year,
-                  month: index + 1,
-                }).toISODate()
-              );
-            }
-          }}
-        >
-          {month}
-        </div>
-      )
-    );
+        onMouseUp={() => {
+          if (!disabled && setDate) {
+            setDate(
+              DateTime.fromObject({
+                day: 1,
+                year,
+                month: index + 1,
+              }).toISODate()
+            );
+          }
+        }}
+      >
+        {month}
+      </div>
+    ));
   };
 
   return (
