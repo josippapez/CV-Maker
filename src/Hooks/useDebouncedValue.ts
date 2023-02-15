@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 
 type DebouncedValue = <T>(
-  initialState: T | (() => T)
+  initialState: T | (() => T),
+  { timeout }?: { timeout?: number }
 ) => [T, (value: T | (() => T)) => void];
 
-export const useDebouncedValue: DebouncedValue = initialState => {
+export const useDebouncedValue: DebouncedValue = (initialState, option) => {
   const [value, setValue] = useState(initialState);
   const timeoutRef = useRef<null | ReturnType<typeof setTimeout>>(null);
 
@@ -17,12 +18,12 @@ export const useDebouncedValue: DebouncedValue = initialState => {
     }
     timeoutRef.current = setTimeout(() => {
       setValue(newValue);
-    }, 200);
+    }, option?.timeout || 200);
   };
 
-  const setDebouncedValue = (newValue: typeof initialState) => {
+  const setDebouncedValue = useCallback((newValue: typeof initialState) => {
     handleChange(newValue, setValue);
-  };
+  }, []);
 
   return [value, setDebouncedValue];
 };

@@ -26,13 +26,7 @@ const TemplatesModal = (props: Props) => {
             {t('chooseYourTemplate')}
           </h1>
           <button
-            className='absolute top-1 right-3 rounded-full font-bold hover:bg-gray-500 hover:text-white dark:text-white'
-            style={{
-              lineHeight: '10px',
-              fontSize: '20px',
-              width: '30px',
-              height: '30px',
-            }}
+            className='absolute top-1 right-3 rounded-full text-4xl font-bold text-white'
             onClick={() => {
               closeModal();
             }}

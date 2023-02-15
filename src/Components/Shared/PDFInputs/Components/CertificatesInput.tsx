@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
+import usePDFData from '../../../../Hooks/usePDFData';
 import { Certificate } from '../../../PDFView/models';
-import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import { DateInput } from '../../Inputs/DateInput';
 import TextInput from '../../Inputs/TextInput';
 import { AddNewButton } from './AddNewButton';
@@ -20,7 +19,7 @@ const arrayOfCertificatesInputs: Array<{
 ];
 
 export const CertificatesInput = () => {
-  const { setCertificates, certificates } = useContext(PDFViewContext);
+  const { setCertificates, certificates } = usePDFData();
   const { t } = useTranslation('CertificatesInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,

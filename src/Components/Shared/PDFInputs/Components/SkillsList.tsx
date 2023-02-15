@@ -1,9 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useContext } from 'react';
-import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
+import usePDFData from '../../../../Hooks/usePDFData';
 
 export const SkillsList = () => {
-  const { skills, setSkills } = useContext(PDFViewContext);
+  const { skills, setSkills } = usePDFData();
 
   const removeSelf = (index: number) => {
     const newSkills = [...skills];
@@ -12,12 +11,12 @@ export const SkillsList = () => {
   };
 
   return (
-    <div className='flex flex-wrap mb-4'>
+    <div className='mb-4 flex flex-wrap'>
       <AnimatePresence>
         {skills.map((skill, index) => (
           <motion.div
             key={skill.id}
-            className={`bg-green-500 text-white rounded-md mr-2 mb-2 p-3`}
+            className={`mr-2 mb-2 rounded-md bg-green-500 p-3 text-white`}
             initial='hidden'
             animate='visible'
             exit='exit'

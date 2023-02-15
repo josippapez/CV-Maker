@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Day,
@@ -30,8 +30,9 @@ const DatePicker = (props: Props) => {
     disabledCondition,
     startYear,
   } = props;
-  const { t } = useTranslation('DatePicker');
 
+  const { t } = useTranslation('DatePicker');
+  const [tempDate, setTempDate] = useState(initialDate || '');
   const eachDayOfMonth = useCalculateEachDayOfMonth({
     startYear: startYear || DateTime.local().year,
     startMonth: DateTime.local().month,
@@ -53,7 +54,7 @@ const DatePicker = (props: Props) => {
       closeModal={closeDatePicker}
       zindex={10}
     >
-      <div className='p-4 bg-white rounded-md relative'>
+      <div className='relative rounded-md bg-white p-4'>
         <DatePickerHeader
           selectedMonth={month}
           selectedYear={year}
@@ -63,14 +64,14 @@ const DatePicker = (props: Props) => {
         <div className='my-4'>
           <DatePickerDates
             dates={eachDayOfMonth}
-            initialDate={initialDate}
-            setDate={setDate}
+            initialDate={tempDate}
+            setDate={setTempDate}
             disabledCondition={disabledCondition}
           />
         </div>
         <div className='flex justify-end'>
           <button
-            className='hover:bg-slate-200 font-bold py-2 px-4 rounded'
+            className='rounded py-2 px-4 font-bold hover:bg-slate-200'
             onClick={() => {
               closeDatePicker();
               resetData();
@@ -79,7 +80,7 @@ const DatePicker = (props: Props) => {
             {t('cancel')}
           </button>
           <button
-            className='hover:bg-slate-200 font-bold py-2 px-4 rounded'
+            className='rounded py-2 px-4 font-bold hover:bg-slate-200'
             onClick={() => {
               resetData();
             }}
@@ -87,8 +88,9 @@ const DatePicker = (props: Props) => {
             {t('clear')}
           </button>
           <button
-            className='hover:bg-slate-200 font-bold py-2 px-4 rounded'
+            className='rounded py-2 px-4 font-bold hover:bg-slate-200'
             onClick={() => {
+              setDate(tempDate);
               closeDatePicker();
             }}
           >

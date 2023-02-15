@@ -114,15 +114,6 @@ module.exports = (env, argv) => {
           },
           resourceQuery: /url/,
         },
-        {
-          test: /\.svg$/i,
-          type: 'asset/resource',
-          generator: {
-            filename: 'images/[hash][ext][query]',
-          },
-          issuer: /\.(scss|css)$/,
-          loader: 'svg-inline-loader',
-        },
       ],
     },
     plugins: [

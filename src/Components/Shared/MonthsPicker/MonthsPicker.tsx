@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Day,
@@ -30,7 +30,9 @@ const MonthsPicker = (props: Props) => {
     disabledCondition,
     startYear,
   } = props;
+
   const { t } = useTranslation('DatePicker');
+  const [tempDate, setTempDate] = useState(initialDate || '');
 
   const eachDayOfMonth = useCalculateEachDayOfMonth({
     startYear: startYear || DateTime.local().year,
@@ -61,8 +63,8 @@ const MonthsPicker = (props: Props) => {
         <div className='my-4'>
           <Months
             dates={eachDayOfMonth}
-            initialDate={initialDate}
-            setDate={setDate}
+            initialDate={tempDate}
+            setDate={setTempDate}
             disabledCondition={disabledCondition}
           />
         </div>
@@ -87,6 +89,7 @@ const MonthsPicker = (props: Props) => {
           <button
             className='hover:bg-slate-200 font-bold py-2 px-4 rounded'
             onClick={() => {
+              setDate(tempDate);
               closeMonthsPicker();
             }}
           >
