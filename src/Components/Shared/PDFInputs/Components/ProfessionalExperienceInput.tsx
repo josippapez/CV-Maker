@@ -1,9 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
+import usePDFData from '../../../../Hooks/usePDFData';
 import { ProfessionalExperience } from '../../../PDFView/models';
-import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import { DateInput } from '../../Inputs/DateInput';
 import TextInput from '../../Inputs/TextInput';
 import ToggleInput from '../../Inputs/ToggleInput';
@@ -31,8 +30,7 @@ const arrayOfProfessionalExperienceInputs: Array<{
 ];
 
 export const ProfessionalExperienceInput = () => {
-  const { setProfessionalExperience, professionalExperience } =
-    useContext(PDFViewContext);
+  const { setProfessionalExperience, professionalExperience } = usePDFData();
   const { t } = useTranslation('ProfessionalExperienceInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
@@ -52,7 +50,7 @@ export const ProfessionalExperienceInput = () => {
           animate={combinedStyleFinal}
           exit={combinedStyleInitial}
           transition={{ duration: 0.2, when: 'beforeChildren' }}
-          className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4'
+          className='relative mt-4 flex flex-col gap-4 rounded-md p-10 first:mt-0 focus-within:bg-green-100'
         >
           <DeleteButton
             onClick={() => {

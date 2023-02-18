@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
-import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
+import usePDFData from '../../../../Hooks/usePDFData';
 import TextInput from '../../Inputs/TextInput';
 import { AddNewButton } from './AddNewButton';
 import { SkillsList } from './SkillsList';
 
 export const SkillsInput = () => {
   const { t } = useTranslation('SkillsInput');
-  const { skills, setSkills } = useContext(PDFViewContext);
+  const { skills, setSkills } = usePDFData();
   const [skill, setSkill] = useState('');
 
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({

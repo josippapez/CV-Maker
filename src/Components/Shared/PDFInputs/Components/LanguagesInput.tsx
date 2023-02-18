@@ -1,15 +1,14 @@
 import { motion } from 'framer-motion';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
+import usePDFData from '../../../../Hooks/usePDFData';
 import { LanguageProficiencyLevel } from '../../../PDFView/models';
-import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import TextInput from '../../Inputs/TextInput';
 import { AddNewButton } from './AddNewButton';
 import { DeleteButton } from './DeleteButton';
 
 export const LanguagesInput = () => {
-  const { languages, setLanguages } = useContext(PDFViewContext);
+  const { languages, setLanguages } = usePDFData();
   const { t } = useTranslation('LanguagesInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
@@ -29,7 +28,7 @@ export const LanguagesInput = () => {
           animate={combinedStyleFinal}
           exit={combinedStyleInitial}
           transition={{ duration: 0.2 }}
-          className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4'
+          className='relative mt-4 flex flex-col gap-4 rounded-md p-10 first:mt-0 focus-within:bg-green-100'
         >
           <DeleteButton
             onClick={() => {
@@ -58,12 +57,12 @@ export const LanguagesInput = () => {
               fullWidth
             />
           </div>
-          <div className='flex mt-2'>
-            <label className='w-1/4 font-medium self-center'>
+          <div className='mt-2 flex'>
+            <label className='w-1/4 self-center font-medium'>
               {t('level')}
             </label>
             <select
-              className='w-3/4 border-2 rounded-md p-1 focus:border-slate-400'
+              className='w-3/4 rounded-md border-2 p-1 focus:border-slate-400'
               value={language.proficiency}
               onChange={e => {
                 setLanguages(

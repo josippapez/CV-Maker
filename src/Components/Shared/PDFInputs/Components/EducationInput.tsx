@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
-import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
+import usePDFData from '../../../../Hooks/usePDFData';
 import { AddNewButton } from './AddNewButton';
 import EducationItem from './EducationItem';
 
 export const EducationInput = () => {
-  const { education, setEducation } = useContext(PDFViewContext);
+  const { education, setEducation } = usePDFData();
   const { t } = useTranslation('EducationInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,

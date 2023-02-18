@@ -1,11 +1,10 @@
 import Compressor from 'compressorjs';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
+import usePDFData from '../../../../Hooks/usePDFData';
 import { ReactComponent as Plus } from '../../../../Styles/Assets/Images/plus.svg';
 import { GeneralInfo } from '../../../PDFView/models';
-import { PDFViewContext } from '../../../PDFView/PDFViewProvider';
 import { DateInput } from '../../Inputs/DateInput';
 import TextInput from '../../Inputs/TextInput';
 
@@ -35,7 +34,7 @@ const arrayOfGeneralTextAreas: Array<{
 }> = [{ inputName: 'About me', inputValue: 'aboutMe' }];
 
 export const GeneralInput = () => {
-  const { generalInfo, setGeneralInfo } = useContext(PDFViewContext);
+  const { generalInfo, setGeneralInfo } = usePDFData();
   const { t } = useTranslation('GeneralInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
@@ -56,16 +55,16 @@ export const GeneralInput = () => {
           animate={combinedStyleFinal}
           exit={combinedStyleInitial}
           transition={{ duration: 0.2 }}
-          className='flex justify-center items-center'
+          className='flex items-center justify-center'
         >
           {generalInfo.profilePicture ? (
-            <div className='flex flex-col w-full'>
+            <div className='flex w-full flex-col'>
               <label className='font-medium text-gray-700'>
                 {t('profilePicture')}
               </label>
               <div className='flex flex-row justify-center'>
                 <img
-                  className='w-24 h-24 rounded-3xl'
+                  className='h-24 w-24 rounded-3xl'
                   style={{ objectFit: 'cover' }}
                   src={
                     generalInfo.profilePicture ? generalInfo.profilePicture : ''
@@ -73,7 +72,7 @@ export const GeneralInput = () => {
                   alt='profile picture'
                 />
                 <button
-                  className='p-2 ml-2 rounded-full bg-red-500 text-white self-center h-fit'
+                  className='ml-2 h-fit self-center rounded-full bg-red-500 p-2 text-white'
                   onClick={() => {
                     setGeneralInfo({
                       ...generalInfo,
@@ -86,13 +85,13 @@ export const GeneralInput = () => {
               </div>
             </div>
           ) : (
-            <div className='flex flex-col w-full'>
+            <div className='flex w-full flex-col'>
               <label className='font-medium text-gray-700'>
                 {t('profilePicture')}
               </label>
               <label
                 htmlFor='profilePicture'
-                className='flex justify-center self-center items-center cursor-pointer w-24 h-24 bg-blue-100 rounded-3xl border border-dashed border-blue-500 hover:bg-blue-300'
+                className='flex h-24 w-24 cursor-pointer items-center justify-center self-center rounded-3xl border border-dashed border-blue-500 bg-blue-100 hover:bg-blue-300'
               >
                 <Plus height={30} className='fill-blue-600' />
               </label>

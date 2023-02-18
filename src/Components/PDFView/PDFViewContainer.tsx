@@ -1,7 +1,8 @@
 import { usePDF } from '@react-pdf/renderer';
-import { useContext, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import usePDFData from '../../Hooks/usePDFData';
 import {
   DocumentPDFData,
   getCVPreviewForUser,
@@ -9,14 +10,13 @@ import {
   saveDataForUser,
 } from '../../store/actions/syncActions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { PDFData, cacheAllData } from '../../store/reducers/pdfData';
 import CVTemplate from './CVTemplates/CVTemplate';
 import PDFViewPresenter from './PDFViewPresenter';
-import { PDFViewContext } from './PDFViewProvider';
 
 const PDFView = () => {
+  const dispatch = useAppDispatch();
   const params = useParams();
-  const isPDFPreview = !!params.userId;
+  const user = useAppSelector(state => state.user.user.id);
   const {
     certificates,
     education,
@@ -25,16 +25,15 @@ const PDFView = () => {
     professionalExperience,
     skills,
     template,
-    setAllData,
-    setTemplate,
     loaded,
-    setLoaded,
-  } = useContext(PDFViewContext);
+    setDataLoaded,
+    setActiveTemplate,
+    setAllData,
+  } = usePDFData();
   const { t, i18n } = useTranslation('CVTemplates');
-  const currentLanguage = i18n.language;
 
-  const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.user.user);
+  const currentLanguage = i18n.language;
+  const isPDFPreview = !!params.userId;
 
   const [instance, updateInstance] = usePDF({
     document: CVTemplate({
@@ -50,25 +49,19 @@ const PDFView = () => {
     }),
   });
 
+  const updateInstanceRef: { current: null | ReturnType<typeof setTimeout> } =
+    useRef(null);
+
   useEffect(() => {
-    if (!loaded) {
-      setLoaded(true);
-    }
-    updateInstance();
+    if (updateInstanceRef.current) clearTimeout(updateInstanceRef.current);
 
-    if (isPDFPreview) return;
+    updateInstanceRef.current = setTimeout(() => {
+      updateInstance();
 
-    dispatch(
-      cacheAllData({
-        generalInfo,
-        professionalExperience,
-        certificates,
-        education,
-        languages,
-        skills,
-      } as PDFData)
-    );
-    dispatch(saveDataForUser());
+      if (isPDFPreview) return;
+
+      if (loaded) dispatch(saveDataForUser());
+    }, 800);
   }, [
     generalInfo,
     professionalExperience,
@@ -85,11 +78,17 @@ const PDFView = () => {
   }, [user]);
 
   useEffect(() => {
+    if (!instance) return;
+
+    setDataLoaded(!instance.loading);
+  }, [instance]);
+
+  useEffect(() => {
     if (isPDFPreview) {
       if (!params.userId) return;
 
       getCVPreviewForUser(params.userId, (data: DocumentPDFData) => {
-        setTemplate(data.template);
+        setActiveTemplate(data.template.templateName);
         setAllData(data);
         i18n.changeLanguage(data.language);
       });

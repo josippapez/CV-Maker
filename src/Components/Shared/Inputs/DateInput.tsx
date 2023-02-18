@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DatePicker from '../DatePicker/DatePicker';
 import MonthsPicker from '../MonthsPicker/MonthsPicker';
 
@@ -34,18 +34,6 @@ export const DateInput = (props: Props) => {
     monthsPicker,
   } = props;
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [displayedDate, setDisplayedDate] = useState<string | undefined>(value);
-  console.log(value, displayedDate);
-
-  const handleReset = () => {
-    setDisplayedDate(undefined);
-    resetData();
-  };
-
-  const handleSetData = (date: string) => {
-    setDisplayedDate(date);
-    setData(date);
-  };
 
   return (
     <div
@@ -63,28 +51,26 @@ export const DateInput = (props: Props) => {
         focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500'
         onClick={() => setShowDatePicker(true)}
         defaultValue={
-          displayedDate
-            ? DateTime.fromISO(displayedDate).toLocaleString(format)
-            : ''
+          value ? DateTime.fromISO(value).toLocaleString(format) : ''
         }
       />
       {monthsPicker ? (
         <MonthsPicker
           startYear={startYear}
-          initialDate={displayedDate}
+          initialDate={value}
           showMonthsPicker={showDatePicker}
           closeMonthsPicker={() => setShowDatePicker(false)}
-          resetData={handleReset}
-          setDate={handleSetData}
+          resetData={resetData}
+          setDate={setData}
         />
       ) : (
         <DatePicker
           startYear={startYear}
-          initialDate={displayedDate}
+          initialDate={value}
           showDatePicker={showDatePicker}
           closeDatePicker={() => setShowDatePicker(false)}
-          resetData={handleReset}
-          setDate={handleSetData}
+          resetData={resetData}
+          setDate={setData}
         />
       )}
     </div>

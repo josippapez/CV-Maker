@@ -1,8 +1,9 @@
-import { Suspense, useCallback, useContext, useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack5';
+import { Suspense, useCallback, useState } from 'react';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack5';
 import useMobileView from '../../Hooks/useMobileView';
+import usePDFData from '../../Hooks/usePDFData';
 import useWindowSize from '../../Hooks/useWindowSize';
 import { useAppSelector } from '../../store/hooks';
 import PDFDownload from '../PDFDownload/PDFDownload';
@@ -10,7 +11,6 @@ import PageLoader from '../Shared/Loader/PageLoader';
 import PDFInputsContainer from '../Shared/PDFInputs/PDFInputsContainer';
 import { Tooltip } from '../Shared/Tootlip/Tooltip';
 import './PDFViewPresenter.css';
-import { PDFViewContext } from './PDFViewProvider';
 
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
@@ -32,7 +32,7 @@ const options = {
 const PDFViewPresenter = (props: Props) => {
   const { pdfInstance, isPDFPreview } = props;
 
-  const { loaded } = useContext(PDFViewContext);
+  const { loaded } = usePDFData();
   const windowSize = useWindowSize();
   const isMobileView = useMobileView();
 
@@ -41,7 +41,9 @@ const PDFViewPresenter = (props: Props) => {
   const [displayDownloadModal, setDisplayDownloadModal] = useState(false);
 
   const user = useAppSelector(state => state.user.user);
+
   const userIsLoggedIn = !!user.id;
+  const pageExists = !!pageNumber && !!numPages;
 
   const onDocumentLoadSuccess = useCallback(
     ({ numPages }: { numPages: number }) => {
@@ -75,9 +77,7 @@ const PDFViewPresenter = (props: Props) => {
           isMobileView || isPDFPreview ? 'w-full' : 'w-7/12'
         }`}
       >
-        {!loaded ? (
-          <PageLoader isLoading inline />
-        ) : (
+        <PageLoader isLoading={!loaded} inline>
           <Document
             {...options}
             file={pdfInstance.url}
@@ -98,7 +98,7 @@ const PDFViewPresenter = (props: Props) => {
               renderInteractiveForms
               renderAnnotationLayer
             >
-              {pageNumber && numPages && (
+              {pageExists && (
                 <div className='document-controls'>
                   <div className='page-controls-navigation'>
                     <button
@@ -145,7 +145,7 @@ const PDFViewPresenter = (props: Props) => {
               )}
             </Page>
           </Document>
-        )}
+        </PageLoader>
       </div>
       {pdfInstance && pdfInstance.blob && pdfInstance.url && (
         <PDFDownload

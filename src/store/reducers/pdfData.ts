@@ -14,13 +14,15 @@ export interface PDFData {
   certificates: Certificate[];
   education: Education[];
   languages: LanguageSkill[];
-  loading: boolean;
-  initialLoad: boolean;
-  timestamp: number;
   skills: Skill[];
+  loaded: boolean;
 }
 
-const initialState: PDFData = {
+export interface PDFDataWithTimestamp extends PDFData {
+  timestamp: number;
+}
+
+const initialState: PDFDataWithTimestamp = {
   generalInfo: {
     profilePicture: undefined,
     firstName: '',
@@ -45,15 +47,17 @@ const initialState: PDFData = {
   education: [],
   languages: [],
   skills: [],
-  loading: false,
-  initialLoad: true,
   timestamp: 0,
+  loaded: false,
 };
 
 export const pdfData = createSlice({
   name: 'pdfData',
   initialState,
   reducers: {
+    setLoaded: (state, action: PayloadAction<boolean>) => {
+      state.loaded = action.payload;
+    },
     cacheAllData: (
       state,
       action: PayloadAction<PDFData | undefined | null>
@@ -68,6 +72,7 @@ export const pdfData = createSlice({
       state.education = action.payload.education;
       state.languages = action.payload.languages;
       state.skills = action.payload.skills;
+      state.loaded = true;
     },
     cacheGeneralInfo: (state, action: PayloadAction<GeneralInfo>) => {
       state.generalInfo = action.payload;
@@ -90,12 +95,6 @@ export const pdfData = createSlice({
     cacheSkills: (state, action: PayloadAction<Skill[]>) => {
       state.skills = action.payload;
     },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
-    setInitialLoad: (state, action: PayloadAction<boolean>) => {
-      state.initialLoad = action.payload;
-    },
   },
 });
 
@@ -106,8 +105,8 @@ export const {
   cacheEducation,
   cacheCertificates,
   cacheLanguages,
-  setLoading,
-  setInitialLoad,
+  cacheSkills,
+  setLoaded,
 } = pdfData.actions;
 
 export default pdfData.reducer;

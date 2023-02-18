@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { toast } from 'react-toastify';
-import { cacheAllData, PDFData, setLoading } from '../reducers/pdfData';
-import { setTemplate, Template, TemplateName } from '../reducers/template';
+import { cacheAllData, PDFData, setLoaded } from '../reducers/pdfData';
+import { setTemplate, Template } from '../reducers/template';
 import { AppDispatch, AppState } from '../store';
 import { FirebaseCollectionActions } from './FirebaseCollectionActions';
 
@@ -17,7 +17,7 @@ export const saveDataForUser = () => {
     const { add } = FirebaseCollectionActions('user-data');
 
     const data = Object.keys(getState().pdfData).reduce((acc, key) => {
-      if (key !== 'timestamp' && key !== 'loading') {
+      if (key !== 'timestamp' && key !== 'loaded') {
         return { ...acc, [key]: getState().pdfData[key as keyof PDFData] };
       } else {
         return acc;
@@ -80,8 +80,6 @@ export const getDataForUser = () => {
 
     const { getById } = FirebaseCollectionActions('user-data');
 
-    dispatch(setLoading(true));
-
     getById(
       id,
       () => {
@@ -93,12 +91,10 @@ export const getDataForUser = () => {
           type: 'error',
           position: 'bottom-right',
         });
-        dispatch(setLoading(false));
       }
     ).then(data => {
       if (!data) {
         dispatch(saveDataForUser());
-        dispatch(setLoading(false));
         toast.dark('Saved data to cloud!', {
           type: 'success',
           position: 'bottom-center',
@@ -106,13 +102,12 @@ export const getDataForUser = () => {
         return;
       }
 
-      const pdfData = data;
+      const pdfData = data as DocumentPDFData;
 
       i18next.changeLanguage(pdfData.language);
 
-      dispatch(setLoading(false));
-      dispatch(cacheAllData(pdfData as PDFData));
-      dispatch(setTemplate(pdfData.template.templateName as TemplateName));
+      dispatch(cacheAllData(pdfData));
+      dispatch(setTemplate(pdfData.template.templateName));
     });
   };
 };
