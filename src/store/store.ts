@@ -3,10 +3,7 @@ import { connectAuthEmulator, getAuth } from 'firebase/auth';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import {
-  connectFirestoreEmulator,
-  getFirestore,
-} from 'firebase/firestore';
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 import { connectStorageEmulator, getStorage } from 'firebase/storage';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -20,6 +17,7 @@ import {
 } from 'redux-persist/es/constants';
 import storage from 'redux-persist/lib/storage';
 import firebaseConfig from './fbConfig';
+import firebaseConfigProd from './fbConfig-prod';
 import { reducers } from './reducers/reducer';
 
 const persistConfig = {
@@ -29,8 +27,11 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
+const fbConfig =
+  process.env.NODE_ENV === 'development' ? firebaseConfig : firebaseConfigProd;
+
 if (firebase.apps.length === 0) {
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(fbConfig);
 }
 
 if (process.env.NODE_ENV === 'development') {
