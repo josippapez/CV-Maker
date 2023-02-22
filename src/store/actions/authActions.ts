@@ -20,6 +20,7 @@ import { resetUser, setUser } from '../reducers/user';
 import { AppDispatch, store } from '../store';
 
 const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 export const signInWithGoogle = async () => {
   try {
