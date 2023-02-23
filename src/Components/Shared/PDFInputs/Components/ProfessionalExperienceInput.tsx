@@ -75,7 +75,7 @@ export const ProfessionalExperienceInput = () => {
               >
                 {input.type === 'date' ? (
                   <DateInput
-                    monthsPicker
+                    type='month'
                     disabled={
                       experience.currentlyEnrolled &&
                       input.inputValue === 'endDate'

@@ -66,7 +66,7 @@ export const CertificatesInput = () => {
             <>
               {input.type === 'date' ? (
                 <DateInput
-                  monthsPicker
+                  type='month'
                   label={t(`${input.inputValue}`)}
                   value={certificate[input.inputValue] as string}
                   setData={date =>

@@ -1,3 +1,5 @@
+import Months from '@/Components/Shared/DatePicker/Dates/Months';
+import { Years } from '@/Components/Shared/DatePicker/Dates/Years';
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +12,7 @@ import DatePickerDates from './Dates/DatePickerDates';
 import DatePickerHeader from './Header/DatePickerHeader';
 
 type Props = {
+  type: 'date' | 'month' | 'year';
   showDatePicker: boolean;
   closeDatePicker: () => void;
   initialDate?: string;
@@ -29,10 +32,12 @@ const DatePicker = (props: Props) => {
     resetData,
     disabledCondition,
     startYear,
+    type = 'date',
   } = props;
 
   const { t } = useTranslation('DatePicker');
   const [tempDate, setTempDate] = useState(initialDate || '');
+
   const eachDayOfMonth = useCalculateEachDayOfMonth({
     startYear: startYear || DateTime.local().year,
     startMonth: DateTime.local().month,
@@ -56,18 +61,38 @@ const DatePicker = (props: Props) => {
     >
       <div className='relative rounded-md bg-white p-4'>
         <DatePickerHeader
+          type={type}
+          hideMonth={type === 'year' || type === 'month'}
           selectedMonth={month}
           selectedYear={year}
           setSelectedMonth={setmonth}
           setSelectedYear={setyear}
         />
         <div className='my-4'>
-          <DatePickerDates
-            dates={eachDayOfMonth}
-            initialDate={tempDate}
-            setDate={setTempDate}
-            disabledCondition={disabledCondition}
-          />
+          {type === 'year' && (
+            <Years
+              initialYear={year.toString()}
+              selectedYear={DateTime.fromISO(tempDate).year.toString()}
+              setDate={setTempDate}
+              disabledCondition={disabledCondition}
+            />
+          )}
+          {type === 'month' && (
+            <Months
+              dates={eachDayOfMonth}
+              initialDate={tempDate}
+              setDate={setTempDate}
+              disabledCondition={disabledCondition}
+            />
+          )}
+          {type === 'date' && (
+            <DatePickerDates
+              dates={eachDayOfMonth}
+              initialDate={tempDate}
+              setDate={setTempDate}
+              disabledCondition={disabledCondition}
+            />
+          )}
         </div>
         <div className='flex justify-end'>
           <button

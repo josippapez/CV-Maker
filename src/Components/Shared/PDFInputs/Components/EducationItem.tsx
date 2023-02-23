@@ -156,7 +156,7 @@ const EducationItem = (props: Props) => {
         <div key={`input-${index}-${currentIndex}`}>
           {input.type === 'date' ? (
             <DateInput
-              monthsPicker
+              type='month'
               disabled={
                 education.currentlyEnrolled && input.inputValue === 'endDate'
               }
