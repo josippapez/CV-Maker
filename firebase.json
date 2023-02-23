@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist",
+    "public": "out",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -8,8 +8,16 @@
     ],
     "rewrites": [
       {
-        "source": "**",
+        "source": "/",
         "destination": "/index.html"
+      },
+      {
+        "source": "/create",
+        "destination": "/create.html"
+      },
+      {
+        "source": "/cv/**",
+        "destination": "/cv/[userId].html"
       }
     ]
   },
@@ -36,7 +44,8 @@
     },
     "hosting": {
       "port": 5000
-    }
+    },
+    "singleProjectMode": true
   },
   "storage": {
     "rules": "storage.rules"

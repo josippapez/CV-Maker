@@ -1,4 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
+import { useCallback } from 'react';
 import Scrollbars from 'react-custom-scrollbars';
 import PDFTabNavigationPresenter from '../PDFTabNavigation/PDFTabNavigationPresenter';
 import {
@@ -7,10 +8,9 @@ import {
   GeneralInput,
   LanguagesInput,
   ProfessionalExperienceInput,
-  SkillsInput,
+  SkillsInput
 } from './Components';
 import { Tab } from './PDFInputsContainer';
-import { useMemo } from 'react';
 
 type Props = {
   selectedTab: Tab;
@@ -20,7 +20,7 @@ type Props = {
 const PDFInputsPresenter = (props: Props) => {
   const { setSelectedTab, selectedTab } = props;
 
-  const getInputs = useMemo(() => {
+  const getInputs = useCallback(() => {
     switch (selectedTab) {
       case Tab.generalInfo:
         return <GeneralInput key={selectedTab} />;
@@ -35,7 +35,7 @@ const PDFInputsPresenter = (props: Props) => {
       case Tab.skills:
         return <SkillsInput key={selectedTab} />;
     }
-  }, []);
+  }, [selectedTab]);
 
   return (
     <div className='flex h-full w-full flex-row'>
@@ -45,7 +45,7 @@ const PDFInputsPresenter = (props: Props) => {
       />
       <Scrollbars autoHide>
         <div className='min-h-full w-full bg-[#f7f7f7] p-10'>
-          <AnimatePresence mode='wait'>{getInputs}</AnimatePresence>
+          <AnimatePresence mode='wait'>{getInputs()}</AnimatePresence>
         </div>
       </Scrollbars>
     </div>
