@@ -9,13 +9,13 @@ import {
   View,
 } from '@react-pdf/renderer';
 import { DateTime } from 'luxon';
-import OpensansBold from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-Bold.woff';
-import OpensansExtraBold from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.woff';
-import OpensansItalic from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-Italic.woff';
-import OpensansLite from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-Light.woff';
-import OpensansMedium from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-Medium.woff';
-import OpensansRegular from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-Regular.woff';
-import OpensansSemibold from '../../../../Styles/Assets/Fonts/OpenSans/OpenSans-SemiBold.woff';
+import OpensansBold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Bold.woff';
+import OpensansExtraBold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.woff';
+import OpensansItalic from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Italic.woff';
+import OpensansLite from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Light.woff';
+import OpensansMedium from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Medium.woff';
+import OpensansRegular from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Regular.woff';
+import OpensansSemibold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-SemiBold.woff';
 import { Skill } from '../../models';
 import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
 import { TextDisplay } from '../TemplateComponents/TextDisplay';

@@ -32,3 +32,11 @@ yarn-debug.log*
 yarn-error.log*
 
 ui-debug.log
+
+# next.js
+/.next/
+/out/
+
+# react-pdf
+cmaps/
+pdf.worker.min.js

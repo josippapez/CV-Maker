@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   Certificate,
   Education,
@@ -108,5 +108,10 @@ export const {
   cacheSkills,
   setLoaded,
 } = pdfData.actions;
+
+export const pdfDataSelector = createSelector(
+  (state: { pdfData: PDFDataWithTimestamp }) => state.pdfData,
+  pdfData => pdfData
+);
 
 export default pdfData.reducer;

@@ -16,7 +16,10 @@ i18next
     returnNull: false,
     debug: false,
     fallbackLng: 'hr',
-    lng: localStorage.getItem('language') || 'hr',
+    lng:
+      typeof window !== 'undefined'
+        ? window?.localStorage.getItem('language') || 'en-US'
+        : 'en-US',
     interpolation: {
       escapeValue: false,
     },

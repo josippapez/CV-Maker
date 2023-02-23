@@ -1,7 +1,7 @@
+import Translate from '@public/Styles/Assets/Images/translate.svg';
+import { Settings } from 'luxon';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as Translate } from '../../../../Styles/Assets/Images/translate.svg';
-import { Settings } from 'luxon';
 
 interface Props {
   dropdownPosition?: 'left' | 'right';

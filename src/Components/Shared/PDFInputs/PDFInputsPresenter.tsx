@@ -10,6 +10,7 @@ import {
   SkillsInput,
 } from './Components';
 import { Tab } from './PDFInputsContainer';
+import { useMemo } from 'react';
 
 type Props = {
   selectedTab: Tab;
@@ -19,7 +20,7 @@ type Props = {
 const PDFInputsPresenter = (props: Props) => {
   const { setSelectedTab, selectedTab } = props;
 
-  const getInputs = () => {
+  const getInputs = useMemo(() => {
     switch (selectedTab) {
       case Tab.generalInfo:
         return <GeneralInput key={selectedTab} />;
@@ -34,17 +35,17 @@ const PDFInputsPresenter = (props: Props) => {
       case Tab.skills:
         return <SkillsInput key={selectedTab} />;
     }
-  };
+  }, []);
 
   return (
-    <div className='flex flex-row h-full w-full'>
+    <div className='flex h-full w-full flex-row'>
       <PDFTabNavigationPresenter
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
       <Scrollbars autoHide>
-        <div className='w-full min-h-full p-10 bg-[#f7f7f7]'>
-          <AnimatePresence mode='wait'>{getInputs()}</AnimatePresence>
+        <div className='min-h-full w-full bg-[#f7f7f7] p-10'>
+          <AnimatePresence mode='wait'>{getInputs}</AnimatePresence>
         </div>
       </Scrollbars>
     </div>

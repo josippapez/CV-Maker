@@ -1,6 +1,6 @@
 import useDarkMode from '../../../../Hooks/useDarkMode';
-import { ReactComponent as MoonIcon } from '../../../../Styles/Assets/Images/moon.svg';
-import { ReactComponent as SunIcon } from '../../../../Styles/Assets/Images/sun.svg';
+import MoonIcon from '@public/Styles/Assets/Images/moon.svg';
+import SunIcon from '@public/Styles/Assets/Images/sun.svg';
 
 type Props = {
   className?: string;
@@ -12,11 +12,15 @@ const DarkModeButton = (props: Props) => {
   const darkTheme = useDarkMode();
 
   return (
-    <button className={`${className} flex justify-center items-center`} type='button' onClick={darkTheme.toggle}>
+    <button
+      className={`${className} flex items-center justify-center`}
+      type='button'
+      onClick={darkTheme.toggle}
+    >
       {darkTheme.enabled ? (
-        <SunIcon className='w-8 h-8' fill='white' stroke='white' />
+        <SunIcon className='h-8 w-8' fill='white' stroke='white' />
       ) : (
-        <MoonIcon className='w-8 h-8' />
+        <MoonIcon className='h-8 w-8' />
       )}
     </button>
   );

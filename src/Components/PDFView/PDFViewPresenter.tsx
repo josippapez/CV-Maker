@@ -1,3 +1,4 @@
+import { Tooltip } from '@/Components/Shared/Tooltip/Tooltip';
 import { Suspense, useCallback, useState } from 'react';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
@@ -9,8 +10,6 @@ import { useAppSelector } from '../../store/hooks';
 import PDFDownload from '../PDFDownload/PDFDownload';
 import PageLoader from '../Shared/Loader/PageLoader';
 import PDFInputsContainer from '../Shared/PDFInputs/PDFInputsContainer';
-import { Tooltip } from '../Shared/Tootlip/Tooltip';
-import './PDFViewPresenter.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
@@ -25,7 +24,7 @@ type Props = {
 };
 
 const options = {
-  cMapUrl: 'cmaps/',
+  cMapUrl: '/cmaps/',
   cMapPacked: true,
 };
 

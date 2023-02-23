@@ -5,7 +5,6 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
-import { connectStorageEmulator, getStorage } from 'firebase/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import {
   FLUSH,
@@ -15,7 +14,7 @@ import {
   REGISTER,
   REHYDRATE,
 } from 'redux-persist/es/constants';
-import storage from 'redux-persist/lib/storage';
+import storage from '../storage';
 import firebaseConfig from './fbConfig';
 import firebaseConfigProd from './fbConfig-prod';
 import { reducers } from './reducers/reducer';
@@ -41,12 +40,12 @@ if (process.env.NODE_ENV === 'development') {
   connectFunctionsEmulator(functions, 'localhost', 5001);
   const auth = getAuth();
   connectAuthEmulator(auth, 'http://localhost:9099');
-  const firebaseStorage = getStorage();
-  connectStorageEmulator(firebaseStorage, 'localhost', 9199);
+  // const firebaseStorage = getStorage();
+  // connectStorageEmulator(firebaseStorage, 'localhost', 9199);
 }
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: persistedReducer || reducers,
   devTools: process.env.NODE_ENV !== 'production',
   middleware: getDefaultMiddleware => {
     const middleware = getDefaultMiddleware({
@@ -57,6 +56,7 @@ const store = configureStore({
     return middleware;
   },
 });
+
 const persistor = persistStore(store);
 export { store, persistor };
 

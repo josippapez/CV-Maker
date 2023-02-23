@@ -8,7 +8,6 @@ import {
   Skill,
 } from '../Components/PDFView/models';
 import {
-  PDFData,
   cacheAllData,
   cacheCertificates,
   cacheEducation,
@@ -16,9 +15,11 @@ import {
   cacheLanguages,
   cacheProfessionalExperience,
   cacheSkills,
+  PDFData,
+  pdfDataSelector,
   setLoaded,
 } from '../store/reducers/pdfData';
-import { TemplateName, setTemplate } from '../store/reducers/template';
+import { setTemplate, TemplateName } from '../store/reducers/template';
 import { useAppDispatch, useAppSelector } from './../store/hooks';
 
 const usePDFData = () => {
@@ -31,7 +32,7 @@ const usePDFData = () => {
     professionalExperience,
     skills,
     loaded,
-  } = useAppSelector(state => state.pdfData);
+  } = useAppSelector(pdfDataSelector);
   const template = useAppSelector(state => state.template);
 
   const setDataLoaded = useCallback(

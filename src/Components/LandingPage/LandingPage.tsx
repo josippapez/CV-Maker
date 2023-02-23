@@ -1,9 +1,8 @@
 import { motion, useInView } from 'framer-motion';
+import Link from 'next/link';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
 import useAnimation from '../../Hooks/useAnimation';
-import Images from '../../Styles/Assets/Images/Images';
 import style from './LandingPage.module.scss';
 import LandingPageScrollNavigation from './LandingPageScrollNavigation';
 import LandingPageSections from './LandingPageSections';
@@ -24,14 +23,14 @@ const LandingPage = () => {
     });
 
     return (
-      <div ref={ref} className='flex justify-center items-center h-full'>
-        <div className='flex flex-col w-full'>
-          <div className='flex justify-center items-center'>
+      <div ref={ref} className='flex h-full items-center justify-center'>
+        <div className='flex w-full flex-col'>
+          <div className='flex items-center justify-center'>
             <motion.header
               initial={combinedStyleInitial}
               animate={inview ? combinedStyleFinal : combinedStyleInitial}
               transition={{ duration: 0.2 }}
-              className='w-2/6 text-6xl text-center font-bold text-blue-900 dark:text-white'
+              className='w-2/6 text-center text-6xl font-bold text-blue-900 dark:text-white'
             >
               {t('pageName')}
             </motion.header>
@@ -39,7 +38,7 @@ const LandingPage = () => {
               initial={combinedStyleInitial}
               animate={inview ? combinedStyleFinal : combinedStyleInitial}
               transition={{ duration: 0.2, delay: 0.1 }}
-              src={Images.PagesImage}
+              src={'./Styles/Assets/Images/pages.svg'}
               alt='Page Logo'
               className='w-2/6'
             />
@@ -50,9 +49,9 @@ const LandingPage = () => {
             animate={inview ? combinedStyleFinal : combinedStyleInitial}
             transition={{ duration: 0.2, delay: 0.7 }}
           >
-            <NavLink to='/create' className={style.createYourCVLink}>
+            <Link href='/create' className={style.createYourCVLink}>
               {t('createYourCV')}
-            </NavLink>
+            </Link>
           </motion.div>
         </div>
       </div>
@@ -68,12 +67,12 @@ const LandingPage = () => {
     return (
       <div
         ref={ref}
-        className='flex justify-center items-center h-full bg-[#fbe5c4] dark:bg-[#c0ad8f]'
+        className='flex h-full items-center justify-center bg-[#fbe5c4] dark:bg-[#c0ad8f]'
       >
         <motion.img
-          src={Images.Desk}
+          src={'./Styles/Assets/Images/Desk.jpg'}
           alt='Page Logo'
-          className='w-3/5 m-5 rounded-lg shadow-lg'
+          className='m-5 w-3/5 rounded-lg shadow-lg'
           initial={horizontalAnimation.combinedStyleInitialReverse}
           animate={
             inview
@@ -107,7 +106,7 @@ const LandingPage = () => {
     return (
       <div
         ref={ref}
-        className='flex justify-center items-center h-full bg-[#e6cfad] dark:bg-[#a08e72]'
+        className='flex h-full items-center justify-center bg-[#e6cfad] dark:bg-[#a08e72]'
       >
         <motion.div
           className='w-2/6 text-xl text-blue-900 dark:text-white'
@@ -122,9 +121,9 @@ const LandingPage = () => {
           {t('templatesDescription')}
         </motion.div>
         <motion.img
-          src={Images.Notebook}
+          src={'./Styles/Assets/Images/Notebook.jpg'}
           alt='Page Logo'
-          className='w-3/5 m-5 rounded-lg shadow-lg'
+          className='m-5 w-3/5 rounded-lg shadow-lg'
           initial={horizontalAnimation.combinedStyleInitial}
           animate={
             inview
@@ -145,7 +144,7 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className='overflow-y-hidden h-screen transition-colors bg-[#f0f0f0] dark:bg-[#3a3836]'>
+    <div className='h-screen overflow-y-hidden bg-[#f0f0f0] transition-colors dark:bg-[#3a3836]'>
       <LandingPageSections landingPageSections={landingPageSections} />
       <LandingPageScrollNavigation landingPageSections={landingPageSections} />
     </div>

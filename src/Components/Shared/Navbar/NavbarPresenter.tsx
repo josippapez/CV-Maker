@@ -1,28 +1,28 @@
-import { useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import ChangeLanguageButton from './Components/ChangeLanguageButton';
 import DarkModeButton from './Components/DarkModeButton';
 
 const NavbarPresenter = () => {
-  const {pathname} = useLocation();
+  const { asPath } = useRouter();
 
   return (
-    <div className='sticky float-right right-2 top-2 w-fit transition-colors h-0 z-40'>
+    <div className='sticky right-2 top-2 z-40 float-right h-0 w-fit transition-colors'>
       <div className='relative flex-col'>
         <DarkModeButton
-          className='dark:bg-[#616161]
-          bg-[#b8b8b8] rounded-full shadow-md
-          mt-3 transition-all h-10 w-10 font-bold
-          text-sm cursor-pointer select-none
-          focus:outline-none focus:shadow-outline'
+          className='focus:shadow-outline
+          mt-3 h-10 w-10
+          cursor-pointer select-none rounded-full bg-[#b8b8b8] text-sm
+          font-bold shadow-md transition-all
+          focus:outline-none dark:bg-[#616161]'
         />
-        {pathname === '/' && (
+        {asPath === '/' && (
           <ChangeLanguageButton
             iconStrokeColor={'dark:stroke-white stroke-black'}
             dropdownPosition='left'
-            className='p-[5px] mt-3 h-10 w-10 font-bold rounded-full text-sm
-            cursor-pointer select-none
-            focus:outline-none focus:shadow-outline
-            transition-all bg-[#b8b8b8] dark:bg-[#616161]'
+            className='focus:shadow-outline mt-3 h-10 w-10 cursor-pointer select-none rounded-full
+            bg-[#b8b8b8] p-[5px]
+            text-sm font-bold
+            transition-all focus:outline-none dark:bg-[#616161]'
           />
         )}
       </div>

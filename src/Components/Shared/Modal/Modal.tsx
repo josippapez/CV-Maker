@@ -204,7 +204,7 @@ const Modal = (props: Props): JSX.Element => {
         </motion.div>
       )}
     </AnimatePresence>,
-    document.getElementById('root') as Element
+    document.getElementById('__next') as Element
   );
 };
 

@@ -1,6 +1,6 @@
+import ArrowLeft from '@public/Styles/Assets/Images/left-arrow.svg';
+import ArrowRight from '@public/Styles/Assets/Images/right-arrow.svg';
 import useMobileView from '../../../../Hooks/useMobileView';
-import { ReactComponent as ArrowLeft } from '../../../../Styles/Assets/Images/left-arrow.svg';
-import { ReactComponent as ArrowRight } from '../../../../Styles/Assets/Images/right-arrow.svg';
 
 type Props = {
   setSelectedYear?: (year: number) => void;

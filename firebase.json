@@ -21,6 +21,9 @@
     "functions": {
       "port": 5001
     },
+    "storage": {
+      "port": 8845
+    },
     "firestore": {
       "port": 8080
     },

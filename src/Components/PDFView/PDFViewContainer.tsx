@@ -1,7 +1,7 @@
 import { usePDF } from '@react-pdf/renderer';
+import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import usePDFData from '../../Hooks/usePDFData';
 import {
   DocumentPDFData,
@@ -13,9 +13,12 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CVTemplate from './CVTemplates/CVTemplate';
 import PDFViewPresenter from './PDFViewPresenter';
 
+const isQueryUserIdString = (query: any): query is string =>
+  typeof query === 'string';
+
 const PDFView = () => {
   const dispatch = useAppDispatch();
-  const params = useParams();
+  const { query } = useRouter();
   const user = useAppSelector(state => state.user.user.id);
   const {
     certificates,
@@ -32,8 +35,10 @@ const PDFView = () => {
   } = usePDFData();
   const { t, i18n } = useTranslation('CVTemplates');
 
+  const userId = isQueryUserIdString(query.userId) ? query.userId : null;
+
   const currentLanguage = i18n.language;
-  const isPDFPreview = !!params.userId;
+  const isPDFPreview = Boolean(userId);
 
   const [instance, updateInstance] = usePDF({
     document: CVTemplate({
@@ -85,9 +90,9 @@ const PDFView = () => {
 
   useEffect(() => {
     if (isPDFPreview) {
-      if (!params.userId) return;
+      if (!userId) return;
 
-      getCVPreviewForUser(params.userId, (data: DocumentPDFData) => {
+      getCVPreviewForUser(userId, (data: DocumentPDFData) => {
         setActiveTemplate(data.template.templateName);
         setAllData(data);
         i18n.changeLanguage(data.language);

@@ -1,4 +1,4 @@
-import { ReactComponent as DeleteIcon } from '../../../../Styles/Assets/Images/deleteIcon.svg';
+import DeleteIcon from '@public/Styles/Assets/Images/deleteIcon.svg';
 
 type Props = {
   onClick: () => void;

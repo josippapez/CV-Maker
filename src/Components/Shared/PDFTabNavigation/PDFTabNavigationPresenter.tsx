@@ -1,22 +1,21 @@
+import { Tooltip } from '@/Components/Shared/Tooltip/Tooltip';
+import AcademicCap from '@public/Styles/Assets/Images/academic-cap.svg';
+import Briefcase from '@public/Styles/Assets/Images/briefcase.svg';
+import CertificateIcon from '@public/Styles/Assets/Images/document.svg';
+import Google from '@public/Styles/Assets/Images/google.svg';
+import Language from '@public/Styles/Assets/Images/language.svg';
+import Logout from '@public/Styles/Assets/Images/logout.svg';
+import Profile from '@public/Styles/Assets/Images/profile.svg';
+import Tools from '@public/Styles/Assets/Images/tools.svg';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { logout, signInWithGoogle } from '../../../store/actions/authActions';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { ReactComponent as AcademicCap } from '../../../Styles/Assets/Images/academic-cap.svg';
-import { ReactComponent as Briefcase } from '../../../Styles/Assets/Images/briefcase.svg';
-import { ReactComponent as CertificateIcon } from '../../../Styles/Assets/Images/document.svg';
-import { ReactComponent as Google } from '../../../Styles/Assets/Images/google.svg';
-import { ReactComponent as Language } from '../../../Styles/Assets/Images/language.svg';
-import { ReactComponent as Logout } from '../../../Styles/Assets/Images/logout.svg';
-import { ReactComponent as Profile } from '../../../Styles/Assets/Images/profile.svg';
-import { ReactComponent as Tools } from '../../../Styles/Assets/Images/tools.svg';
 import TemplatesModal from '../../PDFView/CVTemplates/TemplatesModal';
 import ChangeLanguageButton from '../Navbar/Components/ChangeLanguageButton';
 import TemplatesButton from '../Navbar/Components/TemplatesButton';
-
 import { Tab } from '../PDFInputs/PDFInputsContainer';
-import { Tooltip } from '../Tootlip/Tooltip';
 
 type Props = {
   setSelectedTab: (tab: Tab) => void;
@@ -33,41 +32,46 @@ const PDFTabNavigationPresenter = (props: Props) => {
   const [displayTemplateChooseModal, setDisplayTemplateChooseModal] =
     useState(false);
 
-  const arrayOfTabs: Array<{ tab: Tab; label: string | JSX.Element }> = [
-    {
-      tab: Tab.generalInfo,
-      label: (
-        <Profile
-          height={30}
-          width={35}
-          strokeWidth={2.5}
-          className='fill-gray-700 stroke-gray-700'
-        />
-      ),
-    },
-    {
-      tab: Tab.professionalExperience,
-      label: <Briefcase height={30} width={35} className='stroke-gray-700' />,
-    },
-    {
-      tab: Tab.education,
-      label: <AcademicCap height={30} width={35} className='stroke-gray-700' />,
-    },
-    {
-      tab: Tab.certificates,
-      label: (
-        <CertificateIcon height={30} width={35} className='stroke-gray-700' />
-      ),
-    },
-    {
-      tab: Tab.languages,
-      label: <Language height={30} width={35} className='fill-gray-700' />,
-    },
-    {
-      tab: Tab.skills,
-      label: <Tools height={30} width={35} className='fill-gray-700' />,
-    },
-  ];
+  const arrayOfTabs: Array<{ tab: Tab; label: string | JSX.Element }> = useMemo(
+    () => [
+      {
+        tab: Tab.generalInfo,
+        label: (
+          <Profile
+            height={30}
+            width={35}
+            strokeWidth={2.5}
+            className='fill-gray-700 stroke-gray-700'
+          />
+        ),
+      },
+      {
+        tab: Tab.professionalExperience,
+        label: <Briefcase height={30} width={35} className='stroke-gray-700' />,
+      },
+      {
+        tab: Tab.education,
+        label: (
+          <AcademicCap height={30} width={35} className='stroke-gray-700' />
+        ),
+      },
+      {
+        tab: Tab.certificates,
+        label: (
+          <CertificateIcon height={30} width={35} className='stroke-gray-700' />
+        ),
+      },
+      {
+        tab: Tab.languages,
+        label: <Language height={30} width={35} className='fill-gray-700' />,
+      },
+      {
+        tab: Tab.skills,
+        label: <Tools height={30} width={35} className='fill-gray-700' />,
+      },
+    ],
+    []
+  );
 
   return (
     <div className='relative z-10 w-32 p-6 shadow-sm'>

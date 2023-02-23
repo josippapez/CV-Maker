@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
 import usePDFData from '../../../../Hooks/usePDFData';
-import { ReactComponent as Plus } from '../../../../Styles/Assets/Images/plus.svg';
+import Plus from '@public/Styles/Assets/Images/plus.svg';
 import { GeneralInfo } from '../../../PDFView/models';
 import { DateInput } from '../../Inputs/DateInput';
 import TextInput from '../../Inputs/TextInput';

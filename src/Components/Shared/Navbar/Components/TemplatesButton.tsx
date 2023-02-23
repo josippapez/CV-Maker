@@ -1,4 +1,4 @@
-import { ReactComponent as TemplatesIcon } from '../../../../Styles/Assets/Images/template.svg';
+import  TemplatesIcon from '@public/Styles/Assets/Images/template.svg';
 
 type Props = {
   iconClassname?: string;

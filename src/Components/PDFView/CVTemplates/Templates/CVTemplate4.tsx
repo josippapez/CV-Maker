@@ -9,13 +9,13 @@ import {
   View,
 } from '@react-pdf/renderer';
 import { DateTime } from 'luxon';
-import UnboundedBold from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-Bold.woff';
-import UnboundedExtraBold from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-ExtraBold.woff';
-import UnboundedExtraLight from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-ExtraLight.woff';
-import UnboundedLight from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-Light.woff';
-import UnboundedMedium from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-Medium.woff';
-import UnboundedRegular from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-Regular.woff';
-import UnboundedSemiBold from '../../../../Styles/Assets/Fonts/Unbound/Unbounded-SemiBold.woff';
+import UnboundedBold from '@public/Styles/Assets/Fonts/Unbound/Unbounded-Bold.woff';
+import UnboundedExtraBold from '@public/Styles/Assets/Fonts/Unbound/Unbounded-ExtraBold.woff';
+import UnboundedExtraLight from '@public/Styles/Assets/Fonts/Unbound/Unbounded-ExtraLight.woff';
+import UnboundedLight from '@public/Styles/Assets/Fonts/Unbound/Unbounded-Light.woff';
+import UnboundedMedium from '@public/Styles/Assets/Fonts/Unbound/Unbounded-Medium.woff';
+import UnboundedRegular from '@public/Styles/Assets/Fonts/Unbound/Unbounded-Regular.woff';
+import UnboundedSemiBold from '@public/Styles/Assets/Fonts/Unbound/Unbounded-SemiBold.woff';
 import { Skill } from '../../models';
 import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
 import { TextDisplay } from '../TemplateComponents/TextDisplay';

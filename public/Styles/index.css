@@ -1,3 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Unbounded-variable', sans-serif;
+  font-size: 13px;
+  line-height: 2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+input,
+textarea {
+  outline: none !important;
+}
+
+@font-face {
+  font-family: 'Unbounded-variable';
+  src: url('./Assets/Fonts/Unbounded-VariableFont_wght.ttf');
+}
+
+.privacy-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.firebase-emulator-warning {
+ display: none;
+}
+
+
 .document-controls {
   opacity: 0;
   bottom: 80px;
@@ -33,7 +84,7 @@
 }
 
 .pdf-download {
-  background: url('../../Styles/Assets/Images/downloadDocument.svg');
+  background: url('./Assets/Images/downloadDocument.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-color: #ffffff;
@@ -46,7 +97,7 @@
 }
 
 .pdf-share {
-  background: url('../../Styles/Assets/Images/share.svg');
+  background: url('./Assets/Images/share.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-color: #ffffff;
