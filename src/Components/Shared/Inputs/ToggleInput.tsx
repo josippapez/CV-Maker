@@ -1,4 +1,14 @@
 type Props = {
+  labelFontWeight?:
+    | 'font-medium'
+    | 'font-bold'
+    | 'font-normal'
+    | 'font-light'
+    | 'font-thin'
+    | 'font-extrabold'
+    | 'font-black'
+    | 'font-extralight';
+  inline?: boolean;
   name?: string;
   id?: string;
   label?: string;
@@ -16,9 +26,11 @@ type Props = {
 
 const ToggleInput = (props: Props) => {
   const {
-    name,
-    id,
-    label,
+    labelFontWeight = 'font-medium',
+    inline = false,
+    name = 'input',
+    id = 'input',
+    label = 'input',
     placeholder,
     onChange,
     onBlur,
@@ -32,11 +44,13 @@ const ToggleInput = (props: Props) => {
   } = props;
   return (
     <div
-      className={`flex flex-col ${
+      className={`flex ${inline ? 'flex-row items-center gap-1' : 'flex-col'} ${
         fullWidth ? 'w-full' : ''
       } drop-shadow-sm ${wrapperClassName}`}
     >
-      {label && <label className='font-medium text-gray-700'>{label}</label>}
+      {label && (
+        <label className={`${labelFontWeight} text-gray-700`}>{label}</label>
+      )}
       <input
         placeholder={placeholder}
         type='checkbox'
@@ -58,7 +72,9 @@ const ToggleInput = (props: Props) => {
         }}
         disabled={disabled}
         required={required}
-        className={`sm:text-sm border rounded-md h-4 px-4 focus:ring-indigo-500 focus:border-indigo-500 w-full
+        className={`h-4 rounded-md border ${
+          inline ? '' : 'w-full px-4'
+        } focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm
         ${
           error
             ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
@@ -68,13 +84,6 @@ const ToggleInput = (props: Props) => {
       {error && <p className='mt-2 text-sm text-red-600'>{error}</p>}
     </div>
   );
-};
-
-ToggleInput.defaultProps = {
-  name: 'input',
-  id: 'input',
-  label: 'input',
-  type: 'text',
 };
 
 export default ToggleInput;

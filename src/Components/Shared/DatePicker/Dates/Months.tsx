@@ -78,19 +78,19 @@ const Months = (props: Props) => {
     dates && (
       <>
         {showPreviousYear && (
-          <div>
+          <div className='bg-gray-100 p-4 rounded-md shadow-inner'>
             <div className={`${style.calendarGrid}`}>
               {displayMonths(dates.year - 1, 0)}
             </div>
           </div>
         )}
-        <div>
+        <div className='bg-gray-100 p-4 rounded-md shadow-inner'>
           <div className={`${style.calendarGrid}`}>
             {displayMonths(dates.year, 0)}
           </div>
         </div>
         {showNextYear && (
-          <div>
+          <div className='bg-gray-100 p-4 rounded-md shadow-inner'>
             <div className={`${style.calendarGrid}`}>
               {displayMonths(dates.year + 1, 0)}
             </div>

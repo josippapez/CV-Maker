@@ -56,7 +56,7 @@ export const Years: FC<Props> = ({
   };
 
   return (
-    <div>
+    <div className='bg-gray-100 p-4 rounded-md shadow-inner'>
       <div className={`${style.calendarGrid}`}>
         {displayYears(initialYear || DateTime.now().year.toString())}
       </div>

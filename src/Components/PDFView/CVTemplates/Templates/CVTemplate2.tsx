@@ -1,3 +1,11 @@
+import { displayDate } from '@/Components/PDFView/CVTemplates/Templates/Utils';
+import OpensansBold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Bold.woff';
+import OpensansExtraBold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.woff';
+import OpensansItalic from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Italic.woff';
+import OpensansLite from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Light.woff';
+import OpensansMedium from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Medium.woff';
+import OpensansRegular from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Regular.woff';
+import OpensansSemibold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-SemiBold.woff';
 import {
   Document,
   Font,
@@ -8,14 +16,6 @@ import {
   Text,
   View,
 } from '@react-pdf/renderer';
-import { DateTime } from 'luxon';
-import OpensansBold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Bold.woff';
-import OpensansExtraBold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.woff';
-import OpensansItalic from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Italic.woff';
-import OpensansLite from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Light.woff';
-import OpensansMedium from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Medium.woff';
-import OpensansRegular from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Regular.woff';
-import OpensansSemibold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-SemiBold.woff';
 import { Skill } from '../../models';
 import AdditionalInformation from '../TemplateComponents/AdditionalInformation';
 import { TextDisplay } from '../TemplateComponents/TextDisplay';
@@ -205,7 +205,6 @@ const CVTemplate2 = (props: DefaultProps): JSX.Element => {
     languages,
     skills,
     translate,
-    locale,
   } = props;
 
   return (
@@ -240,9 +239,7 @@ const CVTemplate2 = (props: DefaultProps): JSX.Element => {
                 },
               ]}
             >
-              {generalInfo?.dob &&
-                DateTime.fromISO(generalInfo?.dob)
-                .toLocaleString()}
+              {generalInfo?.dob && displayDate(generalInfo?.dob, 'default')}
             </TextDisplay>
             <TextDisplay style={[styles.topBarPosition]}>
               {generalInfo?.position}
@@ -365,18 +362,11 @@ const CVTemplate2 = (props: DefaultProps): JSX.Element => {
                   </TextDisplay>
                   <TextDisplay style={[styles.companyDuration]}>
                     {experience.location},{' '}
-                    {experience.startDate &&
-                      DateTime.fromISO(experience.startDate)
-                      .toLocaleString({
-                        month: 'short',
-                        year: 'numeric',
-                      })}{' '}
+                    {experience.startDate && displayDate(experience.startDate)}{' '}
                     -{' '}
                     {experience.currentlyEnrolled
                       ? translate('present')
-                      : experience.endDate &&
-                        DateTime.fromISO(experience.endDate)
-                        .toLocaleString({ month: 'short', year: 'numeric' })}
+                      : experience.endDate && displayDate(experience.endDate)}
                   </TextDisplay>
                   <TextDisplay style={[styles.companyDescription]}>
                     {experience.description}
@@ -407,21 +397,10 @@ const CVTemplate2 = (props: DefaultProps): JSX.Element => {
                       {edu.course ? edu.course : edu.school}
                     </TextDisplay>
                     <TextDisplay style={[styles.educationDuration]}>
-                      {edu.startDate &&
-                        DateTime.fromISO(edu.startDate)
-                        .toLocaleString({
-                          month: 'short',
-                          year: 'numeric',
-                        })}{' '}
-                      -{' '}
+                      {edu.startDate && displayDate(edu.startDate)} -{' '}
                       {edu.currentlyEnrolled
                         ? translate('present')
-                        : edu.endDate &&
-                          DateTime.fromISO(edu.endDate)
-                          .toLocaleString({
-                            month: 'short',
-                            year: 'numeric',
-                          })}
+                        : edu.endDate && displayDate(edu.endDate)}
                     </TextDisplay>
                     <TextDisplay style={[styles.educationDegree]}>
                       {`${edu.degree} ${

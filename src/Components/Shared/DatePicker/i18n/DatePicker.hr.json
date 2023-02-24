@@ -1,5 +1,7 @@
 {
+  "date-selector": "Odabir datuma",
   "cancel": "Poništi",
   "clear": "Očisti",
-  "done": "Gotovo"
+  "done": "Gotovo",
+  "year-only": "Samo godina"
 }

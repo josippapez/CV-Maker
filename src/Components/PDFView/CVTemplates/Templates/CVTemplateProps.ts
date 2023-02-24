@@ -16,5 +16,4 @@ export interface DefaultProps {
   languages?: LanguageSkill[];
   skills: Skill[];
   translate: TFunction;
-  locale: string;
 }

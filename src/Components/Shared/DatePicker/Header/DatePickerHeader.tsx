@@ -1,6 +1,7 @@
 import ArrowLeft from '@public/Styles/Assets/Images/left-arrow.svg';
 import ArrowRight from '@public/Styles/Assets/Images/right-arrow.svg';
 import { DateTime } from 'luxon';
+import { useTranslation } from 'react-i18next';
 import useMobileView from '../../../../Hooks/useMobileView';
 
 type Props = {
@@ -12,6 +13,7 @@ type Props = {
   className?: string;
   hideMonth?: boolean;
   hideYear?: boolean;
+  setShowYearPicker: () => void;
 };
 
 const DatePickerHeader = (props: Props) => {
@@ -24,8 +26,9 @@ const DatePickerHeader = (props: Props) => {
     className,
     hideMonth,
     hideYear,
+    setShowYearPicker,
   } = props;
-
+  const { t } = useTranslation('DatePicker');
   const mobileView = useMobileView();
 
   const shouldShowSelectMonth =
@@ -33,56 +36,68 @@ const DatePickerHeader = (props: Props) => {
   const shouldShowSelectYear = !hideYear && setSelectedYear && !!selectedYear;
 
   return (
-    <div
-      className={`flex select-none justify-center gap-3 drop-shadow-md ${className}`}
-    >
-      {shouldShowSelectMonth ? (
-        <div
-          className={`flex items-center ${
-            mobileView ? 'w-[165px]' : 'w-36'
-          } h-10 rounded-md`}
+    <div>
+      <div className='flex pb-3'>
+        <button
+          onClick={() => {
+            setShowYearPicker();
+          }}
+          className='rounded-md bg-gray-200 px-3 py-2 text-xs drop-shadow-sm hover:drop-shadow-md'
         >
-          <button
-            onClick={() => {
-              if (selectedMonth === 1) {
-                setSelectedMonth(12);
-                if (shouldShowSelectYear) {
-                  setSelectedYear(selectedYear - 1);
-                }
-                return;
-              }
-              setSelectedMonth(selectedMonth - 1);
-            }}
-            className='rounded-l-md p-2 transition-all hover:bg-stone-200'
+          {t(type === 'year' ? 'date-selector' :'year-only')}
+        </button>
+      </div>
+      <div
+        className={`flex select-none justify-center gap-3 drop-shadow-md ${className}`}
+      >
+        {shouldShowSelectMonth ? (
+          <div
+            className={`flex items-center ${
+              mobileView ? 'w-[165px]' : 'w-36'
+            } h-10 rounded-md`}
           >
-            <ArrowLeft height={30} />
-          </button>
-          <h2 className='w-full select-none px-5 text-center font-bold'>
-            {selectedMonth}
-          </h2>
-          <button
-            onClick={() => {
-              if (selectedMonth === 12) {
-                setSelectedMonth(1);
-                if (shouldShowSelectYear) {
-                  setSelectedYear(selectedYear + 1);
+            <button
+              onClick={() => {
+                if (selectedMonth === 1) {
+                  setSelectedMonth(12);
+                  if (shouldShowSelectYear) {
+                    setSelectedYear(selectedYear - 1);
+                  }
+                  return;
                 }
-                return;
-              }
-              setSelectedMonth(selectedMonth + 1);
-            }}
-            className='rounded-r-md p-2 transition-all hover:bg-stone-200'
-          >
-            <ArrowRight height={30} />
-          </button>
-        </div>
-      ) : null}
-      <YearHeaderDisplay
-        type={type}
-        shouldShowSelectYear={shouldShowSelectYear}
-        selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}
-      />
+                setSelectedMonth(selectedMonth - 1);
+              }}
+              className='rounded-l-md p-2 transition-all hover:bg-stone-200'
+            >
+              <ArrowLeft height={30} />
+            </button>
+            <h2 className='w-full select-none px-5 text-center font-bold'>
+              {selectedMonth}
+            </h2>
+            <button
+              onClick={() => {
+                if (selectedMonth === 12) {
+                  setSelectedMonth(1);
+                  if (shouldShowSelectYear) {
+                    setSelectedYear(selectedYear + 1);
+                  }
+                  return;
+                }
+                setSelectedMonth(selectedMonth + 1);
+              }}
+              className='rounded-r-md p-2 transition-all hover:bg-stone-200'
+            >
+              <ArrowRight height={30} />
+            </button>
+          </div>
+        ) : null}
+        <YearHeaderDisplay
+          type={type}
+          shouldShowSelectYear={shouldShowSelectYear}
+          selectedYear={selectedYear}
+          setSelectedYear={setSelectedYear}
+        />
+      </div>
     </div>
   );
 };

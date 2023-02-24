@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { DateTime, DateTimeFormatOptions } from 'luxon';
 import { useState } from 'react';
 import DatePicker from '../DatePicker/DatePicker';
 
@@ -32,7 +32,19 @@ export const DateInput = (props: Props) => {
     disabled,
     type = 'date',
   } = props;
+
+  const isOnlyYear = value.length === 4;
+
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const onlyYearFormat = {
+    year: 'numeric',
+  } satisfies DateTimeFormatOptions;
+
+  const newFormat = isOnlyYear ? onlyYearFormat : format;
+
+  console.log(type);
+
 
   return (
     <div
@@ -44,13 +56,13 @@ export const DateInput = (props: Props) => {
       <input
         disabled={disabled}
         type='button'
-        className='flex h-10 w-full
+        className='w-ful flex h-10
         flex-row items-center justify-between rounded-md bg-white
         px-4 ring-0 transition-all duration-300 ease-in-out hover:cursor-pointer
         focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500'
         onClick={() => setShowDatePicker(true)}
         defaultValue={
-          value ? DateTime.fromISO(value).toLocaleString(format) : ''
+          value ? DateTime.fromISO(value).toLocaleString(newFormat) : ''
         }
       />
       <DatePicker

@@ -37,6 +37,9 @@ const DatePicker = (props: Props) => {
 
   const { t } = useTranslation('DatePicker');
   const [tempDate, setTempDate] = useState(initialDate || '');
+  const [showYearPicker, setShowYearPicker] = useState(
+    initialDate?.length === 4
+  );
 
   const eachDayOfMonth = useCalculateEachDayOfMonth({
     startYear: startYear || DateTime.local().year,
@@ -44,6 +47,8 @@ const DatePicker = (props: Props) => {
   });
 
   const { month, year, setmonth, setyear } = eachDayOfMonth;
+
+  const selectedType = showYearPicker ? 'year' : type;
 
   useEffect(() => {
     if (initialDate) {
@@ -61,15 +66,21 @@ const DatePicker = (props: Props) => {
     >
       <div className='relative rounded-md bg-white p-4'>
         <DatePickerHeader
-          type={type}
-          hideMonth={type === 'year' || type === 'month'}
+          type={selectedType}
+          hideMonth={selectedType === 'year' || selectedType === 'month'}
           selectedMonth={month}
           selectedYear={year}
           setSelectedMonth={setmonth}
           setSelectedYear={setyear}
+          setShowYearPicker={() => {
+            setShowYearPicker(prev => !prev);
+            if (!showYearPicker) {
+              setTempDate(year.toString());
+            }
+          }}
         />
         <div className='my-4'>
-          {type === 'year' && (
+          {selectedType === 'year' && (
             <Years
               initialYear={year.toString()}
               selectedYear={DateTime.fromISO(tempDate).year.toString()}
@@ -77,7 +88,7 @@ const DatePicker = (props: Props) => {
               disabledCondition={disabledCondition}
             />
           )}
-          {type === 'month' && (
+          {selectedType === 'month' && (
             <Months
               dates={eachDayOfMonth}
               initialDate={tempDate}
@@ -85,7 +96,7 @@ const DatePicker = (props: Props) => {
               disabledCondition={disabledCondition}
             />
           )}
-          {type === 'date' && (
+          {selectedType === 'date' && (
             <DatePickerDates
               dates={eachDayOfMonth}
               initialDate={tempDate}
