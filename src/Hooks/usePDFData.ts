@@ -1,3 +1,4 @@
+import { getDataForUser } from '@/store/actions/syncActions';
 import { useCallback, useMemo } from 'react';
 import {
   Certificate,
@@ -8,6 +9,7 @@ import {
   Skill,
 } from '../Components/PDFView/models';
 import {
+  PDFData,
   cacheAllData,
   cacheCertificates,
   cacheEducation,
@@ -15,11 +17,10 @@ import {
   cacheLanguages,
   cacheProfessionalExperience,
   cacheSkills,
-  PDFData,
   pdfDataSelector,
   setLoaded,
 } from '../store/reducers/pdfData';
-import { setTemplate, TemplateName } from '../store/reducers/template';
+import { TemplateName, setTemplate } from '../store/reducers/template';
 import { useAppDispatch, useAppSelector } from './../store/hooks';
 
 const usePDFData = () => {
@@ -73,6 +74,10 @@ const usePDFData = () => {
     [dispatch]
   );
 
+  const getUserData = useCallback(() => {
+    dispatch(getDataForUser());
+  }, [dispatch]);
+
   const state = useMemo(() => {
     return {
       certificates,
@@ -106,6 +111,7 @@ const usePDFData = () => {
     setSkills,
     setAllData,
     setActiveTemplate,
+    getUserData,
   };
 };
 

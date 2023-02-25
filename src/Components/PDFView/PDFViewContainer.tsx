@@ -1,92 +1,26 @@
-import { usePDF } from '@react-pdf/renderer';
+import usePDFData from '@/Hooks/usePDFData';
+import { useAppSelector } from '@/store/hooks';
 import { useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import usePDFData from '../../Hooks/usePDFData';
 import {
   DocumentPDFData,
   getCVPreviewForUser,
-  getDataForUser,
-  saveDataForUser,
 } from '../../store/actions/syncActions';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import CVTemplate from './CVTemplates/CVTemplate';
 import PDFViewPresenter from './PDFViewPresenter';
 
-const isQueryUserIdString = (query: any): query is string =>
-  typeof query === 'string';
+const isQueryUserIdString = (
+  query: string | string[] | undefined
+): query is string => typeof query === 'string';
 
-const PDFView = () => {
-  const dispatch = useAppDispatch();
+const PDFViewContainer = () => {
   const { query } = useRouter();
-  const user = useAppSelector(state => state.user.user.id);
-  const {
-    certificates,
-    education,
-    generalInfo,
-    languages,
-    professionalExperience,
-    skills,
-    template,
-    loaded,
-    setDataLoaded,
-    setActiveTemplate,
-    setAllData,
-  } = usePDFData();
-  const { t, i18n } = useTranslation('CVTemplates');
+  const { i18n } = useTranslation('CVTemplates');
+  const user = useAppSelector(state => state.user.user);
+  const { setActiveTemplate, setAllData, getUserData } = usePDFData();
 
   const userId = isQueryUserIdString(query.userId) ? query.userId : null;
-
-  const currentLanguage = i18n.language;
   const isPDFPreview = Boolean(userId);
-
-  const [instance, updateInstance] = usePDF({
-    document: CVTemplate({
-      generalInfo,
-      professionalExperience,
-      certificates,
-      education,
-      languages,
-      skills,
-      template,
-      t,
-      currentLanguage,
-    }),
-  });
-
-  const updateInstanceRef: { current: null | ReturnType<typeof setTimeout> } =
-    useRef(null);
-
-  useEffect(() => {
-    if (updateInstanceRef.current) clearTimeout(updateInstanceRef.current);
-
-    updateInstanceRef.current = setTimeout(() => {
-      updateInstance();
-
-      if (isPDFPreview) return;
-
-      if (loaded) dispatch(saveDataForUser());
-    }, 800);
-  }, [
-    generalInfo,
-    professionalExperience,
-    certificates,
-    education,
-    languages,
-    skills,
-    template,
-    currentLanguage,
-  ]);
-
-  useEffect(() => {
-    dispatch(getDataForUser());
-  }, [user]);
-
-  useEffect(() => {
-    if (!instance) return;
-
-    setDataLoaded(!instance.loading);
-  }, [instance]);
 
   useEffect(() => {
     if (isPDFPreview) {
@@ -100,9 +34,11 @@ const PDFView = () => {
     }
   }, []);
 
-  return (
-    <PDFViewPresenter pdfInstance={instance} isPDFPreview={isPDFPreview} />
-  );
+  useEffect(() => {
+    getUserData();
+  }, [user]);
+
+  return <PDFViewPresenter isPDFPreview={isPDFPreview} />;
 };
 
-export default PDFView;
+export default PDFViewContainer;

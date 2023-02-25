@@ -72,7 +72,6 @@ export const pdfData = createSlice({
       state.education = action.payload.education;
       state.languages = action.payload.languages;
       state.skills = action.payload.skills;
-      state.loaded = true;
     },
     cacheGeneralInfo: (state, action: PayloadAction<GeneralInfo>) => {
       state.generalInfo = action.payload;

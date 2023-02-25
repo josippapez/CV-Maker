@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import { toast } from 'react-toastify';
-import { cacheAllData, PDFData, setLoaded } from '../reducers/pdfData';
+import { cacheAllData, PDFData } from '../reducers/pdfData';
 import { setTemplate, Template } from '../reducers/template';
 import { AppDispatch, AppState } from '../store';
 import { FirebaseCollectionActions } from './FirebaseCollectionActions';
@@ -73,14 +73,14 @@ export const deleteDataForUser = () => {
 };
 
 export const getDataForUser = () => {
-  return (dispatch: AppDispatch, getState: AppState) => {
+  return async (dispatch: AppDispatch, getState: AppState) => {
     const id = getState().user.user.id;
 
     if (!id) return;
 
     const { getById } = FirebaseCollectionActions('user-data');
 
-    getById(
+    const data = await getById(
       id,
       () => {
         console.log('got user data');
@@ -92,23 +92,22 @@ export const getDataForUser = () => {
           position: 'bottom-right',
         });
       }
-    ).then(data => {
-      if (!data) {
-        dispatch(saveDataForUser());
-        toast.dark('Saved data to cloud!', {
-          type: 'success',
-          position: 'bottom-center',
-        });
-        return;
-      }
+    );
 
-      const pdfData = data as DocumentPDFData;
+    if (!data) {
+      dispatch(saveDataForUser());
+      toast.dark('Saved data to cloud!', {
+        type: 'success',
+        position: 'bottom-center',
+      });
+      return;
+    }
 
-      i18next.changeLanguage(pdfData.language);
+    const pdfData = data as DocumentPDFData;
 
-      dispatch(cacheAllData(pdfData));
-      dispatch(setTemplate(pdfData.template.templateName));
-    });
+    i18next.changeLanguage(pdfData.language);
+    dispatch(cacheAllData(pdfData));
+    dispatch(setTemplate(pdfData.template.templateName));
   };
 };
 
@@ -116,11 +115,9 @@ export const getCVPreviewForUser = async (
   userId: string,
   setState: (data: any) => void
 ) => {
-  const id = userId;
-
-  if (!id) return;
+  if (!userId) return;
 
   const { listenById } = FirebaseCollectionActions('user-data');
 
-  return listenById(id, setState);
+  return listenById(userId, setState);
 };

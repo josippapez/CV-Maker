@@ -43,9 +43,6 @@ export const DateInput = (props: Props) => {
 
   const newFormat = isOnlyYear ? onlyYearFormat : format;
 
-  console.log(type);
-
-
   return (
     <div
       className={`flex ${inline ? 'flex-row items-center gap-4' : 'flex-col'} ${
