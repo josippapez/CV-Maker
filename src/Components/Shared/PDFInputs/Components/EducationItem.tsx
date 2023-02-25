@@ -1,3 +1,5 @@
+import usePDFData from '@/Hooks/usePDFData';
+import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,8 +13,6 @@ import { DeleteButton } from './DeleteButton';
 interface Props {
   education: Education;
   index: number;
-  setEducation: (educations: Education[]) => void;
-  educationList: Education[];
 }
 
 const arrayOfEducationInputs: Array<{
@@ -51,7 +51,8 @@ const arrayOfCourseInputs: Array<{
 
 const EducationItem = (props: Props) => {
   const { t } = useTranslation('EducationInput');
-  const { education, index, setEducation, educationList } = props;
+  const { setEducation, education: educationList } = usePDFData();
+  const { education, index } = props;
 
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
@@ -67,28 +68,22 @@ const EducationItem = (props: Props) => {
     return arrayOfEducationInputs;
   };
 
-  const handleSelectedEducation = (
-    value: string,
-    selectedEducationIndex: number
-  ) => {
+  const handleSelectedEducation = (value: string) => {
     setEducation(
-      educationList.map((education, index) => {
-        if (index === selectedEducationIndex) {
-          return {
-            url: '',
-            course: '',
-            location: '',
-            school: '',
-            degree: '',
-            fieldOfStudy: '',
-            startDate: '',
-            endDate: '',
-            description: '',
-            currentlyEnrolled: false,
-          };
-        }
-        return education;
-      })
+      Operations.UPDATE,
+      {
+        url: '',
+        course: '',
+        location: '',
+        school: '',
+        degree: '',
+        fieldOfStudy: '',
+        startDate: '',
+        endDate: '',
+        description: '',
+        currentlyEnrolled: false,
+      },
+      index
     );
     if (value === 'school') {
       return setSelectedEducation('school');
@@ -99,15 +94,11 @@ const EducationItem = (props: Props) => {
   const handleSetData = useCallback(
     (value: string | boolean, inputName: string) => {
       setEducation(
-        educationList.map((education, i) => {
-          if (i === index) {
-            return {
-              ...education,
-              [inputName]: value,
-            };
-          }
-          return education;
-        })
+        Operations.UPDATE,
+        {
+          [inputName]: value,
+        },
+        index
       );
     },
     [educationList, index]
@@ -119,35 +110,31 @@ const EducationItem = (props: Props) => {
       initial={combinedStyleInitial}
       animate={combinedStyleFinal}
       transition={{ duration: 0.2 }}
-      className='flex flex-col gap-4 p-10 relative focus-within:bg-green-100 rounded-md first:mt-0 mt-4'
+      className='relative mt-4 flex flex-col gap-4 rounded-md p-10 first:mt-0 focus-within:bg-green-100'
     >
       <DeleteButton
         onClick={() => {
-          setEducation(
-            educationList.filter(
-              (item, existingIndex) => existingIndex !== index
-            )
-          );
+          setEducation(Operations.REMOVE, undefined, index);
         }}
       />
       <div className='flex flex-row gap-4'>
         <button
-          onClick={() => handleSelectedEducation('school', index)}
+          onClick={() => handleSelectedEducation('school')}
           className={`${
             selectedEducation === 'school'
               ? 'bg-green-500 text-white'
               : 'bg-white text-green-500'
-          } p-2 rounded-md`}
+          } rounded-md p-2`}
         >
           {t('school')}
         </button>
         <button
-          onClick={() => handleSelectedEducation('course', index)}
+          onClick={() => handleSelectedEducation('course')}
           className={`${
             selectedEducation === 'course'
               ? 'bg-green-500 text-white'
               : 'bg-white text-green-500'
-          } p-2 rounded-md`}
+          } rounded-md p-2`}
         >
           {t('course')}
         </button>
@@ -173,7 +160,7 @@ const EducationItem = (props: Props) => {
             input.type !== 'toggle' && (
               <TextInput
                 label={t(`${input.inputName}`)}
-                value={education[input.inputValue] as string}
+                defaultValue={education[input.inputValue] as string}
                 name={input.inputName}
                 onChange={e => handleSetData(e.target.value, input.inputValue)}
                 fullWidth
@@ -195,16 +182,15 @@ const EducationItem = (props: Props) => {
       <TextInput
         key={`${index}-${getEducationInputs().length - 1}-input`}
         label={t('description')}
-        value={education.description}
+        defaultValue={education.description}
         name='education-description'
         onChange={e => {
           setEducation(
-            educationList.map((item, i) => {
-              if (i === index) {
-                return { ...item, description: e.target.value };
-              }
-              return item;
-            })
+            Operations.UPDATE,
+            {
+              description: e.target.value,
+            },
+            index
           );
         }}
         fullWidth

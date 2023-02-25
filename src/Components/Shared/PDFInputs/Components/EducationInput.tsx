@@ -4,6 +4,7 @@ import useAnimation from '../../../../Hooks/useAnimation';
 import usePDFData from '../../../../Hooks/usePDFData';
 import { AddNewButton } from './AddNewButton';
 import EducationItem from './EducationItem';
+import { Operations } from '@/store/reducers/pdfData';
 
 export const EducationInput = () => {
   const { education, setEducation } = usePDFData();
@@ -23,15 +24,13 @@ export const EducationInput = () => {
         <EducationItem
           key={`EducationInput-${index}`}
           education={item}
-          educationList={education}
-          setEducation={setEducation}
           index={index}
         />
       ))}
       <AddNewButton
         onClick={() => {
-          setEducation([
-            ...education,
+          setEducation(
+            Operations.ADD,
             {
               url: '',
               course: '',
@@ -43,8 +42,8 @@ export const EducationInput = () => {
               endDate: '',
               description: '',
               currentlyEnrolled: false,
-            },
-          ]);
+            }
+          );
         }}
         title={t('addEducation')}
       />

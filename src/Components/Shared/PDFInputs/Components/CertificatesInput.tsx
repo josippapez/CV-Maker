@@ -7,6 +7,7 @@ import { DateInput } from '../../Inputs/DateInput';
 import TextInput from '../../Inputs/TextInput';
 import { AddNewButton } from './AddNewButton';
 import { DeleteButton } from './DeleteButton';
+import { Operations } from '@/store/reducers/pdfData';
 
 const arrayOfCertificatesInputs: Array<{
   inputName: string;
@@ -27,15 +28,11 @@ export const CertificatesInput = () => {
 
   const handleSaveData = (value: string, index: number, inputName: string) => {
     setCertificates(
-      certificates.map((certificate, i) => {
-        if (i === index) {
-          return {
-            ...certificate,
-            [inputName]: value,
-          };
-        }
-        return certificate;
-      })
+      Operations.UPDATE,
+      {
+        [inputName]: value,
+      },
+      index
     );
   };
 
@@ -57,9 +54,7 @@ export const CertificatesInput = () => {
         >
           <DeleteButton
             onClick={() => {
-              setCertificates(
-                certificates.filter((certificate, i) => i !== index)
-              );
+              setCertificates(Operations.REMOVE, undefined, index);
             }}
           />
           {arrayOfCertificatesInputs.map((input, currentIndex) => (
@@ -82,7 +77,7 @@ export const CertificatesInput = () => {
                 <TextInput
                   key={index + '-' + 'CertificatesInput' + '-' + currentIndex}
                   label={t(`${input.inputValue}`)}
-                  value={certificate[input.inputValue]}
+                  defaultValue={certificate[input.inputValue]}
                   name={input.inputValue}
                   onChange={e =>
                     handleSaveData(e.target.value, index, input.inputValue)
@@ -101,7 +96,7 @@ export const CertificatesInput = () => {
               (arrayOfCertificatesInputs.length - 1)
             }
             label={t('description')}
-            value={certificate.description}
+            defaultValue={certificate.description}
             name='certificate-description'
             onChange={e => handleSaveData(e.target.value, index, 'description')}
             fullWidth
@@ -111,15 +106,12 @@ export const CertificatesInput = () => {
       ))}
       <AddNewButton
         onClick={() => {
-          setCertificates([
-            ...certificates,
-            {
-              institution: '',
-              name: '',
-              description: '',
-              date: '',
-            },
-          ]);
+          setCertificates(Operations.ADD, {
+            name: '',
+            date: '',
+            institution: '',
+            description: '',
+          });
         }}
         title={t('addCertification')}
       />

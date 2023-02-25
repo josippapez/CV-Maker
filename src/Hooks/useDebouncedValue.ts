@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { useDebouncedFunction } from '@/Hooks/useDebouncedFunction';
+import { useState } from 'react';
 
 type DebouncedValue = <T>(
   initialState: T | (() => T),
@@ -7,19 +8,16 @@ type DebouncedValue = <T>(
 
 export const useDebouncedValue: DebouncedValue = (
   initialState,
-  customTimeout
+  customTimeout = 200
 ) => {
   const [value, setValue] = useState(initialState);
-  const timeoutRef = useRef<null | ReturnType<typeof setTimeout>>(null);
 
-  const setDebouncedValue = (newValue: typeof initialState) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    timeoutRef.current = setTimeout(() => {
+  const setDebouncedValue = useDebouncedFunction(
+    (newValue: typeof initialState) => {
       setValue(newValue);
-    }, customTimeout || 200);
-  };
+    },
+    customTimeout
+  );
 
   return [value, setDebouncedValue];
 };

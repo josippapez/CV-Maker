@@ -1,3 +1,4 @@
+import { useDebouncedFunction } from '@/Hooks/useDebouncedFunction';
 import { getDataForUser } from '@/store/actions/syncActions';
 import { useCallback, useMemo } from 'react';
 import {
@@ -9,6 +10,7 @@ import {
   Skill,
 } from '../Components/PDFView/models';
 import {
+  Operations,
   PDFData,
   cacheAllData,
   cacheCertificates,
@@ -40,43 +42,81 @@ const usePDFData = () => {
     (loaded: boolean) => dispatch(setLoaded(loaded)),
     [dispatch]
   );
-  const setGeneralInfo = useCallback(
-    (generalInfo: GeneralInfo) => dispatch(cacheGeneralInfo(generalInfo)),
-    [dispatch]
+  const setGeneralInfo = useDebouncedFunction((value: Partial<GeneralInfo>) =>
+    dispatch(cacheGeneralInfo(value))
   );
-  const setProfessionalExperience = useCallback(
-    (professionalExperience: ProfessionalExperience[]) =>
-      dispatch(cacheProfessionalExperience(professionalExperience)),
-    [dispatch]
+  const setProfessionalExperience = useDebouncedFunction(
+    (
+      operation: Operations,
+      professionalExperience?: Partial<ProfessionalExperience>,
+      index?: number
+    ) =>
+      dispatch(
+        cacheProfessionalExperience({
+          operation,
+          experience: professionalExperience,
+          index,
+        })
+      )
   );
-  const setCertificates = useCallback(
-    (certificates: Certificate[]) => dispatch(cacheCertificates(certificates)),
-    [dispatch]
+  const setCertificates = useDebouncedFunction(
+    (
+      operation: Operations,
+      certificate?: Partial<Certificate>,
+      index?: number
+    ) =>
+      dispatch(
+        cacheCertificates({
+          operation,
+          certificate,
+          index,
+        })
+      )
   );
-  const setEducation = useCallback(
-    (education: Education[]) => dispatch(cacheEducation(education)),
-    [dispatch]
+  const setEducation = useDebouncedFunction(
+    (operation: Operations, education?: Partial<Education>, index?: number) =>
+      dispatch(
+        cacheEducation({
+          operation,
+          education,
+          index,
+        })
+      )
   );
-  const setLanguages = useCallback(
-    (languages: LanguageSkill[]) => dispatch(cacheLanguages(languages)),
-    [dispatch]
+  const setLanguages = useDebouncedFunction(
+    (
+      operation: Operations,
+      language?: Partial<LanguageSkill>,
+      index?: number
+    ) =>
+      dispatch(
+        cacheLanguages({
+          operation,
+          language,
+          index,
+        })
+      )
   );
-  const setSkills = useCallback(
-    (skills: Skill[]) => dispatch(cacheSkills(skills)),
-    [dispatch]
+  const setSkills = useDebouncedFunction(
+    (operation: Operations, skill?: Partial<Skill>, index?: number) =>
+      dispatch(
+        cacheSkills({
+          operation,
+          skill,
+          index,
+        })
+      ),
+    0
   );
-  const setAllData = useCallback(
-    (data: PDFData) => dispatch(cacheAllData(data)),
-    [dispatch]
+  const setAllData = useDebouncedFunction((data: PDFData) =>
+    dispatch(cacheAllData(data))
   );
-  const setActiveTemplate = useCallback(
-    (template: TemplateName) => dispatch(setTemplate(template)),
-    [dispatch]
+  const setActiveTemplate = useDebouncedFunction((template: TemplateName) =>
+    dispatch(setTemplate(template))
   );
-
   const getUserData = useCallback(() => {
     dispatch(getDataForUser());
-  }, [dispatch]);
+  }, []);
 
   const state = useMemo(() => {
     return {

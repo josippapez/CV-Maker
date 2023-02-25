@@ -1,3 +1,4 @@
+import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +10,7 @@ import { SkillsList } from './SkillsList';
 
 export const SkillsInput = () => {
   const { t } = useTranslation('SkillsInput');
-  const { skills, setSkills } = usePDFData();
+  const { setSkills } = usePDFData();
   const [skill, setSkill] = useState('');
 
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
@@ -34,13 +35,10 @@ export const SkillsInput = () => {
         onKeyPress={e => {
           if (e.key === 'Enter') {
             if (skill) {
-              setSkills([
-                ...skills,
-                {
-                  name: skill,
-                  id: crypto.randomUUID(),
-                },
-              ]);
+              setSkills(Operations.ADD, {
+                name: skill,
+                id: crypto.randomUUID(),
+              });
               setSkill('');
             }
           }
@@ -50,7 +48,10 @@ export const SkillsInput = () => {
       <AddNewButton
         onClick={() => {
           if (skill) {
-            setSkills([...skills, { name: skill, id: crypto.randomUUID() }]);
+            setSkills(Operations.ADD, {
+              name: skill,
+              id: crypto.randomUUID(),
+            });
             setSkill('');
           }
         }}

@@ -1,3 +1,4 @@
+import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
@@ -32,26 +33,22 @@ export const LanguagesInput = () => {
         >
           <DeleteButton
             onClick={() => {
-              setLanguages(languages.filter((language, i) => i !== index));
+              setLanguages(Operations.REMOVE, undefined, index);
             }}
           />
           <div className='flex'>
             <TextInput
               key={index + '-' + 'LanguagesInput' + '-' + t('language')}
               label={t('language')}
-              value={language.name}
+              defaultValue={language.name}
               name='language'
               onChange={e => {
                 setLanguages(
-                  languages.map((language, i) => {
-                    if (i === index) {
-                      return {
-                        ...language,
-                        name: e.target.value,
-                      };
-                    }
-                    return language;
-                  })
+                  Operations.UPDATE,
+                  {
+                    name: e.target.value,
+                  },
+                  index
                 );
               }}
               fullWidth
@@ -66,15 +63,11 @@ export const LanguagesInput = () => {
               value={language.proficiency}
               onChange={e => {
                 setLanguages(
-                  languages.map((language, i) => {
-                    if (i === index) {
-                      return {
-                        name: language.name,
-                        proficiency: e.target.value as LanguageProficiencyLevel,
-                      };
-                    }
-                    return language;
-                  })
+                  Operations.UPDATE,
+                  {
+                    proficiency: e.target.value as LanguageProficiencyLevel,
+                  },
+                  index
                 );
               }}
             >
@@ -96,10 +89,10 @@ export const LanguagesInput = () => {
       ))}
       <AddNewButton
         onClick={() => {
-          setLanguages([
-            ...languages,
-            { name: '', proficiency: LanguageProficiencyLevel.BEGINNER },
-          ]);
+          setLanguages(Operations.ADD, {
+            name: '',
+            proficiency: LanguageProficiencyLevel.BEGINNER,
+          });
         }}
         title={t('addLanguage')}
       />

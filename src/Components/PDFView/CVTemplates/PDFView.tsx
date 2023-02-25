@@ -84,7 +84,7 @@ export const PDFView: FC<Props> = ({ isPDFPreview }) => {
       return;
     }
     dispatch(saveDataForUser());
-  }, 800);
+  }, 600);
 
   useEffect(() => {
     updateInstanceAndSaveData();

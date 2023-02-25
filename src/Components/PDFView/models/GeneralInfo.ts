@@ -1,5 +1,5 @@
 export interface GeneralInfo {
-  profilePicture?: string;
+  profilePicture: string;
   firstName: string;
   lastName: string;
   dob: string;

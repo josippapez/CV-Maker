@@ -1,9 +1,9 @@
+import Plus from '@public/Styles/Assets/Images/plus.svg';
 import Compressor from 'compressorjs';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
 import usePDFData from '../../../../Hooks/usePDFData';
-import Plus from '@public/Styles/Assets/Images/plus.svg';
 import { GeneralInfo } from '../../../PDFView/models';
 import { DateInput } from '../../Inputs/DateInput';
 import TextInput from '../../Inputs/TextInput';
@@ -75,8 +75,7 @@ export const GeneralInput = () => {
                   className='ml-2 h-fit self-center rounded-full bg-red-500 p-2 text-white'
                   onClick={() => {
                     setGeneralInfo({
-                      ...generalInfo,
-                      profilePicture: undefined,
+                      profilePicture: '',
                     });
                   }}
                 >
@@ -115,7 +114,6 @@ export const GeneralInput = () => {
                       reader.onload = () => {
                         if (typeof reader.result === 'string') {
                           setGeneralInfo({
-                            ...generalInfo,
                             profilePicture: reader.result,
                           });
                         }
@@ -131,7 +129,6 @@ export const GeneralInput = () => {
                         reader.onload = () => {
                           if (typeof reader.result === 'string') {
                             setGeneralInfo({
-                              ...generalInfo,
                               profilePicture: reader.result,
                             });
                           }
@@ -169,13 +166,11 @@ export const GeneralInput = () => {
                   value={generalInfo[input.inputValue]}
                   setData={date => {
                     setGeneralInfo({
-                      ...generalInfo,
                       [input.inputValue]: date,
                     });
                   }}
                   resetData={() => {
                     setGeneralInfo({
-                      ...generalInfo,
                       [input.inputValue]: undefined,
                     });
                   }}
@@ -185,12 +180,11 @@ export const GeneralInput = () => {
                 <TextInput
                   label={t(`${input.inputValue}`)}
                   type={input.type}
-                  value={generalInfo[input.inputValue]}
+                  defaultValue={generalInfo[input.inputValue]}
                   name={input.inputName}
                   onChange={e => {
                     setGeneralInfo({
-                      ...generalInfo,
-                      [input.inputValue]: e.target.value,
+                      [input.inputValue]: e.currentTarget.value,
                     });
                   }}
                 />
@@ -214,12 +208,11 @@ export const GeneralInput = () => {
               <TextInput
                 label={t(`${input.inputValue}`)}
                 textarea
-                value={generalInfo[input.inputValue]}
+                defaultValue={generalInfo[input.inputValue]}
                 name={input.inputName}
                 onChange={e => {
                   setGeneralInfo({
-                    ...generalInfo,
-                    [input.inputValue]: e.target.value,
+                    [input.inputValue]: e.currentTarget.value,
                   });
                 }}
                 fullWidth

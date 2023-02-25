@@ -1,3 +1,4 @@
+import { Operations } from '@/store/reducers/pdfData';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
@@ -54,11 +55,7 @@ export const ProfessionalExperienceInput = () => {
         >
           <DeleteButton
             onClick={() => {
-              setProfessionalExperience(
-                professionalExperience.filter(
-                  (experience, existingIndex) => existingIndex !== index
-                )
-              );
+              setProfessionalExperience(Operations.REMOVE, experience, index);
             }}
           />
           <AnimatePresence>
@@ -84,28 +81,22 @@ export const ProfessionalExperienceInput = () => {
                     value={experience[input.inputValue] as string}
                     setData={date => {
                       setProfessionalExperience(
-                        professionalExperience.map((experience, i) => {
-                          if (i === index) {
-                            return {
-                              ...experience,
-                              [input.inputValue]: date,
-                            };
-                          }
-                          return experience;
-                        })
+                        Operations.UPDATE,
+                        {
+                          ...experience,
+                          [input.inputValue]: date,
+                        },
+                        index
                       );
                     }}
                     resetData={() => {
                       setProfessionalExperience(
-                        professionalExperience.map((experience, i) => {
-                          if (i === index) {
-                            return {
-                              ...experience,
-                              [input.inputValue]: '',
-                            };
-                          }
-                          return experience;
-                        })
+                        Operations.UPDATE,
+                        {
+                          ...experience,
+                          [input.inputValue]: '',
+                        },
+                        index
                       );
                     }}
                     format={{
@@ -117,19 +108,16 @@ export const ProfessionalExperienceInput = () => {
                   input.type !== 'toggle' && (
                     <TextInput
                       label={t(`${input.inputValue}`)}
-                      value={experience[input.inputValue] as string}
+                      defaultValue={experience[input.inputValue] as string}
                       name={input.inputValue}
                       onChange={e => {
                         setProfessionalExperience(
-                          professionalExperience.map((experience, i) => {
-                            if (i === index) {
-                              return {
-                                ...experience,
-                                [input.inputValue]: e.target.value,
-                              };
-                            }
-                            return experience;
-                          })
+                          Operations.UPDATE,
+                          {
+                            ...experience,
+                            [input.inputValue]: e.target.value,
+                          },
+                          index
                         );
                       }}
                       fullWidth
@@ -145,15 +133,12 @@ export const ProfessionalExperienceInput = () => {
                     wrapperClassName='mt-4'
                     onChange={e => {
                       setProfessionalExperience(
-                        professionalExperience.map((experience, i) => {
-                          if (i === index) {
-                            return {
-                              ...experience,
-                              currentlyEnrolled: e.target.checked,
-                            };
-                          }
-                          return experience;
-                        })
+                        Operations.UPDATE,
+                        {
+                          ...experience,
+                          [input.inputValue]: e.target.checked,
+                        },
+                        index
                       );
                     }}
                     fullWidth
@@ -166,18 +151,15 @@ export const ProfessionalExperienceInput = () => {
       ))}
       <AddNewButton
         onClick={() => {
-          setProfessionalExperience([
-            ...professionalExperience,
-            {
-              company: '',
-              position: '',
-              startDate: '',
-              endDate: '',
-              description: '',
-              location: '',
-              currentlyEnrolled: false,
-            },
-          ]);
+          setProfessionalExperience(Operations.ADD, {
+            company: '',
+            position: '',
+            startDate: '',
+            endDate: '',
+            description: '',
+            location: '',
+            currentlyEnrolled: false,
+          });
         }}
         title={t('addExperience')}
       />

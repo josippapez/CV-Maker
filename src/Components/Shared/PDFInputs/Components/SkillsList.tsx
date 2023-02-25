@@ -1,3 +1,4 @@
+import { Operations } from '@/store/reducers/pdfData';
 import { AnimatePresence, motion } from 'framer-motion';
 import usePDFData from '../../../../Hooks/usePDFData';
 
@@ -5,9 +6,7 @@ export const SkillsList = () => {
   const { skills, setSkills } = usePDFData();
 
   const removeSelf = (index: number) => {
-    const newSkills = [...skills];
-    newSkills.splice(index, 1);
-    setSkills(newSkills);
+    setSkills(Operations.REMOVE, undefined, index);
   };
 
   return (

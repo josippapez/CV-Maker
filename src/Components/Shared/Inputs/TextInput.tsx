@@ -5,6 +5,7 @@ type Props = {
   type?: 'text' | 'number' | 'email' | 'password' | 'tel';
   placeholder?: string;
   value?: string | number;
+  defaultValue?: string | number;
   onChange?: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -28,9 +29,10 @@ const TextInput = (props: Props) => {
     label,
     type,
     placeholder,
-    value,
-    onChange,
-    onBlur,
+    value = undefined,
+    defaultValue = undefined,
+    onChange: change,
+    onBlur: blur,
     error,
     disabled,
     required,
@@ -38,8 +40,38 @@ const TextInput = (props: Props) => {
     fullWidth,
     textarea,
     inline,
-    onKeyPress,
+    onKeyPress: keypress,
   } = props;
+
+  const defaultTextAreaProps = {
+    placeholder,
+    name,
+    id,
+    disabled,
+    required,
+    className: `h-auto max-h-64 w-full rounded-md p-2 ring-0 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-indigo-500 sm:text-sm
+  ${
+    error
+      ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
+      : 'border-gray-300'
+  } ${className || ''}`,
+  };
+
+  const defaultInputProps = {
+    placeholder,
+    type,
+    name,
+    id,
+    disabled,
+    required,
+    className: `h-10 w-full rounded-md px-4 ring-0 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-indigo-500 sm:text-sm
+    ${
+      error
+        ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
+        : 'border-gray-300'
+    } ${className || ''}`,
+  };
+
   return (
     <div
       className={`flex ${inline ? 'flex-row items-center gap-4' : 'flex-col'} ${
@@ -47,74 +79,78 @@ const TextInput = (props: Props) => {
       } drop-shadow-sm`}
     >
       {label && <label className='font-medium text-gray-700'>{label}</label>}
-      {textarea && (
-        <textarea
-          placeholder={placeholder}
-          name={name}
-          id={id}
-          autoComplete={name}
-          value={value}
-          onChange={e => {
-            e.preventDefault();
+      {textarea &&
+        (typeof value !== 'undefined' ? (
+          <textarea
+            autoComplete={name}
+            value={value}
+            rows={5}
+            maxLength={490}
+            onChange={e => {
+              if (!change) return;
 
-            if (!onChange) return;
+              change(e);
+            }}
+            onBlur={e => {
+              if (!blur) return;
 
-            onChange(e);
-          }}
-          onBlur={e => {
-            e.preventDefault();
+              blur(e);
+            }}
+            {...defaultTextAreaProps}
+          />
+        ) : (
+          <textarea
+            autoComplete={name}
+            defaultValue={defaultValue}
+            rows={5}
+            maxLength={490}
+            {...defaultTextAreaProps}
+          />
+        ))}
+      {!textarea &&
+        (typeof value !== 'undefined' ? (
+          <input
+            autoComplete={name}
+            value={value}
+            onChange={e => {
+              if (!change) return;
 
-            if (!onBlur) return;
+              change(e);
+            }}
+            onBlur={e => {
+              if (!blur) return;
 
-            onBlur(e);
-          }}
-          disabled={disabled}
-          required={required}
-          rows={5}
-          maxLength={490}
-          className={`sm:text-sm rounded-md h-auto max-h-64 p-2 ring-0 focus:ring-indigo-500 focus:ring-2 w-full transition-all duration-300 ease-in-out
-        ${
-          error
-            ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
-            : 'border-gray-300'
-        } ${className || ''}`}
-        />
-      )}
-      {!textarea && (
-        <input
-          placeholder={placeholder}
-          type={type}
-          name={name}
-          id={id}
-          autoComplete={name}
-          value={value}
-          onChange={e => {
-            if (!onChange) return;
+              blur(e);
+            }}
+            onKeyDown={e => {
+              if (!keypress) return;
 
-            e.preventDefault();
-            onChange(e);
-          }}
-          onBlur={e => {
-            if (!onBlur) return;
+              keypress(e);
+            }}
+            {...defaultInputProps}
+          />
+        ) : (
+          <input
+            autoComplete={name}
+            defaultValue={defaultValue}
+            onChange={e => {
+              if (!change) return;
 
-            e.preventDefault();
-            onBlur(e);
-          }}
-          onKeyDown={e => {
-            if (!onKeyPress) return;
+              change(e);
+            }}
+            onBlur={e => {
+              if (!blur) return;
 
-            onKeyPress(e);
-          }}
-          disabled={disabled}
-          required={required}
-          className={`sm:text-sm rounded-md h-10 px-4 ring-0 focus:ring-indigo-500 focus:ring-2 w-full transition-all duration-300 ease-in-out
-          ${
-            error
-              ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
-              : 'border-gray-300'
-          } ${className || ''}`}
-        />
-      )}
+              blur(e);
+            }}
+            onKeyDown={e => {
+              if (!keypress) return;
+
+              keypress(e);
+            }}
+            {...defaultInputProps}
+          />
+        ))}
       {error && <p className='mt-2 text-sm text-red-600'>{error}</p>}
     </div>
   );
