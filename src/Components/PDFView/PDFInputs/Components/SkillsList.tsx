@@ -1,6 +1,6 @@
+import usePDFData from '@/Hooks/usePDFData';
 import { Operations } from '@/store/reducers/pdfData';
 import { AnimatePresence, motion } from 'framer-motion';
-import usePDFData from '../../../../Hooks/usePDFData';
 
 export const SkillsList = () => {
   const { skills, setSkills } = usePDFData();

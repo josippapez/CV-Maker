@@ -1,3 +1,5 @@
+import { setDisplayVersionHistory } from '@/store/reducers/versionHistory';
+import { getAuth } from 'firebase/auth';
 import i18next from 'i18next';
 import { toast } from 'react-toastify';
 import { cacheAllData, PDFData } from '../reducers/pdfData';
@@ -12,12 +14,12 @@ export interface DocumentPDFData extends PDFData {
 
 export const saveDataForUser = () => {
   return (dispatch: AppDispatch, getState: AppState) => {
-    if (!getState().user.user.id) return;
+    if (!getAuth().currentUser) return;
 
     const { add } = FirebaseCollectionActions('user-data');
 
     const data = Object.keys(getState().pdfData).reduce((acc, key) => {
-      if (key !== 'timestamp' && key !== 'loaded') {
+      if (key !== 'timestamp' && key !== 'loaded' && key !== 'modified') {
         return { ...acc, [key]: getState().pdfData[key as keyof PDFData] };
       } else {
         return acc;
@@ -48,7 +50,7 @@ export const saveDataForUser = () => {
 export const deleteDataForUser = () => {
   return (dispatch: AppDispatch, getState: AppState) => {
     const { delete: deleteData } = FirebaseCollectionActions('user-data');
-    const { id } = getState().user.user;
+    const id = getAuth().currentUser?.uid;
     if (!id) {
       throw new Error('User not logged in');
     }
@@ -72,9 +74,13 @@ export const deleteDataForUser = () => {
   };
 };
 
-export const getDataForUser = () => {
+export const getDataForUser = (props?: {
+  preventVersionHistory?: boolean;
+  userId?: string;
+  successCallback?: () => void;
+}) => {
   return async (dispatch: AppDispatch, getState: AppState) => {
-    const id = getState().user.user.id;
+    const id = getAuth().currentUser?.uid || props?.userId;
 
     if (!id) return;
 
@@ -105,9 +111,21 @@ export const getDataForUser = () => {
 
     const pdfData = data as DocumentPDFData;
 
+    if (getState().pdfData.modified && !props?.preventVersionHistory) {
+      return dispatch(
+        setDisplayVersionHistory({
+          displayVersionHistory: true,
+          pdfData: pdfData,
+        })
+      );
+    }
+
     i18next.changeLanguage(pdfData.language);
     dispatch(cacheAllData(pdfData));
     dispatch(setTemplate(pdfData.template.templateName));
+    if (props?.successCallback) {
+      props.successCallback();
+    }
   };
 };
 

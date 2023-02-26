@@ -1,11 +1,12 @@
+import { getAuth } from 'firebase/auth';
 import {
   deleteDoc,
   doc,
   getDoc,
   getFirestore,
+  onSnapshot,
   setDoc,
   updateDoc,
-  onSnapshot,
 } from 'firebase/firestore';
 import { AppDispatch, AppState } from './../store';
 
@@ -14,7 +15,7 @@ export const FirebaseCollectionActions = (collectionName: string) => {
     add: (data: any, onSuccess?: () => void, onError?: () => void) => {
       return async (dispatch: AppDispatch, getState: AppState) => {
         try {
-          const { id } = getState().user.user;
+          const id = getAuth().currentUser?.uid;
           if (!id) {
             throw new Error('User not logged in');
           }

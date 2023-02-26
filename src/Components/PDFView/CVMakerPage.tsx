@@ -6,13 +6,13 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 const CVMakerPage: React.FC = () => {
   return (
-    <AuthProvider>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <AuthProvider>
           <PDFViewContainer />
-        </PersistGate>
-      </Provider>
-    </AuthProvider>
+        </AuthProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 

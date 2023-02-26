@@ -1,5 +1,5 @@
 import usePDFData from '@/Hooks/usePDFData';
-import { useAppSelector } from '@/store/hooks';
+import { useAuth } from '@/Providers/AuthProvider';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ const isQueryUserIdString = (
 const PDFViewContainer = () => {
   const { query } = useRouter();
   const { i18n } = useTranslation('CVTemplates');
-  const user = useAppSelector(state => state.user.user);
+  const { user } = useAuth();
   const { setActiveTemplate, setAllData, getUserData } = usePDFData();
 
   const userId = isQueryUserIdString(query.userId) ? query.userId : null;

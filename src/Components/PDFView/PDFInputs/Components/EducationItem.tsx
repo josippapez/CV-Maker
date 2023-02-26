@@ -3,12 +3,12 @@ import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import useAnimation from '../../../../Hooks/useAnimation';
-import { Education } from '../../../PDFView/models';
-import { DateInput } from '../../Inputs/DateInput';
-import TextInput from '../../Inputs/TextInput';
-import ToggleInput from '../../Inputs/ToggleInput';
 import { DeleteButton } from './DeleteButton';
+import { Education } from '@/Components/PDFView/models';
+import useAnimation from '@/Hooks/useAnimation';
+import { DateInput } from '@/Components/Shared/Inputs/DateInput';
+import TextInput from '@/Components/Shared/Inputs/TextInput';
+import ToggleInput from '@/Components/Shared/Inputs/ToggleInput';
 
 interface Props {
   education: Education;

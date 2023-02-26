@@ -2,7 +2,7 @@ import { PDFView } from '@/Components/PDFView/CVTemplates/PDFView';
 import { Suspense } from 'react';
 import useMobileView from '../../Hooks/useMobileView';
 import PageLoader from '../Shared/Loader/PageLoader';
-import PDFInputsContainer from '../Shared/PDFInputs/PDFInputsContainer';
+import PDFInputsContainer from './PDFInputs/PDFInputsContainer';
 
 type Props = {
   isPDFPreview: boolean;

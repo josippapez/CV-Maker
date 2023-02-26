@@ -1,4 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PURGE } from 'redux-persist/es/constants';
 import {
   Certificate,
   Education,
@@ -58,6 +59,7 @@ export interface PDFData {
 
 export interface PDFDataWithTimestamp extends PDFData {
   timestamp: number;
+  modified: boolean;
 }
 
 const initialState: PDFDataWithTimestamp = {
@@ -87,12 +89,19 @@ const initialState: PDFDataWithTimestamp = {
   skills: [],
   timestamp: 0,
   loaded: false,
+  modified: false,
 };
 
 export const pdfData = createSlice({
   name: 'pdfData',
   initialState,
+  extraReducers: builder => {
+    builder.addCase(PURGE, () => initialState);
+  },
   reducers: {
+    setModified: (state, action: PayloadAction<boolean>) => {
+      state.modified = action.payload;
+    },
     setLoaded: (state, action: PayloadAction<boolean>) => {
       state.loaded = action.payload;
     },
@@ -110,12 +119,14 @@ export const pdfData = createSlice({
       state.education = action.payload.education;
       state.languages = action.payload.languages;
       state.skills = action.payload.skills;
+      state.modified = true;
     },
     cacheGeneralInfo: (state, action: PayloadAction<Partial<GeneralInfo>>) => {
       state.generalInfo = {
         ...state.generalInfo,
         ...action.payload,
       };
+      state.modified = true;
     },
     cacheProfessionalExperience: (
       state,
@@ -131,6 +142,7 @@ export const pdfData = createSlice({
         item: experience,
         index,
       });
+      state.modified = true;
     },
     cacheCertificates: (
       state,
@@ -146,6 +158,7 @@ export const pdfData = createSlice({
         item: certificate,
         index,
       });
+      state.modified = true;
     },
     cacheEducation: (
       state,
@@ -161,6 +174,7 @@ export const pdfData = createSlice({
         item: education,
         index,
       });
+      state.modified = true;
     },
     cacheLanguages: (
       state,
@@ -176,6 +190,7 @@ export const pdfData = createSlice({
         item: language,
         index,
       });
+      state.modified = true;
     },
     cacheSkills: (
       state,
@@ -191,6 +206,7 @@ export const pdfData = createSlice({
         item: skill,
         index,
       });
+      state.modified = true;
     },
   },
 });
@@ -204,6 +220,7 @@ export const {
   cacheLanguages,
   cacheSkills,
   setLoaded,
+  setModified,
 } = pdfData.actions;
 
 export const pdfDataSelector = createSelector(
