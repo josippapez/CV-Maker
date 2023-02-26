@@ -33,7 +33,7 @@ export const DateInput = (props: Props) => {
     type = 'date',
   } = props;
 
-  const isOnlyYear = value.length === 4;
+  const isOnlyYear = value?.length === 4;
 
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -53,10 +53,9 @@ export const DateInput = (props: Props) => {
       <input
         disabled={disabled}
         type='button'
-        className='w-ful flex h-10
-        flex-row items-center justify-between rounded-md bg-white
-        px-4 ring-0 transition-all duration-300 ease-in-out hover:cursor-pointer
-        focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500'
+        className='w-ful flex h-10 flex-row rounded-md bg-white
+        px-4 ring-0 transition-all duration-300 ease-in-out text-start
+        hover:cursor-pointer focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500'
         onClick={() => setShowDatePicker(true)}
         defaultValue={
           value ? DateTime.fromISO(value).toLocaleString(newFormat) : ''

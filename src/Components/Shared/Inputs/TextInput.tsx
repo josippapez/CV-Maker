@@ -55,6 +55,16 @@ const TextInput = (props: Props) => {
       ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
       : 'border-gray-300'
   } ${className || ''}`,
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      if (!change) return;
+
+      change(e);
+    },
+    onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => {
+      if (!blur) return;
+
+      blur(e);
+    },
   };
 
   const defaultInputProps = {
@@ -70,6 +80,21 @@ const TextInput = (props: Props) => {
         ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
         : 'border-gray-300'
     } ${className || ''}`,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!change) return;
+
+      change(e);
+    },
+    onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
+      if (!blur) return;
+
+      blur(e);
+    },
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (!keypress) return;
+
+      keypress(e);
+    },
   };
 
   return (
@@ -86,16 +111,6 @@ const TextInput = (props: Props) => {
             value={value}
             rows={5}
             maxLength={490}
-            onChange={e => {
-              if (!change) return;
-
-              change(e);
-            }}
-            onBlur={e => {
-              if (!blur) return;
-
-              blur(e);
-            }}
             {...defaultTextAreaProps}
           />
         ) : (
@@ -109,45 +124,11 @@ const TextInput = (props: Props) => {
         ))}
       {!textarea &&
         (typeof value !== 'undefined' ? (
-          <input
-            autoComplete={name}
-            value={value}
-            onChange={e => {
-              if (!change) return;
-
-              change(e);
-            }}
-            onBlur={e => {
-              if (!blur) return;
-
-              blur(e);
-            }}
-            onKeyDown={e => {
-              if (!keypress) return;
-
-              keypress(e);
-            }}
-            {...defaultInputProps}
-          />
+          <input autoComplete={name} value={value} {...defaultInputProps} />
         ) : (
           <input
             autoComplete={name}
             defaultValue={defaultValue}
-            onChange={e => {
-              if (!change) return;
-
-              change(e);
-            }}
-            onBlur={e => {
-              if (!blur) return;
-
-              blur(e);
-            }}
-            onKeyDown={e => {
-              if (!keypress) return;
-
-              keypress(e);
-            }}
             {...defaultInputProps}
           />
         ))}

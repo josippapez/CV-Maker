@@ -1,4 +1,4 @@
-import { createRef, useMemo, useRef } from 'react';
+import { createRef, useMemo } from 'react';
 
 type Props = {
   landingPageSections: React.FC<{ props: any; ref: any }>[];
@@ -6,8 +6,6 @@ type Props = {
 
 const LandingPageSections = (props: Props) => {
   const { landingPageSections } = props;
-  // const componentRef = useRef(null);
-
   return useMemo(
     () => (
       <>

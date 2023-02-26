@@ -118,6 +118,7 @@ const DatePicker = (props: Props) => {
           <button
             className='rounded py-2 px-4 font-bold hover:bg-slate-200'
             onClick={() => {
+              closeDatePicker();
               resetData();
             }}
           >
