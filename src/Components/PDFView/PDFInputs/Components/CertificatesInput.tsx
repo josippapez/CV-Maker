@@ -1,13 +1,13 @@
+import { Certificate } from '@/Components/PDFView/models';
+import { DateInput } from '@/Components/Shared/Inputs/DateInput';
+import TextInput from '@/Components/Shared/Inputs/TextInput';
+import useAnimation from '@/Hooks/useAnimation';
+import usePDFData from '@/Hooks/usePDFData';
+import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import useAnimation from '../../../../Hooks/useAnimation';
-import usePDFData from '../../../../Hooks/usePDFData';
-import { Certificate } from '../../../PDFView/models';
-import { DateInput } from '../../Inputs/DateInput';
-import TextInput from '../../Inputs/TextInput';
 import { AddNewButton } from './AddNewButton';
 import { DeleteButton } from './DeleteButton';
-import { Operations } from '@/store/reducers/pdfData';
 
 const arrayOfCertificatesInputs: Array<{
   inputName: string;

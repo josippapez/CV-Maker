@@ -1,12 +1,12 @@
+import { GeneralInfo } from '@/Components/PDFView/models';
+import { DateInput } from '@/Components/Shared/Inputs/DateInput';
+import TextInput from '@/Components/Shared/Inputs/TextInput';
+import useAnimation from '@/Hooks/useAnimation';
+import usePDFData from '@/Hooks/usePDFData';
 import Plus from '@public/Styles/Assets/Images/plus.svg';
 import Compressor from 'compressorjs';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import useAnimation from '../../../../Hooks/useAnimation';
-import usePDFData from '../../../../Hooks/usePDFData';
-import { GeneralInfo } from '../../../PDFView/models';
-import { DateInput } from '../../Inputs/DateInput';
-import TextInput from '../../Inputs/TextInput';
 
 const arrayOfGeneralInputs: Array<{
   inputName: string;

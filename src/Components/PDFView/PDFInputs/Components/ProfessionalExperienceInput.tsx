@@ -1,14 +1,14 @@
+import { AddNewButton } from '@/Components/PDFView/PDFInputs/Components/AddNewButton';
+import { DeleteButton } from '@/Components/PDFView/PDFInputs/Components/DeleteButton';
+import { ProfessionalExperience } from '@/Components/PDFView/models';
+import { DateInput } from '@/Components/Shared/Inputs/DateInput';
+import TextInput from '@/Components/Shared/Inputs/TextInput';
+import ToggleInput from '@/Components/Shared/Inputs/ToggleInput';
+import useAnimation from '@/Hooks/useAnimation';
+import usePDFData from '@/Hooks/usePDFData';
 import { Operations } from '@/store/reducers/pdfData';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import useAnimation from '../../../../Hooks/useAnimation';
-import usePDFData from '../../../../Hooks/usePDFData';
-import { ProfessionalExperience } from '../../../PDFView/models';
-import { DateInput } from '../../Inputs/DateInput';
-import TextInput from '../../Inputs/TextInput';
-import ToggleInput from '../../Inputs/ToggleInput';
-import { AddNewButton } from './AddNewButton';
-import { DeleteButton } from './DeleteButton';
 
 const arrayOfProfessionalExperienceInputs: Array<{
   inputName: string;

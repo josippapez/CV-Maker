@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PURGE } from 'redux-persist/es/constants';
 
 export enum TemplateName {
   CVTemplate1 = 'CVTemplate1',
@@ -18,6 +19,9 @@ const initialState: Template = {
 export const template = createSlice({
   name: 'template',
   initialState,
+  extraReducers: builder => {
+    builder.addCase(PURGE, () => initialState);
+  },
   reducers: {
     setTemplate: (state, action: PayloadAction<TemplateName>) => {
       state.templateName = action.payload;

@@ -1,0 +1,7 @@
+{
+  "conflict": "Version Conflict: Your CV has been edited both locally and on the cloud. Would you like to keep your local changes or the cloud version? Please select an option below to continue.",
+  "conflict-local": "Keep Local: Your local changes will be kept and the cloud version will be overwritten.",
+  "conflict-cloud": "Keep Cloud: Your local changes will be overwritten and the cloud version will be kept.",
+  "conflict_keep_local": "Keep Local",
+  "conflict_keep_cloud": "Keep Cloud"
+}

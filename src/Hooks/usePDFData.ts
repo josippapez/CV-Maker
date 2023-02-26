@@ -115,7 +115,13 @@ const usePDFData = () => {
     dispatch(setTemplate(template))
   );
   const getUserData = useCallback(() => {
-    dispatch(getDataForUser());
+    dispatch(
+      getDataForUser({
+        preventVersionHistory: Boolean(
+          localStorage.getItem('preventVersionHistory')
+        ),
+      })
+    );
   }, []);
 
   const state = useMemo(() => {

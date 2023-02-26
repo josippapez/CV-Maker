@@ -1,12 +1,12 @@
+import { AppDispatch, AppState, persistor } from '@/store/store';
 import { FirebaseError } from 'firebase/app';
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
-  GoogleAuthProvider,
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
-import firebase from 'firebase/compat/app';
 import {
   addDoc,
   collection,
@@ -15,39 +15,30 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import Cookie from 'js-cookie';
-import { resetUser, setUser } from '../reducers/user';
-import { AppDispatch, store } from '../store';
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-export const signInWithGoogle = async () => {
-  try {
-    const auth = getAuth(firebase.app());
-    const db = getFirestore(firebase.app());
-    const res = await signInWithPopup(auth, googleProvider);
-    const user = res.user;
-    const q = query(collection(db, 'users'), where('uid', '==', user.uid));
-    const docs = await getDocs(q);
-    if (docs.docs.length === 0) {
-      await addDoc(collection(db, 'users'), {
-        uid: user.uid,
-        authProvider: 'google',
-        email: user.email,
-      });
+export const signInWithGoogle = () => {
+  return async (dispatch: AppDispatch, getState: AppState) => {
+    try {
+      const auth = getAuth();
+      const db = getFirestore();
+      const res = await signInWithPopup(auth, googleProvider);
+      const user = res.user;
+      const q = query(collection(db, 'users'), where('uid', '==', user.uid));
+      const docs = await getDocs(q);
+      if (docs.docs.length === 0) {
+        await addDoc(collection(db, 'users'), {
+          uid: user.uid,
+          authProvider: 'google',
+          email: user.email,
+        });
+      }
+    } catch (err) {
+      console.error(err);
     }
-    if (user) {
-      const serializedUser = {
-        id: user.uid,
-        email: user.email,
-      };
-      Cookie.set('accessToken', await user.getIdToken(), { expires: 1 });
-      store.dispatch(setUser(serializedUser));
-    }
-  } catch (err) {
-    console.error(err);
-  }
+  };
 };
 
 export const registerWithEmailAndPassword = async (
@@ -55,8 +46,8 @@ export const registerWithEmailAndPassword = async (
   password: string
 ) => {
   try {
-    const auth = getAuth(firebase.app());
-    const db = getFirestore(firebase.app());
+    const auth = getAuth();
+    const db = getFirestore();
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
     await addDoc(collection(db, 'users'), {
@@ -64,12 +55,6 @@ export const registerWithEmailAndPassword = async (
       authProvider: 'local',
       email,
     });
-    const serializedUser = {
-      id: user.uid,
-      email: user.email,
-    };
-    Cookie.set('accessToken', await user.getIdToken(), { expires: 1 });
-    store.dispatch(setUser(serializedUser));
   } catch (err) {
     if (err instanceof FirebaseError) {
       if (
@@ -117,11 +102,11 @@ export const registerWithEmailAndPassword = async (
 
 export const logout = () => {
   return async (dispatch: AppDispatch) => {
-    // await persistor.purge();
-    // await persistor.flush();
-    Cookie.remove('accessToken');
-    dispatch(resetUser());
-    const auth = getAuth(firebase.app());
+    await persistor.purge();
+    await persistor.flush();
+    const auth = getAuth();
     await signOut(auth);
+    localStorage.clear();
+    location.reload();
   };
 };

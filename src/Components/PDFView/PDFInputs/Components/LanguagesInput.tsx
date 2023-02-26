@@ -1,12 +1,12 @@
+import { AddNewButton } from '@/Components/PDFView/PDFInputs/Components/AddNewButton';
+import { DeleteButton } from '@/Components/PDFView/PDFInputs/Components/DeleteButton';
+import { LanguageProficiencyLevel } from '@/Components/PDFView/models';
+import TextInput from '@/Components/Shared/Inputs/TextInput';
+import useAnimation from '@/Hooks/useAnimation';
+import usePDFData from '@/Hooks/usePDFData';
 import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import useAnimation from '../../../../Hooks/useAnimation';
-import usePDFData from '../../../../Hooks/usePDFData';
-import { LanguageProficiencyLevel } from '../../../PDFView/models';
-import TextInput from '../../Inputs/TextInput';
-import { AddNewButton } from './AddNewButton';
-import { DeleteButton } from './DeleteButton';
 
 export const LanguagesInput = () => {
   const { languages, setLanguages } = usePDFData();

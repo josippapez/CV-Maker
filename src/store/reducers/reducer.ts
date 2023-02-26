@@ -3,7 +3,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import persistReducer from 'redux-persist/es/persistReducer';
 import pdfData from './pdfData';
 import template from './template';
-import user from './user';
+import versionHistory from './versionHistory';
 
 const pdfReducerPersistConfig = {
   key: 'pdf-loaded-data',
@@ -14,5 +14,5 @@ const pdfReducerPersistConfig = {
 export const reducers = combineReducers({
   pdfData: persistReducer(pdfReducerPersistConfig, pdfData),
   template,
-  user,
+  versionHistory,
 });

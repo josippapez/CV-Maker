@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 type Props = {
   name?: string;
   id?: string;
@@ -97,6 +99,8 @@ const TextInput = (props: Props) => {
     },
   };
 
+  const shouldInputRerender = localStorage.getItem('preventVersionHistory');
+
   return (
     <div
       className={`flex ${inline ? 'flex-row items-center gap-4' : 'flex-col'} ${
@@ -115,6 +119,7 @@ const TextInput = (props: Props) => {
           />
         ) : (
           <textarea
+            key={shouldInputRerender}
             autoComplete={name}
             defaultValue={defaultValue}
             rows={5}
@@ -127,6 +132,7 @@ const TextInput = (props: Props) => {
           <input autoComplete={name} value={value} {...defaultInputProps} />
         ) : (
           <input
+            key={shouldInputRerender}
             autoComplete={name}
             defaultValue={defaultValue}
             {...defaultInputProps}

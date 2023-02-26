@@ -1,12 +1,12 @@
+import { AddNewButton } from '@/Components/PDFView/PDFInputs/Components/AddNewButton';
+import { SkillsList } from '@/Components/PDFView/PDFInputs/Components/SkillsList';
+import TextInput from '@/Components/Shared/Inputs/TextInput';
+import useAnimation from '@/Hooks/useAnimation';
+import usePDFData from '@/Hooks/usePDFData';
 import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import useAnimation from '../../../../Hooks/useAnimation';
-import usePDFData from '../../../../Hooks/usePDFData';
-import TextInput from '../../Inputs/TextInput';
-import { AddNewButton } from './AddNewButton';
-import { SkillsList } from './SkillsList';
 
 export const SkillsInput = () => {
   const { t } = useTranslation('SkillsInput');

@@ -22,7 +22,7 @@ import { reducers } from './reducers/reducer';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['pdf-loaded-data'], // from reducer.ts
+  blacklist: ['pdf-loaded-data', 'versionHistory'], // from reducer.ts
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

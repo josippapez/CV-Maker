@@ -7,8 +7,9 @@ import { useDebouncedValue } from '@/Hooks/useDebouncedValue';
 import useMobileView from '@/Hooks/useMobileView';
 import usePDFData from '@/Hooks/usePDFData';
 import useWindowSize from '@/Hooks/useWindowSize';
+import { useAuth } from '@/Providers/AuthProvider';
 import { saveDataForUser } from '@/store/actions/syncActions';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppDispatch } from '@/store/hooks';
 import { usePDF } from '@react-pdf/renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -31,7 +32,7 @@ export const PDFView: FC<Props> = ({ isPDFPreview }) => {
   const dispatch = useAppDispatch();
   const windowSize = useWindowSize();
   const isMobileView = useMobileView();
-  const user = useAppSelector(state => state.user.user);
+  const { user } = useAuth();
   const { t, i18n } = useTranslation('CVTemplates');
   const {
     certificates,
@@ -51,7 +52,7 @@ export const PDFView: FC<Props> = ({ isPDFPreview }) => {
   const [initial, setInitial] = useDebouncedValue(true, 2000);
 
   const currentLanguage = i18n.language;
-  const userIsLoggedIn = !!user.id;
+  const userIsLoggedIn = !!user?.uid;
   const pageExists = !!pageNumber && !!numPages;
 
   const [instance, updateInstance] = usePDF({
@@ -178,7 +179,7 @@ export const PDFView: FC<Props> = ({ isPDFPreview }) => {
                         className='pdf-share'
                         onClick={() => {
                           navigator.clipboard.writeText(
-                            `${window.location.origin}/cv/${user.id}`
+                            `${window.location.origin}/cv/${user?.uid}`
                           );
                         }}
                       />

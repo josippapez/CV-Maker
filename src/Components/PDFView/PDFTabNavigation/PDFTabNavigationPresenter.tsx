@@ -1,4 +1,12 @@
+import TemplatesModal from '@/Components/PDFView/CVTemplates/TemplatesModal';
+import { Tab } from '@/Components/PDFView/PDFInputs/PDFInputsContainer';
+import { VersionHistoryModal } from '@/Components/PDFView/VersionHistory/VersionHistoryModal';
+import ChangeLanguageButton from '@/Components/Shared/Navbar/Components/ChangeLanguageButton';
+import TemplatesButton from '@/Components/Shared/Navbar/Components/TemplatesButton';
 import { Tooltip } from '@/Components/Shared/Tooltip/Tooltip';
+import { useAuth } from '@/Providers/AuthProvider';
+import { logout, signInWithGoogle } from '@/store/actions/authActions';
+import { useAppDispatch } from '@/store/hooks';
 import AcademicCap from '@public/Styles/Assets/Images/academic-cap.svg';
 import Briefcase from '@public/Styles/Assets/Images/briefcase.svg';
 import CertificateIcon from '@public/Styles/Assets/Images/document.svg';
@@ -10,12 +18,6 @@ import Tools from '@public/Styles/Assets/Images/tools.svg';
 import { motion } from 'framer-motion';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { logout, signInWithGoogle } from '../../../store/actions/authActions';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import TemplatesModal from '../../PDFView/CVTemplates/TemplatesModal';
-import ChangeLanguageButton from '../Navbar/Components/ChangeLanguageButton';
-import TemplatesButton from '../Navbar/Components/TemplatesButton';
-import { Tab } from '../PDFInputs/PDFInputsContainer';
 
 type Props = {
   setSelectedTab: (tab: Tab) => void;
@@ -27,7 +29,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
   const dispatch = useAppDispatch();
 
   const { setSelectedTab, selectedTab } = props;
-  const { user } = useAppSelector(state => state.user);
+  const { user } = useAuth();
 
   const [displayTemplateChooseModal, setDisplayTemplateChooseModal] =
     useState(false);
@@ -77,7 +79,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
     <div className='relative z-10 w-32 p-6 shadow-sm'>
       <div className='flex h-full flex-col justify-between'>
         <div className='flex w-full min-w-full flex-col items-center justify-evenly gap-2'>
-          {user.email ? (
+          {user ? (
             <button
               className={`focus:shadow-outline mt-4 mb-4 rounded-full bg-[#f5f5f5] p-4 transition-all duration-300  ease-in-out hover:bg-gray-100 focus:outline-none`}
               type='button'
@@ -92,7 +94,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
               className={`focus:shadow-outline mt-4 mb-4 rounded-full bg-[#f5f5f5] p-4 transition-all duration-300  ease-in-out hover:bg-gray-100 focus:outline-none`}
               type='button'
               onClick={() => {
-                signInWithGoogle();
+                dispatch(signInWithGoogle());
               }}
             >
               <Google height={24} className='m-auto block' />
@@ -143,7 +145,10 @@ const PDFTabNavigationPresenter = (props: Props) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2, delay: 0.05 * arrayOfTabs.length }}
+            transition={{
+              duration: 0.2,
+              delay: 0.05 * (arrayOfTabs.length + 1),
+            }}
           >
             <ChangeLanguageButton
               dropdownPosition='right'
@@ -160,7 +165,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
             exit={{ opacity: 0, y: -10 }}
             transition={{
               duration: 0.2,
-              delay: 0.05 * (arrayOfTabs.length + 1),
+              delay: 0.05 * (arrayOfTabs.length + 2),
             }}
           >
             <TemplatesButton
@@ -178,6 +183,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
         closeModal={() => setDisplayTemplateChooseModal(false)}
         show={displayTemplateChooseModal}
       />
+      <VersionHistoryModal />
     </div>
   );
 };
