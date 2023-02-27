@@ -1,6 +1,7 @@
 import { AnimatePresence } from 'framer-motion';
 import { useCallback } from 'react';
-import Scrollbars from 'react-custom-scrollbars';
+import CustomScroll from 'react-custom-scroll';
+import 'react-custom-scroll/dist/customScroll.css';
 import PDFTabNavigationPresenter from '../PDFTabNavigation/PDFTabNavigationPresenter';
 import {
   CertificatesInput,
@@ -8,7 +9,7 @@ import {
   GeneralInput,
   LanguagesInput,
   ProfessionalExperienceInput,
-  SkillsInput
+  SkillsInput,
 } from './Components';
 import { Tab } from './PDFInputsContainer';
 
@@ -43,11 +44,11 @@ const PDFInputsPresenter = (props: Props) => {
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
-      <Scrollbars autoHide>
-        <div className='min-h-full w-full bg-[#f7f7f7] p-10'>
+      <CustomScroll flex={1} allowOuterScroll>
+        <div className='min-h-full bg-[#f7f7f7] p-10'>
           <AnimatePresence mode='wait'>{getInputs()}</AnimatePresence>
         </div>
-      </Scrollbars>
+      </CustomScroll>
     </div>
   );
 };
