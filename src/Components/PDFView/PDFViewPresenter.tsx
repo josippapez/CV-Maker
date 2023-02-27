@@ -15,7 +15,7 @@ const PDFViewPresenter = (props: Props) => {
 
   return (
     <div
-      className={`flex min-h-full w-full ${
+      className={`flex min-h-full max-h-full w-full ${
         isMobileView ? 'flex-col' : 'flex-row'
       }`}
     >

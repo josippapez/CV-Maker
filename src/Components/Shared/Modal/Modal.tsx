@@ -30,8 +30,6 @@ interface Props {
     | string;
 }
 
-let opened = 0;
-
 const Modal = (props: Props): JSX.Element => {
   const windowSize = useWindowSize();
   const {
@@ -46,20 +44,6 @@ const Modal = (props: Props): JSX.Element => {
     contentClassname,
     zindex,
   } = props;
-
-  useEffect(() => {
-    if (opened === 0) {
-      document.body.style.overflow = show ? 'hidden' : 'auto';
-    }
-    if (show) {
-      opened++;
-    }
-    return () => {
-      if (show) {
-        opened--;
-      }
-    };
-  }, [show]);
 
   const getAnimation = () => {
     const transition = {

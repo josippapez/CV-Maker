@@ -48,6 +48,10 @@ textarea {
  display: none;
 }
 
+.rcs-inner-handle {
+  background-color: #d6d6d6 !important;
+}
+
 
 .document-controls {
   opacity: 0;
