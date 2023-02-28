@@ -1530,6 +1530,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.19.4":
+  version: 7.21.0
+  resolution: "@babel/runtime@npm:7.21.0"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: 7b33e25bfa9e0e1b9e8828bb61b2d32bdd46b41b07ba7cb43319ad08efc6fda8eb89445193e67d6541814627df0ca59122c0ea795e412b99c5183a0540d338ab
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.18.10, @babel/template@npm:^7.20.7, @babel/template@npm:^7.3.3":
   version: 7.20.7
   resolution: "@babel/template@npm:7.20.7"
@@ -7601,6 +7610,7 @@ __metadata:
     framer-motion: ^9.0.7
     html-webpack-plugin: ^5.5.0
     i18next: ^22.4.10
+    i18next-browser-languagedetector: ^7.0.1
     i18next-intervalplural-postprocessor: ^3.0.0
     js-cookie: ^3.0.1
     luxon: ^3.2.1
@@ -10523,6 +10533,15 @@ __metadata:
   version: 1.6.4
   resolution: "hyphen@npm:1.6.4"
   checksum: 3ee1a69004f95717ffd7f97ab2b20ca09ba6b16714bdc9fbdd5aca6bfeec14dbb2a3cd6d6286c77d54770f7c0fa99b0bd66cf3d1681b0f12f549cfc843379fda
+  languageName: node
+  linkType: hard
+
+"i18next-browser-languagedetector@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "i18next-browser-languagedetector@npm:7.0.1"
+  dependencies:
+    "@babel/runtime": ^7.19.4
+  checksum: 03129614be8761988df59b630359ded4f7c989eec4553781b5968139fd898de1eb09128c4c69c1365b547649ad829ff9abe1f60161658f8789668bcc623adcf0
   languageName: node
   linkType: hard
 

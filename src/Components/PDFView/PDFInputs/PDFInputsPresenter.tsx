@@ -44,7 +44,7 @@ const PDFInputsPresenter = (props: Props) => {
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
-      <CustomScroll flex={1} allowOuterScroll>
+      <CustomScroll flex={"1"} allowOuterScroll>
         <div className='min-h-full bg-[#f7f7f7] p-10'>
           <AnimatePresence mode='wait'>{getInputs()}</AnimatePresence>
         </div>
