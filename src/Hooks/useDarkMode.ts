@@ -1,26 +1,30 @@
 import { useEffect, useState } from 'react';
 
+type Theme = 'light' | 'dark';
+
 const useDarkMode = () => {
-  const [enabled, setEnabled] = useState(
-    localStorage.getItem('dark-theme') === 'enabled'
-  );
+  const [theme, setTheme] = useState<Theme>('light');
+
+  useEffect(() => {
+    setTheme(localStorage.getItem('theme') === 'light' ? 'light' : 'dark');
+  }, []);
 
   useEffect(() => {
     const className = 'dark';
     const bodyClass = window.document.body.classList;
 
-    enabled ? bodyClass.add(className) : bodyClass.remove(className);
-  }, [enabled]);
+    theme === 'dark' ? bodyClass.add(className) : bodyClass.remove(className);
+  }, [theme]);
 
   return {
-    enabled,
+    theme,
     toggle: () => {
-      if (enabled) {
-        setEnabled(false);
-        localStorage.removeItem('dark-theme');
+      if (theme === 'light') {
+        setTheme('dark');
+        localStorage.setItem('theme', 'dark');
       } else {
-        setEnabled(true);
-        localStorage.setItem('dark-theme', 'enabled');
+        setTheme('light');
+        localStorage.setItem('theme', 'light');
       }
     },
   };

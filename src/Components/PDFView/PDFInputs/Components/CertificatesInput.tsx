@@ -5,7 +5,7 @@ import useAnimation from '@/Hooks/useAnimation';
 import usePDFData from '@/Hooks/usePDFData';
 import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { AddNewButton } from './AddNewButton';
 import { DeleteButton } from './DeleteButton';
 
@@ -62,7 +62,7 @@ export const CertificatesInput = () => {
               {input.type === 'date' ? (
                 <DateInput
                   type='month'
-                  label={t(`${input.inputValue}`)}
+                  label={t(`${input.inputValue}`).toString()}
                   value={certificate[input.inputValue] as string}
                   setData={date =>
                     handleSaveData(date, index, input.inputValue)
@@ -76,7 +76,7 @@ export const CertificatesInput = () => {
               ) : (
                 <TextInput
                   key={index + '-' + 'CertificatesInput' + '-' + currentIndex}
-                  label={t(`${input.inputValue}`)}
+                  label={t(`${input.inputValue}`).toString()}
                   defaultValue={certificate[input.inputValue]}
                   name={input.inputValue}
                   onChange={e =>
@@ -95,7 +95,7 @@ export const CertificatesInput = () => {
               '-' +
               (arrayOfCertificatesInputs.length - 1)
             }
-            label={t('description')}
+            label={t('description').toString()}
             defaultValue={certificate.description}
             name='certificate-description'
             onChange={e => handleSaveData(e.target.value, index, 'description')}

@@ -1,4 +1,4 @@
-import useDarkMode from '../../../../Hooks/useDarkMode';
+import useDarkMode from '@/Hooks/useDarkMode';
 import MoonIcon from '@public/Styles/Assets/Images/moon.svg';
 import SunIcon from '@public/Styles/Assets/Images/sun.svg';
 
@@ -17,7 +17,7 @@ const DarkModeButton = (props: Props) => {
       type='button'
       onClick={darkTheme.toggle}
     >
-      {darkTheme.enabled ? (
+      {darkTheme.theme === 'dark' ? (
         <SunIcon className='h-8 w-8' fill='white' stroke='white' />
       ) : (
         <MoonIcon className='h-8 w-8' />

@@ -1,7 +1,8 @@
+import { RoutesWithLocale } from 'consts/Routes';
 import { motion, useInView } from 'framer-motion';
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { forwardRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import useAnimation from '../../Hooks/useAnimation';
 import style from './LandingPage.module.scss';
 import LandingPageScrollNavigation from './LandingPageScrollNavigation';
@@ -49,7 +50,10 @@ const LandingPage = () => {
             animate={inview ? combinedStyleFinal : combinedStyleInitial}
             transition={{ duration: 0.2, delay: 0.7 }}
           >
-            <Link href='/create' className={style.createYourCVLink}>
+            <Link
+              href={RoutesWithLocale.CREATE}
+              className={style.createYourCVLink}
+            >
               {t('createYourCV')}
             </Link>
           </motion.div>

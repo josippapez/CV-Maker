@@ -4,8 +4,9 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { cacheAllData, setModified } from '@/store/reducers/pdfData';
 import { setTemplate } from '@/store/reducers/template';
 import { setDisplayVersionHistory } from '@/store/reducers/versionHistory';
+import { Settings } from 'luxon';
+import { i18n, useTranslation } from 'next-i18next';
 import { FC, useCallback, useEffect } from 'react';
-import { getI18n, useTranslation } from 'react-i18next';
 
 export const VersionHistoryModal: FC = () => {
   const dispatch = useAppDispatch();
@@ -59,7 +60,9 @@ export const VersionHistoryModal: FC = () => {
             className='rounded-md bg-green-200 px-3 py-2 hover:bg-green-300'
             onClick={() => {
               if (!tempPdfData) return;
-              getI18n().changeLanguage(tempPdfData.language);
+              i18n?.changeLanguage(tempPdfData.language);
+              localStorage.setItem('i18nextLng', tempPdfData.language);
+              Settings.defaultLocale = tempPdfData.language;
               dispatch(cacheAllData(tempPdfData));
               dispatch(setTemplate(tempPdfData.template.templateName));
               closeModal();

@@ -1,22 +1,3 @@
-import { NextPage } from 'next';
-import dynamic from 'next/dynamic';
-import PageLoader from '../../src/Components/Shared/Loader/PageLoader';
+import { useRedirect } from 'ssg-setup/redirect';
 
-const DynamicPDFView = dynamic(
-  () => import('@/Components/PDFView/CVMakerPage'),
-  {
-    ssr: false,
-    loading: () => <PageLoader isLoading />,
-  }
-);
-
-const Create: NextPage = () => {
-  return (
-    <>
-      <title>Create CV</title>
-      <DynamicPDFView />
-    </>
-  );
-};
-
-export default Create;
+export default useRedirect;

@@ -1,8 +1,8 @@
 import usePDFData from '@/Hooks/usePDFData';
 import { useAuth } from '@/Providers/AuthProvider';
+import { i18n } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   DocumentPDFData,
   getCVPreviewForUser,
@@ -15,7 +15,6 @@ const isQueryUserIdString = (
 
 const PDFViewContainer = () => {
   const { query } = useRouter();
-  const { i18n } = useTranslation('CVTemplates');
   const { user } = useAuth();
   const { setActiveTemplate, setAllData, getUserData } = usePDFData();
 
@@ -29,7 +28,7 @@ const PDFViewContainer = () => {
       getCVPreviewForUser(userId, (data: DocumentPDFData) => {
         setActiveTemplate(data.template.templateName);
         setAllData(data);
-        i18n.changeLanguage(data.language);
+        i18n?.changeLanguage(data.language);
       });
     }
   }, []);

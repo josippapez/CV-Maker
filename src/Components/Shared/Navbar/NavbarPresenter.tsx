@@ -1,3 +1,4 @@
+import { RoutesWithLocale } from 'consts/Routes';
 import { useRouter } from 'next/router';
 import ChangeLanguageButton from './Components/ChangeLanguageButton';
 import DarkModeButton from './Components/DarkModeButton';
@@ -15,7 +16,7 @@ const NavbarPresenter = () => {
           font-bold shadow-md transition-all
           focus:outline-none dark:bg-[#616161]'
         />
-        {asPath === '/' && (
+        {asPath === RoutesWithLocale.LANDING_PAGE && (
           <ChangeLanguageButton
             iconStrokeColor={'dark:stroke-white stroke-black'}
             dropdownPosition='left'

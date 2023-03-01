@@ -17,7 +17,7 @@ import Profile from '@public/Styles/Assets/Images/profile.svg';
 import Tools from '@public/Styles/Assets/Images/tools.svg';
 import { motion } from 'framer-motion';
 import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 type Props = {
   setSelectedTab: (tab: Tab) => void;

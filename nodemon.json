@@ -1,0 +1,7 @@
+{
+  "watch": [
+    "src/**/i18n/**/*.json"
+  ],
+  "ext": "json",
+  "exec": "yarn ts-node Translations.ts"
+}

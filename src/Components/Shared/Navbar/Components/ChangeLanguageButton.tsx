@@ -1,7 +1,7 @@
+import { useChangeLanguage } from '@/Components/Shared/Navbar/hooks';
 import Translate from '@public/Styles/Assets/Images/translate.svg';
-import { Settings } from 'luxon';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 interface Props {
   dropdownPosition?: 'left' | 'right';
@@ -9,9 +9,13 @@ interface Props {
   iconStrokeColor?: string;
 }
 
-const ChangeLanguageButton = (props: Props) => {
-  const { dropdownPosition, className, iconStrokeColor } = props;
-  const { t, i18n } = useTranslation('Navbar');
+const ChangeLanguageButton: FC<Props> = ({
+  dropdownPosition,
+  className,
+  iconStrokeColor,
+}) => {
+  const { t } = useTranslation('Navbar');
+  const { changeLanguage } = useChangeLanguage();
 
   const [displayLanguageDropdown, setDisplayLanguageDropdown] =
     useState<boolean>(false);
@@ -31,6 +35,14 @@ const ChangeLanguageButton = (props: Props) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [component]);
+
+  const handleSelectLanguage = useCallback(
+    (language: string) => {
+      changeLanguage(language);
+      setDisplayLanguageDropdown(false);
+    },
+    [changeLanguage]
+  );
 
   return (
     <div
@@ -54,26 +66,22 @@ const ChangeLanguageButton = (props: Props) => {
         <div
           className={`w-fit rounded-md bg-slate-300 p-3 text-zinc-900 dark:bg-slate-800 dark:text-zinc-100`}
         >
-          <div
+          <button
             className='cursor-pointer rounded-md px-1 py-[2px] hover:bg-gray-400 hover:dark:bg-slate-600'
             onClick={() => {
-              i18n.changeLanguage('en-US');
-              Settings.defaultLocale = 'en-US';
-              setDisplayLanguageDropdown(false);
+              handleSelectLanguage('en-US');
             }}
           >
             {t('English')}
-          </div>
-          <div
+          </button>
+          <button
             className='cursor-pointer rounded-md px-1 py-[2px] hover:bg-gray-400 hover:dark:bg-slate-600'
             onClick={() => {
-              i18n.changeLanguage('hr');
-              Settings.defaultLocale = 'hr';
-              setDisplayLanguageDropdown(false);
+              handleSelectLanguage('hr');
             }}
           >
             {t('Croatian')}
-          </div>
+          </button>
         </div>
       </div>
     </div>

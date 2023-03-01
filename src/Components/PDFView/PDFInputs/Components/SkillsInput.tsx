@@ -6,7 +6,7 @@ import usePDFData from '@/Hooks/usePDFData';
 import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 export const SkillsInput = () => {
   const { t } = useTranslation('SkillsInput');
@@ -26,7 +26,7 @@ export const SkillsInput = () => {
     >
       <SkillsList />
       <TextInput
-        label={t('skill')}
+        label={t('skill').toString()}
         value={skill}
         name='skill'
         onChange={e => {

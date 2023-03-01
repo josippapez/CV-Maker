@@ -8,7 +8,7 @@ import useAnimation from '@/Hooks/useAnimation';
 import usePDFData from '@/Hooks/usePDFData';
 import { Operations } from '@/store/reducers/pdfData';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const arrayOfProfessionalExperienceInputs: Array<{
   inputName: string;
@@ -77,7 +77,7 @@ export const ProfessionalExperienceInput = () => {
                       experience.currentlyEnrolled &&
                       input.inputValue === 'endDate'
                     }
-                    label={t(`${input.inputValue}`)}
+                    label={t(`${input.inputValue}`).toString()}
                     value={experience[input.inputValue] as string}
                     setData={date => {
                       setProfessionalExperience(
@@ -107,7 +107,7 @@ export const ProfessionalExperienceInput = () => {
                 ) : (
                   input.type !== 'toggle' && (
                     <TextInput
-                      label={t(`${input.inputValue}`)}
+                      label={t(`${input.inputValue}`).toString()}
                       defaultValue={experience[input.inputValue] as string}
                       name={input.inputValue}
                       onChange={e => {
@@ -127,7 +127,7 @@ export const ProfessionalExperienceInput = () => {
                 )}
                 {input.type === 'toggle' && (
                   <ToggleInput
-                    label={t(`${input.inputValue}`)}
+                    label={t(`${input.inputValue}`).toString()}
                     name={input.inputValue}
                     checked={experience.currentlyEnrolled}
                     wrapperClassName='mt-4'

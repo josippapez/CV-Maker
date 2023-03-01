@@ -6,7 +6,7 @@ import usePDFData from '@/Hooks/usePDFData';
 import Plus from '@public/Styles/Assets/Images/plus.svg';
 import Compressor from 'compressorjs';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const arrayOfGeneralInputs: Array<{
   inputName: string;
@@ -162,7 +162,7 @@ export const GeneralInput = () => {
             >
               {input.type === 'date' ? (
                 <DateInput
-                  label={t(`${input.inputValue}`)}
+                  label={t(`${input.inputValue}`).toString()}
                   value={generalInfo[input.inputValue]}
                   setData={date => {
                     setGeneralInfo({
@@ -178,7 +178,7 @@ export const GeneralInput = () => {
                 />
               ) : (
                 <TextInput
-                  label={t(`${input.inputValue}`)}
+                  label={t(`${input.inputValue}`).toString()}
                   type={input.type}
                   defaultValue={generalInfo[input.inputValue]}
                   name={input.inputName}
@@ -206,7 +206,7 @@ export const GeneralInput = () => {
               }}
             >
               <TextInput
-                label={t(`${input.inputValue}`)}
+                label={t(`${input.inputValue}`).toString()}
                 textarea
                 defaultValue={generalInfo[input.inputValue]}
                 name={input.inputName}

@@ -1,19 +1,12 @@
 {
   "hosting": {
+    "cleanUrls": true,
     "public": "out",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "/",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/create",
-        "destination": "/create.html"
-      },
-      {
-        "source": "/cv/**",
-        "destination": "/cv/[userId].html"
+        "source": "/**",
+        "dynamicLinks": true
       }
     ]
   },
