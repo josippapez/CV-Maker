@@ -20,10 +20,10 @@ export const useChangeLanguage = () => {
 
   const changeLanguage = async (language: string) => {
     await i18n?.changeLanguage(language).then(async () => {
+      await dispatch(saveDataForUser());
       localStorage.setItem('i18nextLng', language);
       Settings.defaultLocale = language;
     });
-    await dispatch(saveDataForUser());
     navigateToSameRoute(language);
   };
 

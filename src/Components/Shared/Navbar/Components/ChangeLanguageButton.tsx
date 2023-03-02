@@ -10,7 +10,7 @@ interface Props {
 }
 
 const ChangeLanguageButton: FC<Props> = ({
-  dropdownPosition,
+  dropdownPosition = 'left',
   className,
   iconStrokeColor,
 }) => {
@@ -86,10 +86,6 @@ const ChangeLanguageButton: FC<Props> = ({
       </div>
     </div>
   );
-};
-
-ChangeLanguageButton.defaultProps = {
-  dropdownPosition: 'left',
 };
 
 export default ChangeLanguageButton;

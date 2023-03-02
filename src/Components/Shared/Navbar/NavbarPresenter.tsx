@@ -1,7 +1,12 @@
 import { RoutesWithLocale } from 'consts/Routes';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import ChangeLanguageButton from './Components/ChangeLanguageButton';
 import DarkModeButton from './Components/DarkModeButton';
+
+const DynamicChangeLanguageButton = dynamic(
+  () => import('@/Components/Shared/Navbar/Components/ChangeLanguageButton'),
+  { ssr: false }
+);
 
 const NavbarPresenter = () => {
   const { asPath } = useRouter();
@@ -17,7 +22,7 @@ const NavbarPresenter = () => {
           focus:outline-none dark:bg-[#616161]'
         />
         {asPath === RoutesWithLocale.LANDING_PAGE && (
-          <ChangeLanguageButton
+          <DynamicChangeLanguageButton
             iconStrokeColor={'dark:stroke-white stroke-black'}
             dropdownPosition='left'
             className='focus:shadow-outline mt-3 h-10 w-10 cursor-pointer select-none rounded-full

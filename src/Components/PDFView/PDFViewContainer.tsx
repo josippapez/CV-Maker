@@ -1,6 +1,6 @@
 import usePDFData from '@/Hooks/usePDFData';
 import { useAuth } from '@/Providers/AuthProvider';
-import { i18n } from 'next-i18next';
+import { getI18n } from 'react-i18next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import {
@@ -28,7 +28,7 @@ const PDFViewContainer = () => {
       getCVPreviewForUser(userId, (data: DocumentPDFData) => {
         setActiveTemplate(data.template.templateName);
         setAllData(data);
-        i18n?.changeLanguage(data.language);
+        getI18n().changeLanguage(data.language);
       });
     }
   }, []);
