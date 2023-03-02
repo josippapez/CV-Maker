@@ -1,14 +1,18 @@
-import { RoutesWithLocale } from 'consts/Routes';
 import { motion, useInView } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
-import { forwardRef } from 'react';
+import { FC, forwardRef } from 'react';
 import useAnimation from '../../Hooks/useAnimation';
 import style from './LandingPage.module.scss';
 import LandingPageScrollNavigation from './LandingPageScrollNavigation';
 import LandingPageSections from './LandingPageSections';
+import { RoutesWithLocale } from 'consts/Routes';
 
-const LandingPage = () => {
+type Props = {
+  routesWithLocale : typeof RoutesWithLocale;
+};
+
+const LandingPage: FC<Props> = ({routesWithLocale}) => {
   const { t } = useTranslation('LandingPage');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
@@ -51,7 +55,7 @@ const LandingPage = () => {
             transition={{ duration: 0.2, delay: 0.7 }}
           >
             <Link
-              href={RoutesWithLocale.CREATE}
+              href={routesWithLocale.CREATE}
               className={style.createYourCVLink}
             >
               {t('createYourCV')}

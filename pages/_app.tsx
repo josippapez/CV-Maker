@@ -1,5 +1,4 @@
 import PageLoader from '@/Components/Shared/Loader/PageLoader';
-import NavbarPresenter from '@/Components/Shared/Navbar/NavbarPresenter';
 import '@public/Styles/index.css';
 import { appWithTranslation } from 'next-i18next';
 import { AppProps } from 'next/app';
@@ -60,7 +59,6 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       </Head>
       <div className='h-screen'>
         <PageLoader isLoading={loading}>
-          <NavbarPresenter />
           <Component {...pageProps} />
         </PageLoader>
       </div>

@@ -1,10 +1,12 @@
 import TemplatesModal from '@/Components/PDFView/CVTemplates/TemplatesModal';
 import { Tab } from '@/Components/PDFView/PDFInputs/PDFInputsContainer';
 import { VersionHistoryModal } from '@/Components/PDFView/VersionHistory/VersionHistoryModal';
+import ChangeLanguageButton from '@/Components/Shared/Navbar/Components/ChangeLanguageButton';
 import TemplatesButton from '@/Components/Shared/Navbar/Components/TemplatesButton';
 import { Tooltip } from '@/Components/Shared/Tooltip/Tooltip';
 import { useAuth } from '@/Providers/AuthProvider';
 import { logout, signInWithGoogle } from '@/store/actions/authActions';
+import { saveDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch } from '@/store/hooks';
 import AcademicCap from '@public/Styles/Assets/Images/academic-cap.svg';
 import Briefcase from '@public/Styles/Assets/Images/briefcase.svg';
@@ -16,13 +18,7 @@ import Profile from '@public/Styles/Assets/Images/profile.svg';
 import Tools from '@public/Styles/Assets/Images/tools.svg';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
-import dynamic from 'next/dynamic';
 import { useMemo, useState } from 'react';
-
-const DynamicChangeLanguageButton = dynamic(
-  () => import('@/Components/Shared/Navbar/Components/ChangeLanguageButton'),
-  { ssr: false }
-);
 
 type Props = {
   setSelectedTab: (tab: Tab) => void;
@@ -30,8 +26,8 @@ type Props = {
 };
 
 const PDFTabNavigationPresenter = (props: Props) => {
-  const { t } = useTranslation('PDFTabNavigation');
   const dispatch = useAppDispatch();
+  const { t } = useTranslation('PDFTabNavigation');
 
   const { setSelectedTab, selectedTab } = props;
   const { user } = useAuth();
@@ -155,7 +151,8 @@ const PDFTabNavigationPresenter = (props: Props) => {
               delay: 0.05 * (arrayOfTabs.length + 1),
             }}
           >
-            <DynamicChangeLanguageButton
+            <ChangeLanguageButton
+              onChangeLanguage={() => dispatch(saveDataForUser())}
               dropdownPosition='right'
               className='focus:shadow-outline cursor-pointer select-none rounded-md
             p-4 text-sm

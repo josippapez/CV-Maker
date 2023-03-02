@@ -87,9 +87,9 @@ function extractTranslations() {
       }
     }
   }
-  for (const dir of i18nDirs) {
+  i18nDirs.forEach(dir => {
     processDirectory(dir, translations);
-  }
+  });
   saveLocaleFiles(translations);
 }
 

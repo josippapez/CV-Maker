@@ -5,6 +5,7 @@ import { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 interface Props {
   dropdownPosition?: 'left' | 'right';
+  onChangeLanguage?: () => void;
   className?: string;
   iconStrokeColor?: string;
 }
@@ -13,6 +14,7 @@ const ChangeLanguageButton: FC<Props> = ({
   dropdownPosition = 'left',
   className,
   iconStrokeColor,
+  onChangeLanguage,
 }) => {
   const { t } = useTranslation('Navbar');
   const { changeLanguage } = useChangeLanguage();
@@ -38,7 +40,7 @@ const ChangeLanguageButton: FC<Props> = ({
 
   const handleSelectLanguage = useCallback(
     (language: string) => {
-      changeLanguage(language);
+      changeLanguage(language, onChangeLanguage);
       setDisplayLanguageDropdown(false);
     },
     [changeLanguage]
@@ -67,7 +69,7 @@ const ChangeLanguageButton: FC<Props> = ({
           className={`w-fit rounded-md bg-slate-300 p-3 text-zinc-900 dark:bg-slate-800 dark:text-zinc-100`}
         >
           <button
-            className='cursor-pointer rounded-md px-1 py-[2px] hover:bg-gray-400 hover:dark:bg-slate-600'
+            className={`cursor-pointer rounded-md px-1 py-[2px] hover:bg-gray-400 hover:dark:bg-slate-600`}
             onClick={() => {
               handleSelectLanguage('en-US');
             }}

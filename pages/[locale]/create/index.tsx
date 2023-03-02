@@ -1,3 +1,4 @@
+import NavbarPresenter from '@/Components/Shared/Navbar/NavbarPresenter';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -18,6 +19,7 @@ const Create: NextPage = () => {
       <Head>
         <title>Create CV</title>
       </Head>
+      <NavbarPresenter />
       <DynamicPDFView />
     </>
   );
