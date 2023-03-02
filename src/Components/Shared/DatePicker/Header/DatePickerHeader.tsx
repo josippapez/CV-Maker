@@ -1,7 +1,7 @@
 import ArrowLeft from '@public/Styles/Assets/Images/left-arrow.svg';
 import ArrowRight from '@public/Styles/Assets/Images/right-arrow.svg';
 import { DateTime } from 'luxon';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import useMobileView from '../../../../Hooks/useMobileView';
 
 type Props = {

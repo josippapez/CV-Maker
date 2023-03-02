@@ -2,7 +2,7 @@ import usePDFData from '@/Hooks/usePDFData';
 import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
 import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { DeleteButton } from './DeleteButton';
 import { Education } from '@/Components/PDFView/models';
 import useAnimation from '@/Hooks/useAnimation';
@@ -40,6 +40,7 @@ const arrayOfCourseInputs: Array<{
 }> = [
   { inputName: 'course', inputValue: 'course', type: 'text' },
   { inputName: 'url', inputValue: 'url', type: 'text' },
+  { inputName: 'location', inputValue: 'location', type: 'text' },
   { inputName: 'startDate', inputValue: 'startDate', type: 'date' },
   { inputName: 'endDate', inputValue: 'endDate', type: 'date' },
   {
@@ -147,7 +148,7 @@ const EducationItem = (props: Props) => {
               disabled={
                 education.currentlyEnrolled && input.inputValue === 'endDate'
               }
-              label={t(`${input.inputValue}`)}
+              label={t(`${input.inputValue}`).toString()}
               value={education[input.inputValue] as string}
               setData={date => handleSetData(date, input.inputValue)}
               resetData={() => handleSetData('', input.inputValue)}
@@ -159,7 +160,7 @@ const EducationItem = (props: Props) => {
           ) : (
             input.type !== 'toggle' && (
               <TextInput
-                label={t(`${input.inputName}`)}
+                label={t(`${input.inputName}`).toString()}
                 defaultValue={education[input.inputValue] as string}
                 name={input.inputName}
                 onChange={e => handleSetData(e.target.value, input.inputValue)}
@@ -169,7 +170,7 @@ const EducationItem = (props: Props) => {
           )}
           {input.type === 'toggle' && (
             <ToggleInput
-              label={t('present')}
+              label={t('present').toString()}
               name={input.inputName}
               checked={education.currentlyEnrolled}
               wrapperClassName='mt-4'
@@ -181,7 +182,7 @@ const EducationItem = (props: Props) => {
       ))}
       <TextInput
         key={`${index}-${getEducationInputs().length - 1}-input`}
-        label={t('description')}
+        label={t('description').toString()}
         defaultValue={education.description}
         name='education-description'
         onChange={e => {

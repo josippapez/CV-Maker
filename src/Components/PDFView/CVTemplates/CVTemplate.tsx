@@ -23,7 +23,6 @@ type OptionType = {
   skills: Skill[];
   template: Template;
   translate: TFunction;
-  locale: string;
 };
 
 type Props = {
@@ -34,7 +33,6 @@ type Props = {
   languages: LanguageSkill[];
   template: Template;
   t: TFunction;
-  currentLanguage: string;
   skills: Skill[];
 };
 
@@ -63,7 +61,6 @@ const CVTemplate = (props: Props): JSX.Element => {
     skills,
     template,
     t,
-    currentLanguage,
   } = props;
 
   const options: OptionType = {
@@ -74,8 +71,7 @@ const CVTemplate = (props: Props): JSX.Element => {
     languages,
     skills,
     template,
-    translate: t,
-    locale: currentLanguage,
+    translate: t
   };
 
   return useMemo(
@@ -87,7 +83,6 @@ const CVTemplate = (props: Props): JSX.Element => {
       certificates,
       education,
       languages,
-      currentLanguage,
       skills,
     ]
   );

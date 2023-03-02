@@ -1,6 +1,7 @@
 import PageLoader from '@/Components/Shared/Loader/PageLoader';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
 
 const DynamicPDFView = dynamic(
   () => import('@/Components/PDFView/CVMakerPage'),
@@ -13,7 +14,9 @@ const DynamicPDFView = dynamic(
 const Create: NextPage = () => {
   return (
     <>
-      <title>View CV</title>
+      <Head>
+        <title>View CV</title>
+      </Head>
       <DynamicPDFView />
     </>
   );

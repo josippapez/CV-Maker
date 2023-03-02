@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import usePDFData from '../../../Hooks/usePDFData';
 import { TemplateName } from '../../../store/reducers/template';
 import style from './TemplatesModal.module.scss';

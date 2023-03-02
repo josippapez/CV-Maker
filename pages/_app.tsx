@@ -1,16 +1,9 @@
 import PageLoader from '@/Components/Shared/Loader/PageLoader';
 import '@public/Styles/index.css';
+import { appWithTranslation } from 'next-i18next';
 import { AppProps } from 'next/app';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { Suspense, useEffect, useMemo, useState } from 'react';
-
-const DynamicNavbar = dynamic(
-  () => import('@/Components/Shared/Navbar/NavbarPresenter'),
-  {
-    ssr: false,
-  }
-);
+import { useEffect, useState } from 'react';
 
 declare global {
   interface Window {
@@ -38,10 +31,6 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     };
   }, []);
 
-  useMemo(async () => {
-    await import('@/i18n');
-  }, []);
-
   return (
     <>
       <Head>
@@ -61,8 +50,8 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         <meta property='og:title' content='CV Maker' />
         <meta property='og:type' content='website' />
         <meta property='og:url' content='https://cv-maker.jp.app/' />
-        <link rel='apple-touch-icon' href='./logo.png' />
-        <link rel='manifest' href='./manifest.json' />
+        <link rel='apple-touch-icon' href='/logo.png' />
+        <link rel='manifest' href='/manifest.json' />
         <meta
           name='google-site-verification'
           content='Pa7EgWXkYbyNhyNiDDHiMurSrf0fMjBaZzIWth-N0Wo'
@@ -70,9 +59,6 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       </Head>
       <div className='h-screen'>
         <PageLoader isLoading={loading}>
-          <Suspense fallback={null}>
-            <DynamicNavbar />
-          </Suspense>
           <Component {...pageProps} />
         </PageLoader>
       </div>
@@ -80,4 +66,4 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);

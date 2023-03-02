@@ -1,8 +1,8 @@
 import Months from '@/Components/Shared/DatePicker/Dates/Months';
 import { Years } from '@/Components/Shared/DatePicker/Dates/Years';
 import { DateTime } from 'luxon';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   Day,
   useCalculateEachDayOfMonth,

@@ -41,3 +41,5 @@ ui-debug.log
 # react-pdf
 cmaps/
 pdf.worker.min.js
+
+/public/locales

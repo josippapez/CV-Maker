@@ -1,6 +1,6 @@
 import { setDisplayVersionHistory } from '@/store/reducers/versionHistory';
 import { getAuth } from 'firebase/auth';
-import i18next from 'i18next';
+import { i18n } from 'next-i18next';
 import { toast } from 'react-toastify';
 import { cacheAllData, PDFData } from '../reducers/pdfData';
 import { setTemplate, Template } from '../reducers/template';
@@ -13,7 +13,7 @@ export interface DocumentPDFData extends PDFData {
 }
 
 export const saveDataForUser = () => {
-  return (dispatch: AppDispatch, getState: AppState) => {
+  return async (dispatch: AppDispatch, getState: AppState) => {
     if (!getAuth().currentUser) return;
 
     const { add } = FirebaseCollectionActions('user-data');
@@ -26,15 +26,13 @@ export const saveDataForUser = () => {
       }
     }, {});
 
-    localStorage.setItem('language', i18next.language);
-
-    dispatch(
+    await dispatch(
       add(
         {
           ...data,
           template: getState().template,
           timestamp: Date.now(),
-          language: i18next.language,
+          language: i18n?.language || 'en-US',
         },
         () => {
           console.log('saved user data');
@@ -120,7 +118,7 @@ export const getDataForUser = (props?: {
       );
     }
 
-    i18next.changeLanguage(pdfData.language);
+    i18n?.changeLanguage(pdfData.language);
     dispatch(cacheAllData(pdfData));
     dispatch(setTemplate(pdfData.template.templateName));
     if (props?.successCallback) {

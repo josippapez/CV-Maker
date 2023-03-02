@@ -11,11 +11,11 @@ import { useAuth } from '@/Providers/AuthProvider';
 import { saveDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch } from '@/store/hooks';
 import { usePDF } from '@react-pdf/renderer';
+import { i18n, useTranslation } from 'next-i18next';
 import { FC, useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack5';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
+import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack5';
 
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
@@ -33,7 +33,7 @@ export const PDFView: FC<Props> = ({ isPDFPreview }) => {
   const windowSize = useWindowSize();
   const isMobileView = useMobileView();
   const { user } = useAuth();
-  const { t, i18n } = useTranslation('CVTemplates');
+  const { t } = useTranslation('CVTemplates');
   const {
     certificates,
     education,
@@ -51,7 +51,6 @@ export const PDFView: FC<Props> = ({ isPDFPreview }) => {
   const [displayDownloadModal, setDisplayDownloadModal] = useState(false);
   const [initial, setInitial] = useDebouncedValue(true, 2000);
 
-  const currentLanguage = i18n.language;
   const userIsLoggedIn = !!user?.uid;
   const pageExists = !!pageNumber && !!numPages;
 
@@ -65,7 +64,6 @@ export const PDFView: FC<Props> = ({ isPDFPreview }) => {
       skills,
       template,
       t,
-      currentLanguage,
     }),
   });
 
@@ -97,7 +95,6 @@ export const PDFView: FC<Props> = ({ isPDFPreview }) => {
     languages,
     skills,
     template,
-    currentLanguage,
   ]);
 
   const onDocumentLoadSuccess = useCallback(

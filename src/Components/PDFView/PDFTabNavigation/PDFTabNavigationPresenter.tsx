@@ -6,6 +6,7 @@ import TemplatesButton from '@/Components/Shared/Navbar/Components/TemplatesButt
 import { Tooltip } from '@/Components/Shared/Tooltip/Tooltip';
 import { useAuth } from '@/Providers/AuthProvider';
 import { logout, signInWithGoogle } from '@/store/actions/authActions';
+import { saveDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch } from '@/store/hooks';
 import AcademicCap from '@public/Styles/Assets/Images/academic-cap.svg';
 import Briefcase from '@public/Styles/Assets/Images/briefcase.svg';
@@ -16,8 +17,8 @@ import Logout from '@public/Styles/Assets/Images/logout.svg';
 import Profile from '@public/Styles/Assets/Images/profile.svg';
 import Tools from '@public/Styles/Assets/Images/tools.svg';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'next-i18next';
 import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 type Props = {
   setSelectedTab: (tab: Tab) => void;
@@ -25,8 +26,8 @@ type Props = {
 };
 
 const PDFTabNavigationPresenter = (props: Props) => {
-  const { t } = useTranslation('PDFTabNavigation');
   const dispatch = useAppDispatch();
+  const { t } = useTranslation('PDFTabNavigation');
 
   const { setSelectedTab, selectedTab } = props;
   const { user } = useAuth();
@@ -151,6 +152,7 @@ const PDFTabNavigationPresenter = (props: Props) => {
             }}
           >
             <ChangeLanguageButton
+              onChangeLanguage={() => dispatch(saveDataForUser())}
               dropdownPosition='right'
               className='focus:shadow-outline cursor-pointer select-none rounded-md
             p-4 text-sm

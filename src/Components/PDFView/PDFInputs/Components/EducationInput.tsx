@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import useAnimation from '../../../../Hooks/useAnimation';
 import usePDFData from '../../../../Hooks/usePDFData';
 import { AddNewButton } from './AddNewButton';

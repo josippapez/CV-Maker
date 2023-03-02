@@ -418,7 +418,7 @@ const CVTemplate1 = (props: DefaultProps): JSX.Element => {
                     {edu.startDate && displayDate(edu.startDate)} -{' '}
                     {edu.currentlyEnrolled
                       ? translate('present')
-                      : edu.endDate && displayDate(edu.startDate)}
+                      : edu.endDate && displayDate(edu.endDate)}
                   </TextDisplay>
                   <TextDisplay style={[styles.educationDegree]}>
                     {`${edu.degree} ${

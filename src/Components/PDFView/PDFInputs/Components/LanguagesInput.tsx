@@ -6,7 +6,7 @@ import useAnimation from '@/Hooks/useAnimation';
 import usePDFData from '@/Hooks/usePDFData';
 import { Operations } from '@/store/reducers/pdfData';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 export const LanguagesInput = () => {
   const { languages, setLanguages } = usePDFData();
@@ -39,7 +39,7 @@ export const LanguagesInput = () => {
           <div className='flex'>
             <TextInput
               key={index + '-' + 'LanguagesInput' + '-' + t('language')}
-              label={t('language')}
+              label={t('language').toString()}
               defaultValue={language.name}
               name='language'
               onChange={e => {

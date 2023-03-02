@@ -1,8 +1,16 @@
+import ChangeLanguageButton from '@/Components/Shared/Navbar/Components/ChangeLanguageButton';
+import { RoutesWithLocale } from 'consts/Routes';
 import { useRouter } from 'next/router';
-import ChangeLanguageButton from './Components/ChangeLanguageButton';
+import { FC } from 'react';
 import DarkModeButton from './Components/DarkModeButton';
 
-const NavbarPresenter = () => {
+type Props = {
+  routesWithLocale?: typeof RoutesWithLocale;
+};
+
+const NavbarPresenter: FC<Props> = ({
+  routesWithLocale = RoutesWithLocale,
+}) => {
   const { asPath } = useRouter();
 
   return (
@@ -15,7 +23,7 @@ const NavbarPresenter = () => {
           font-bold shadow-md transition-all
           focus:outline-none dark:bg-[#616161]'
         />
-        {asPath === '/' && (
+        {asPath === routesWithLocale?.LANDING_PAGE && (
           <ChangeLanguageButton
             iconStrokeColor={'dark:stroke-white stroke-black'}
             dropdownPosition='left'
