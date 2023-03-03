@@ -1,5 +1,5 @@
-import LandingPage from '@/Components/LandingPage/LandingPage';
-import NavbarPresenter from '@/Components/Shared/Navbar/NavbarPresenter';
+import { LandingPage } from '@modules/LandingPage';
+import { NavbarPresenter } from '@modules/Navbar';
 import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import { getStaticPaths, makeStaticProps } from 'ssg-setup/getStatic';

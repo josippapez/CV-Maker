@@ -1,14 +1,6 @@
 import { useDebouncedFunction } from '@/Hooks/useDebouncedFunction';
 import { getDataForUser } from '@/store/actions/syncActions';
-import { useCallback, useMemo } from 'react';
-import {
-  Certificate,
-  Education,
-  GeneralInfo,
-  LanguageSkill,
-  ProfessionalExperience,
-  Skill,
-} from '../Components/PDFView/models';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   Operations,
   PDFData,
@@ -21,11 +13,19 @@ import {
   cacheSkills,
   pdfDataSelector,
   setLoaded,
-} from '../store/reducers/pdfData';
-import { TemplateName, setTemplate } from '../store/reducers/template';
-import { useAppDispatch, useAppSelector } from './../store/hooks';
+} from '@/store/reducers/pdfData';
+import { TemplateName, setTemplate } from '@/store/reducers/template';
+import {
+  Certificate,
+  Education,
+  GeneralInfo,
+  LanguageSkill,
+  ProfessionalExperience,
+  Skill,
+} from '@modules/PDFView/models';
+import { useCallback, useMemo } from 'react';
 
-const usePDFData = () => {
+export const usePDFData = () => {
   const dispatch = useAppDispatch();
   const {
     certificates,
@@ -160,5 +160,3 @@ const usePDFData = () => {
     getUserData,
   };
 };
-
-export default usePDFData;

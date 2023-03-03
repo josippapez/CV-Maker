@@ -1,4 +1,4 @@
-import PageLoader from '@/Components/Shared/Loader/PageLoader';
+import { PageLoader } from '@modules/Shared';
 import '@public/Styles/index.css';
 import { appWithTranslation } from 'next-i18next';
 import { AppProps } from 'next/app';

@@ -1,12 +1,12 @@
-import NavbarPresenter from '@/Components/Shared/Navbar/NavbarPresenter';
+import { NavbarPresenter } from '@modules/Navbar';
+import { PageLoader } from '@modules/Shared';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { getStaticPaths, makeStaticProps } from 'ssg-setup/getStatic';
-import PageLoader from '../../../src/Components/Shared/Loader/PageLoader';
 
 const DynamicPDFView = dynamic(
-  () => import('@/Components/PDFView/CVMakerPage'),
+  () => import('@modules/PDFView').then(mod => mod.CVMakerPage),
   {
     ssr: false,
     loading: () => <PageLoader isLoading />,

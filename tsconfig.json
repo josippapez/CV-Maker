@@ -18,7 +18,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@public/*": ["public/*"]
+      "@public/*": ["public/*"],
+      "@modules/*": ["modules/*"],
     },
   },
   "ts-node": {
