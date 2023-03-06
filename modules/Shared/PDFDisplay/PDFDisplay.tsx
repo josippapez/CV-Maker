@@ -119,7 +119,7 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
           isMobileView || isPDFPreview ? 'w-full' : 'w-7/12'
         }`}
       >
-        <PageLoader isLoading={!loaded} inline>
+        <PageLoader isLoading={!loaded} inline={!isPDFPreview}>
           <Document
             {...options}
             file={instance.url}
