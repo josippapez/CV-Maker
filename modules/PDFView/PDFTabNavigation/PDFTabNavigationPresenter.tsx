@@ -3,7 +3,7 @@ import { useAppDispatch } from '@/store/hooks';
 import { ChangeLanguageButton, TemplatesButton } from '@modules/Navbar';
 import { Tab, TemplatesModal, VersionHistoryModal } from '@modules/PDFView';
 import { useAuth } from '@modules/Providers';
-import { Tooltip } from '@modules/Shared';
+import { Tooltip } from '@modules/Shared/Tooltip';
 import AcademicCap from '@public/Styles/Assets/Images/academic-cap.svg';
 import Briefcase from '@public/Styles/Assets/Images/briefcase.svg';
 import CertificateIcon from '@public/Styles/Assets/Images/document.svg';

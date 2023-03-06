@@ -1,7 +1,7 @@
 import { useAnimation, usePDFData } from '@/Hooks';
-import { DateInput, TextInput, ToggleInput } from '@modules/Shared';
 import { Operations } from '@/store/reducers/pdfData';
 import { Education } from '@modules/PDFView/models';
+import { DateInput, TextInput, ToggleInput } from '@modules/Shared/Inputs';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useState } from 'react';

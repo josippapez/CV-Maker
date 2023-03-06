@@ -1,4 +1,4 @@
-import { Modal } from '@modules/Shared';
+import { Modal } from '@modules/Shared/Modal';
 import { saveDataForUser } from '@/store/actions';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { cacheAllData, setModified } from '@/store/reducers/pdfData';

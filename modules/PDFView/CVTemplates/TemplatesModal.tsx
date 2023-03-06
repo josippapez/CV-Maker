@@ -1,5 +1,5 @@
-import { Modal } from '@modules/Shared';
 import { Carousel } from '@modules/PDFView/CVTemplates';
+import { Modal } from '@modules/Shared/Modal';
 import { useTranslation } from 'next-i18next';
 
 type Props = {

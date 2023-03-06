@@ -15,7 +15,6 @@ import {
 } from '@modules/PDFView/models';
 import { TFunction } from 'i18next';
 import { useMemo } from 'react';
-import { getI18n } from 'react-i18next';
 
 type OptionType = {
   generalInfo: GeneralInfo;
@@ -89,7 +88,7 @@ export const CVTemplate = (props: Props): JSX.Element => {
       certificates,
       education,
       languages,
-      skills
+      skills,
     ]
   );
 };

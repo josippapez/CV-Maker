@@ -1,8 +1,3 @@
-import { PDFTabNavigationPresenter } from '@modules/PDFView/PDFTabNavigation';
-import { AnimatePresence } from 'framer-motion';
-import { useCallback } from 'react';
-import CustomScroll from 'react-custom-scroll';
-import 'react-custom-scroll/dist/customScroll.css';
 import {
   CertificatesInput,
   EducationInput,
@@ -10,8 +5,13 @@ import {
   LanguagesInput,
   ProfessionalExperienceInput,
   SkillsInput,
-} from './Components';
-import { Tab } from './PDFInputsContainer';
+  Tab,
+} from '@modules/PDFView/PDFInputs';
+import { PDFTabNavigationPresenter } from '@modules/PDFView/PDFTabNavigation';
+import { AnimatePresence } from 'framer-motion';
+import { useCallback } from 'react';
+import CustomScroll from 'react-custom-scroll';
+import 'react-custom-scroll/dist/customScroll.css';
 
 type Props = {
   selectedTab: Tab;

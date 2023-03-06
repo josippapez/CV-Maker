@@ -1,7 +1,7 @@
 import { useAnimation, usePDFData } from '@/Hooks';
-import { DateInput, TextInput } from '@modules/Shared';
 import { Operations } from '@/store/reducers/pdfData';
 import { AddNewButton, Certificate, DeleteButton } from '@modules/PDFView';
+import { DateInput, TextInput } from '@modules/Shared/Inputs';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 

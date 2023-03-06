@@ -9,7 +9,8 @@ import { saveDataForUser } from '@/store/actions';
 import { useAppDispatch } from '@/store/hooks';
 import { CVTemplate, PDFDownload } from '@modules/PDFView';
 import { useAuth } from '@modules/Providers';
-import { PageLoader, Tooltip } from '@modules/Shared';
+import { PageLoader } from '@modules/Shared/Loader';
+import { Tooltip } from '@modules/Shared/Tooltip';
 import { usePDF } from '@react-pdf/renderer';
 import { useTranslation } from 'next-i18next';
 import { FC, useCallback, useEffect, useState } from 'react';
@@ -25,10 +26,10 @@ const options = {
 };
 
 type Props = {
-  isPDFPreview: boolean;
+  isPDFPreview?: boolean;
 };
 
-export const PDFView: FC<Props> = ({ isPDFPreview }) => {
+export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
   const dispatch = useAppDispatch();
   const windowSize = useWindowSize();
   const isMobileView = useMobileView();
@@ -74,8 +75,6 @@ export const PDFView: FC<Props> = ({ isPDFPreview }) => {
   }, [instance.loading]);
 
   const updateInstanceAndSaveData = useDebouncedFunction(() => {
-    console.log('updateInstanceAndSaveData');
-
     if (loaded) updateInstance();
 
     if (isPDFPreview) return;

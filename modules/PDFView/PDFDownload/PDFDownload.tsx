@@ -1,4 +1,4 @@
-import { Modal } from '@modules/Shared';
+import { Modal } from '@modules/Shared/Modal';
 import { useState } from 'react';
 
 type Props = {

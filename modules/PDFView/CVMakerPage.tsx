@@ -1,6 +1,5 @@
-import '@/i18n';
 import { persistor, store } from '@/store';
-import { PDFViewContainer } from '@modules/PDFView';
+import { CreateView } from '@modules/PDFView/CreateView';
 import { AuthProvider } from '@modules/Providers/AuthProvider';
 import { FC } from 'react';
 import { Provider } from 'react-redux';
@@ -11,7 +10,7 @@ export const CVMakerPage: FC = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <AuthProvider>
-          <PDFViewContainer />
+          <CreateView />
         </AuthProvider>
       </PersistGate>
     </Provider>
