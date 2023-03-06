@@ -1,13 +1,13 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PURGE } from 'redux-persist/es/constants';
 import {
   Certificate,
   Education,
   GeneralInfo,
   LanguageSkill,
+  ProfessionalExperience,
   Skill,
-} from '../../Components/PDFView/models';
-import { ProfessionalExperience } from './../../Components/PDFView/models/ProfessionalExperience';
+} from '@modules/PDFView/models';
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
+import { PURGE } from 'redux-persist/es/constants';
 
 export enum Operations {
   ADD,

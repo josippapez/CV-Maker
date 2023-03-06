@@ -6,7 +6,7 @@ declare global {
   }
 }
 
-const useMobileView = (): boolean => {
+export const useMobileView = (): boolean => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
   const [isMobileView, setIsMobileView] = useState(
@@ -26,5 +26,3 @@ const useMobileView = (): boolean => {
 
   return isMobileView;
 };
-
-export default useMobileView;

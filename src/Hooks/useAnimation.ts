@@ -8,7 +8,7 @@ interface Props {
   };
 }
 
-const useAnimation = (props: Props) => {
+export const useAnimation = (props: Props) => {
   const { amountX, amountY, combinedTransition } = props;
 
   const fadeStyleInitial = {
@@ -57,5 +57,3 @@ const useAnimation = (props: Props) => {
     },
   };
 };
-
-export default useAnimation;

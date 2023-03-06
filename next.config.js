@@ -9,6 +9,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const nextConfig = {
+  transpilePackages: ['redux-persist'],
   reactStrictMode: true,
   swcMinify: true,
   images: {

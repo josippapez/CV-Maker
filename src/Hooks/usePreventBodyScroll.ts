@@ -21,7 +21,7 @@ const preventDefault = (ev: Event) => {
   }
 };
 
-function usePreventBodyScroll(ref: React.RefObject<HTMLElement>) {
+export const usePreventBodyScroll = (ref: React.RefObject<HTMLElement>) => {
   const [hidden, setHidden] = React.useState(false);
   const [position, setPosition] = React.useState<scrollPosition | null>(null);
 
@@ -78,6 +78,4 @@ function usePreventBodyScroll(ref: React.RefObject<HTMLElement>) {
   const disableScroll = React.useCallback(() => setHidden(true), []);
   const enableScroll = React.useCallback(() => setHidden(false), []);
   return { disableScroll, enableScroll, position };
-}
-
-export default usePreventBodyScroll;
+};
