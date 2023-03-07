@@ -37,5 +37,6 @@ const getStaticProps = makeStaticProps([
   'SkillsInput',
   'DatePicker',
   'VersionHistoryModal',
+  'PDFTabNavigation',
 ]);
 export { getStaticPaths, getStaticProps };

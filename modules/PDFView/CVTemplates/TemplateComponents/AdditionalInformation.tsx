@@ -10,24 +10,55 @@ import {
 } from '@modules/PDFView';
 import { Link, StyleSheet, Text, View } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
+import { FC } from 'react';
 import { GeneralInfo } from '../../models';
 
 type Props = {
   generalInfo?: GeneralInfo;
+  onlyIcon?: boolean;
   styles: ReturnType<typeof StyleSheet.create>;
-  wrapper(children: JSX.Element[]): JSX.Element;
+  wrapper?: (children: JSX.Element[]) => JSX.Element;
   itemWrapperStyle?: Style[] | Style;
 };
 
-export const AdditionalInformation = (props: Props) => {
-  const { generalInfo, styles, wrapper, itemWrapperStyle } = props;
+const additionalInfoStyles = StyleSheet.create({
+  infoDisplay: {
+    paddingVertical: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  infoWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: 10,
+  },
+  iconWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    columnGap: 20,
+    flexWrap: 'wrap',
+    rowGap: 10,
+    justifyContent: 'flex-end',
+  },
+  iconsDisplay: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: '1.5px solid #919191',
+    borderRadius: '50%',
+    padding: 6,
+  },
+});
 
+export const AdditionalInformation: FC<Props> = ({
+  generalInfo,
+  styles,
+  wrapper,
+  itemWrapperStyle,
+  onlyIcon,
+}) => {
   const info: JSX.Element[] = [
-    {
-      icon: Email,
-      text: generalInfo?.email,
-      condition: generalInfo?.email,
-    },
     {
       icon: Pin,
       text: `${generalInfo?.city}, ${generalInfo?.country}`,
@@ -37,6 +68,25 @@ export const AdditionalInformation = (props: Props) => {
       icon: Phone,
       text: generalInfo?.phone,
       condition: generalInfo?.phone,
+    },
+  ]
+    .filter(({ condition }) => {
+      return condition;
+    })
+    .map(({ icon, text }, index) => {
+      return (
+        <View key={`additionalInfo-${index}`} style={itemWrapperStyle}>
+          {icon({ width: 14 })}
+          {text && <Text style={styles.additionalInfoBarText}>{text}</Text>}
+        </View>
+      );
+    });
+
+  const links: JSX.Element[] = [
+    {
+      icon: Email,
+      text: generalInfo?.email,
+      condition: generalInfo?.email,
     },
     {
       icon: Linkedin,
@@ -68,7 +118,19 @@ export const AdditionalInformation = (props: Props) => {
       return condition;
     })
     .map(({ icon, text, link }, index) => {
-      return (
+      const LinkDisplay = () => (
+        <Link
+          src={link || `mailto:${text}`}
+          key={`additionalInfo-${index}`}
+          style={[additionalInfoStyles.iconsDisplay]}
+        >
+          {icon({ width: 14 })}
+        </Link>
+      );
+
+      return onlyIcon ? (
+        <LinkDisplay />
+      ) : (
         <View key={`additionalInfo-${index}`} style={itemWrapperStyle}>
           {icon({ width: 14 })}
           {text && <Text style={styles.additionalInfoBarText}>{text}</Text>}
@@ -88,5 +150,12 @@ export const AdditionalInformation = (props: Props) => {
       );
     });
 
-  return wrapper(info);
+  return wrapper ? (
+    wrapper([...info, ...links])
+  ) : (
+    <View style={additionalInfoStyles.infoDisplay}>
+      <View style={additionalInfoStyles.infoWrapper}>{info}</View>
+      <View style={additionalInfoStyles.iconWrapper}>{links}</View>
+    </View>
+  );
 };

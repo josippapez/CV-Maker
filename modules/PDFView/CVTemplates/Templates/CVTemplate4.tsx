@@ -329,30 +329,13 @@ export const CVTemplate4 = (props: DefaultProps): JSX.Element => {
             </View>
           )}
           <AdditionalInformation
+            onlyIcon
             generalInfo={generalInfo}
             styles={styles}
-            itemWrapperStyle={[
-              styles.row,
-              {
-                width: '50%',
-                paddingTop: 10,
-                paddingRight: 20,
-              },
-            ]}
-            wrapper={(wrappedInfo: JSX.Element[]) => {
-              return (
-                <View
-                  style={[
-                    styles.additionalInfoBar,
-                    styles.row,
-                    {
-                      flexWrap: 'wrap',
-                    },
-                  ]}
-                >
-                  {wrappedInfo}
-                </View>
-              );
+            itemWrapperStyle={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           />
         </View>

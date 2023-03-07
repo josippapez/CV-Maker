@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ReactNode, useCallback, useRef, useState } from 'react';
+import { FC, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 
 type Props = {
   children: ReactNode;
@@ -9,8 +9,13 @@ type Props = {
   showOnClick?: boolean;
 };
 
-export const Tooltip = (props: Props) => {
-  const { children, tooltipText, delayShow, showOnClick } = props;
+export const Tooltip: FC<Props> = ({
+  children,
+  tooltipText,
+  delayShow = 0,
+  position = 'right',
+  showOnClick,
+}) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const updateInstanceRef: { current: null | ReturnType<typeof setTimeout> } =
     useRef(null);
@@ -35,8 +40,8 @@ export const Tooltip = (props: Props) => {
     }, 1000);
   }, []);
 
-  const getPostion = useCallback(() => {
-    switch (props.position) {
+  const getPostion = useMemo(() => {
+    switch (position) {
       case 'bottom':
         return 'top-[100%] self-center mt-3';
       case 'top':
@@ -48,7 +53,7 @@ export const Tooltip = (props: Props) => {
       default:
         return 'left-[100%] self-center ml-3';
     }
-  }, [props.position]);
+  }, [position]);
 
   return (
     <div className='flex'>
@@ -81,7 +86,7 @@ export const Tooltip = (props: Props) => {
                 },
               },
             }}
-            className={`absolute w-max bg-gray-200 p-3 rounded-md ${getPostion()} drop-shadow-md`}
+            className={`absolute w-max rounded-md bg-gray-200 p-3 ${getPostion} drop-shadow-md`}
           >
             {tooltipText}
           </motion.div>
@@ -89,9 +94,4 @@ export const Tooltip = (props: Props) => {
       </AnimatePresence>
     </div>
   );
-};
-
-Tooltip.defaultProps = {
-  delayShow: 0,
-  position: 'right',
 };
