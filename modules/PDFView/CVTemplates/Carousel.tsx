@@ -1,4 +1,4 @@
-import { usePDFData } from '@/Hooks';
+import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { TemplateName } from '@/store/reducers/template';
 import { useTranslation } from 'next-i18next';
 import style from './TemplatesModal.module.scss';

@@ -1,6 +1,8 @@
-import { useAnimation, usePDFData } from '@/Hooks';
 import { Operations } from '@/store/reducers/pdfData';
-import { AddNewButton, EducationItem } from '@modules/PDFView/PDFInputs';
+import { AddNewButton } from '@modules/PDFView/PDFInputs/Components/AddNewButton';
+import { EducationItem } from '@modules/PDFView/PDFInputs/Components/EducationItem';
+import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
+import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 

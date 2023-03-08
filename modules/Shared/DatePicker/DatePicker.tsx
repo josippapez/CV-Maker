@@ -1,10 +1,13 @@
-import { Day, useCalculateEachDayOfMonth } from '@/Hooks';
 import {
   DatePickerDates,
   DatePickerHeader,
   Months,
   Years,
 } from '@modules/Shared/DatePicker';
+import {
+  Day,
+  useCalculateEachDayOfMonth,
+} from '@modules/Shared/Hooks/calculateEachDayOfMonth';
 import { Modal } from '@modules/Shared/Modal';
 import { DateTime } from 'luxon';
 import { useTranslation } from 'next-i18next';

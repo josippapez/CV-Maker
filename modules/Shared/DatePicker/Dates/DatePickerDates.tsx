@@ -1,4 +1,4 @@
-import { Day, useCalculateEachDayOfMonth } from '@/Hooks';
+import { Day, useCalculateEachDayOfMonth } from '@modules/Shared/Hooks/calculateEachDayOfMonth';
 import { DateTime, Info } from 'luxon';
 import style from './DatePickerDates.module.scss';
 

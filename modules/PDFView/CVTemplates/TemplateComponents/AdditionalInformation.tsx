@@ -75,7 +75,7 @@ export const AdditionalInformation: FC<Props> = ({
     })
     .map(({ icon, text }, index) => {
       return (
-        <View key={`additionalInfo-${index}`} style={itemWrapperStyle}>
+        <View key={`additionalInfo-${index}-1`} style={itemWrapperStyle}>
           {icon({ width: 14 })}
           {text && <Text style={styles.additionalInfoBarText}>{text}</Text>}
         </View>
@@ -121,7 +121,6 @@ export const AdditionalInformation: FC<Props> = ({
       const LinkDisplay = () => (
         <Link
           src={link || `mailto:${text}`}
-          key={`additionalInfo-${index}`}
           style={[additionalInfoStyles.iconsDisplay]}
         >
           {icon({ width: 14 })}
@@ -129,7 +128,7 @@ export const AdditionalInformation: FC<Props> = ({
       );
 
       return onlyIcon ? (
-        <LinkDisplay />
+        <LinkDisplay key={`additionalInfo-${index}-2`} />
       ) : (
         <View key={`additionalInfo-${index}`} style={itemWrapperStyle}>
           {icon({ width: 14 })}

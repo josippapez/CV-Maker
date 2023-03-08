@@ -1,7 +1,5 @@
-import {
-  AdditionalInformation,
-  displayDate,
-} from '@modules/PDFView/CVTemplates';
+import { AdditionalInformation } from '@modules/PDFView/CVTemplates';
+import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import OpensansBold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Bold.woff';
 import OpensansExtraBold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.woff';
 import OpensansItalic from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Italic.woff';

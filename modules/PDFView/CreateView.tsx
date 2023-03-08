@@ -1,9 +1,21 @@
-import { useMobileView, usePDFData } from '@/Hooks';
-import { PDFInputsContainer } from '@modules/PDFView';
+import { PDFInputsContainer } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { useAuth } from '@modules/Providers';
+import { useMobileView } from '@modules/Shared/Hooks/useMobileView';
+import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { PageLoader } from '@modules/Shared/Loader';
-import { PDFDisplay } from '@modules/Shared/PDFDisplay';
-import { FC, Suspense, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import { FC, useEffect } from 'react';
+
+const DynamicPDFDisplay = dynamic(
+  () =>
+    import('@modules/Shared/PDFDisplay').then(mod => ({
+      default: mod.PDFDisplay,
+    })),
+  {
+    ssr: false,
+    loading: () => <PageLoader isLoading />,
+  }
+);
 
 export const CreateView: FC = () => {
   const isMobileView = useMobileView();
@@ -21,11 +33,9 @@ export const CreateView: FC = () => {
       }`}
     >
       <div className={`${isMobileView ? 'w-full' : 'w-5/12'}`}>
-        <Suspense fallback={<PageLoader isLoading />}>
-          <PDFInputsContainer />
-        </Suspense>
+        <PDFInputsContainer />
       </div>
-      <PDFDisplay />
+      <DynamicPDFDisplay />
     </div>
   );
 };

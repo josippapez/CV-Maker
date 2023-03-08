@@ -1,4 +1,4 @@
-import { persistor, store } from '@/store';
+import { persistor, store } from '@/store/store';
 import { CreateView } from '@modules/PDFView/CreateView';
 import { AuthProvider } from '@modules/Providers/AuthProvider';
 import { FC } from 'react';

@@ -1,6 +1,8 @@
-import { useAnimation, usePDFData } from '@/Hooks';
 import { GeneralInfo } from '@modules/PDFView/models';
-import { DateInput, TextInput } from '@modules/Shared/Inputs';
+import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
+import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
+import { DateInput } from '@modules/Shared/Inputs/DateInput';
+import { TextInput } from '@modules/Shared/Inputs/TextInput';
 import Plus from '@public/Styles/Assets/Images/plus.svg';
 import Compressor from 'compressorjs';
 import { AnimatePresence, motion } from 'framer-motion';

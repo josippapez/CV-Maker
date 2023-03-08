@@ -1,4 +1,4 @@
-import { useDebouncedFunction } from '@/Hooks/useDebouncedFunction';
+import { useDebouncedFunction } from '@modules/Shared/Hooks/useDebouncedFunction';
 import { useState } from 'react';
 
 type DebouncedValue = <T>(

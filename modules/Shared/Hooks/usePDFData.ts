@@ -1,4 +1,4 @@
-import { useDebouncedFunction } from '@/Hooks/useDebouncedFunction';
+import { useDebouncedFunction } from '@modules/Shared/Hooks/useDebouncedFunction';
 import { getDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {

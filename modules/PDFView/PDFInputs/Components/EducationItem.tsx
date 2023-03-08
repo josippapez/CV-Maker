@@ -1,7 +1,10 @@
-import { useAnimation, usePDFData } from '@/Hooks';
 import { Operations } from '@/store/reducers/pdfData';
 import { Education } from '@modules/PDFView/models';
-import { DateInput, TextInput, ToggleInput } from '@modules/Shared/Inputs';
+import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
+import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
+import { DateInput } from '@modules/Shared/Inputs/DateInput';
+import { TextInput } from '@modules/Shared/Inputs/TextInput';
+import { ToggleInput } from '@modules/Shared/Inputs/ToggleInput';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useState } from 'react';
