@@ -11,12 +11,12 @@
 }
 
 body {
-  margin: 0;
-  font-family: 'Unbounded-variable', sans-serif;
-  font-size: 13px;
-  line-height: 2;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-size: 13px;
+  line-height: 2;
+  font-family: 'Unbounded-variable', sans-serif;
 }
 
 code {
@@ -30,90 +30,90 @@ textarea {
 }
 
 @font-face {
-  font-family: 'Unbounded-variable';
   src: url('./Assets/Fonts/Unbounded-VariableFont_wght.ttf');
+  font-family: 'Unbounded-variable';
 }
 
 .privacy-screen {
   position: fixed;
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  left: 0;
   z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .firebase-emulator-warning {
- display: none;
+  display: none;
 }
 
 .rcs-inner-handle {
   background-color: #d6d6d6 !important;
 }
 
-
 .document-controls {
-  opacity: 0;
+  display: flex;
+  position: absolute;
   bottom: 80px;
   left: 50%;
-  transform: translateX(-50%);
-  transition: opacity ease-in-out 0.2s;
-  position: absolute;
-  display: flex;
   place-content: center;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity ease-in-out 0.2s;
 }
 .page-controls-navigation {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
   background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  text-align: center;
   width: fit-content;
   height: fit-content;
+  text-align: center;
 }
 .page-controls-navigation span {
-  font-size: 14px;
-  font-weight: bold;
-  color: rgb(0, 0, 0);
   margin: 0px 10px;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  font-size: 14px;
 }
 .page-controls-navigation button {
   width: 40px;
   height: 40px;
 }
 .page-controls-navigation button:hover {
-  background-color: #e6e6e6;
   cursor: pointer;
   border-radius: 4px;
+  background-color: #e6e6e6;
 }
 
 .pdf-download {
-  background: url('./Assets/Images/downloadDocument.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
   cursor: pointer;
   margin-left: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  background: url('./Assets/Images/downloadDocument.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  width: 40px;
+  height: 40px;
 }
 
 .pdf-share {
-  background: url('./Assets/Images/share.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
   cursor: pointer;
   margin-left: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  background: url('./Assets/Images/share.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  width: 40px;
+  height: 40px;
 }
 
-.pdf-download:hover, .pdf-share:hover {
+.pdf-download:hover,
+.pdf-share:hover {
   background-color: #e6e6e6;
 }
 
@@ -121,4 +121,19 @@ textarea {
 .document-controls:hover {
   opacity: 1;
   z-index: 1;
+}
+
+.page-container {
+  display: grid;
+  grid-template-rows: max-content;
+  grid-template-columns: 1fr min(40rem, calc(100% - 260px)) 1fr;
+  column-gap: 32px;
+}
+
+.page-container > * {
+  grid-column: 2;
+}
+.full-bleed {
+  grid-column: 1 / -1;
+  width: 100%;
 }

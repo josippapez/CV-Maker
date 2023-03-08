@@ -1,7 +1,7 @@
 import { PDFInputsContainer } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { useAuth } from '@modules/Providers';
-import { useMobileView } from '@modules/Shared/Hooks/useMobileView';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
+import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { PageLoader } from '@modules/Shared/Loader';
 import dynamic from 'next/dynamic';
 import { FC, useEffect } from 'react';
@@ -18,7 +18,8 @@ const DynamicPDFDisplay = dynamic(
 );
 
 export const CreateView: FC = () => {
-  const isMobileView = useMobileView();
+  const windowSize = useWindowSize();
+  const isMobileView = windowSize.width < 1550;
   const { user } = useAuth();
   const { getUserData } = usePDFData();
 
@@ -32,7 +33,7 @@ export const CreateView: FC = () => {
         isMobileView ? 'flex-col' : 'flex-row'
       }`}
     >
-      <div className={`${isMobileView ? 'w-full' : 'w-5/12'}`}>
+      <div className={`${isMobileView ? 'w-full' : 'w-7/12'}`}>
         <PDFInputsContainer />
       </div>
       <DynamicPDFDisplay />

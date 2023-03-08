@@ -5,7 +5,6 @@ import { PDFDownload } from '@modules/PDFView/PDFDownload/PDFDownload';
 import { useAuth } from '@modules/Providers';
 import { useDebouncedFunction } from '@modules/Shared/Hooks/useDebouncedFunction';
 import { useDebouncedValue } from '@modules/Shared/Hooks/useDebouncedValue';
-import { useMobileView } from '@modules/Shared/Hooks/useMobileView';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { PageLoader } from '@modules/Shared/Loader';
@@ -31,7 +30,6 @@ type Props = {
 export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
   const dispatch = useAppDispatch();
   const windowSize = useWindowSize();
-  const isMobileView = useMobileView();
   const { user } = useAuth();
   const { t } = useTranslation('CVTemplates');
   const {
@@ -115,7 +113,7 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
     <>
       <div
         className={`transition-colors dark:bg-neutral-700 ${
-          isMobileView || isPDFPreview ? 'w-full' : 'w-7/12'
+          windowSize.width < 1550 || isPDFPreview ? 'w-full' : 'w-5/12'
         }`}
       >
         <PageLoader isLoading={!loaded} inline={!isPDFPreview}>
