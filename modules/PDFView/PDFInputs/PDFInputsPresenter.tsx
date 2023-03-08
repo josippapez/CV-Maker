@@ -5,9 +5,9 @@ import {
   LanguagesInput,
   ProfessionalExperienceInput,
   SkillsInput,
-  Tab,
-} from '@modules/PDFView/PDFInputs';
-import { PDFTabNavigationPresenter } from '@modules/PDFView/PDFTabNavigation';
+} from '@modules/PDFView/PDFInputs/Components';
+import { Tab } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
+import { PDFTabNavigationPresenter } from '@modules/PDFView/PDFTabNavigation/PDFTabNavigationPresenter';
 import { AnimatePresence } from 'framer-motion';
 import { useCallback } from 'react';
 import CustomScroll from 'react-custom-scroll';

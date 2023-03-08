@@ -1,4 +1,4 @@
-import { useCalculateEachDayOfMonth } from '@/Hooks';
+import { useCalculateEachDayOfMonth } from '@modules/Shared/Hooks/calculateEachDayOfMonth';
 import { DateTime, Info } from 'luxon';
 import style from './Months.module.scss';
 

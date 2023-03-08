@@ -1,4 +1,4 @@
-import { PDFInputsPresenter } from '@modules/PDFView';
+import { PDFInputsPresenter } from '@modules/PDFView/PDFInputs/PDFInputsPresenter';
 import { useEffect, useState } from 'react';
 
 export enum Tab {

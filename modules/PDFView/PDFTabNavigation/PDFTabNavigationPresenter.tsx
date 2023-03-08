@@ -1,7 +1,9 @@
 import { logout, saveDataForUser, signInWithGoogle } from '@/store/actions';
 import { useAppDispatch } from '@/store/hooks';
 import { ChangeLanguageButton, TemplatesButton } from '@modules/Navbar';
-import { Tab, TemplatesModal, VersionHistoryModal } from '@modules/PDFView';
+import { TemplatesModal } from '@modules/PDFView/CVTemplates';
+import { Tab } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
+import { VersionHistoryModal } from '@modules/PDFView/VersionHistory/VersionHistoryModal';
 import { useAuth } from '@modules/Providers';
 import { Tooltip } from '@modules/Shared/Tooltip';
 import AcademicCap from '@public/Styles/Assets/Images/academic-cap.svg';

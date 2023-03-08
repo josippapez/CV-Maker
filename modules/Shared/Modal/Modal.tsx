@@ -1,4 +1,4 @@
-import { useWindowSize } from '@/Hooks';
+import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { AnimatePresence, motion } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import style from './Modal.module.scss';

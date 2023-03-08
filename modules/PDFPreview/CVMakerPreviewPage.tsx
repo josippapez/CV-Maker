@@ -1,4 +1,4 @@
-import { store } from '@/store';
+import { store } from '@/store/store';
 import '@/translations/i18n';
 import { PDFPreview } from '@modules/PDFPreview/PDFPreview';
 import { FC } from 'react';

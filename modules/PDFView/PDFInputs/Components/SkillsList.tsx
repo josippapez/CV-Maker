@@ -1,4 +1,4 @@
-import { usePDFData } from '@/Hooks';
+import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { Operations } from '@/store/reducers/pdfData';
 import { AnimatePresence, motion } from 'framer-motion';
 

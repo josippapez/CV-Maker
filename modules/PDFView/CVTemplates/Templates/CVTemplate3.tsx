@@ -1,7 +1,5 @@
-import {
-  AdditionalInformation,
-  displayDate,
-} from '@modules/PDFView/CVTemplates';
+import { AdditionalInformation } from '@modules/PDFView/CVTemplates';
+import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import UnboundedBold from '@public/Styles/Assets/Fonts/Unbound/Unbounded-Bold.woff';
 import UnboundedExtraBold from '@public/Styles/Assets/Fonts/Unbound/Unbounded-ExtraBold.woff';
 import UnboundedExtraLight from '@public/Styles/Assets/Fonts/Unbound/Unbounded-ExtraLight.woff';

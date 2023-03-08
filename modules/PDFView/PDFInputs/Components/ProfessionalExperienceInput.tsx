@@ -1,11 +1,12 @@
-import { useAnimation, usePDFData } from '@/Hooks';
 import { Operations } from '@/store/reducers/pdfData';
-import {
-  AddNewButton,
-  DeleteButton,
-  ProfessionalExperience,
-} from '@modules/PDFView';
-import { DateInput, TextInput, ToggleInput } from '@modules/Shared/Inputs';
+import { ProfessionalExperience } from '@modules/PDFView';
+import { AddNewButton } from '@modules/PDFView/PDFInputs/Components/AddNewButton';
+import { DeleteButton } from '@modules/PDFView/PDFInputs/Components/DeleteButton';
+import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
+import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
+import { DateInput } from '@modules/Shared/Inputs/DateInput';
+import { TextInput } from '@modules/Shared/Inputs/TextInput';
+import { ToggleInput } from '@modules/Shared/Inputs/ToggleInput';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 

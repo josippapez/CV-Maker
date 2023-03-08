@@ -1,4 +1,4 @@
-import { useMobileView } from '@/Hooks';
+import { useMobileView } from '@modules/Shared/Hooks/useMobileView';
 import ArrowLeft from '@public/Styles/Assets/Images/left-arrow.svg';
 import ArrowRight from '@public/Styles/Assets/Images/right-arrow.svg';
 import { DateTime } from 'luxon';

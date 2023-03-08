@@ -1,9 +1,21 @@
-import { usePDFData } from '@/Hooks';
-import { DocumentPDFData, getCVPreviewForUser } from '@/store';
-import { PDFDisplay } from '@modules/Shared/PDFDisplay';
+import { DocumentPDFData, getCVPreviewForUser } from '@/store/actions';
+import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
+import { PageLoader } from '@modules/Shared/Loader';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { getI18n } from 'react-i18next';
+
+const DynamicPDFDisplay = dynamic(
+  () =>
+    import('@modules/Shared/PDFDisplay').then(mod => ({
+      default: mod.PDFDisplay,
+    })),
+  {
+    ssr: false,
+    loading: () => <PageLoader isLoading />,
+  }
+);
 
 const isQueryUserIdString = (
   query: string | string[] | undefined
@@ -31,5 +43,5 @@ export const PDFPreview = () => {
     }
   }, []);
 
-  return <PDFDisplay isPDFPreview />;
+  return <DynamicPDFDisplay isPDFPreview />;
 };

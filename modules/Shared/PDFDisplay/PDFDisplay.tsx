@@ -1,14 +1,13 @@
-import {
-  useDebouncedFunction,
-  useDebouncedValue,
-  useMobileView,
-  usePDFData,
-  useWindowSize,
-} from '@/Hooks';
 import { saveDataForUser } from '@/store/actions';
 import { useAppDispatch } from '@/store/hooks';
-import { CVTemplate, PDFDownload } from '@modules/PDFView';
+import { CVTemplate } from '@modules/PDFView';
+import { PDFDownload } from '@modules/PDFView/PDFDownload/PDFDownload';
 import { useAuth } from '@modules/Providers';
+import { useDebouncedFunction } from '@modules/Shared/Hooks/useDebouncedFunction';
+import { useDebouncedValue } from '@modules/Shared/Hooks/useDebouncedValue';
+import { useMobileView } from '@modules/Shared/Hooks/useMobileView';
+import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
+import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { PageLoader } from '@modules/Shared/Loader';
 import { Tooltip } from '@modules/Shared/Tooltip';
 import { usePDF } from '@react-pdf/renderer';

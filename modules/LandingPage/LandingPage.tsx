@@ -2,7 +2,7 @@ import {
   LandingPageScrollNavigation,
   LandingPageSections,
 } from '@modules/LandingPage';
-import { useAnimation } from '@/Hooks';
+import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import { RoutesWithLocale } from 'consts/Routes';
 import { motion, useInView } from 'framer-motion';
 import { useTranslation } from 'next-i18next';

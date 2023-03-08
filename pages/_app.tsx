@@ -4,6 +4,8 @@ import { appWithTranslation } from 'next-i18next';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 declare global {
   interface Window {
@@ -35,7 +37,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     <>
       <Head>
         <link rel='icon' href='/favicon.ico' />
-        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel='apple-touch-icon' href='/logo.png' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <meta
           name='description'
@@ -61,6 +63,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         />
       </Head>
       <div className='h-screen'>
+        <ToastContainer />
         <PageLoader isLoading={loading}>
           <Component {...pageProps} />
         </PageLoader>

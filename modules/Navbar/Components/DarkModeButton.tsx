@@ -1,4 +1,4 @@
-import { useDarkMode } from '@/Hooks';
+import { useDarkMode } from '@modules/Shared/Hooks/useDarkMode';
 import MoonIcon from '@public/Styles/Assets/Images/moon.svg';
 import SunIcon from '@public/Styles/Assets/Images/sun.svg';
 
