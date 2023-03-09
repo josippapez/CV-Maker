@@ -1,4 +1,3 @@
-import { useDebouncedFunction } from '@modules/Shared/Hooks/useDebouncedFunction';
 import { getDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
@@ -10,6 +9,7 @@ import {
   cacheGeneralInfo,
   cacheLanguages,
   cacheProfessionalExperience,
+  cacheProjects,
   cacheSkills,
   pdfDataSelector,
   setLoaded,
@@ -21,8 +21,10 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
+  Project,
   Skill,
 } from '@modules/PDFView/models';
+import { useDebouncedFunction } from '@modules/Shared/Hooks/useDebouncedFunction';
 import { useCallback, useMemo } from 'react';
 
 export const usePDFData = () => {
@@ -35,6 +37,7 @@ export const usePDFData = () => {
     professionalExperience,
     skills,
     loaded,
+    projects,
   } = useAppSelector(pdfDataSelector);
   const template = useAppSelector(state => state.template);
 
@@ -108,6 +111,16 @@ export const usePDFData = () => {
       ),
     0
   );
+  const setProjects = useDebouncedFunction(
+    (operation: Operations, project?: Partial<Project>, index?: number) =>
+      dispatch(
+        cacheProjects({
+          operation,
+          project,
+          index,
+        })
+      )
+  );
   const setAllData = useDebouncedFunction((data: PDFData) =>
     dispatch(cacheAllData(data))
   );
@@ -134,6 +147,7 @@ export const usePDFData = () => {
       skills,
       loaded,
       template,
+      projects,
     };
   }, [
     certificates,
@@ -142,6 +156,7 @@ export const usePDFData = () => {
     languages,
     professionalExperience,
     skills,
+    projects,
     loaded,
     template,
   ]);
@@ -155,6 +170,7 @@ export const usePDFData = () => {
     setEducation,
     setLanguages,
     setSkills,
+    setProjects,
     setAllData,
     setActiveTemplate,
     getUserData,

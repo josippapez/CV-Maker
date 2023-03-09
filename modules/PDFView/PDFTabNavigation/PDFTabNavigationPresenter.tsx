@@ -15,6 +15,7 @@ import Language from '@public/Styles/Assets/Images/language.svg';
 import Logout from '@public/Styles/Assets/Images/logout.svg';
 import Profile from '@public/Styles/Assets/Images/profile.svg';
 import Tools from '@public/Styles/Assets/Images/tools.svg';
+import ProjectFolder from '@public/Styles/Assets/Images/projectFolder.svg';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useMemo, useState } from 'react';
@@ -70,6 +71,12 @@ export const PDFTabNavigationPresenter = (props: Props) => {
       {
         tab: Tab.skills,
         label: <Tools height={30} width={35} className='fill-gray-700' />,
+      },
+      {
+        tab: Tab.projects,
+        label: (
+          <ProjectFolder height={30} width={35} className='stroke-gray-700' />
+        ),
       },
     ],
     []

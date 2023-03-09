@@ -4,4 +4,5 @@ export * from './GeneralInfo';
 export * from './LanguageProficiency';
 export * from './LanguageSkill';
 export * from './ProfessionalExperience';
+export * from './Project';
 export * from './Skill';

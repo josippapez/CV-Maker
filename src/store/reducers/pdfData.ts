@@ -4,6 +4,7 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
+  Project,
   Skill,
 } from '@modules/PDFView/models';
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
@@ -23,6 +24,7 @@ interface ArrayUpdatePayload<T> {
 
 function updateArray<T>(array: T[], payload: ArrayUpdatePayload<T>) {
   const { operation, item, index } = payload;
+  if (!array) array = [];
   switch (operation) {
     case Operations.ADD:
       if (item) {
@@ -54,6 +56,7 @@ export interface PDFData {
   education: Education[];
   languages: LanguageSkill[];
   skills: Skill[];
+  projects: Project[];
   loaded: boolean;
 }
 
@@ -87,6 +90,7 @@ const initialState: PDFDataWithTimestamp = {
   education: [],
   languages: [],
   skills: [],
+  projects: [],
   timestamp: 0,
   loaded: false,
   modified: false,
@@ -208,6 +212,22 @@ export const pdfData = createSlice({
       });
       state.modified = true;
     },
+    cacheProjects: (
+      state,
+      action: PayloadAction<{
+        operation: Operations;
+        project?: Partial<Project>;
+        index?: number;
+      }>
+    ) => {
+      const { operation, project, index } = action.payload;
+      updateArray(state.projects, {
+        operation,
+        item: project,
+        index,
+      });
+      state.modified = true;
+    },
   },
 });
 
@@ -219,6 +239,7 @@ export const {
   cacheCertificates,
   cacheLanguages,
   cacheSkills,
+  cacheProjects,
   setLoaded,
   setModified,
 } = pdfData.actions;

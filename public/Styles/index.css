@@ -130,6 +130,12 @@ textarea {
   column-gap: 32px;
 }
 
+@media screen and (max-width: 768px) {
+  .page-container {
+    grid-template-columns: 1fr calc(100% - 64px) 1fr;
+  }
+}
+
 .page-container > * {
   grid-column: 2;
 }

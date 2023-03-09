@@ -35,6 +35,7 @@ const getStaticProps = makeStaticProps([
   'EducationInput',
   'CertificatesInput',
   'SkillsInput',
+  'ProjectsInput',
   'DatePicker',
   'VersionHistoryModal',
   'PDFTabNavigation',

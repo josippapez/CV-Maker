@@ -3,6 +3,7 @@ import { EducationInput } from '@modules/PDFView/PDFInputs/Components/EducationI
 import { GeneralInput } from '@modules/PDFView/PDFInputs/Components/GeneralInput';
 import { LanguagesInput } from '@modules/PDFView/PDFInputs/Components/LanguagesInput';
 import { ProfessionalExperienceInput } from '@modules/PDFView/PDFInputs/Components/ProfessionalExperienceInput';
+import { ProjectsInput } from '@modules/PDFView/PDFInputs/Components/ProjectsInput';
 import { SkillsInput } from '@modules/PDFView/PDFInputs/Components/SkillsInput';
 import { Tab } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { PDFTabNavigationPresenter } from '@modules/PDFView/PDFTabNavigation/PDFTabNavigationPresenter';
@@ -33,6 +34,8 @@ export const PDFInputsPresenter = (props: Props) => {
         return <LanguagesInput key={selectedTab} />;
       case Tab.skills:
         return <SkillsInput key={selectedTab} />;
+      case Tab.projects:
+        return <ProjectsInput key={selectedTab} />;
     }
   }, [selectedTab]);
 

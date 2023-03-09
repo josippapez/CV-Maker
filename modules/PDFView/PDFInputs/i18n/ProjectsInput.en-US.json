@@ -1,0 +1,10 @@
+{
+  "name": "Name",
+  "description": "Description",
+  "startDate": "Start date",
+  "endDate": "End date",
+  "owner": "Owner",
+  "url": "URL",
+  "currentlyWorking": "Currently working",
+  "addProject": "Add project"
+}
