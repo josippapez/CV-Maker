@@ -1,10 +1,9 @@
 import { Template, TemplateName } from '@/store/reducers/template';
-import {
-  CVTemplate1,
-  CVTemplate2,
-  CVTemplate3,
-  CVTemplate4,
-} from '@modules/PDFView/CVTemplates';
+import { CVTemplate1 } from '@modules/PDFView/CVTemplates/Templates/CVTemplate1';
+import { CVTemplate2 } from '@modules/PDFView/CVTemplates/Templates/CVTemplate2';
+import { CVTemplate3 } from '@modules/PDFView/CVTemplates/Templates/CVTemplate3';
+import { CVTemplate4 } from '@modules/PDFView/CVTemplates/Templates/CVTemplate4';
+import { registerFonts } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import {
   Certificate,
   Education,
@@ -15,6 +14,7 @@ import {
 } from '@modules/PDFView/models';
 import { TFunction } from 'i18next';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type OptionType = {
   generalInfo: GeneralInfo;
@@ -34,9 +34,12 @@ type Props = {
   education: Education[];
   languages: LanguageSkill[];
   template: Template;
-  t: TFunction;
   skills: Skill[];
 };
+
+function isNever(template: never): never {
+  throw new Error(`Unexpected Template: ${template}`);
+}
 
 export const getTemplate = (
   templateName: TemplateName,
@@ -52,11 +55,12 @@ export const getTemplate = (
     case TemplateName.CVTemplate4:
       return <CVTemplate4 {...options} />;
     default:
-      return <CVTemplate1 {...options} />;
+      return isNever(templateName);
   }
 };
 
 export const CVTemplate = (props: Props): JSX.Element => {
+  const { t } = useTranslation('CVTemplates');
   const {
     generalInfo,
     professionalExperience,
@@ -65,7 +69,6 @@ export const CVTemplate = (props: Props): JSX.Element => {
     languages,
     skills,
     template,
-    t,
   } = props;
 
   const options: OptionType = {
@@ -78,6 +81,10 @@ export const CVTemplate = (props: Props): JSX.Element => {
     template,
     translate: t,
   };
+
+  useMemo(() => {
+    registerFonts(template.templateName);
+  }, [template.templateName]);
 
   return useMemo(
     () => getTemplate(template.templateName, options),

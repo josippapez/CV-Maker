@@ -1,7 +1,7 @@
 import { Operations } from '@/store/reducers/pdfData';
-import { ProfessionalExperience } from '@modules/PDFView';
 import { AddNewButton } from '@modules/PDFView/PDFInputs/Components/AddNewButton';
 import { DeleteButton } from '@modules/PDFView/PDFInputs/Components/DeleteButton';
+import { ProfessionalExperience } from '@modules/PDFView/models';
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { DateInput } from '@modules/Shared/Inputs/DateInput';

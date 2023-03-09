@@ -1,11 +1,9 @@
-import {
-  CertificatesInput,
-  EducationInput,
-  GeneralInput,
-  LanguagesInput,
-  ProfessionalExperienceInput,
-  SkillsInput,
-} from '@modules/PDFView/PDFInputs/Components';
+import { CertificatesInput } from '@modules/PDFView/PDFInputs/Components/CertificatesInput';
+import { EducationInput } from '@modules/PDFView/PDFInputs/Components/EducationInput';
+import { GeneralInput } from '@modules/PDFView/PDFInputs/Components/GeneralInput';
+import { LanguagesInput } from '@modules/PDFView/PDFInputs/Components/LanguagesInput';
+import { ProfessionalExperienceInput } from '@modules/PDFView/PDFInputs/Components/ProfessionalExperienceInput';
+import { SkillsInput } from '@modules/PDFView/PDFInputs/Components/SkillsInput';
 import { Tab } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { PDFTabNavigationPresenter } from '@modules/PDFView/PDFTabNavigation/PDFTabNavigationPresenter';
 import { AnimatePresence } from 'framer-motion';
@@ -45,7 +43,7 @@ export const PDFInputsPresenter = (props: Props) => {
         selectedTab={selectedTab}
       />
       <CustomScroll flex={'1'} allowOuterScroll>
-        <div className='min-h-full bg-[#f7f7f7] page-container py-10'>
+        <div className='page-container min-h-full bg-[#f7f7f7] py-10'>
           <AnimatePresence mode='wait'>{getInputs()}</AnimatePresence>
         </div>
       </CustomScroll>

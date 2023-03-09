@@ -5,7 +5,10 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 const DynamicPDFView = dynamic(
-  () => import('@modules/PDFPreview').then(mod => mod.CVMakerPreviewPage),
+  () =>
+    import('@modules/PDFPreview/CVMakerPreviewPage').then(
+      mod => mod.CVMakerPreviewPage
+    ),
   {
     ssr: false,
     loading: () => <PageLoader isLoading />,

@@ -1,4 +1,7 @@
-import { DocumentPDFData, getCVPreviewForUser } from '@/store/actions';
+import {
+  DocumentPDFData,
+  getCVPreviewForUser,
+} from '@/store/actions/syncActions';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { PageLoader } from '@modules/Shared/Loader';
 import dynamic from 'next/dynamic';
@@ -8,7 +11,7 @@ import { getI18n } from 'react-i18next';
 
 const DynamicPDFDisplay = dynamic(
   () =>
-    import('@modules/Shared/PDFDisplay').then(mod => ({
+    import('@modules/Shared/PDFDisplay/PDFDisplay').then(mod => ({
       default: mod.PDFDisplay,
     })),
   {

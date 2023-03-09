@@ -1,13 +1,11 @@
-import {
-  Earth,
-  Email,
-  Facebook,
-  GitHub,
-  Linkedin,
-  Phone,
-  Pin,
-  Twitter,
-} from '@modules/PDFView';
+import { Earth } from '@modules/PDFView/CVTemplates/Images/Earth';
+import { Email } from '@modules/PDFView/CVTemplates/Images/Email';
+import { Facebook } from '@modules/PDFView/CVTemplates/Images/Facebook';
+import { GitHub } from '@modules/PDFView/CVTemplates/Images/Github';
+import { Linkedin } from '@modules/PDFView/CVTemplates/Images/Linkedin';
+import { Phone } from '@modules/PDFView/CVTemplates/Images/Phone';
+import { Pin } from '@modules/PDFView/CVTemplates/Images/Pin';
+import { Twitter } from '@modules/PDFView/CVTemplates/Images/Twitter';
 import { Link, StyleSheet, Text, View } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
 import { FC } from 'react';

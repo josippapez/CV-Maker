@@ -5,8 +5,8 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { getStaticPaths, makeStaticProps } from 'ssg-setup/getStatic';
 
-const DynamicPDFView = dynamic(
-  () => import('@modules/PDFView').then(mod => mod.CVMakerPage),
+const DynamicCVMakerPage = dynamic(
+  () => import('@modules/PDFView/CVMakerPage').then(mod => mod.CVMakerPage),
   {
     ssr: false,
     loading: () => <PageLoader isLoading />,
@@ -20,7 +20,7 @@ const Create: NextPage = () => {
         <title>Create CV</title>
       </Head>
       <NavbarPresenter />
-      <DynamicPDFView />
+      <DynamicCVMakerPage />
     </>
   );
 };

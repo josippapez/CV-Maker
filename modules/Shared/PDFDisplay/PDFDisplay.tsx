@@ -1,6 +1,6 @@
-import { saveDataForUser } from '@/store/actions';
+import { saveDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch } from '@/store/hooks';
-import { CVTemplate } from '@modules/PDFView';
+import { CVTemplate } from '@modules/PDFView/CVTemplates/CVTemplate';
 import { PDFDownload } from '@modules/PDFView/PDFDownload/PDFDownload';
 import { useAuth } from '@modules/Providers';
 import { useDebouncedFunction } from '@modules/Shared/Hooks/useDebouncedFunction';
@@ -10,7 +10,6 @@ import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { PageLoader } from '@modules/Shared/Loader';
 import { Tooltip } from '@modules/Shared/Tooltip';
 import { usePDF } from '@react-pdf/renderer';
-import { useTranslation } from 'next-i18next';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -31,7 +30,6 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
   const dispatch = useAppDispatch();
   const windowSize = useWindowSize();
   const { user } = useAuth();
-  const { t } = useTranslation('CVTemplates');
   const {
     certificates,
     education,
@@ -61,7 +59,6 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
       languages,
       skills,
       template,
-      t,
     }),
   });
 

@@ -1,4 +1,4 @@
-import { Carousel } from '@modules/PDFView/CVTemplates';
+import { Carousel } from '@modules/PDFView/CVTemplates/Carousel';
 import { Modal } from '@modules/Shared/Modal';
 import { useTranslation } from 'next-i18next';
 

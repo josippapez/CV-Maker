@@ -1,16 +1,8 @@
-import { AdditionalInformation } from '@modules/PDFView/CVTemplates';
+import { AdditionalInformation } from '@modules/PDFView/CVTemplates/TemplateComponents';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
-import UnboundedBold from '@public/Styles/Assets/Fonts/Unbound/Unbounded-Bold.woff';
-import UnboundedExtraBold from '@public/Styles/Assets/Fonts/Unbound/Unbounded-ExtraBold.woff';
-import UnboundedExtraLight from '@public/Styles/Assets/Fonts/Unbound/Unbounded-ExtraLight.woff';
-import UnboundedLight from '@public/Styles/Assets/Fonts/Unbound/Unbounded-Light.woff';
-import UnboundedMedium from '@public/Styles/Assets/Fonts/Unbound/Unbounded-Medium.woff';
-import UnboundedRegular from '@public/Styles/Assets/Fonts/Unbound/Unbounded-Regular.woff';
-import UnboundedSemiBold from '@public/Styles/Assets/Fonts/Unbound/Unbounded-SemiBold.woff';
 import {
   Defs,
   Document,
-  Font,
   Image,
   LinearGradient,
   Link,
@@ -30,25 +22,6 @@ import { BlobTopRight } from '../Images/BlobTopRight';
 import { LayeredWaves } from '../Images/LayeredWaves';
 import { TextDisplay } from '../TemplateComponents/TextDisplay';
 import { DefaultProps } from './CVTemplateProps';
-
-Font.register({
-  family: 'Unbounded',
-  fonts: [
-    {
-      src: UnboundedRegular,
-      fontWeight: 'normal',
-    },
-    {
-      src: UnboundedBold,
-      fontWeight: 'bold',
-    },
-    { src: UnboundedLight, fontWeight: 'light' },
-    { src: UnboundedExtraLight, fontWeight: 'extralight' },
-    { src: UnboundedSemiBold, fontWeight: 'semibold' },
-    { src: UnboundedMedium, fontWeight: 'medium' },
-    { src: UnboundedExtraBold, fontWeight: 'extrabold' },
-  ],
-});
 
 const styles = StyleSheet.create({
   page: {

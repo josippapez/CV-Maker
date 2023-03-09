@@ -8,7 +8,7 @@ import { FC, useEffect } from 'react';
 
 const DynamicPDFDisplay = dynamic(
   () =>
-    import('@modules/Shared/PDFDisplay').then(mod => ({
+    import('@modules/Shared/PDFDisplay/PDFDisplay').then(mod => ({
       default: mod.PDFDisplay,
     })),
   {

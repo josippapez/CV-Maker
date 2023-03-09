@@ -1,9 +1,9 @@
-import { Modal } from '@modules/Shared/Modal';
-import { saveDataForUser } from '@/store/actions';
+import { saveDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { cacheAllData, setModified } from '@/store/reducers/pdfData';
 import { setTemplate } from '@/store/reducers/template';
 import { setDisplayVersionHistory } from '@/store/reducers/versionHistory';
+import { Modal } from '@modules/Shared/Modal';
 import { Settings } from 'luxon';
 import { i18n, useTranslation } from 'next-i18next';
 import { FC, useCallback, useEffect } from 'react';

@@ -1,7 +1,8 @@
-import { logout, saveDataForUser, signInWithGoogle } from '@/store/actions';
+import { logout, signInWithGoogle } from '@/store/actions/authActions';
+import { saveDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch } from '@/store/hooks';
 import { ChangeLanguageButton, TemplatesButton } from '@modules/Navbar';
-import { TemplatesModal } from '@modules/PDFView/CVTemplates';
+import { TemplatesModal } from '@modules/PDFView/CVTemplates/TemplatesModal';
 import { Tab } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { VersionHistoryModal } from '@modules/PDFView/VersionHistory/VersionHistoryModal';
 import { useAuth } from '@modules/Providers';

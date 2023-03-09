@@ -1,15 +1,7 @@
-import { AdditionalInformation } from '@modules/PDFView/CVTemplates';
+import { AdditionalInformation } from '@modules/PDFView/CVTemplates/TemplateComponents';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
-import OpensansBold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Bold.woff';
-import OpensansExtraBold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.woff';
-import OpensansItalic from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Italic.woff';
-import OpensansLite from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Light.woff';
-import OpensansMedium from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Medium.woff';
-import OpensansRegular from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-Regular.woff';
-import OpensansSemibold from '@public/Styles/Assets/Fonts/OpenSans/OpenSans-SemiBold.woff';
 import {
   Document,
-  Font,
   Image,
   Link,
   Page,
@@ -20,25 +12,6 @@ import {
 import { Skill } from '../../models';
 import { TextDisplay } from '../TemplateComponents/TextDisplay';
 import { DefaultProps } from './CVTemplateProps';
-
-Font.register({
-  family: 'Opensans',
-  fonts: [
-    {
-      src: OpensansRegular,
-      fontWeight: 'normal',
-    },
-    {
-      src: OpensansBold,
-      fontWeight: 'bold',
-    },
-    { src: OpensansLite, fontWeight: 'light' },
-    { src: OpensansSemibold, fontWeight: 'semibold' },
-    { src: OpensansMedium, fontWeight: 'medium' },
-    { src: OpensansExtraBold, fontWeight: 'extrabold' },
-    { src: OpensansItalic, fontStyle: 'italic' },
-  ],
-});
 
 const styles = StyleSheet.create({
   page: {

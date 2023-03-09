@@ -1,9 +1,7 @@
-import {
-  DatePickerDates,
-  DatePickerHeader,
-  Months,
-  Years,
-} from '@modules/Shared/DatePicker';
+import { DatePickerHeader } from '@modules/Shared/DatePicker';
+import { DatePickerDates } from '@modules/Shared/DatePicker/Dates/DatePickerDates';
+import { Months } from '@modules/Shared/DatePicker/Dates/Months';
+import { Years } from '@modules/Shared/DatePicker/Dates/Years';
 import {
   Day,
   useCalculateEachDayOfMonth,
