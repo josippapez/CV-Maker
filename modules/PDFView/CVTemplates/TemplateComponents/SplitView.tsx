@@ -18,7 +18,7 @@ export const SplitView: FC<Props> = ({ Component1, Component2 }) => {
       {Component1 && (
         <View
           style={{
-            width: '50%',
+            width: Component2 ? '50%' : '100%',
             paddingLeft: 20,
             backgroundColor: '#fcfcfc',
             color: 'black',
@@ -32,7 +32,7 @@ export const SplitView: FC<Props> = ({ Component1, Component2 }) => {
       {Component2 && (
         <View
           style={{
-            width: '50%',
+            width: Component1 ? '50%' : '100%',
             paddingRight: 20,
             backgroundColor: '#f7f7f7',
             color: 'black',
