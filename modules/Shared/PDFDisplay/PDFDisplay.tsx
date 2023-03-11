@@ -38,6 +38,7 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
     professionalExperience,
     skills,
     template,
+    projects,
   } = usePDFData();
   const [instance, updateInstance] = usePDF({
     document: CVTemplate({
@@ -48,6 +49,7 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
       languages,
       skills,
       template,
+      projects,
     }),
   });
 
@@ -80,8 +82,20 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
     education,
     languages,
     skills,
-    template,
+    projects,
   ]);
+
+  useEffect(() => {
+    if (!instance.loading) updateInstance();
+
+    if (isPDFPreview) return;
+
+    if (initial) {
+      setInitial(false);
+      return;
+    }
+    dispatch(saveDataForUser());
+  }, [template]);
 
   const onDocumentLoadSuccess = useCallback(
     ({ numPages }: { numPages: number }) => {

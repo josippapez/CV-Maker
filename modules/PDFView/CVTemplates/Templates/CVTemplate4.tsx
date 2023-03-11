@@ -1,16 +1,13 @@
-import { AdditionalInformation } from '@modules/PDFView/CVTemplates/TemplateComponents';
-import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import {
-  Document,
-  Image,
-  Link,
-  Page,
-  StyleSheet,
-  Text,
-  View,
-} from '@react-pdf/renderer';
-import { Skill } from '../../models';
-import { TextDisplay } from '../TemplateComponents/TextDisplay';
+  Certificates,
+  Educations,
+  Languages,
+  PersonalInfo,
+  ProfessionalExperienceDisplay,
+  Projects,
+  SplitView,
+} from '@modules/PDFView/CVTemplates/TemplateComponents';
+import { Document, Page, StyleSheet } from '@react-pdf/renderer';
 import { DefaultProps } from './CVTemplateProps';
 
 const styles = StyleSheet.create({
@@ -43,6 +40,9 @@ const styles = StyleSheet.create({
   },
   marginTop10: {
     marginTop: 10,
+  },
+  marginTop5: {
+    marginTop: 5,
   },
   marginBottom20: {
     marginBottom: 20,
@@ -116,95 +116,24 @@ const styles = StyleSheet.create({
     textDecoration: 'none',
     color: 'white',
   },
-  companyName: {
+  name: {
     fontSize: 12,
     fontWeight: 'medium',
   },
-  companyPosition: {},
-  companyDescription: {
-    marginTop: 10,
-  },
-  companyLocation: {
+  location: {
     fontSize: 11,
     marginTop: 0,
     fontWeight: 'extralight',
   },
-  companyDuration: {
-    fontSize: 11,
-    marginTop: 5,
-    fontWeight: 'light',
-  },
-  educationSchool: {
-    fontSize: 11,
-    marginBottom: 5,
-    fontWeight: 'medium',
-  },
-  educationDegree: {
-    fontSize: 11,
-    fontWeight: 'extralight',
-  },
-  educationDuration: {
+  duration: {
     fontSize: 11,
     fontWeight: 'light',
-  },
-  educationLocation: {
-    fontSize: 11,
-    fontWeight: 'extralight',
-  },
-  educationDescription: {
-    marginTop: 10,
   },
   sectionTitle: {
     fontSize: 13,
-    fontWeight: 'bold',
-  },
-  certificateName: {
-    fontSize: 11,
-    fontWeight: 'medium',
-  },
-  certificateInstitution: {
-    fontSize: 11,
     fontWeight: 'light',
-  },
-  certificateDuration: {
-    fontSize: 11,
-    fontWeight: 'extralight',
-  },
-  certificateDescription: {
-    marginTop: 10,
-  },
-  languageCard: {
-    width: 'auto',
-    height: 'auto',
-    margin: '0 10px 10px 0',
-    backgroundColor: 'transparent',
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: '#818181',
-    padding: '5px 15px',
-  },
-  languageName: {
-    fontSize: 11,
-    fontWeight: 'normal',
-  },
-  languageLevel: {
-    fontSize: 11,
-    fontWeight: 'extralight',
-  },
-  skill: {
-    width: 'auto',
-    height: 'auto',
-    margin: '0 10px 10px 0',
-    backgroundColor: 'transparent',
-    borderRadius: 3,
-    borderWidth: 1,
-    padding: '5px 15px',
-    borderColor: '#333333',
-  },
-  skillText: {
-    fontSize: 9,
-    fontWeight: 'normal',
-    color: 'white',
+    color: '#404040',
+    paddingBottom: 10,
   },
 });
 
@@ -216,340 +145,49 @@ export const CVTemplate4 = (props: DefaultProps): JSX.Element => {
     education,
     languages,
     skills,
+    projects,
     translate,
   } = props;
 
   return (
     <Document>
       <Page size='A4' style={[styles.page]}>
-        <View
-          style={[
-            styles.personalInfo,
-            styles.paddingX40,
-            { paddingTop: 40, paddingBottom: 20 },
-          ]}
-        >
-          <View style={[styles.topBar]}>
-            {generalInfo && generalInfo.profilePicture && (
-              <View style={[styles.profilePicture]}>
-                <Image
-                  src={generalInfo.profilePicture}
-                  style={{
-                    width: 65,
-                    height: 65,
-                    borderRadius: 15,
-                    objectFit: 'cover',
-                  }}
-                />
-              </View>
-            )}
-            <View
-              style={{
-                flex: 1,
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                }}
-              >
-                <TextDisplay style={styles.topBarName}>
-                  {generalInfo?.firstName} {generalInfo?.lastName}
-                </TextDisplay>
-                <TextDisplay
-                  style={[
-                    {
-                      fontWeight: 'light',
-                      fontSize: 11,
-                      paddingLeft: 20,
-                      paddingBottom: 3,
-                      alignSelf: 'flex-end',
-                    },
-                  ]}
-                >
-                  {generalInfo?.dob && displayDate(generalInfo?.dob, 'default')}
-                </TextDisplay>
-              </View>
-              <TextDisplay style={styles.topBarPosition}>
-                {generalInfo?.position}
-              </TextDisplay>
-              <TextDisplay style={styles.topBarText}>
-                {generalInfo?.aboutMe}
-              </TextDisplay>
-            </View>
-          </View>
-          {skills && skills.length > 0 && (
-            <View
-              style={[
-                styles.row,
-                styles.marginTop10,
-                {
-                  flexWrap: 'wrap',
-                },
-              ]}
-            >
-              {skills.map((skill: Skill, index: number) => {
-                return (
-                  <View key={index} style={[styles.skill]}>
-                    <TextDisplay style={[styles.skillText]}>
-                      {skill.name}
-                    </TextDisplay>
-                  </View>
-                );
-              })}
-            </View>
-          )}
-          <AdditionalInformation
-            onlyIcon
-            generalInfo={generalInfo}
-            styles={styles}
-            itemWrapperStyle={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          />
-        </View>
-        {professionalExperience && professionalExperience.length > 0 && (
-          <View
-            style={[
-              styles.paddingY10,
-              styles.paddingX40,
-              styles.column,
-              styles.horizontalCenter,
-              {
-                flexGrow: 1,
-                flexShrink: 1,
-                backgroundColor: '#ededed',
-                color: 'black',
-              },
-            ]}
-          >
-            {professionalExperience?.map((experience, index) => (
-              <View
-                wrap={false}
-                key={index}
-                style={[
-                  styles.row,
-                  styles.paddingY10,
-                  {
-                    borderTop: index === 0 ? 'none' : '1px solid #d8d8d8',
-                  },
-                ]}
-              >
-                <View style={[styles.column, { width: '50%' }]}>
-                  <TextDisplay style={[styles.companyName]}>
-                    {experience.company}
-                  </TextDisplay>
-                  <TextDisplay style={[styles.companyDuration]}>
-                    {experience.startDate && displayDate(experience.startDate)}{' '}
-                    -{' '}
-                    {experience.currentlyEnrolled
-                      ? translate('present')
-                      : experience.endDate && displayDate(experience.endDate)}
-                  </TextDisplay>
-                  <TextDisplay style={[styles.companyLocation]}>
-                    {experience.location}
-                  </TextDisplay>
-                </View>
-
-                <View
-                  style={[styles.column, styles.paddingX20, { width: '50%' }]}
-                >
-                  <TextDisplay style={[styles.companyPosition]}>
-                    {experience.position}
-                  </TextDisplay>
-                  <TextDisplay style={[styles.companyDescription]}>
-                    {experience.description}
-                  </TextDisplay>
-                </View>
-              </View>
-            ))}
-          </View>
-        )}
-        <View wrap={false} style={[styles.row, { flexGrow: 1 }]}>
-          {education && education.length > 0 && (
-            <View
-              style={[
-                styles.paddingY20,
-                certificates && certificates.length > 0
-                  ? { paddingLeft: 40, paddingRight: 20, width: '50%' }
-                  : styles.paddingX40,
-                styles.column,
-                {
-                  backgroundColor: '#fcfcfc',
-                  color: 'black',
-                  overflow: 'hidden',
-                  position: 'relative',
-                },
-              ]}
-            >
-              <TextDisplay style={[styles.sectionTitle]}>
-                {translate('education')}
-              </TextDisplay>
-              {education.map((edu, index) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.column,
-                    {
-                      marginTop: 20,
-                    },
-                  ]}
-                >
-                  <View style={[styles.column]}>
-                    <TextDisplay style={[styles.educationSchool]}>
-                      {edu.course ? edu.course : edu.school}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.educationDuration]}>
-                      {edu.startDate && displayDate(edu.startDate)} -{' '}
-                      {edu.currentlyEnrolled
-                        ? translate('present')
-                        : edu.endDate && displayDate(edu.endDate)}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.educationDegree]}>
-                      {`${edu.degree} ${
-                        edu.fieldOfStudy && `, ${edu.fieldOfStudy}`
-                      }`}
-                    </TextDisplay>
-                    {edu.url && edu.url !== '' && (
-                      <Link
-                        src={edu.url}
-                        style={{
-                          textDecoration: 'none',
-                        }}
-                      >
-                        <Text
-                          style={[styles.educationDegree, { color: 'black' }]}
-                        >
-                          {edu.url
-                            .replace(/(^\w+:|^)\/\//, '')
-                            .replace(/(^www\.)/, '')}
-                        </Text>
-                      </Link>
-                    )}
-                    <TextDisplay style={[styles.educationLocation]}>
-                      {edu.location}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.educationDescription]}>
-                      {edu.description}
-                    </TextDisplay>
-                  </View>
-                </View>
-              ))}
-            </View>
-          )}
-          {certificates && certificates.length > 0 && (
-            <View
-              style={[
-                styles.paddingY20,
-                education && education.length > 0
-                  ? {
-                      paddingLeft: 20,
-                      paddingRight: 40,
-                      width: '50%',
-                      left: -0.5,
-                    }
-                  : styles.paddingX40,
-                styles.column,
-                {
-                  backgroundColor: '#e7e4e4',
-                  color: 'black',
-                },
-              ]}
-            >
-              {certificates.map((cert, index) => (
-                <>
-                  <View
-                    key={index}
-                    style={[
-                      {
-                        marginTop: index === 0 ? 0 : 20,
-                      },
-                    ]}
-                  >
-                    {index === 0 && (
-                      <TextDisplay
-                        style={[styles.sectionTitle, styles.marginBottom20]}
-                      >
-                        {translate('certificates')}
-                      </TextDisplay>
-                    )}
-                    <View style={[styles.column]}>
-                      <TextDisplay style={[styles.certificateName]}>
-                        {cert.name}
-                      </TextDisplay>
-                      <TextDisplay style={[styles.certificateInstitution]}>
-                        {cert.institution}
-                      </TextDisplay>
-                      <View
-                        style={[
-                          styles.row,
-                          {
-                            paddingBottom: 2,
-                          },
-                        ]}
-                      >
-                        <TextDisplay style={[styles.certificateDuration]}>
-                          {cert.date}
-                        </TextDisplay>
-                      </View>
-                      <TextDisplay style={[styles.certificateDescription]}>
-                        {cert.description}
-                      </TextDisplay>
-                    </View>
-                  </View>
-                </>
-              ))}
-            </View>
-          )}
-        </View>
-        {languages && languages.length > 0 && (
-          <View
-            wrap={false}
-            style={[
-              styles.paddingY20,
-              styles.paddingX40,
-              {
-                backgroundColor: '#ededed',
-                flex: 5,
-                color: 'black',
-              },
-            ]}
-          >
-            <View>
-              <TextDisplay
-                style={[
-                  styles.sectionTitle,
-                  {
-                    marginBottom: 10,
-                  },
-                ]}
-              >
-                {translate('languages')}
-              </TextDisplay>
-            </View>
-            <View
-              style={[
-                styles.row,
-                {
-                  flexWrap: 'wrap',
-                },
-              ]}
-            >
-              {languages.map((lang, index) => (
-                <View key={index} style={[styles.column, styles.languageCard]}>
-                  <TextDisplay style={[styles.languageName]}>
-                    {lang.name}
-                  </TextDisplay>
-                  <TextDisplay style={[styles.languageLevel]}>
-                    {translate(lang.proficiency)}
-                  </TextDisplay>
-                </View>
-              ))}
-            </View>
-          </View>
-        )}
+        <PersonalInfo
+          styles={styles}
+          generalInfo={generalInfo}
+          skills={skills}
+        />
+        <ProfessionalExperienceDisplay
+          styles={styles}
+          translate={translate}
+          professionalExperience={professionalExperience}
+          backgroundColor='#E0E0E0'
+          showBorder
+        />
+        <Projects
+          defaultStyles={styles}
+          translate={translate}
+          projects={projects}
+          backgroundColor='#dbdbdb'
+          color='black'
+        />
+        <SplitView
+          Component1={Educations({
+            defaultStyles: styles,
+            translate,
+            education: education,
+          })}
+          Component2={Certificates({
+            defaultStyles: styles,
+            translate,
+            certificateList: certificates,
+          })}
+        />
+        <Languages
+          defaultStyles={styles}
+          translate={translate}
+          languages={languages}
+        />
       </Page>
     </Document>
   );

@@ -1,25 +1,25 @@
-import { AdditionalInformation } from '@modules/PDFView/CVTemplates/TemplateComponents';
+import {
+  AdditionalInformation,
+  CertificatesWithImage,
+  EducationWithImage,
+  Languages,
+  ProfessionalExperienceDisplay,
+  Projects,
+} from '@modules/PDFView/CVTemplates/TemplateComponents';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import {
   Defs,
   Document,
   Image,
   LinearGradient,
-  Link,
   Page,
   Rect,
   Stop,
   StyleSheet,
   Svg,
-  Text,
   View,
 } from '@react-pdf/renderer';
-import { Fragment } from 'react';
 import { Skill } from '../../models';
-import { BlobBottomLeft } from '../Images/BlobBottomLeft';
-import { BlobTopLeft } from '../Images/BlobTopLeft';
-import { BlobTopRight } from '../Images/BlobTopRight';
-import { LayeredWaves } from '../Images/LayeredWaves';
 import { TextDisplay } from '../TemplateComponents/TextDisplay';
 import { DefaultProps } from './CVTemplateProps';
 
@@ -126,81 +126,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     color: 'white',
   },
-  companyName: {
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  companyPosition: {},
-  companyDescription: {
-    marginTop: 10,
-  },
-  companyLocation: {
-    fontSize: 11,
-    marginTop: 0,
-    fontWeight: 'extralight',
-  },
-  companyDuration: {
-    fontSize: 11,
-    marginTop: 5,
-    fontWeight: 'light',
-  },
-  educationSchool: {
-    fontSize: 11,
-    marginBottom: 5,
-    fontWeight: 'medium',
-  },
-  educationDegree: {
-    fontSize: 11,
-    fontWeight: 'extralight',
-  },
-  educationDuration: {
-    fontSize: 11,
-    fontWeight: 'light',
-  },
-  educationLocation: {
-    fontSize: 11,
-    fontWeight: 'extralight',
-  },
-  educationDescription: {
-    marginTop: 10,
-  },
-  sectionTitle: {
-    fontSize: 13,
-    fontWeight: 'bold',
-  },
-  certificateName: {
-    fontSize: 11,
-    fontWeight: 'medium',
-  },
-  certificateInstitution: {
-    fontSize: 11,
-    fontWeight: 'light',
-  },
-  certificateDuration: {
-    fontSize: 11,
-    fontWeight: 'extralight',
-  },
-  certificateDescription: {
-    marginTop: 10,
-  },
-  languageCard: {
-    width: 'auto',
-    height: 'auto',
-    margin: '0 10px 10px 0',
-    backgroundColor: 'transparent',
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: 'white',
-    padding: '5px 15px',
-  },
-  languageName: {
-    fontSize: 11,
-    fontWeight: 'normal',
-  },
-  languageLevel: {
-    fontSize: 11,
-    fontWeight: 'extralight',
-  },
   skill: {
     width: 'auto',
     height: 'auto',
@@ -215,6 +140,26 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontWeight: 'normal',
   },
+
+  name: {
+    fontSize: 12,
+    fontWeight: 'medium',
+  },
+  location: {
+    fontSize: 11,
+    marginTop: 0,
+    fontWeight: 'extralight',
+  },
+  duration: {
+    fontSize: 11,
+    fontWeight: 'light',
+  },
+  sectionTitle: {
+    fontSize: 13,
+    fontWeight: 'light',
+    color: '#a3a3a3',
+    paddingBottom: 10,
+  },
 });
 
 export const CVTemplate3 = (props: DefaultProps): JSX.Element => {
@@ -225,6 +170,7 @@ export const CVTemplate3 = (props: DefaultProps): JSX.Element => {
     education,
     languages,
     skills,
+    projects,
     translate,
   } = props;
 
@@ -363,304 +309,36 @@ export const CVTemplate3 = (props: DefaultProps): JSX.Element => {
             }}
           />
         </View>
-        {professionalExperience && professionalExperience.length > 0 && (
-          <View
-            style={[
-              styles.marginBottom20,
-              styles.paddingX40,
-              styles.column,
-              styles.horizontalCenter,
-              { flexShrink: 1 },
-            ]}
-          >
-            {professionalExperience?.map((experience, index) => (
-              <View
-                wrap={false}
-                key={`experience-${index}`}
-                style={[
-                  styles.row,
-                  {
-                    marginTop: index === 0 ? 0 : 20,
-                    marginBottom:
-                      index === professionalExperience.length - 1 ? 0 : 10,
-                  },
-                ]}
-              >
-                <View style={[styles.column, { width: '50%' }]}>
-                  <TextDisplay style={[styles.companyName]}>
-                    {experience.company}
-                  </TextDisplay>
-                  <TextDisplay style={[styles.companyDuration]}>
-                    {experience.startDate && displayDate(experience.startDate)}{' '}
-                    -{' '}
-                    {experience.currentlyEnrolled
-                      ? translate('present')
-                      : experience.endDate && displayDate(experience.endDate)}
-                  </TextDisplay>
-                  <TextDisplay style={[styles.companyLocation]}>
-                    {experience.location}
-                  </TextDisplay>
-                </View>
-
-                <View style={[styles.column, { width: '50%' }]}>
-                  <TextDisplay style={[styles.companyPosition]}>
-                    {experience.position}
-                  </TextDisplay>
-                  <TextDisplay style={[styles.companyDescription]}>
-                    {experience.description}
-                  </TextDisplay>
-                </View>
-              </View>
-            ))}
-          </View>
-        )}
-        {education && education?.length > 0 ? (
-          <View
-            style={[
-              styles.paddingY20,
-              styles.paddingX40,
-              styles.column,
-              {
-                backgroundColor: '#13171a',
-                overflow: 'hidden',
-                flexGrow: 1,
-              },
-            ]}
-          >
-            <TextDisplay style={[styles.sectionTitle]}>
-              {translate('education')}
-            </TextDisplay>
-            {education?.map((edu, index) => (
-              <Fragment key={`edu-${index}`}>
-                {index === 0 && (
-                  <View
-                    key={`edu-${index}-blobTopRight`}
-                    wrap={false}
-                    style={{
-                      position: 'absolute',
-                      width: 595,
-                      height: 100,
-                      zIndex: -1,
-                      top: 0,
-                    }}
-                  >
-                    <BlobTopRight />
-                  </View>
-                )}
-                {index === education.length - 1 &&
-                  (certificates && certificates.length > 0 ? (
-                    <View
-                      key={`edu-${index}-blobBottomLeft`}
-                      wrap={false}
-                      style={{
-                        position: 'absolute',
-                        width: 595,
-                        height: 100,
-                        zIndex: -1,
-                        bottom: 0,
-                      }}
-                    >
-                      <BlobBottomLeft />
-                    </View>
-                  ) : (
-                    <View
-                      key={`edu-${index}-LayeredWaves`}
-                      wrap={false}
-                      style={{
-                        position: 'absolute',
-                        width: 595,
-                        height: 100,
-                        zIndex: -1,
-                        bottom: 0,
-                      }}
-                    >
-                      <LayeredWaves />
-                    </View>
-                  ))}
-                <View
-                  wrap={false}
-                  key={`edu-${index}`}
-                  style={[
-                    styles.column,
-                    {
-                      marginTop: 20,
-                    },
-                  ]}
-                >
-                  <View style={[styles.column]}>
-                    <TextDisplay style={[styles.educationSchool]}>
-                      {edu.course ? edu.course : edu.school}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.educationDuration]}>
-                      {edu.startDate && displayDate(edu.startDate)} -{' '}
-                      {edu.currentlyEnrolled
-                        ? translate('present')
-                        : edu.endDate && displayDate(edu.endDate)}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.educationDegree]}>
-                      {`${edu.degree} ${
-                        edu.fieldOfStudy && `, ${edu.fieldOfStudy}`
-                      }`}
-                    </TextDisplay>
-                    {edu.url && edu.url !== '' && (
-                      <Link
-                        src={edu.url}
-                        style={{
-                          textDecoration: 'none',
-                        }}
-                      >
-                        <Text
-                          style={[styles.educationDegree, { color: 'white' }]}
-                        >
-                          {edu.url
-                            .replace(/(^\w+:|^)\/\//, '')
-                            .replace(/(^www\.)/, '')}
-                        </Text>
-                      </Link>
-                    )}
-                    <TextDisplay style={[styles.educationLocation]}>
-                      {edu.location}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.educationDescription]}>
-                      {edu.description}
-                    </TextDisplay>
-                  </View>
-                </View>
-              </Fragment>
-            ))}
-          </View>
-        ) : null}
-        {certificates && certificates.length > 0 ? (
-          <View
-            wrap={false}
-            style={[
-              styles.paddingY20,
-              styles.paddingX40,
-              styles.column,
-              { backgroundColor: '#13171a', overflow: 'hidden', flexGrow: 5 },
-            ]}
-          >
-            <View
-              wrap={false}
-              style={{
-                position: 'absolute',
-                width: 595,
-                height: 100,
-                zIndex: -1,
-                bottom: 0,
-              }}
-            >
-              <LayeredWaves />
-            </View>
-            {certificates.map((cert, index) => (
-              <Fragment key={`cert-${index}`}>
-                {index === 0 && (
-                  <View
-                    key={`cert-${index}-blobTopLeft`}
-                    wrap={false}
-                    style={{
-                      position: 'absolute',
-                      width: 595,
-                      height: 100,
-                      zIndex: -1,
-                      top: 0,
-                    }}
-                  >
-                    <BlobTopLeft />
-                  </View>
-                )}
-                <View
-                  wrap={false}
-                  key={`cert-${index}`}
-                  style={[
-                    {
-                      marginTop: index === 0 ? 0 : 20,
-                    },
-                  ]}
-                >
-                  {index === 0 && (
-                    <TextDisplay
-                      style={[styles.sectionTitle, styles.marginBottom20]}
-                    >
-                      {translate('certificates')}
-                    </TextDisplay>
-                  )}
-                  <View style={[styles.column]}>
-                    <TextDisplay style={[styles.certificateName]}>
-                      {cert.name}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.certificateInstitution]}>
-                      {cert.institution}
-                    </TextDisplay>
-                    <View
-                      style={[
-                        styles.row,
-                        {
-                          paddingBottom: 2,
-                        },
-                      ]}
-                    >
-                      <TextDisplay style={[styles.certificateDuration]}>
-                        {cert.date}
-                      </TextDisplay>
-                    </View>
-                    <TextDisplay style={[styles.certificateDescription]}>
-                      {cert.description}
-                    </TextDisplay>
-                  </View>
-                </View>
-              </Fragment>
-            ))}
-          </View>
-        ) : null}
-        {languages && languages.length > 0 ? (
-          <View
-            wrap={false}
-            style={[
-              styles.paddingY20,
-              styles.paddingX40,
-              {
-                backgroundColor: '#3b3b3b',
-                flexGrow: 1,
-              },
-            ]}
-          >
-            <View>
-              <TextDisplay
-                style={[
-                  styles.sectionTitle,
-                  {
-                    marginBottom: 10,
-                  },
-                ]}
-              >
-                {translate('languages')}
-              </TextDisplay>
-            </View>
-            <View
-              style={[
-                styles.row,
-                {
-                  flexWrap: 'wrap',
-                },
-              ]}
-            >
-              {languages.map((lang, index) => (
-                <View
-                  key={`lang-${index}`}
-                  style={[styles.column, styles.languageCard]}
-                >
-                  <TextDisplay style={[styles.languageName]}>
-                    {lang.name}
-                  </TextDisplay>
-                  <TextDisplay style={[styles.languageLevel]}>
-                    {translate(lang.proficiency)}
-                  </TextDisplay>
-                </View>
-              ))}
-            </View>
-          </View>
-        ) : null}
+        <ProfessionalExperienceDisplay
+          styles={styles}
+          translate={translate}
+          professionalExperience={professionalExperience}
+          color='white'
+        />
+        <Projects
+          defaultStyles={styles}
+          translate={translate}
+          projects={projects}
+        />
+        <EducationWithImage
+          styles={styles}
+          translate={translate}
+          education={education}
+          certificates={certificates}
+        />
+        <CertificatesWithImage
+          styles={styles}
+          translate={translate}
+          certificates={certificates}
+        />
+        <Languages
+          defaultStyles={styles}
+          translate={translate}
+          languages={languages}
+          backgroundColor='#3b3b3b'
+          flexGrow={1}
+          color='white'
+        />
       </Page>
     </Document>
   );

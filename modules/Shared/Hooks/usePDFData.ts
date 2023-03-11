@@ -124,9 +124,8 @@ export const usePDFData = () => {
   const setAllData = useDebouncedFunction((data: PDFData) =>
     dispatch(cacheAllData(data))
   );
-  const setActiveTemplate = useDebouncedFunction((template: TemplateName) =>
-    dispatch(setTemplate(template))
-  );
+  const setActiveTemplate = (template: TemplateName) =>
+    dispatch(setTemplate(template));
   const getUserData = useCallback(() => {
     dispatch(
       getDataForUser({
