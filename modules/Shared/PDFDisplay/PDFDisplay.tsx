@@ -38,18 +38,8 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
     professionalExperience,
     skills,
     template,
-    loaded,
-    setDataLoaded,
+    projects,
   } = usePDFData();
-
-  const [numPages, setNumPages] = useState<number>(1);
-  const [pageNumber, setPageNumber] = useState<number>(1);
-  const [displayDownloadModal, setDisplayDownloadModal] = useState(false);
-  const [initial, setInitial] = useDebouncedValue(true, 2000);
-
-  const userIsLoggedIn = !!user?.uid;
-  const pageExists = !!pageNumber && !!numPages;
-
   const [instance, updateInstance] = usePDF({
     document: CVTemplate({
       generalInfo,
@@ -59,17 +49,20 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
       languages,
       skills,
       template,
+      projects,
     }),
   });
 
-  useEffect(() => {
-    if (!instance) return;
+  const [numPages, setNumPages] = useState<number>(1);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [displayDownloadModal, setDisplayDownloadModal] = useState(false);
+  const [initial, setInitial] = useDebouncedValue(true, 2000);
 
-    setDataLoaded(!instance.loading);
-  }, [instance.loading]);
+  const userIsLoggedIn = !!user?.uid;
+  const pageExists = !!pageNumber && !!numPages;
 
   const updateInstanceAndSaveData = useDebouncedFunction(() => {
-    if (loaded) updateInstance();
+    if (!instance.loading) updateInstance();
 
     if (isPDFPreview) return;
 
@@ -89,8 +82,20 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
     education,
     languages,
     skills,
-    template,
+    projects,
   ]);
+
+  useEffect(() => {
+    if (!instance.loading) updateInstance();
+
+    if (isPDFPreview) return;
+
+    if (initial) {
+      setInitial(false);
+      return;
+    }
+    dispatch(saveDataForUser());
+  }, [template]);
 
   const onDocumentLoadSuccess = useCallback(
     ({ numPages }: { numPages: number }) => {
@@ -113,7 +118,7 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
           windowSize.width < 1550 || isPDFPreview ? 'w-full' : 'w-5/12'
         }`}
       >
-        <PageLoader isLoading={!loaded} inline={!isPDFPreview}>
+        <PageLoader isLoading={instance.loading} inline={!isPDFPreview}>
           <Document
             {...options}
             file={instance.url}

@@ -10,32 +10,27 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
+  Project,
   Skill,
 } from '@modules/PDFView/models';
 import { TFunction } from 'i18next';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-type OptionType = {
+interface Props {
   generalInfo: GeneralInfo;
   professionalExperience: ProfessionalExperience[];
   certificates: Certificate[];
   education: Education[];
   languages: LanguageSkill[];
-  skills: Skill[];
   template: Template;
-  translate: TFunction;
-};
+  skills: Skill[];
+  projects: Project[];
+}
 
-type Props = {
-  generalInfo: GeneralInfo;
-  professionalExperience: ProfessionalExperience[];
-  certificates: Certificate[];
-  education: Education[];
-  languages: LanguageSkill[];
-  template: Template;
-  skills: Skill[];
-};
+interface OptionType extends Props {
+  translate: TFunction;
+}
 
 function isNever(template: never): never {
   throw new Error(`Unexpected Template: ${template}`);
@@ -69,16 +64,11 @@ export const CVTemplate = (props: Props): JSX.Element => {
     languages,
     skills,
     template,
+    projects,
   } = props;
 
   const options: OptionType = {
-    generalInfo,
-    professionalExperience,
-    certificates,
-    education,
-    languages,
-    skills,
-    template,
+    ...props,
     translate: t,
   };
 
@@ -89,6 +79,7 @@ export const CVTemplate = (props: Props): JSX.Element => {
   return useMemo(
     () => getTemplate(template.templateName, options),
     [
+      projects,
       template,
       generalInfo,
       professionalExperience,

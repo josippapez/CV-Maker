@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         />
         <meta
           name='keywords'
-          content='CV,Resume,Maker,Template,CV Template,CV Maker,CV Maker Hrvatski,Životopis,Kreiranje životopisa,Posao,CV Posao,Profesionalni CV,Profesionalni životopis,CV Builder,CV Builder Hrvatski,Builder,Job,Experience,Professional,Professional Experience,Job Experience,Resume,Resume Maker,Resume Builder,Share,Share CV,Share Resume,Download,Download CV,Download Resume,Print,Print CV,Print Resume,PDF,PDF CV,PDF Resume,Google Drive,Google Drive CV,Google Drive Resume,Register,Login,Sync Resume,Sync CV,Sync,Sy'
+          content='CV, Resume, Maker, Template, CV Template, CV Maker, CV Maker Hrvatski, Životopis, Kreiranje životopisa, Posao, CV Posao, Profesionalni CV, Profesionalni životopis, CV Builder, CV Builder Hrvatski, Builder, Job, Experience, Professional, Professional Experience, Job Experience, Resume, Resume Maker, Resume Builder, Share, Share CV, Share Resume, Download, Download CV, Download Resume, Print, Print CV, Print Resume, PDF, PDF CV, PDF Resume, Google Drive, Google Drive CV, Google Drive Resume, Register, Login, Sync Resume, Sync CV, Sync, Sy'
         />
         <meta name='author' content='Josip Papež' />
         <meta name='robots' content='index, follow' />

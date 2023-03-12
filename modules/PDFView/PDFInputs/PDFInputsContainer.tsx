@@ -8,6 +8,7 @@ export enum Tab {
   education = 'education',
   languages = 'languages',
   skills = 'skills',
+  projects = 'projects',
 }
 
 export const PDFInputsContainer = () => {

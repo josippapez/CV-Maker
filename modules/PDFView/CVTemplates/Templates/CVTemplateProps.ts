@@ -5,6 +5,7 @@ import {
   GeneralInfo,
   LanguageSkill,
   ProfessionalExperience,
+  Project,
   Skill,
 } from '../../models';
 
@@ -14,6 +15,7 @@ export interface DefaultProps {
   certificates?: Certificate[];
   education?: Education[];
   languages?: LanguageSkill[];
+  projects?: Project[];
   skills: Skill[];
   translate: TFunction;
 }
