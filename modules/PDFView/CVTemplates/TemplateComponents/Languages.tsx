@@ -37,11 +37,16 @@ export const Languages: FC<Props> = ({
   languages,
   defaultStyles: styles,
   translate,
-  backgroundColor = '#ededed',
+  backgroundColor,
   flexGrow = 5,
   color = 'black',
 }) => {
   if (!languages || languages.length === 0) return null;
+
+  const combinedStyles = {
+    ...languageStyles,
+    ...styles,
+  };
 
   return (
     <View
@@ -79,12 +84,12 @@ export const Languages: FC<Props> = ({
         {languages.map((lang, index) => (
           <View
             key={index}
-            style={[styles.column, languageStyles.languageCard]}
+            style={[styles.column, combinedStyles.languageCard]}
           >
-            <TextDisplay style={[languageStyles.languageName]}>
+            <TextDisplay style={[combinedStyles.languageName]}>
               {lang.name}
             </TextDisplay>
-            <TextDisplay style={[languageStyles.languageLevel]}>
+            <TextDisplay style={[combinedStyles.languageLevel]}>
               {translate(lang.proficiency)}
             </TextDisplay>
           </View>

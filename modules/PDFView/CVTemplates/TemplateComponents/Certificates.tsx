@@ -2,6 +2,7 @@ import { CertificateItem } from '@modules/PDFView/CVTemplates/TemplateComponents
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
 import { Certificate } from '@modules/PDFView/models';
 import { StyleSheet, View } from '@react-pdf/renderer';
+import { Style } from '@react-pdf/types';
 import { TFunction } from 'next-i18next';
 import { FC } from 'react';
 
@@ -9,17 +10,27 @@ type Props = {
   certificateList?: Certificate[];
   defaultStyles: ReturnType<typeof StyleSheet.create>;
   translate: TFunction;
+  wrapperStyle?: Style;
 };
 
 export const Certificates: FC<Props> = ({
   certificateList,
   defaultStyles: styles,
   translate,
+  wrapperStyle = {},
 }) => {
   if (!certificateList || certificateList.length === 0) return null;
 
   return (
-    <View style={[styles.paddingY20, styles.paddingX20, styles.column]}>
+    <View
+      wrap={false}
+      style={[
+        styles.paddingY20,
+        styles.paddingX20,
+        styles.column,
+        wrapperStyle,
+      ]}
+    >
       <TextDisplay style={[styles.sectionTitle]}>
         {translate('certificates')}
       </TextDisplay>

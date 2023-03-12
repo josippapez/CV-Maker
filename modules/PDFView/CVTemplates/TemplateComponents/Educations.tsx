@@ -4,22 +4,33 @@ import { Education } from '@modules/PDFView/models';
 import { StyleSheet, View } from '@react-pdf/renderer';
 import { TFunction } from 'next-i18next';
 import { FC } from 'react';
+import { Style } from '@react-pdf/types';
 
 type Props = {
   education?: Education[];
   defaultStyles: ReturnType<typeof StyleSheet.create>;
   translate: TFunction;
+  wrapperStyle?: Style;
 };
 
 export const Educations: FC<Props> = ({
   education,
   defaultStyles: styles,
   translate,
+  wrapperStyle = {},
 }) => {
   if (!education || education.length === 0) return null;
 
   return (
-    <View style={[styles.paddingY20, styles.paddingX20, styles.column]}>
+    <View
+      wrap={false}
+      style={[
+        styles.paddingY20,
+        styles.paddingX20,
+        styles.column,
+        wrapperStyle,
+      ]}
+    >
       <TextDisplay style={[styles.sectionTitle]}>
         {translate('education')}
       </TextDisplay>

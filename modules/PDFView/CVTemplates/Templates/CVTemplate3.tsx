@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontWeight: 'normal',
   },
-
   name: {
     fontSize: 12,
     fontWeight: 'medium',

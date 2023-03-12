@@ -168,7 +168,7 @@ export const CVTemplate4 = (props: DefaultProps): JSX.Element => {
           defaultStyles={styles}
           translate={translate}
           projects={projects}
-          backgroundColor='#dbdbdb'
+          backgroundColor='#e8e8e8'
           color='black'
         />
         <SplitView
@@ -187,6 +187,7 @@ export const CVTemplate4 = (props: DefaultProps): JSX.Element => {
           defaultStyles={styles}
           translate={translate}
           languages={languages}
+          backgroundColor='#ededed'
         />
       </Page>
     </Document>

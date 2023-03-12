@@ -15,8 +15,10 @@ type Props = {
   generalInfo?: GeneralInfo;
   onlyIcon?: boolean;
   styles: ReturnType<typeof StyleSheet.create>;
-  wrapper?: (children: JSX.Element[]) => JSX.Element;
   itemWrapperStyle?: Style[] | Style;
+  wrapperStyle?: Style;
+  backgroundColor?: string;
+  wrapper?: (children: JSX.Element) => JSX.Element;
 };
 
 const additionalInfoStyles = StyleSheet.create({
@@ -46,15 +48,18 @@ const additionalInfoStyles = StyleSheet.create({
     border: '1.5px solid #919191',
     borderRadius: '50%',
     padding: 6,
+    width: 29,
   },
 });
 
 export const AdditionalInformation: FC<Props> = ({
   generalInfo,
   styles,
-  wrapper,
   itemWrapperStyle,
   onlyIcon,
+  wrapperStyle = {},
+  backgroundColor,
+  wrapper,
 }) => {
   const info: JSX.Element[] = [
     {
@@ -148,11 +153,22 @@ export const AdditionalInformation: FC<Props> = ({
     });
 
   return wrapper ? (
-    wrapper([...info, ...links])
+    wrapper(
+      <View key={'wrapped-info'} style={wrapperStyle}>
+        <View style={additionalInfoStyles.infoWrapper}>{info}</View>
+        <View style={additionalInfoStyles.iconWrapper}>{links}</View>
+      </View>
+    )
   ) : (
-    <View style={additionalInfoStyles.infoDisplay}>
-      <View style={additionalInfoStyles.infoWrapper}>{info}</View>
-      <View style={additionalInfoStyles.iconWrapper}>{links}</View>
+    <View
+      style={{
+        backgroundColor,
+      }}
+    >
+      <View style={[additionalInfoStyles.infoDisplay, wrapperStyle]}>
+        <View style={additionalInfoStyles.infoWrapper}>{info}</View>
+        <View style={additionalInfoStyles.iconWrapper}>{links}</View>
+      </View>
     </View>
   );
 };

@@ -1,4 +1,9 @@
-import { AdditionalInformation } from '@modules/PDFView/CVTemplates/TemplateComponents';
+import {
+  AdditionalInformation,
+  Certificates,
+  Educations,
+  Projects,
+} from '@modules/PDFView/CVTemplates/TemplateComponents';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import {
   Document,
@@ -46,13 +51,27 @@ const styles = StyleSheet.create({
   padding20: {
     padding: 20,
   },
+  padding40: {
+    padding: 40,
+  },
+  padding60: {
+    padding: 60,
+  },
   paddingX20: {
     paddingLeft: 20,
     paddingRight: 20,
   },
+  paddingX40: {
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
   paddingY20: {
     paddingTop: 20,
     paddingBottom: 20,
+  },
+  paddingY40: {
+    paddingTop: 40,
+    paddingBottom: 40,
   },
   paddingY10: {
     paddingTop: 10,
@@ -142,6 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: 'bold',
     marginTop: 20,
+    color: '#818181',
   },
   languageCard: {
     width: 'auto',
@@ -167,6 +187,22 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     color: 'white',
   },
+  name: {
+    fontSize: 12,
+    fontWeight: 'medium',
+  },
+  location: {
+    fontSize: 11,
+    marginTop: 0,
+    fontWeight: 'extralight',
+  },
+  duration: {
+    fontSize: 11,
+    fontWeight: 'light',
+  },
+  projectWrapper: {
+    flexDirection: 'column',
+  },
 });
 
 export const CVTemplate2 = (props: DefaultProps): JSX.Element => {
@@ -177,6 +213,7 @@ export const CVTemplate2 = (props: DefaultProps): JSX.Element => {
     education,
     languages,
     skills,
+    projects,
     translate,
   } = props;
 
@@ -243,6 +280,7 @@ export const CVTemplate2 = (props: DefaultProps): JSX.Element => {
             </View>
           )}
           <AdditionalInformation
+            onlyIcon
             generalInfo={generalInfo}
             styles={styles}
             itemWrapperStyle={[
@@ -252,7 +290,7 @@ export const CVTemplate2 = (props: DefaultProps): JSX.Element => {
                 marginBottom: 3.5,
               },
             ]}
-            wrapper={(wrappedInfo: JSX.Element[]) => {
+            wrapper={(wrappedInfo: JSX.Element) => {
               return (
                 <View
                   style={[
@@ -267,6 +305,9 @@ export const CVTemplate2 = (props: DefaultProps): JSX.Element => {
                   {wrappedInfo}
                 </View>
               );
+            }}
+            wrapperStyle={{
+              gap: 10,
             }}
           />
           {languages && languages.length > 0 ? (
@@ -348,115 +389,30 @@ export const CVTemplate2 = (props: DefaultProps): JSX.Element => {
               </View>
             ))}
           </View>
-          {education && education?.length > 0 ? (
-            <View style={[styles.column, styles.marginTop20]}>
-              <TextDisplay style={[styles.sectionTitle, styles.lightGrayText]}>
-                {translate('education')}
-              </TextDisplay>
-              {education?.map((edu, index) => (
-                <View
-                  wrap={false}
-                  key={index}
-                  style={[
-                    styles.column,
-                    {
-                      width: '100%',
-                      marginTop: 10,
-                    },
-                  ]}
-                >
-                  <View style={[styles.column, { width: '100%' }]}>
-                    <TextDisplay style={[styles.educationSchool]}>
-                      {edu.course ? edu.course : edu.school}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.educationDuration]}>
-                      {edu.startDate && displayDate(edu.startDate)} -{' '}
-                      {edu.currentlyEnrolled
-                        ? translate('present')
-                        : edu.endDate && displayDate(edu.endDate)}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.educationDegree]}>
-                      {`${edu.degree} ${
-                        edu.fieldOfStudy && `, ${edu.fieldOfStudy}`
-                      }`}
-                    </TextDisplay>
-                    {edu.url && edu.url !== '' && (
-                      <Link
-                        src={edu.url}
-                        style={{
-                          textDecoration: 'none',
-                        }}
-                      >
-                        <Text
-                          style={[styles.educationDegree, { color: 'black' }]}
-                        >
-                          {edu.url
-                            .replace(/(^\w+:|^)\/\//, '')
-                            .replace(/(^www\.)/, '')}
-                        </Text>
-                      </Link>
-                    )}
-                    <TextDisplay style={[styles.educationLocation]}>
-                      {edu.location}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.educationDescription]}>
-                      {edu.description}
-                    </TextDisplay>
-                  </View>
-                </View>
-              ))}
-            </View>
-          ) : null}
-          {certificates && certificates.length > 0 ? (
-            <View style={[styles.column, styles.marginTop20]}>
-              {certificates.map((cert, index) => (
-                <View
-                  wrap={false}
-                  key={index}
-                  style={[
-                    {
-                      marginTop: index === 0 ? 0 : 10,
-                    },
-                  ]}
-                >
-                  {index === 0 && (
-                    <TextDisplay
-                      style={[
-                        styles.sectionTitle,
-                        styles.lightGrayText,
-                        { marginBottom: 10, marginTop: 0 },
-                      ]}
-                    >
-                      {translate('certificates')}
-                    </TextDisplay>
-                  )}
-                  <View style={[styles.column, { width: '100%' }]}>
-                    <TextDisplay style={[styles.companyName]}>
-                      {cert.name}
-                    </TextDisplay>
-                    <TextDisplay style={[styles.companyPosition]}>
-                      {cert.institution}
-                    </TextDisplay>
-                    <View
-                      style={[
-                        styles.row,
-                        {
-                          paddingBottom: 2,
-                        },
-                      ]}
-                    >
-                      <TextDisplay style={[styles.companyDuration]}>
-                        {cert.date}
-                      </TextDisplay>
-                    </View>
-                    <TextDisplay style={[styles.companyDescription]}>
-                      {cert.description}
-                    </TextDisplay>
-                  </View>
-                </View>
-              ))}
-            </View>
-          ) : null}
+          <Projects
+            defaultStyles={styles}
+            projects={projects}
+            translate={translate}
+            wrapperStyle={{
+              paddingHorizontal: 0,
+            }}
+          />
+          <Educations
+            defaultStyles={styles}
+            translate={translate}
+            education={education}
+            wrapperStyle={{
+              paddingHorizontal: 0,
+            }}
+          />
+          <Certificates
+            defaultStyles={styles}
+            translate={translate}
+            certificateList={certificates}
+            wrapperStyle={{
+              paddingHorizontal: 0,
+            }}
+          />
         </View>
       </Page>
     </Document>

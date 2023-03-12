@@ -3,6 +3,7 @@ import { ComponentProps } from '@modules/PDFView/CVTemplates/TemplateComponents/
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { Project } from '@modules/PDFView/models';
 import { StyleSheet, View } from '@react-pdf/renderer';
+import { Style } from '@react-pdf/types';
 import { TFunction } from 'next-i18next';
 import { FC } from 'react';
 
@@ -10,6 +11,7 @@ interface Props extends ComponentProps {
   defaultStyles: ReturnType<typeof StyleSheet.create>;
   projects?: Project[];
   translate: TFunction;
+  wrapperStyle?: Style;
 }
 
 const projectStyles = StyleSheet.create({
@@ -26,16 +28,23 @@ export const Projects: FC<Props> = ({
   translate,
   backgroundColor,
   color,
+  wrapperStyle = {},
 }) => {
   if (!projects || projects.length === 0) return null;
+
+  const combinedStyles = {
+    ...projectStyles,
+    ...defaultStyles,
+  };
 
   return (
     <View
       wrap={false}
       style={[
-        projectStyles.projectWrapper,
+        combinedStyles.projectWrapper,
         defaultStyles.paddingY20,
         defaultStyles.paddingX40,
+        wrapperStyle,
         {
           color,
           backgroundColor,
