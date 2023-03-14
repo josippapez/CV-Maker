@@ -6,4 +6,5 @@ export interface ProfessionalExperience {
   endDate: string;
   currentlyEnrolled: boolean;
   description: string;
+  id?: string;
 }

@@ -2,12 +2,14 @@ import { useCallback, useEffect, useRef } from 'react';
 
 type DebouncedFunction = <T extends unknown[]>(
   func: (...args: T) => void,
-  customTimeout?: number
-) => (...args: T) => void;
+  customTimeout?: number,
+  customDependencies?: unknown[]
+) => [(...args: T) => void, () => void];
 
 export const useDebouncedFunction: DebouncedFunction = <T extends unknown[]>(
   func: (...args: T) => void,
-  customTimeout = 200
+  customTimeout = 300,
+  customDependencies: unknown[] = []
 ) => {
   const timeoutRef = useRef<null | ReturnType<typeof setTimeout>>(null);
 
@@ -20,8 +22,14 @@ export const useDebouncedFunction: DebouncedFunction = <T extends unknown[]>(
         func(...args);
       }, customTimeout);
     },
-    [func, customTimeout]
+    [func, customTimeout, customDependencies]
   );
+
+  const clear = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -31,5 +39,5 @@ export const useDebouncedFunction: DebouncedFunction = <T extends unknown[]>(
     };
   }, []);
 
-  return debouncedFunction;
+  return [debouncedFunction, clear];
 };

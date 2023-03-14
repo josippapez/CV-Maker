@@ -8,11 +8,11 @@ type DebouncedValue = <T>(
 
 export const useDebouncedValue: DebouncedValue = (
   initialState,
-  customTimeout = 200
+  customTimeout = 300
 ) => {
   const [value, setValue] = useState(initialState);
 
-  const setDebouncedValue = useDebouncedFunction(
+  const [setDebouncedValue] = useDebouncedFunction(
     (newValue: typeof initialState) => {
       setValue(newValue);
     },

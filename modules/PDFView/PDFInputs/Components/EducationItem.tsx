@@ -1,18 +1,31 @@
 import { Operations } from '@/store/reducers/pdfData';
+import { ReorderButton } from '@modules/PDFView/PDFInputs/Components/ReorderButton';
 import { Education } from '@modules/PDFView/models';
+import { ReorderContext } from '@modules/Shared/Hooks';
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
-import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { DateInput } from '@modules/Shared/Inputs/DateInput';
 import { TextInput } from '@modules/Shared/Inputs/TextInput';
 import { ToggleInput } from '@modules/Shared/Inputs/ToggleInput';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
-import { useCallback, useState } from 'react';
+import {
+  Reorder,
+  motion,
+  useDragControls,
+  useMotionValue,
+} from 'framer-motion';
+import { TFunction } from 'next-i18next';
+import { useCallback, useContext, useState } from 'react';
 import { DeleteButton } from './DeleteButton';
 
 interface Props {
   education: Education;
   index: number;
+  animation: ReturnType<typeof useAnimation>;
+  setEducation: (
+    operation: Operations,
+    data?: Partial<Education> | Partial<Education>[],
+    index?: number
+  ) => void;
+  t: TFunction;
 }
 
 const arrayOfEducationInputs: Array<{
@@ -50,39 +63,34 @@ const arrayOfCourseInputs: Array<{
   },
 ];
 
-export const EducationItem = (props: Props) => {
-  const { t } = useTranslation('EducationInput');
-  const { setEducation, education: educationList } = usePDFData();
-  const { education, index } = props;
-
-  const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
-    amountY: 10,
-  });
+export const EducationItem = ({
+  education,
+  index,
+  animation: { combinedStyleFinal, combinedStyleInitial },
+  setEducation,
+  t,
+}: Props) => {
+  const y = useMotionValue(0);
+  const controls = useDragControls();
+  const { setIsDragging, isDragging, stopReorder } = useContext(ReorderContext);
   const [selectedEducation, setSelectedEducation] = useState<
     'school' | 'course'
   >(education.course ? 'course' : 'school');
 
-  const getEducationInputs = () => {
+  const getEducationInputs = useCallback(() => {
     if (selectedEducation === 'course') {
       return arrayOfCourseInputs;
     }
     return arrayOfEducationInputs;
-  };
+  }, [selectedEducation]);
 
   const handleSelectedEducation = (value: string) => {
     setEducation(
       Operations.UPDATE,
       {
-        url: '',
-        course: '',
-        location: '',
-        school: '',
-        degree: '',
-        fieldOfStudy: '',
-        startDate: '',
-        endDate: '',
-        description: '',
-        currentlyEnrolled: false,
+        ...education,
+        course: value === 'course' ? '' : undefined,
+        school: value === 'school' ? '' : undefined,
       },
       index
     );
@@ -102,101 +110,151 @@ export const EducationItem = (props: Props) => {
         index
       );
     },
-    [educationList, index]
+    [index]
   );
 
   return (
-    <motion.div
-      key={`EducationInput-${index}`}
-      initial={combinedStyleInitial}
-      animate={combinedStyleFinal}
-      transition={{ duration: 0.2 }}
-      className='relative mt-4 flex flex-col gap-4 rounded-md p-10 first:mt-0 focus-within:bg-green-100'
+    <Reorder.Item
+      key={education.id}
+      value={education}
+      style={{
+        y,
+        position: 'relative',
+      }}
+      onDragEnd={() => {
+        setIsDragging(false);
+      }}
+      className='mt-4 select-none rounded-md transition-colors first:mt-0 hover:bg-green-100'
+      dragListener={false}
+      dragControls={controls}
     >
+      <ReorderButton
+        controls={controls}
+        setIsDragging={value => {
+          setIsDragging(value);
+          if (value) stopReorder();
+        }}
+      />
       <DeleteButton
+        positionTop={8}
+        positionRight={20}
         onClick={() => {
           setEducation(Operations.REMOVE, undefined, index);
         }}
       />
-      <div className='flex flex-row gap-4'>
-        <button
-          onClick={() => handleSelectedEducation('school')}
-          className={`${
-            selectedEducation === 'school'
-              ? 'bg-green-500 text-white'
-              : 'bg-white text-green-500'
-          } rounded-md p-2`}
-        >
-          {t('school')}
-        </button>
-        <button
-          onClick={() => handleSelectedEducation('course')}
-          className={`${
-            selectedEducation === 'course'
-              ? 'bg-green-500 text-white'
-              : 'bg-white text-green-500'
-          } rounded-md p-2`}
-        >
-          {t('course')}
-        </button>
-      </div>
-      {getEducationInputs().map((input, currentIndex) => (
-        <div key={`input-${index}-${currentIndex}`}>
-          {input.type === 'date' ? (
-            <DateInput
-              type='month'
-              disabled={
-                education.currentlyEnrolled && input.inputValue === 'endDate'
-              }
-              label={t(`${input.inputValue}`).toString()}
-              value={education[input.inputValue] as string}
-              setData={date => handleSetData(date, input.inputValue)}
-              resetData={() => handleSetData('', input.inputValue)}
-              format={{
-                month: 'short',
-                year: 'numeric',
+      <motion.div
+        key={`EducationInput-${index}`}
+        initial={combinedStyleInitial}
+        animate={combinedStyleFinal}
+        transition={{ duration: 0.2 }}
+        className='relative mt-4 flex flex-col gap-4 rounded-md p-10 first:mt-0 focus-within:bg-green-100'
+      >
+        {isDragging ? (
+          <motion.div
+            initial={{
+              height: 50,
+              opacity: 0,
+            }}
+            animate={{
+              height: 50,
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            transition={{ duration: 0.05 }}
+          >
+            {education.course || education.school}
+          </motion.div>
+        ) : (
+          <>
+            <div className='flex flex-row gap-4'>
+              <button
+                onClick={() => handleSelectedEducation('school')}
+                className={`${
+                  selectedEducation === 'school'
+                    ? 'bg-green-500 text-white'
+                    : 'bg-white text-green-500'
+                } rounded-md p-2`}
+              >
+                {t('school')}
+              </button>
+              <button
+                onClick={() => handleSelectedEducation('course')}
+                className={`${
+                  selectedEducation === 'course'
+                    ? 'bg-green-500 text-white'
+                    : 'bg-white text-green-500'
+                } rounded-md p-2`}
+              >
+                {t('course')}
+              </button>
+            </div>
+            {getEducationInputs().map((input, currentIndex) => (
+              <div key={`input-${index}-${currentIndex}`}>
+                {input.type === 'date' ? (
+                  <DateInput
+                    type='month'
+                    disabled={
+                      education.currentlyEnrolled &&
+                      input.inputValue === 'endDate'
+                    }
+                    label={t(`${input.inputValue}`).toString()}
+                    value={education[input.inputValue] as string}
+                    setData={date => handleSetData(date, input.inputValue)}
+                    resetData={() => handleSetData('', input.inputValue)}
+                    format={{
+                      month: 'short',
+                      year: 'numeric',
+                    }}
+                  />
+                ) : (
+                  input.type !== 'toggle' && (
+                    <TextInput
+                      label={t(`${input.inputName}`).toString()}
+                      defaultValue={education[input.inputValue] as string}
+                      name={input.inputName}
+                      onChange={e =>
+                        handleSetData(e.target.value, input.inputValue)
+                      }
+                      fullWidth
+                    />
+                  )
+                )}
+                {input.type === 'toggle' && (
+                  <ToggleInput
+                    label={t('present').toString()}
+                    name={input.inputName}
+                    checked={education.currentlyEnrolled}
+                    wrapperClassName='mt-4'
+                    onChange={e =>
+                      handleSetData(e.target.checked, input.inputValue)
+                    }
+                    fullWidth
+                  />
+                )}
+              </div>
+            ))}
+            <TextInput
+              key={`${index}-${getEducationInputs().length - 1}-input`}
+              label={t('description').toString()}
+              defaultValue={education.description}
+              name='education-description'
+              onChange={e => {
+                setEducation(
+                  Operations.UPDATE,
+                  {
+                    description: e.target.value,
+                  },
+                  index
+                );
               }}
-            />
-          ) : (
-            input.type !== 'toggle' && (
-              <TextInput
-                label={t(`${input.inputName}`).toString()}
-                defaultValue={education[input.inputValue] as string}
-                name={input.inputName}
-                onChange={e => handleSetData(e.target.value, input.inputValue)}
-                fullWidth
-              />
-            )
-          )}
-          {input.type === 'toggle' && (
-            <ToggleInput
-              label={t('present').toString()}
-              name={input.inputName}
-              checked={education.currentlyEnrolled}
-              wrapperClassName='mt-4'
-              onChange={e => handleSetData(e.target.checked, input.inputValue)}
               fullWidth
+              textarea
             />
-          )}
-        </div>
-      ))}
-      <TextInput
-        key={`${index}-${getEducationInputs().length - 1}-input`}
-        label={t('description').toString()}
-        defaultValue={education.description}
-        name='education-description'
-        onChange={e => {
-          setEducation(
-            Operations.UPDATE,
-            {
-              description: e.target.value,
-            },
-            index
-          );
-        }}
-        fullWidth
-        textarea
-      />
-    </motion.div>
+          </>
+        )}
+      </motion.div>
+    </Reorder.Item>
   );
 };

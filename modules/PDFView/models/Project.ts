@@ -6,4 +6,5 @@ export interface Project {
   endDate?: string;
   currentlyWorking: boolean;
   url?: string;
+  id?: string;
 }

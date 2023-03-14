@@ -26,6 +26,8 @@ export const PDFInputsPresenter = (props: Props) => {
         return <GeneralInput key={selectedTab} />;
       case Tab.professionalExperience:
         return <ProfessionalExperienceInput key={selectedTab} />;
+      case Tab.projects:
+        return <ProjectsInput key={selectedTab} />;
       case Tab.education:
         return <EducationInput key={selectedTab} />;
       case Tab.certificates:
@@ -34,8 +36,6 @@ export const PDFInputsPresenter = (props: Props) => {
         return <LanguagesInput key={selectedTab} />;
       case Tab.skills:
         return <SkillsInput key={selectedTab} />;
-      case Tab.projects:
-        return <ProjectsInput key={selectedTab} />;
     }
   }, [selectedTab]);
 

@@ -5,7 +5,16 @@
     "src/Components/PDFView/CVTemplates/i18n",
     "src/Components/Shared/PDFInputs/i18n",
     "src/Components/Shared/Navbar/i18n",
-    "src/Components/Shared/PDFTabNavigation/i18n"
+    "src/Components/Shared/PDFTabNavigation/i18n",
+    "out/locales",
+    "public/locales",
+    "modules/LandingPage/i18n",
+    "modules/Navbar/i18n",
+    "modules/PDFView/CVTemplates/i18n",
+    "modules/PDFView/PDFInputs/i18n",
+    "modules/PDFView/VersionHistory/i18n",
+    "modules/PDFView/PDFTabNavigation/i18n",
+    "modules/Shared/DatePicker/i18n"
   ],
   "i18n-ally.enabledParsers": ["js", "json"],
   "i18n-ally.enabledFrameworks": ["react", "i18next"],

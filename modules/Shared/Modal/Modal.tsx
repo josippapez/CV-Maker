@@ -1,5 +1,8 @@
+import { useKeyPress } from '@modules/Shared/Hooks';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
+import { getAnimation } from '@modules/Shared/Modal/getAnimations';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import style from './Modal.module.scss';
 
@@ -31,6 +34,7 @@ interface Props {
 
 export const Modal = (props: Props): JSX.Element => {
   const windowSize = useWindowSize();
+  const escPressed = useKeyPress('Escape');
   const {
     closeModal,
     position,
@@ -44,83 +48,15 @@ export const Modal = (props: Props): JSX.Element => {
     zindex,
   } = props;
 
-  const getAnimation = () => {
-    const transition = {
-      duration: 0.15,
-    };
-    switch (animation) {
-      case 'slide-left':
-        return {
-          show: {
-            x: 0,
-            transition,
-          },
-          hide: {
-            x: '-100%',
-            transition,
-          },
-        };
-      case 'slide-right':
-        return {
-          show: {
-            x: 0,
-            transition,
-          },
-          hide: {
-            x: '100%',
-            transition,
-          },
-        };
-      case 'slide-top':
-        return {
-          show: {
-            y: 0,
-            transition,
-          },
-          hide: {
-            y: '-100%',
-            transition,
-          },
-        };
-      case 'slide-bottom':
-        return {
-          show: {
-            y: 0,
-            transition,
-          },
-          hide: {
-            y: '100%',
-            transition,
-          },
-        };
-      case 'fade':
-        return {
-          show: {
-            opacity: 1,
-            transition,
-          },
-          hide: {
-            opacity: 0,
-            transition,
-          },
-        };
-      default:
-        return {
-          show: {
-            opacity: 1,
-            transform: 'scale(1)',
-            transition,
-          },
-          hide: {
-            transform: 'scale(0.95)',
-            opacity: 0,
-            transition,
-          },
-        };
-    }
-  };
+  const animate = getAnimation(animation);
 
-  const animate = getAnimation();
+  useEffect(() => {
+    if (escPressed) closeModal();
+  }, [escPressed, closeModal]);
+
+  useEffect(() => {
+    document.body.style.overflow = show ? 'hidden' : 'auto';
+  }, [show]);
 
   return createPortal(
     <AnimatePresence>

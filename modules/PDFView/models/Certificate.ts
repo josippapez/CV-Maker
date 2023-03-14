@@ -3,4 +3,5 @@ export interface Certificate {
   date: string;
   institution: string;
   description: string;
+  id?: string;
 }
