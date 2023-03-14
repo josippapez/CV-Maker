@@ -9,4 +9,5 @@ export interface Education {
   endDate: string;
   currentlyEnrolled: boolean;
   description: string;
+  id?: string;
 }

@@ -45,62 +45,68 @@ export const usePDFData = () => {
     (loaded: boolean) => dispatch(setLoaded(loaded)),
     [dispatch]
   );
-  const setGeneralInfo = useDebouncedFunction((value: Partial<GeneralInfo>) =>
+  const [setGeneralInfo] = useDebouncedFunction((value: Partial<GeneralInfo>) =>
     dispatch(cacheGeneralInfo(value))
   );
-  const setProfessionalExperience = useDebouncedFunction(
+  const [setProfessionalExperience] = useDebouncedFunction(
     (
       operation: Operations,
-      professionalExperience?: Partial<ProfessionalExperience>,
+      professionalExperience?:
+        | Partial<ProfessionalExperience>
+        | Partial<ProfessionalExperience>[],
       index?: number
     ) =>
       dispatch(
         cacheProfessionalExperience({
           operation,
-          experience: professionalExperience,
+          data: professionalExperience,
           index,
         })
       )
   );
-  const setCertificates = useDebouncedFunction(
+  const [setCertificates] = useDebouncedFunction(
     (
       operation: Operations,
-      certificate?: Partial<Certificate>,
+      data?: Partial<Certificate> | Partial<Certificate>[],
       index?: number
     ) =>
       dispatch(
         cacheCertificates({
           operation,
-          certificate,
+          data,
           index,
         })
       )
   );
-  const setEducation = useDebouncedFunction(
-    (operation: Operations, education?: Partial<Education>, index?: number) =>
+  const [setEducation] = useDebouncedFunction(
+    (
+      operation: Operations,
+      data?: Partial<Education> | Partial<Education>[],
+      index?: number
+    ) =>
       dispatch(
         cacheEducation({
           operation,
-          education,
+          data,
           index,
         })
       )
   );
-  const setLanguages = useDebouncedFunction(
+  const [setLanguages] = useDebouncedFunction(
     (
       operation: Operations,
-      language?: Partial<LanguageSkill>,
+      data?: Partial<LanguageSkill> | Partial<LanguageSkill>[],
       index?: number
     ) =>
       dispatch(
         cacheLanguages({
           operation,
-          language,
+          data,
           index,
         })
       )
   );
-  const setSkills = useDebouncedFunction(
+  const [setSkills] = useDebouncedFunction(
     (operation: Operations, skill?: Partial<Skill>, index?: number) =>
       dispatch(
         cacheSkills({
@@ -111,17 +117,21 @@ export const usePDFData = () => {
       ),
     0
   );
-  const setProjects = useDebouncedFunction(
-    (operation: Operations, project?: Partial<Project>, index?: number) =>
+  const [setProjects] = useDebouncedFunction(
+    (
+      operation: Operations,
+      data?: Partial<Project> | Partial<Project>[],
+      index?: number
+    ) =>
       dispatch(
         cacheProjects({
           operation,
-          project,
+          data,
           index,
         })
       )
   );
-  const setAllData = useDebouncedFunction((data: PDFData) =>
+  const [setAllData] = useDebouncedFunction((data: PDFData) =>
     dispatch(cacheAllData(data))
   );
   const setActiveTemplate = (template: TemplateName) =>
@@ -173,5 +183,6 @@ export const usePDFData = () => {
     setAllData,
     setActiveTemplate,
     getUserData,
+    dispatch,
   };
 };

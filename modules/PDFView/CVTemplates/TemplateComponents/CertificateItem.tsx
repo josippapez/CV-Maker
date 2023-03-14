@@ -45,7 +45,7 @@ export const CertificateItem: FC<Props> = ({ cert, styles }) => {
         ]}
       >
         <TextDisplay style={[certificateStyles.certificateDuration]}>
-          {displayDate(cert.date)}
+          {cert.date && displayDate(cert.date)}
         </TextDisplay>
       </View>
       <TextDisplay style={[certificateStyles.certificateDescription]}>

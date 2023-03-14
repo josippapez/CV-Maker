@@ -61,7 +61,7 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
   const userIsLoggedIn = !!user?.uid;
   const pageExists = !!pageNumber && !!numPages;
 
-  const updateInstanceAndSaveData = useDebouncedFunction(() => {
+  const [updateInstanceAndSaveData] = useDebouncedFunction(() => {
     if (!instance.loading) updateInstance();
 
     if (isPDFPreview) return;

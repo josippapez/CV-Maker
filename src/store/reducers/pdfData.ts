@@ -11,6 +11,7 @@ import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist/es/constants';
 
 export enum Operations {
+  SET,
   ADD,
   UPDATE,
   REMOVE,
@@ -18,21 +19,26 @@ export enum Operations {
 
 interface ArrayUpdatePayload<T> {
   operation: Operations;
-  item?: T;
+  item?: T | T[];
   index?: number;
 }
 
+const isArray = <T>(item?: T | T[]): item is T[] => Array.isArray(item);
+
 function updateArray<T>(array: T[], payload: ArrayUpdatePayload<T>) {
   const { operation, item, index } = payload;
-  if (!array) array = [];
+
+  const itemIsArray = isArray<T>(item);
+
   switch (operation) {
+    case Operations.SET:
+      if (itemIsArray) array = [...item];
+      break;
     case Operations.ADD:
-      if (item) {
-        array.push(item);
-      }
+      if (item && !itemIsArray) array.push(item);
       break;
     case Operations.UPDATE:
-      if (index !== undefined && item) {
+      if (index !== undefined && item && !itemIsArray) {
         array[index] = {
           ...array[index],
           ...item,
@@ -123,6 +129,7 @@ export const pdfData = createSlice({
       state.education = action.payload.education;
       state.languages = action.payload.languages;
       state.skills = action.payload.skills;
+      state.projects = action.payload.projects;
       state.modified = true;
     },
     cacheGeneralInfo: (state, action: PayloadAction<Partial<GeneralInfo>>) => {
@@ -136,14 +143,24 @@ export const pdfData = createSlice({
       state,
       action: PayloadAction<{
         operation: Operations;
-        experience?: Partial<ProfessionalExperience>;
+        data?:
+          | Partial<ProfessionalExperience>
+          | Partial<ProfessionalExperience>[];
         index?: number;
       }>
     ) => {
-      const { operation, experience, index } = action.payload;
+      const { operation, data, index } = action.payload;
+      if (!state.professionalExperience) state.professionalExperience = [];
+
+      const isDataArray = isArray(data);
+
+      if (isDataArray) {
+        state.professionalExperience = [...(data as ProfessionalExperience[])];
+        return;
+      }
       updateArray(state.professionalExperience, {
         operation,
-        item: experience,
+        item: data,
         index,
       });
       state.modified = true;
@@ -152,14 +169,22 @@ export const pdfData = createSlice({
       state,
       action: PayloadAction<{
         operation: Operations;
-        certificate?: Partial<Certificate>;
+        data?: Partial<Certificate> | Partial<Certificate>[];
         index?: number;
       }>
     ) => {
-      const { operation, certificate, index } = action.payload;
+      const { operation, data, index } = action.payload;
+      if (!state.certificates) state.certificates = [];
+
+      const isDataArray = isArray(data);
+
+      if (isDataArray) {
+        state.certificates = [...(data as Certificate[])];
+        return;
+      }
       updateArray(state.certificates, {
         operation,
-        item: certificate,
+        item: data,
         index,
       });
       state.modified = true;
@@ -168,14 +193,22 @@ export const pdfData = createSlice({
       state,
       action: PayloadAction<{
         operation: Operations;
-        education?: Partial<Education>;
+        data?: Partial<Education> | Partial<Education>[];
         index?: number;
       }>
     ) => {
-      const { operation, education, index } = action.payload;
+      const { operation, data, index } = action.payload;
+      if (!state.education) state.education = [];
+
+      const isDataArray = isArray(data);
+
+      if (isDataArray) {
+        state.education = [...(data as Education[])];
+        return;
+      }
       updateArray(state.education, {
         operation,
-        item: education,
+        item: data,
         index,
       });
       state.modified = true;
@@ -184,14 +217,21 @@ export const pdfData = createSlice({
       state,
       action: PayloadAction<{
         operation: Operations;
-        language?: Partial<LanguageSkill>;
+        data?: Partial<LanguageSkill> | Partial<LanguageSkill>[];
         index?: number;
       }>
     ) => {
-      const { operation, language, index } = action.payload;
+      const { operation, data, index } = action.payload;
+      if (!state.languages) state.languages = [];
+      const isDataArray = isArray(data);
+
+      if (isDataArray) {
+        state.languages = [...(data as LanguageSkill[])];
+        return;
+      }
       updateArray(state.languages, {
         operation,
-        item: language,
+        item: data,
         index,
       });
       state.modified = true;
@@ -216,14 +256,21 @@ export const pdfData = createSlice({
       state,
       action: PayloadAction<{
         operation: Operations;
-        project?: Partial<Project>;
+        data?: Partial<Project> | Partial<Project>[];
         index?: number;
       }>
     ) => {
-      const { operation, project, index } = action.payload;
+      const { operation, data, index } = action.payload;
+      if (!state.projects) state.projects = [];
+      const isDataArray = isArray(data);
+
+      if (isDataArray) {
+        state.projects = [...(data as Project[])];
+        return;
+      }
       updateArray(state.projects, {
         operation,
-        item: project,
+        item: data,
         index,
       });
       state.modified = true;
