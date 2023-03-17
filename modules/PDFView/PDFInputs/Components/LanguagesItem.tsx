@@ -15,7 +15,7 @@ import {
   useMotionValue,
 } from 'framer-motion';
 import { TFunction } from 'next-i18next';
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 
 type Props = {
   animation: ReturnType<typeof useAnimation>;
@@ -39,6 +39,13 @@ export const LanguagesItem: FC<Props> = ({
   const { setIsDragging, isDragging, stopReorder } = useContext(ReorderContext);
   const y = useMotionValue(0);
   const controls = useDragControls();
+  const [reorderComponentHeight, setReorderComponentHeight] = useState(0);
+
+  const animation = {
+    initial: combinedStyleInitial,
+    animate: combinedStyleFinal,
+    exit: combinedStyleInitial,
+  };
 
   return (
     <Reorder.Item
@@ -71,9 +78,14 @@ export const LanguagesItem: FC<Props> = ({
       />
       <motion.div
         key={index + '-' + 'LanguagesInput'}
-        initial={combinedStyleInitial}
-        animate={combinedStyleFinal}
-        exit={combinedStyleInitial}
+        {...animation}
+        animate={{
+          ...combinedStyleFinal,
+          height: isDragging ? reorderComponentHeight + 80 : 'auto',
+          transition: {
+            delay: isDragging ? 0.2 : 0,
+          },
+        }}
         transition={{ duration: 0.2 }}
         className='relative gap-4 p-10'
       >
@@ -81,22 +93,22 @@ export const LanguagesItem: FC<Props> = ({
           {isDragging && (
             <motion.div
               className='gap-4'
-              initial={{
-                height: 0,
-                opacity: 0,
-                display: 'none',
-              }}
+              initial={combinedStyleInitial}
               animate={{
-                opacity: 1,
-                display: 'flex',
+                ...combinedStyleFinal,
                 transition: {
-                  delay: 0.2,
-                  duration: 0.05,
+                  duration: 0.2,
+                  delay: 0.05,
                 },
               }}
               exit={{
-                opacity: 0,
-                display: 'none',
+                ...combinedStyleInitial,
+                transition: {
+                  duration: 0.05,
+                },
+              }}
+              ref={ref => {
+                setReorderComponentHeight(ref?.clientHeight || 0);
               }}
             >
               {language.name}
@@ -105,25 +117,28 @@ export const LanguagesItem: FC<Props> = ({
         </AnimatePresence>
         <AnimatePresence>
           {!isDragging && (
-            <>
-              <div className='flex'>
-                <TextInput
-                  key={index + '-' + 'LanguagesInput' + '-' + t('language')}
-                  label={t('language').toString()}
-                  defaultValue={language.name}
-                  name='language'
-                  onChange={e => {
-                    setLanguages(
-                      Operations.UPDATE,
-                      {
-                        name: e.target.value,
-                      },
-                      index
-                    );
-                  }}
-                  fullWidth
-                />
-              </div>
+            <motion.div
+              {...animation}
+              transition={{ duration: 0.2, when: 'beforeChildren' }}
+              className='flex flex-col'
+            >
+              <TextInput
+                key={index + '-' + 'LanguagesInput' + '-' + t('language')}
+                label={t('language').toString()}
+                defaultValue={language.name}
+                name='language'
+                onChange={e => {
+                  setLanguages(
+                    Operations.UPDATE,
+                    {
+                      name: e.target.value,
+                    },
+                    index
+                  );
+                }}
+                fullWidth
+              />
+
               <div className='mt-2 flex'>
                 <label className='w-1/4 self-center font-medium'>
                   {t('level')}
@@ -155,7 +170,7 @@ export const LanguagesItem: FC<Props> = ({
                   </option>
                 </select>
               </div>
-            </>
+            </motion.div>
           )}
         </AnimatePresence>
       </motion.div>

@@ -13,7 +13,7 @@ import {
   useMotionValue,
 } from 'framer-motion';
 import { TFunction } from 'next-i18next';
-import { FC, useCallback, useContext } from 'react';
+import { FC, useCallback, useContext, useState } from 'react';
 
 type Props = {
   animation: ReturnType<typeof useAnimation>;
@@ -47,6 +47,13 @@ export const CertificateItem: FC<Props> = ({
   const { setIsDragging, isDragging, stopReorder } = useContext(ReorderContext);
   const y = useMotionValue(0);
   const controls = useDragControls();
+  const [reorderComponentHeight, setReorderComponentHeight] = useState(0);
+
+  const animation = {
+    initial: combinedStyleInitial,
+    animate: combinedStyleFinal,
+    exit: combinedStyleInitial,
+  };
 
   const handleSaveData = useCallback(
     (value: string, index: number, inputName: string) => {
@@ -91,9 +98,14 @@ export const CertificateItem: FC<Props> = ({
         }}
       />
       <motion.div
-        initial={combinedStyleInitial}
-        animate={combinedStyleFinal}
-        exit={combinedStyleInitial}
+        {...animation}
+        animate={{
+          ...combinedStyleFinal,
+          height: isDragging ? reorderComponentHeight + 80: 'auto',
+          transition: {
+            delay: isDragging ? 0.2 : 0,
+          },
+        }}
         transition={{
           duration: 0.2,
           when: 'beforeChildren',
@@ -105,22 +117,22 @@ export const CertificateItem: FC<Props> = ({
             {isDragging && (
               <motion.div
                 className='gap-4'
-                initial={{
-                  height: 0,
-                  opacity: 0,
-                  display: 'none',
-                }}
+                initial={combinedStyleInitial}
                 animate={{
-                  opacity: 1,
-                  display: 'flex',
+                  ...combinedStyleFinal,
                   transition: {
-                    delay: 0.2,
-                    duration: 0.05,
+                    duration: 0.2,
+                    delay: (arrayOfCertificatesInputs.length - 1) * 0.05,
                   },
                 }}
                 exit={{
-                  opacity: 0,
-                  display: 'none',
+                  ...combinedStyleInitial,
+                  transition: {
+                    duration: 0.05,
+                  },
+                }}
+                ref={ref => {
+                  setReorderComponentHeight(ref?.clientHeight || 0);
                 }}
               >
                 {certificate.name}
@@ -130,7 +142,14 @@ export const CertificateItem: FC<Props> = ({
 
           <AnimatePresence>
             {!isDragging && (
-              <div className='flex flex-col gap-4'>
+              <motion.div
+                {...animation}
+                transition={{
+                  duration: 0.2,
+                  when: 'beforeChildren',
+                }}
+                className='flex flex-col gap-4'
+              >
                 {arrayOfCertificatesInputs.map((input, currentIndex) => (
                   <motion.div
                     key={`certificates-${index}-${currentIndex}-input`}
@@ -205,7 +224,7 @@ export const CertificateItem: FC<Props> = ({
                     textarea
                   />
                 </motion.div>
-              </div>
+              </motion.div>
             )}
           </AnimatePresence>
         </AnimatePresence>

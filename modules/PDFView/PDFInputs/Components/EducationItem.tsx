@@ -77,6 +77,13 @@ export const EducationItem = ({
   const [selectedEducation, setSelectedEducation] = useState<
     'school' | 'course'
   >(education.course ? 'course' : 'school');
+  const [reorderComponentHeight, setReorderComponentHeight] = useState(0);
+
+  const animation = {
+    initial: combinedStyleInitial,
+    animate: combinedStyleFinal,
+    exit: combinedStyleInitial,
+  };
 
   const getEducationInputs = useCallback(() => {
     if (selectedEducation === 'course') {
@@ -145,126 +152,135 @@ export const EducationItem = ({
       />
       <motion.div
         key={`EducationInput-${index}`}
-        initial={combinedStyleInitial}
-        animate={combinedStyleFinal}
+        {...animation}
+        animate={{
+          ...combinedStyleFinal,
+          height: isDragging ? reorderComponentHeight + 80 : 'auto',
+          transition: {
+            delay: isDragging ? 0.2 : 0,
+          },
+        }}
         transition={{ duration: 0.2 }}
         className='relative p-10'
       >
         <AnimatePresence>
-          {isDragging ? (
-            <AnimatePresence>
-              <motion.div
-                className='gap-4'
-                initial={{
-                  height: 0,
-                  opacity: 0,
-                  display: 'none',
-                }}
-                animate={{
-                  opacity: 1,
-                  display: 'flex',
-                  transition: {
-                    delay: 0.2,
-                    duration: 0.05,
-                  },
-                }}
-                exit={{
-                  opacity: 0,
-                  display: 'none',
-                }}
-              >
-                {education.course || education.school}
-              </motion.div>
-            </AnimatePresence>
-          ) : (
-            <AnimatePresence>
-              <div className='flex flex-col gap-4'>
-                <div className='flex flex-row gap-4'>
-                  <button
-                    onClick={() => handleSelectedEducation('school')}
-                    className={`${
-                      selectedEducation === 'school'
-                        ? 'bg-green-500 text-white'
-                        : 'bg-white text-green-500'
-                    } rounded-md p-2`}
-                  >
-                    {t('school')}
-                  </button>
-                  <button
-                    onClick={() => handleSelectedEducation('course')}
-                    className={`${
-                      selectedEducation === 'course'
-                        ? 'bg-green-500 text-white'
-                        : 'bg-white text-green-500'
-                    } rounded-md p-2`}
-                  >
-                    {t('course')}
-                  </button>
-                </div>
-                {getEducationInputs().map((input, currentIndex) => (
-                  <div key={`input-${index}-${currentIndex}`}>
-                    {input.type === 'date' ? (
-                      <DateInput
-                        type='month'
-                        disabled={
-                          education.currentlyEnrolled &&
-                          input.inputValue === 'endDate'
-                        }
-                        label={t(`${input.inputValue}`).toString()}
-                        value={education[input.inputValue] as string}
-                        setData={date => handleSetData(date, input.inputValue)}
-                        resetData={() => handleSetData('', input.inputValue)}
-                        format={{
-                          month: 'short',
-                          year: 'numeric',
-                        }}
-                      />
-                    ) : (
-                      input.type !== 'toggle' && (
-                        <TextInput
-                          label={t(`${input.inputName}`).toString()}
-                          defaultValue={education[input.inputValue] as string}
-                          name={input.inputName}
-                          onChange={e =>
-                            handleSetData(e.target.value, input.inputValue)
-                          }
-                          fullWidth
-                        />
-                      )
-                    )}
-                    {input.type === 'toggle' && (
-                      <ToggleInput
-                        label={t('present').toString()}
+          {isDragging && (
+            <motion.div
+              className='gap-4'
+              initial={combinedStyleInitial}
+              animate={{
+                ...combinedStyleFinal,
+                transition: {
+                  duration: 0.2,
+                  delay: (getEducationInputs().length - 1) * 0.05,
+                },
+              }}
+              exit={{
+                ...combinedStyleInitial,
+                transition: {
+                  duration: 0.05,
+                },
+              }}
+              ref={ref => {
+                setReorderComponentHeight(ref?.clientHeight || 0);
+              }}
+            >
+              {education.course || education.school}
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {!isDragging && (
+            <motion.div
+              {...animation}
+              transition={{ duration: 0.2, when: 'beforeChildren' }}
+              className='flex flex-col gap-4'
+            >
+              <div className='flex flex-row gap-4'>
+                <button
+                  onClick={() => handleSelectedEducation('school')}
+                  className={`${
+                    selectedEducation === 'school'
+                      ? 'bg-green-500 text-white'
+                      : 'bg-white text-green-500'
+                  } rounded-md p-2`}
+                >
+                  {t('school')}
+                </button>
+                <button
+                  onClick={() => handleSelectedEducation('course')}
+                  className={`${
+                    selectedEducation === 'course'
+                      ? 'bg-green-500 text-white'
+                      : 'bg-white text-green-500'
+                  } rounded-md p-2`}
+                >
+                  {t('course')}
+                </button>
+              </div>
+              {getEducationInputs().map((input, currentIndex) => (
+                <div key={`input-${index}-${currentIndex}`}>
+                  {input.type === 'date' ? (
+                    <DateInput
+                      type='month'
+                      disabled={
+                        education.currentlyEnrolled &&
+                        input.inputValue === 'endDate'
+                      }
+                      label={t(`${input.inputValue}`).toString()}
+                      value={education[input.inputValue] as string}
+                      setData={date => handleSetData(date, input.inputValue)}
+                      resetData={() => handleSetData('', input.inputValue)}
+                      format={{
+                        month: 'short',
+                        year: 'numeric',
+                      }}
+                    />
+                  ) : (
+                    input.type !== 'toggle' && (
+                      <TextInput
+                        label={t(`${input.inputName}`).toString()}
+                        defaultValue={education[input.inputValue] as string}
                         name={input.inputName}
-                        checked={education.currentlyEnrolled}
-                        wrapperClassName='mt-4'
                         onChange={e =>
-                          handleSetData(e.target.checked, input.inputValue)
+                          handleSetData(e.target.value, input.inputValue)
                         }
                         fullWidth
                       />
-                    )}
-                  </div>
-                ))}
-                <TextInput
-                  key={`${index}-${getEducationInputs().length - 1}-input`}
-                  label={t('description').toString()}
-                  defaultValue={education.description}
-                  name='education-description'
-                  onChange={e => {
-                    setEducation(
-                      Operations.UPDATE,
-                      {
-                        description: e.target.value,
-                      },
-                      index
-                    );
-                  }}
-                  fullWidth
-                  textarea
-                />
-              </div>
-            </AnimatePresence>
+                    )
+                  )}
+                  {input.type === 'toggle' && (
+                    <ToggleInput
+                      label={t('present').toString()}
+                      name={input.inputName}
+                      checked={education.currentlyEnrolled}
+                      wrapperClassName='mt-4'
+                      onChange={e =>
+                        handleSetData(e.target.checked, input.inputValue)
+                      }
+                      fullWidth
+                    />
+                  )}
+                </div>
+              ))}
+              <TextInput
+                key={`${index}-${getEducationInputs().length - 1}-input`}
+                label={t('description').toString()}
+                defaultValue={education.description}
+                name='education-description'
+                onChange={e => {
+                  setEducation(
+                    Operations.UPDATE,
+                    {
+                      description: e.target.value,
+                    },
+                    index
+                  );
+                }}
+                fullWidth
+                textarea
+              />
+            </motion.div>
           )}
         </AnimatePresence>
       </motion.div>

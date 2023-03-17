@@ -13,6 +13,7 @@ export const DeleteButton = (props: Props) => {
 
   return (
     <button
+      type='button'
       className='absolute z-10'
       style={{
         top: positionTop,
