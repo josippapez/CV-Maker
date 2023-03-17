@@ -7,6 +7,7 @@ import { DateInput } from '@modules/Shared/Inputs/DateInput';
 import { TextInput } from '@modules/Shared/Inputs/TextInput';
 import { ToggleInput } from '@modules/Shared/Inputs/ToggleInput';
 import {
+  AnimatePresence,
   Reorder,
   motion,
   useDragControls,
@@ -147,113 +148,125 @@ export const EducationItem = ({
         initial={combinedStyleInitial}
         animate={combinedStyleFinal}
         transition={{ duration: 0.2 }}
-        className='relative mt-4 flex flex-col gap-4 rounded-md p-10 first:mt-0 focus-within:bg-green-100'
+        className='relative p-10'
       >
-        {isDragging ? (
-          <motion.div
-            initial={{
-              height: 50,
-              opacity: 0,
-            }}
-            animate={{
-              height: 50,
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-            }}
-            transition={{ duration: 0.05 }}
-          >
-            {education.course || education.school}
-          </motion.div>
-        ) : (
-          <>
-            <div className='flex flex-row gap-4'>
-              <button
-                onClick={() => handleSelectedEducation('school')}
-                className={`${
-                  selectedEducation === 'school'
-                    ? 'bg-green-500 text-white'
-                    : 'bg-white text-green-500'
-                } rounded-md p-2`}
-              >
-                {t('school')}
-              </button>
-              <button
-                onClick={() => handleSelectedEducation('course')}
-                className={`${
-                  selectedEducation === 'course'
-                    ? 'bg-green-500 text-white'
-                    : 'bg-white text-green-500'
-                } rounded-md p-2`}
-              >
-                {t('course')}
-              </button>
-            </div>
-            {getEducationInputs().map((input, currentIndex) => (
-              <div key={`input-${index}-${currentIndex}`}>
-                {input.type === 'date' ? (
-                  <DateInput
-                    type='month'
-                    disabled={
-                      education.currentlyEnrolled &&
-                      input.inputValue === 'endDate'
-                    }
-                    label={t(`${input.inputValue}`).toString()}
-                    value={education[input.inputValue] as string}
-                    setData={date => handleSetData(date, input.inputValue)}
-                    resetData={() => handleSetData('', input.inputValue)}
-                    format={{
-                      month: 'short',
-                      year: 'numeric',
-                    }}
-                  />
-                ) : (
-                  input.type !== 'toggle' && (
-                    <TextInput
-                      label={t(`${input.inputName}`).toString()}
-                      defaultValue={education[input.inputValue] as string}
-                      name={input.inputName}
-                      onChange={e =>
-                        handleSetData(e.target.value, input.inputValue)
-                      }
-                      fullWidth
-                    />
-                  )
-                )}
-                {input.type === 'toggle' && (
-                  <ToggleInput
-                    label={t('present').toString()}
-                    name={input.inputName}
-                    checked={education.currentlyEnrolled}
-                    wrapperClassName='mt-4'
-                    onChange={e =>
-                      handleSetData(e.target.checked, input.inputValue)
-                    }
-                    fullWidth
-                  />
-                )}
-              </div>
-            ))}
-            <TextInput
-              key={`${index}-${getEducationInputs().length - 1}-input`}
-              label={t('description').toString()}
-              defaultValue={education.description}
-              name='education-description'
-              onChange={e => {
-                setEducation(
-                  Operations.UPDATE,
-                  {
-                    description: e.target.value,
+        <AnimatePresence>
+          {isDragging ? (
+            <AnimatePresence>
+              <motion.div
+                className='gap-4'
+                initial={{
+                  height: 0,
+                  opacity: 0,
+                  display: 'none',
+                }}
+                animate={{
+                  opacity: 1,
+                  display: 'flex',
+                  transition: {
+                    delay: 0.2,
+                    duration: 0.05,
                   },
-                  index
-                );
-              }}
-              fullWidth
-              textarea
-            />
-          </>
-        )}
+                }}
+                exit={{
+                  opacity: 0,
+                  display: 'none',
+                }}
+              >
+                {education.course || education.school}
+              </motion.div>
+            </AnimatePresence>
+          ) : (
+            <AnimatePresence>
+              <div className='flex flex-col gap-4'>
+                <div className='flex flex-row gap-4'>
+                  <button
+                    onClick={() => handleSelectedEducation('school')}
+                    className={`${
+                      selectedEducation === 'school'
+                        ? 'bg-green-500 text-white'
+                        : 'bg-white text-green-500'
+                    } rounded-md p-2`}
+                  >
+                    {t('school')}
+                  </button>
+                  <button
+                    onClick={() => handleSelectedEducation('course')}
+                    className={`${
+                      selectedEducation === 'course'
+                        ? 'bg-green-500 text-white'
+                        : 'bg-white text-green-500'
+                    } rounded-md p-2`}
+                  >
+                    {t('course')}
+                  </button>
+                </div>
+                {getEducationInputs().map((input, currentIndex) => (
+                  <div key={`input-${index}-${currentIndex}`}>
+                    {input.type === 'date' ? (
+                      <DateInput
+                        type='month'
+                        disabled={
+                          education.currentlyEnrolled &&
+                          input.inputValue === 'endDate'
+                        }
+                        label={t(`${input.inputValue}`).toString()}
+                        value={education[input.inputValue] as string}
+                        setData={date => handleSetData(date, input.inputValue)}
+                        resetData={() => handleSetData('', input.inputValue)}
+                        format={{
+                          month: 'short',
+                          year: 'numeric',
+                        }}
+                      />
+                    ) : (
+                      input.type !== 'toggle' && (
+                        <TextInput
+                          label={t(`${input.inputName}`).toString()}
+                          defaultValue={education[input.inputValue] as string}
+                          name={input.inputName}
+                          onChange={e =>
+                            handleSetData(e.target.value, input.inputValue)
+                          }
+                          fullWidth
+                        />
+                      )
+                    )}
+                    {input.type === 'toggle' && (
+                      <ToggleInput
+                        label={t('present').toString()}
+                        name={input.inputName}
+                        checked={education.currentlyEnrolled}
+                        wrapperClassName='mt-4'
+                        onChange={e =>
+                          handleSetData(e.target.checked, input.inputValue)
+                        }
+                        fullWidth
+                      />
+                    )}
+                  </div>
+                ))}
+                <TextInput
+                  key={`${index}-${getEducationInputs().length - 1}-input`}
+                  label={t('description').toString()}
+                  defaultValue={education.description}
+                  name='education-description'
+                  onChange={e => {
+                    setEducation(
+                      Operations.UPDATE,
+                      {
+                        description: e.target.value,
+                      },
+                      index
+                    );
+                  }}
+                  fullWidth
+                  textarea
+                />
+              </div>
+            </AnimatePresence>
+          )}
+        </AnimatePresence>
       </motion.div>
     </Reorder.Item>
   );

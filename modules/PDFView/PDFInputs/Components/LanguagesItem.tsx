@@ -8,6 +8,7 @@ import {
 import { ReorderContext, useAnimation } from '@modules/Shared/Hooks';
 import { TextInput } from '@modules/Shared/Inputs/TextInput';
 import {
+  AnimatePresence,
   Reorder,
   motion,
   useDragControls,
@@ -74,78 +75,89 @@ export const LanguagesItem: FC<Props> = ({
         animate={combinedStyleFinal}
         exit={combinedStyleInitial}
         transition={{ duration: 0.2 }}
-        className='relative mt-4 flex flex-col gap-4 rounded-md p-10 first:mt-0 focus-within:bg-green-100'
+        className='relative gap-4 p-10'
       >
-        {isDragging ? (
-          <motion.div
-            initial={{
-              height: 50,
-              opacity: 0,
-            }}
-            animate={{
-              height: 50,
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-            }}
-            transition={{ duration: 0.05 }}
-          >
-            {language.name}
-          </motion.div>
-        ) : (
-          <>
-            <div className='flex'>
-              <TextInput
-                key={index + '-' + 'LanguagesInput' + '-' + t('language')}
-                label={t('language').toString()}
-                defaultValue={language.name}
-                name='language'
-                onChange={e => {
-                  setLanguages(
-                    Operations.UPDATE,
-                    {
-                      name: e.target.value,
-                    },
-                    index
-                  );
-                }}
-                fullWidth
-              />
-            </div>
-            <div className='mt-2 flex'>
-              <label className='w-1/4 self-center font-medium'>
-                {t('level')}
-              </label>
-              <select
-                className='w-3/4 rounded-md border-2 p-1 focus:border-slate-400'
-                value={language.proficiency}
-                onChange={e => {
-                  setLanguages(
-                    Operations.UPDATE,
-                    {
-                      proficiency: e.target.value as LanguageProficiencyLevel,
-                    },
-                    index
-                  );
-                }}
-              >
-                <option value={LanguageProficiencyLevel.BEGINNER}>
-                  {t(LanguageProficiencyLevel.BEGINNER)}
-                </option>
-                <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
-                  {t(LanguageProficiencyLevel.CONVERSATIONAL)}
-                </option>
-                <option value={LanguageProficiencyLevel.FLUENT}>
-                  {t(LanguageProficiencyLevel.FLUENT)}
-                </option>
-                <option value={LanguageProficiencyLevel.NATIVE}>
-                  {t(LanguageProficiencyLevel.NATIVE)}
-                </option>
-              </select>
-            </div>
-          </>
-        )}
+        <AnimatePresence>
+          {isDragging && (
+            <motion.div
+              className='gap-4'
+              initial={{
+                height: 0,
+                opacity: 0,
+                display: 'none',
+              }}
+              animate={{
+                opacity: 1,
+                display: 'flex',
+                transition: {
+                  delay: 0.2,
+                  duration: 0.05,
+                },
+              }}
+              exit={{
+                opacity: 0,
+                display: 'none',
+              }}
+            >
+              {language.name}
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {!isDragging && (
+            <>
+              <div className='flex'>
+                <TextInput
+                  key={index + '-' + 'LanguagesInput' + '-' + t('language')}
+                  label={t('language').toString()}
+                  defaultValue={language.name}
+                  name='language'
+                  onChange={e => {
+                    setLanguages(
+                      Operations.UPDATE,
+                      {
+                        name: e.target.value,
+                      },
+                      index
+                    );
+                  }}
+                  fullWidth
+                />
+              </div>
+              <div className='mt-2 flex'>
+                <label className='w-1/4 self-center font-medium'>
+                  {t('level')}
+                </label>
+                <select
+                  className='w-3/4 rounded-md border-2 p-1 focus:border-slate-400'
+                  value={language.proficiency}
+                  onChange={e => {
+                    setLanguages(
+                      Operations.UPDATE,
+                      {
+                        proficiency: e.target.value as LanguageProficiencyLevel,
+                      },
+                      index
+                    );
+                  }}
+                >
+                  <option value={LanguageProficiencyLevel.BEGINNER}>
+                    {t(LanguageProficiencyLevel.BEGINNER)}
+                  </option>
+                  <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
+                    {t(LanguageProficiencyLevel.CONVERSATIONAL)}
+                  </option>
+                  <option value={LanguageProficiencyLevel.FLUENT}>
+                    {t(LanguageProficiencyLevel.FLUENT)}
+                  </option>
+                  <option value={LanguageProficiencyLevel.NATIVE}>
+                    {t(LanguageProficiencyLevel.NATIVE)}
+                  </option>
+                </select>
+              </div>
+            </>
+          )}
+        </AnimatePresence>
       </motion.div>
     </Reorder.Item>
   );
