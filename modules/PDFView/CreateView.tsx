@@ -29,14 +29,19 @@ export const CreateView: FC = () => {
 
   return (
     <div
-      className={`flex max-h-screen min-h-screen h-full w-full ${
+      className={`flex h-full max-h-screen min-h-screen w-full ${
         isMobileView ? 'flex-col' : 'flex-row'
       }`}
     >
       <div className={`h-full ${isMobileView ? 'w-full' : 'w-7/12'}`}>
         <PDFInputsContainer />
       </div>
-      {process.env.NODE_ENV === 'production' && <DynamicPDFDisplay />}
+      {process.env.NODE_ENV === 'production' ? (
+        <DynamicPDFDisplay />
+      ) : (
+        (!process.env.NEXT_PUBLIC_HIDE_PDF ||
+          process.env.NEXT_PUBLIC_HIDE_PDF === 'false') && <DynamicPDFDisplay />
+      )}
     </div>
   );
 };
