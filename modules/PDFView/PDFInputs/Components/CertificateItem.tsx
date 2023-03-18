@@ -13,7 +13,7 @@ import {
   useMotionValue,
 } from 'framer-motion';
 import { TFunction } from 'next-i18next';
-import { FC, useCallback, useContext, useState } from 'react';
+import { FC, useCallback, useContext } from 'react';
 
 type Props = {
   animation: ReturnType<typeof useAnimation>;
@@ -47,7 +47,6 @@ export const CertificateItem: FC<Props> = ({
   const { setIsDragging, isDragging, stopReorder } = useContext(ReorderContext);
   const y = useMotionValue(0);
   const controls = useDragControls();
-  const [reorderComponentHeight, setReorderComponentHeight] = useState(0);
 
   const animation = {
     initial: combinedStyleInitial,
@@ -101,7 +100,6 @@ export const CertificateItem: FC<Props> = ({
         {...animation}
         animate={{
           ...combinedStyleFinal,
-          height: isDragging ? reorderComponentHeight + 80: 'auto',
           transition: {
             delay: isDragging ? 0.2 : 0,
           },
@@ -131,102 +129,86 @@ export const CertificateItem: FC<Props> = ({
                     duration: 0.05,
                   },
                 }}
-                ref={ref => {
-                  setReorderComponentHeight(ref?.clientHeight || 0);
-                }}
               >
                 {certificate.name}
               </motion.div>
             )}
           </AnimatePresence>
 
-          <AnimatePresence>
-            {!isDragging && (
-              <motion.div
-                {...animation}
-                transition={{
-                  duration: 0.2,
-                  when: 'beforeChildren',
-                }}
-                className='flex flex-col gap-4'
-              >
-                {arrayOfCertificatesInputs.map((input, currentIndex) => (
-                  <motion.div
-                    key={`certificates-${index}-${currentIndex}-input`}
-                    initial={combinedStyleInitial}
-                    animate={combinedStyleFinal}
-                    exit={combinedStyleInitial}
-                    transition={{
-                      duration: 0.2,
-                      delay: currentIndex * 0.05,
-                    }}
-                  >
-                    {input.type === 'date' ? (
-                      <DateInput
-                        type='month'
-                        label={t(`${input.inputValue}`).toString()}
-                        value={certificate[input.inputValue] as string}
-                        setData={date =>
-                          handleSaveData(date, index, input.inputValue)
-                        }
-                        resetData={() =>
-                          handleSaveData('', index, input.inputValue)
-                        }
-                        format={{
-                          month: 'short',
-                          year: 'numeric',
-                        }}
-                      />
-                    ) : (
-                      <TextInput
-                        key={
-                          index + '-' + 'CertificatesInput' + '-' + currentIndex
-                        }
-                        label={t(`${input.inputValue}`).toString()}
-                        defaultValue={certificate[input.inputValue]}
-                        name={input.inputValue}
-                        onChange={e =>
-                          handleSaveData(
-                            e.target.value,
-                            index,
-                            input.inputValue
-                          )
-                        }
-                        fullWidth
-                      />
-                    )}
-                  </motion.div>
-                ))}
+          {!isDragging && (
+            <motion.div className='flex flex-col gap-4'>
+              {arrayOfCertificatesInputs.map((input, currentIndex) => (
                 <motion.div
-                  key={
-                    index +
-                    '-' +
-                    'CertificatesInput' +
-                    '-' +
-                    (arrayOfCertificatesInputs.length - 1)
-                  }
+                  key={`certificates-${index}-${currentIndex}-input`}
                   initial={combinedStyleInitial}
                   animate={combinedStyleFinal}
-                  exit={{ ...combinedStyleInitial, y: 0 }}
+                  exit={combinedStyleInitial}
                   transition={{
                     duration: 0.2,
-                    delay: (arrayOfCertificatesInputs.length - 1) * 0.05,
+                    delay: currentIndex * 0.05,
                   }}
                 >
-                  <TextInput
-                    label={t('description').toString()}
-                    defaultValue={certificate.description}
-                    name='certificate-description'
-                    onChange={e =>
-                      handleSaveData(e.target.value, index, 'description')
-                    }
-                    fullWidth
-                    textarea
-                  />
+                  {input.type === 'date' ? (
+                    <DateInput
+                      type='month'
+                      label={t(`${input.inputValue}`).toString()}
+                      value={certificate[input.inputValue] as string}
+                      setData={date =>
+                        handleSaveData(date, index, input.inputValue)
+                      }
+                      resetData={() =>
+                        handleSaveData('', index, input.inputValue)
+                      }
+                      format={{
+                        month: 'short',
+                        year: 'numeric',
+                      }}
+                    />
+                  ) : (
+                    <TextInput
+                      key={
+                        index + '-' + 'CertificatesInput' + '-' + currentIndex
+                      }
+                      label={t(`${input.inputValue}`).toString()}
+                      defaultValue={certificate[input.inputValue]}
+                      name={input.inputValue}
+                      onChange={e =>
+                        handleSaveData(e.target.value, index, input.inputValue)
+                      }
+                      fullWidth
+                    />
+                  )}
                 </motion.div>
+              ))}
+              <motion.div
+                key={
+                  index +
+                  '-' +
+                  'CertificatesInput' +
+                  '-' +
+                  (arrayOfCertificatesInputs.length - 1)
+                }
+                initial={combinedStyleInitial}
+                animate={combinedStyleFinal}
+                exit={{ ...combinedStyleInitial, y: 0 }}
+                transition={{
+                  duration: 0.2,
+                  delay: (arrayOfCertificatesInputs.length - 1) * 0.05,
+                }}
+              >
+                <TextInput
+                  label={t('description').toString()}
+                  defaultValue={certificate.description}
+                  name='certificate-description'
+                  onChange={e =>
+                    handleSaveData(e.target.value, index, 'description')
+                  }
+                  fullWidth
+                  textarea
+                />
               </motion.div>
-            )}
-          </AnimatePresence>
+            </motion.div>
+          )}
         </AnimatePresence>
       </motion.div>
     </Reorder.Item>

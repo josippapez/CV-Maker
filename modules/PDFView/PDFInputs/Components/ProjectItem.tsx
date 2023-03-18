@@ -14,7 +14,7 @@ import {
   useMotionValue,
 } from 'framer-motion';
 import { TFunction } from 'next-i18next';
-import { FC, useContext, useState } from 'react';
+import { FC, useContext } from 'react';
 
 type Props = {
   animation: ReturnType<typeof useAnimation>;
@@ -62,7 +62,6 @@ export const ProjectItem: FC<Props> = ({
   const y = useMotionValue(0);
   const controls = useDragControls();
   const { setIsDragging, isDragging, stopReorder } = useContext(ReorderContext);
-  const [reorderComponentHeight, setReorderComponentHeight] = useState(0);
 
   const animation = {
     initial: combinedStyleInitial,
@@ -102,7 +101,6 @@ export const ProjectItem: FC<Props> = ({
         {...animation}
         animate={{
           ...combinedStyleFinal,
-          height: isDragging ? reorderComponentHeight + 80 : 'auto',
           transition: {
             delay: isDragging ? 0.2 : 0,
           },
@@ -127,105 +125,95 @@ export const ProjectItem: FC<Props> = ({
                   duration: 0.05,
                 },
               }}
-              ref={ref => {
-                setReorderComponentHeight(ref?.clientHeight || 0);
-              }}
             >
               {project.name}
             </motion.div>
           )}
         </AnimatePresence>
 
-        <AnimatePresence>
-          {!isDragging && (
-            <motion.div
-              {...animation}
-              transition={{ duration: 0.2, when: 'beforeChildren' }}
-              className='flex flex-col gap-4'
-            >
-              {arrayOfInputs.map((input, currentIndex) => (
-                <motion.div
-                  key={`professionalExperience-${index}-${currentIndex}-input`}
-                  {...animation}
-                  transition={{
-                    duration: 0.2,
-                    delay: currentIndex * 0.05,
-                  }}
-                >
-                  {input.type !== 'date' && input.type !== 'toggle' && (
-                    <TextInput
-                      label={t(`${input.inputValue}`).toString()}
-                      defaultValue={project[input.inputValue] as string}
-                      name={input.inputValue}
-                      onChange={e => {
-                        setProjects(
-                          Operations.UPDATE,
-                          {
-                            [input.inputValue]: e.target.value,
-                          },
-                          index
-                        );
-                      }}
-                      fullWidth
-                      textarea={input.textarea}
-                    />
-                  )}
-                  {input.type === 'date' && (
-                    <DateInput
-                      type='month'
-                      disabled={
-                        project.currentlyWorking &&
-                        input.inputValue === 'endDate'
-                      }
-                      label={t(`${input.inputValue}`).toString()}
-                      value={project[input.inputValue] as string}
-                      setData={date => {
-                        setProjects(
-                          Operations.UPDATE,
-                          {
-                            [input.inputValue]: date,
-                          },
-                          index
-                        );
-                      }}
-                      resetData={() => {
-                        setProjects(
-                          Operations.UPDATE,
-                          {
-                            [input.inputValue]: '',
-                          },
-                          index
-                        );
-                      }}
-                      format={{
-                        month: 'short',
-                        year: 'numeric',
-                      }}
-                    />
-                  )}
-                  {input.type === 'toggle' && (
-                    <ToggleInput
-                      label={t(`${input.inputValue}`).toString()}
-                      name={input.inputValue}
-                      checked={project.currentlyWorking}
-                      wrapperClassName='mt-4'
-                      onChange={e => {
-                        setProjects(
-                          Operations.UPDATE,
-                          {
-                            [input.inputValue]: e.target.checked,
-                          },
-                          index
-                        );
-                      }}
-                      fullWidth
-                    />
-                  )}
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {!isDragging && (
+          <motion.div className='flex flex-col gap-4'>
+            {arrayOfInputs.map((input, currentIndex) => (
+              <motion.div
+                key={`professionalExperience-${index}-${currentIndex}-input`}
+                {...animation}
+                transition={{
+                  duration: 0.2,
+                  delay: currentIndex * 0.05,
+                }}
+              >
+                {input.type !== 'date' && input.type !== 'toggle' && (
+                  <TextInput
+                    label={t(`${input.inputValue}`).toString()}
+                    defaultValue={project[input.inputValue] as string}
+                    name={input.inputValue}
+                    onChange={e => {
+                      setProjects(
+                        Operations.UPDATE,
+                        {
+                          [input.inputValue]: e.target.value,
+                        },
+                        index
+                      );
+                    }}
+                    fullWidth
+                    textarea={input.textarea}
+                  />
+                )}
+                {input.type === 'date' && (
+                  <DateInput
+                    type='month'
+                    disabled={
+                      project.currentlyWorking && input.inputValue === 'endDate'
+                    }
+                    label={t(`${input.inputValue}`).toString()}
+                    value={project[input.inputValue] as string}
+                    setData={date => {
+                      setProjects(
+                        Operations.UPDATE,
+                        {
+                          [input.inputValue]: date,
+                        },
+                        index
+                      );
+                    }}
+                    resetData={() => {
+                      setProjects(
+                        Operations.UPDATE,
+                        {
+                          [input.inputValue]: '',
+                        },
+                        index
+                      );
+                    }}
+                    format={{
+                      month: 'short',
+                      year: 'numeric',
+                    }}
+                  />
+                )}
+                {input.type === 'toggle' && (
+                  <ToggleInput
+                    label={t(`${input.inputValue}`).toString()}
+                    name={input.inputValue}
+                    checked={project.currentlyWorking}
+                    wrapperClassName='mt-4'
+                    onChange={e => {
+                      setProjects(
+                        Operations.UPDATE,
+                        {
+                          [input.inputValue]: e.target.checked,
+                        },
+                        index
+                      );
+                    }}
+                    fullWidth
+                  />
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
       </motion.div>
     </Reorder.Item>
   );

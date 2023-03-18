@@ -53,6 +53,12 @@ export const PDFTabNavigationPresenter = (props: Props) => {
         label: <Briefcase height={30} width={35} className='stroke-gray-700' />,
       },
       {
+        tab: Tab.projects,
+        label: (
+          <ProjectFolder height={30} width={35} className='stroke-gray-700' />
+        ),
+      },
+      {
         tab: Tab.education,
         label: (
           <AcademicCap height={30} width={35} className='stroke-gray-700' />
@@ -71,12 +77,6 @@ export const PDFTabNavigationPresenter = (props: Props) => {
       {
         tab: Tab.skills,
         label: <Tools height={30} width={35} className='fill-gray-700' />,
-      },
-      {
-        tab: Tab.projects,
-        label: (
-          <ProjectFolder height={30} width={35} className='stroke-gray-700' />
-        ),
       },
     ],
     []
