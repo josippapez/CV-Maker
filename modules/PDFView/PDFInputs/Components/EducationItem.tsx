@@ -113,6 +113,12 @@ export const EducationItem = ({
     [index]
   );
 
+  const animation = {
+    initial: combinedStyleInitial,
+    animate: combinedStyleFinal,
+    exit: combinedStyleInitial,
+  };
+
   return (
     <Reorder.Item
       tabIndex={index}
@@ -169,15 +175,16 @@ export const EducationItem = ({
       {!isDragging && (
         <motion.div
           key={`EducationInput-${index}`}
-          initial={combinedStyleInitial}
+          {...animation}
           animate={{
             ...combinedStyleFinal,
             transition: {
               delay: isDragging ? 0.2 : 0,
             },
           }}
-          exit={combinedStyleInitial}
-          transition={{ duration: 0.2 }}
+          transition={{
+            duration: 0.2,
+          }}
           className='relative flex flex-col gap-4 p-10'
         >
           <div className='flex flex-row gap-4'>
@@ -203,7 +210,14 @@ export const EducationItem = ({
             </button>
           </div>
           {getEducationInputs().map((input, currentIndex) => (
-            <div key={`input-${index}-${currentIndex}`}>
+            <motion.div
+              key={`input-${index}-${currentIndex}`}
+              {...animation}
+              transition={{
+                duration: 0.2,
+                delay: currentIndex * 0.05,
+              }}
+            >
               {input.type === 'date' ? (
                 <DateInput
                   type='month'
@@ -245,7 +259,7 @@ export const EducationItem = ({
                   fullWidth
                 />
               )}
-            </div>
+            </motion.div>
           ))}
           <TextInput
             key={`${index}-${getEducationInputs().length - 1}-input`}

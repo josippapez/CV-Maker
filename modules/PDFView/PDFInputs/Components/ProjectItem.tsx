@@ -62,6 +62,12 @@ export const ProjectItem: FC<Props> = ({
   const controls = useDragControls();
   const { setIsDragging, isDragging, stopReorder } = useContext(ReorderContext);
 
+  const animation = {
+    initial: combinedStyleInitial,
+    animate: combinedStyleFinal,
+    exit: combinedStyleInitial,
+  };
+
   return (
     <Reorder.Item
       tabIndex={index}
@@ -115,23 +121,20 @@ export const ProjectItem: FC<Props> = ({
 
       {!isDragging && (
         <motion.div
-          initial={combinedStyleInitial}
+          {...animation}
           animate={{
             ...combinedStyleFinal,
             transition: {
               delay: isDragging ? 0.2 : 0,
             },
           }}
-          exit={combinedStyleInitial}
-          transition={{ duration: 0.2, when: 'beforeChildren' }}
+          transition={{ duration: 0.2 }}
           className='relative flex flex-col gap-4 p-10 '
         >
           {arrayOfInputs.map((input, currentIndex) => (
             <motion.div
               key={`professionalExperience-${index}-${currentIndex}-input`}
-              initial={combinedStyleInitial}
-              animate={combinedStyleFinal}
-              exit={combinedStyleInitial}
+              {...animation}
               transition={{
                 duration: 0.2,
                 delay: currentIndex * 0.05,

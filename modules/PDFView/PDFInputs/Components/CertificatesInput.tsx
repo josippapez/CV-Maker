@@ -27,7 +27,7 @@ export const CertificatesInput = () => {
       initial={combinedStyleInitial}
       animate={combinedStyleFinal}
       exit={combinedStyleInitial}
-      transition={{ duration: 0.1, when: 'beforeChildren' }}
+      transition={{ duration: 0.1 }}
     >
       <ReorderProvider reorderContextValue={reorderContextValue}>
         {reorderList?.map((certificate, index) => (

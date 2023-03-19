@@ -60,6 +60,12 @@ export const CertificateItem: FC<Props> = ({
     [index]
   );
 
+  const animation = {
+    initial: combinedStyleInitial,
+    animate: combinedStyleFinal,
+    exit: combinedStyleInitial,
+  };
+
   return (
     <Reorder.Item
       tabIndex={index}
@@ -115,26 +121,22 @@ export const CertificateItem: FC<Props> = ({
 
       {!isDragging && (
         <motion.div
-          initial={combinedStyleInitial}
+          {...animation}
           animate={{
             ...combinedStyleFinal,
             transition: {
               delay: isDragging ? 0.2 : 0,
             },
           }}
-          exit={combinedStyleInitial}
           transition={{
             duration: 0.2,
-            when: 'beforeChildren',
           }}
           className='relative flex flex-col gap-4 p-10'
         >
           {arrayOfCertificatesInputs.map((input, currentIndex) => (
             <motion.div
               key={`certificates-${index}-${currentIndex}-input`}
-              initial={combinedStyleInitial}
-              animate={combinedStyleFinal}
-              exit={combinedStyleInitial}
+              {...animation}
               transition={{
                 duration: 0.2,
                 delay: currentIndex * 0.05,
@@ -176,8 +178,7 @@ export const CertificateItem: FC<Props> = ({
               '-' +
               (arrayOfCertificatesInputs.length - 1)
             }
-            initial={combinedStyleInitial}
-            animate={combinedStyleFinal}
+            {...animation}
             exit={{ ...combinedStyleInitial, y: 0 }}
             transition={{
               duration: 0.2,

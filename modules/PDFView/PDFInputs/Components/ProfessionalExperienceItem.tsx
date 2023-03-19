@@ -58,6 +58,12 @@ export const ProfessionalExperienceItem: FC<Props> = ({
   const y = useMotionValue(0);
   const controls = useDragControls();
 
+  const animation = {
+    initial: combinedStyleInitial,
+    animate: combinedStyleFinal,
+    exit: combinedStyleInitial,
+  };
+
   return (
     <Reorder.Item
       tabIndex={index}
@@ -114,21 +120,16 @@ export const ProfessionalExperienceItem: FC<Props> = ({
       {!isDragging && (
         <motion.div
           key={`professionalExperience-${index}`}
-          initial={combinedStyleInitial}
-          animate={combinedStyleFinal}
-          exit={combinedStyleInitial}
+          {...animation}
           transition={{
             duration: 0.2,
-            when: 'beforeChildren',
           }}
           className='relative flex flex-col gap-4 p-10'
         >
           {arrayOfProfessionalExperienceInputs.map((input, currentIndex) => (
             <motion.div
               key={`professionalExperience-${index}-${currentIndex}-input`}
-              initial={combinedStyleInitial}
-              animate={combinedStyleFinal}
-              exit={combinedStyleInitial}
+              {...animation}
               transition={{
                 duration: 0.2,
                 delay: currentIndex * 0.05,
