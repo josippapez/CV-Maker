@@ -8,7 +8,6 @@ import {
 import { ReorderContext, useAnimation } from '@modules/Shared/Hooks';
 import { TextInput } from '@modules/Shared/Inputs/TextInput';
 import {
-  AnimatePresence,
   Reorder,
   motion,
   useDragControls,
@@ -40,14 +39,9 @@ export const LanguagesItem: FC<Props> = ({
   const y = useMotionValue(0);
   const controls = useDragControls();
 
-  const animation = {
-    initial: combinedStyleInitial,
-    animate: combinedStyleFinal,
-    exit: combinedStyleInitial,
-  };
-
   return (
     <Reorder.Item
+      tabIndex={index}
       key={language.id}
       value={language}
       style={{
@@ -75,95 +69,88 @@ export const LanguagesItem: FC<Props> = ({
           setLanguages(Operations.REMOVE, language, index);
         }}
       />
-      <motion.div
-        key={index + '-' + 'LanguagesInput'}
-        {...animation}
-        animate={{
-          ...combinedStyleFinal,
-          transition: {
-            delay: isDragging ? 0.2 : 0,
-          },
-        }}
-        transition={{ duration: 0.2 }}
-        className='relative gap-4 p-10'
-      >
-        <AnimatePresence>
-          {isDragging && (
-            <motion.div
-              className='gap-4'
-              initial={combinedStyleInitial}
-              animate={{
-                ...combinedStyleFinal,
-                transition: {
-                  duration: 0.2,
-                  delay: 0.05,
-                },
-              }}
-              exit={{
-                ...combinedStyleInitial,
-                transition: {
-                  duration: 0.05,
-                },
-              }}
-            >
-              {language.name}
-            </motion.div>
-          )}
-        </AnimatePresence>
 
-        {!isDragging && (
-          <motion.div className='flex flex-col'>
-            <TextInput
-              key={index + '-' + 'LanguagesInput' + '-' + t('language')}
-              label={t('language').toString()}
-              defaultValue={language.name}
-              name='language'
+      {isDragging && (
+        <motion.div
+          className='gap-4 p-10'
+          initial={combinedStyleInitial}
+          animate={{
+            ...combinedStyleFinal,
+            transition: {
+              duration: 0.2,
+              delay: 0.05,
+            },
+          }}
+          exit={{
+            ...combinedStyleInitial,
+            transition: {
+              duration: 0.05,
+            },
+          }}
+        >
+          {language.name}
+        </motion.div>
+      )}
+
+      {!isDragging && (
+        <motion.div
+          key={index + '-' + 'LanguagesInput'}
+          initial={combinedStyleInitial}
+          animate={combinedStyleFinal}
+          exit={combinedStyleInitial}
+          transition={{ duration: 0.2 }}
+          className='relative flex flex-col gap-4 p-10'
+        >
+          <TextInput
+            key={index + '-' + 'LanguagesInput' + '-' + t('language')}
+            label={t('language').toString()}
+            defaultValue={language.name}
+            name='language'
+            onChange={e => {
+              setLanguages(
+                Operations.UPDATE,
+                {
+                  name: e.target.value,
+                },
+                index
+              );
+            }}
+            fullWidth
+          />
+
+          <div className='mt-2 flex'>
+            <label className='w-1/4 self-center font-medium'>
+              {t('level')}
+            </label>
+            <select
+              className='w-3/4 rounded-md border-2 p-1 focus:border-slate-400'
+              value={language.proficiency}
               onChange={e => {
                 setLanguages(
                   Operations.UPDATE,
                   {
-                    name: e.target.value,
+                    proficiency: e.target.value as LanguageProficiencyLevel,
                   },
                   index
                 );
               }}
-              fullWidth
-            />
-
-            <div className='mt-2 flex'>
-              <label className='w-1/4 self-center font-medium'>
-                {t('level')}
-              </label>
-              <select
-                className='w-3/4 rounded-md border-2 p-1 focus:border-slate-400'
-                value={language.proficiency}
-                onChange={e => {
-                  setLanguages(
-                    Operations.UPDATE,
-                    {
-                      proficiency: e.target.value as LanguageProficiencyLevel,
-                    },
-                    index
-                  );
-                }}
-              >
-                <option value={LanguageProficiencyLevel.BEGINNER}>
-                  {t(LanguageProficiencyLevel.BEGINNER)}
-                </option>
-                <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
-                  {t(LanguageProficiencyLevel.CONVERSATIONAL)}
-                </option>
-                <option value={LanguageProficiencyLevel.FLUENT}>
-                  {t(LanguageProficiencyLevel.FLUENT)}
-                </option>
-                <option value={LanguageProficiencyLevel.NATIVE}>
-                  {t(LanguageProficiencyLevel.NATIVE)}
-                </option>
-              </select>
-            </div>
-          </motion.div>
-        )}
-      </motion.div>
+            >
+              <option value={LanguageProficiencyLevel.BEGINNER}>
+                {t(LanguageProficiencyLevel.BEGINNER)}
+              </option>
+              <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
+                {t(LanguageProficiencyLevel.CONVERSATIONAL)}
+              </option>
+              <option value={LanguageProficiencyLevel.FLUENT}>
+                {t(LanguageProficiencyLevel.FLUENT)}
+              </option>
+              <option value={LanguageProficiencyLevel.NATIVE}>
+                {t(LanguageProficiencyLevel.NATIVE)}
+              </option>
+            </select>
+          </div>
+        </motion.div>
+      )}
     </Reorder.Item>
   );
 };

@@ -47,7 +47,7 @@ export const PDFInputsPresenter = (props: Props) => {
       />
       <CustomScroll flex={'1'} allowOuterScroll>
         <div className='page-container min-h-full bg-[#f7f7f7] py-10'>
-          <AnimatePresence mode='wait'>{getInputs()}</AnimatePresence>
+          {getInputs()}
         </div>
       </CustomScroll>
     </div>
