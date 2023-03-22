@@ -1,7 +1,8 @@
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
+import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { Education } from '@modules/PDFView/models';
-import { Link, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { Link, StyleSheet, Text } from '@react-pdf/renderer';
 import { TFunction } from 'next-i18next';
 import { FC } from 'react';
 
@@ -46,7 +47,7 @@ export const EducationItem: FC<Props> = ({ edu, styles, translate }) => {
         <TextDisplay style={[educationStyles.educationDegree]}>
           {`${edu.degree} ${edu.fieldOfStudy && `, ${edu.fieldOfStudy}`}`}
         </TextDisplay>
-        {edu.url && edu.url !== '' && (
+        {/* {edu.url && edu.url !== '' && (
           <Link
             src={edu.url}
             style={{
@@ -57,7 +58,7 @@ export const EducationItem: FC<Props> = ({ edu, styles, translate }) => {
               {edu.url.replace(/(^\w+:|^)\/\//, '').replace(/(^www\.)/, '')}
             </Text>
           </Link>
-        )}
+        )} */}
         <TextDisplay style={[educationStyles.educationLocation]}>
           {edu.location}
         </TextDisplay>

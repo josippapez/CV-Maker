@@ -1,7 +1,8 @@
 import { CertificateItem } from '@modules/PDFView/CVTemplates/TemplateComponents/CertificateItem';
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
+import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { Certificate } from '@modules/PDFView/models';
-import { StyleSheet, View } from '@react-pdf/renderer';
+import { StyleSheet } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
 import { TFunction } from 'next-i18next';
 import { FC } from 'react';

@@ -6,7 +6,12 @@ import { Linkedin } from '@modules/PDFView/CVTemplates/Images/Linkedin';
 import { Phone } from '@modules/PDFView/CVTemplates/Images/Phone';
 import { Pin } from '@modules/PDFView/CVTemplates/Images/Pin';
 import { Twitter } from '@modules/PDFView/CVTemplates/Images/Twitter';
-import { Link, StyleSheet, Text, View } from '@react-pdf/renderer';
+import {
+  Link,
+  Text,
+  View,
+} from '@modules/PDFView/CVTemplates/Templates/Components';
+import { StyleSheet } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
 import { FC } from 'react';
 import { GeneralInfo } from '../../models';

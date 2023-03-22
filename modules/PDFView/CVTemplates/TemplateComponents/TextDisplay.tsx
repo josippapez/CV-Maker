@@ -1,4 +1,4 @@
-import { Text } from '@react-pdf/renderer';
+import { Text } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { Style } from '@react-pdf/types';
 
 type Props = {

@@ -1,11 +1,9 @@
 import { Modal } from '@modules/Shared/Modal';
-import { useState } from 'react';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { useEffect, useState } from 'react';
 
 type Props = {
-  pdfInstance: {
-    url: string;
-    blob: Blob;
-  };
+  pdfInstance: () => JSX.Element;
   closeModal(): void;
   show: boolean;
 };
@@ -13,6 +11,17 @@ type Props = {
 export const PDFDownload = (props: Props) => {
   const { pdfInstance, show, closeModal } = props;
   const [cvName, setCvName] = useState('CV');
+
+  useEffect(() => {
+    if (!show) return;
+    sessionStorage.setItem('cvIsHTML', 'false');
+
+    setCvName('CV');
+    return () => {
+      sessionStorage.setItem('cvIsHTML', 'true');
+    };
+  }, [show]);
+
   return (
     <Modal show={show} position='center' closeModal={closeModal}>
       <div className='relative h-fit w-fit flex-col bg-white p-5'>
@@ -44,13 +53,25 @@ export const PDFDownload = (props: Props) => {
           />
         </div>
         <div className='mt-4 flex justify-center'>
-          <a
+          {/* <a
             className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
             href={pdfInstance?.url}
             download={`${cvName}.pdf`}
           >
             Download
-          </a>
+          </a> */}
+          <PDFDownloadLink
+            onClick={() => {
+              localStorage.setItem('cvIsHTML', 'true');
+            }}
+            document={pdfInstance()}
+            fileName={`${cvName}.pdf`}
+          >
+            {({ blob, url, loading, error }) => {
+              if (loading) return 'Loading document...';
+              return 'Download now!';
+            }}
+          </PDFDownloadLink>
         </div>
       </div>
     </Modal>

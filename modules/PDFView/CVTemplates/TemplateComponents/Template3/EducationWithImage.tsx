@@ -3,8 +3,9 @@ import { BlobTopRight } from '@modules/PDFView/CVTemplates/Images/BlobTopRight';
 import { LayeredWaves } from '@modules/PDFView/CVTemplates/Images/LayeredWaves';
 import { EducationItem } from '@modules/PDFView/CVTemplates/TemplateComponents/EducationItem';
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
+import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { Certificate, Education } from '@modules/PDFView/models';
-import { StyleSheet, View } from '@react-pdf/renderer';
+import { StyleSheet } from '@react-pdf/renderer';
 import { TFunction } from 'next-i18next';
 import { FC, Fragment } from 'react';
 
@@ -48,7 +49,7 @@ export const EducationWithImage: FC<Props> = ({
               wrap={false}
               style={{
                 position: 'absolute',
-                width: 595,
+                width: '100%',
                 height: 100,
                 zIndex: -1,
                 top: 0,

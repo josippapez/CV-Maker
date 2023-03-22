@@ -10,7 +10,7 @@ import { Skill } from '../../models';
 import { TextDisplay } from '../TemplateComponents/TextDisplay';
 import { DefaultProps } from './CVTemplateProps';
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
     backgroundColor: 'white',
