@@ -3,20 +3,23 @@ import {
   Certificates,
   Educations,
   Projects,
+  TextDisplay,
 } from '@modules/PDFView/CVTemplates/TemplateComponents';
-import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
+import { DefaultProps } from '@modules/PDFView/CVTemplates/Templates/CVTemplateProps';
 import {
   Document,
   Image,
-  Link,
   Page,
-  StyleSheet,
-  Text,
   View,
-} from '@react-pdf/renderer';
-import { Skill } from '../../models';
-import { TextDisplay } from '../TemplateComponents/TextDisplay';
-import { DefaultProps } from './CVTemplateProps';
+} from '@modules/PDFView/CVTemplates/Templates/Components';
+import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
+import { Skill } from '@modules/PDFView/models';
+import { StyleSheet } from '@react-pdf/renderer';
+import { FC } from 'react';
+
+interface Props extends DefaultProps {
+  isHtml?: boolean;
+}
 
 const styles = StyleSheet.create({
   page: {
@@ -205,18 +208,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export const CVTemplate2 = (props: DefaultProps): JSX.Element => {
-  const {
-    generalInfo,
-    professionalExperience,
-    certificates,
-    education,
-    languages,
-    skills,
-    projects,
-    translate,
-  } = props;
-
+export const Template2: FC<Props> = ({
+  generalInfo,
+  education,
+  professionalExperience,
+  skills,
+  languages,
+  certificates,
+  projects,
+  translate,
+  isHtml,
+}) => {
   return (
     <Document>
       <Page size='A4' style={[styles.page, styles.row]}>

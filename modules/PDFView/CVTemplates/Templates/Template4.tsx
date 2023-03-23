@@ -8,7 +8,10 @@ import {
   SplitView,
 } from '@modules/PDFView/CVTemplates/TemplateComponents';
 import { DefaultProps } from '@modules/PDFView/CVTemplates/Templates/CVTemplateProps';
-import { Page } from '@modules/PDFView/CVTemplates/Templates/Components';
+import {
+  Document,
+  Page,
+} from '@modules/PDFView/CVTemplates/Templates/Components';
 import { StyleSheet } from '@react-pdf/renderer';
 import { FC } from 'react';
 
@@ -155,40 +158,46 @@ export const Template4: FC<Props> = ({
   isHtml,
 }) => {
   return (
-    <Page size='A4' style={styles.page}>
-      <PersonalInfo styles={styles} generalInfo={generalInfo} skills={skills} />
-      <ProfessionalExperienceDisplay
-        styles={styles}
-        translate={translate}
-        professionalExperience={professionalExperience}
-        backgroundColor='#E0E0E0'
-        showBorder
-      />
-      <Projects
-        defaultStyles={styles}
-        translate={translate}
-        projects={projects}
-        backgroundColor='#e8e8e8'
-        color='black'
-      />
-      <SplitView
-        Component1={Educations({
-          defaultStyles: styles,
-          translate,
-          education: education,
-        })}
-        Component2={Certificates({
-          defaultStyles: styles,
-          translate,
-          certificateList: certificates,
-        })}
-      />
-      <Languages
-        defaultStyles={styles}
-        translate={translate}
-        languages={languages}
-        backgroundColor='#ededed'
-      />
-    </Page>
+    <Document>
+      <Page size='A4' style={styles.page}>
+        <PersonalInfo
+          styles={styles}
+          generalInfo={generalInfo}
+          skills={skills}
+        />
+        <ProfessionalExperienceDisplay
+          styles={styles}
+          translate={translate}
+          professionalExperience={professionalExperience}
+          backgroundColor='#E0E0E0'
+          showBorder
+        />
+        <Projects
+          defaultStyles={styles}
+          translate={translate}
+          projects={projects}
+          backgroundColor='#e8e8e8'
+          color='black'
+        />
+        <SplitView
+          Component1={Educations({
+            defaultStyles: styles,
+            translate,
+            education: education,
+          })}
+          Component2={Certificates({
+            defaultStyles: styles,
+            translate,
+            certificateList: certificates,
+          })}
+        />
+        <Languages
+          defaultStyles={styles}
+          translate={translate}
+          languages={languages}
+          backgroundColor='#ededed'
+        />
+      </Page>
+    </Document>
   );
 };

@@ -1,9 +1,8 @@
 import { Template, TemplateName } from '@/store/reducers/template';
-import { Document } from '@modules/PDFView/CVTemplates/Templates/Components';
-import { Template1 } from '@modules/PDFView/CVTemplates/Templates/Template/Template1';
-import { Template2 } from '@modules/PDFView/CVTemplates/Templates/Template/Template2';
-import { Template3 } from '@modules/PDFView/CVTemplates/Templates/Template/Template3';
-import { Template4 } from '@modules/PDFView/CVTemplates/Templates/Template/Template4';
+import { Template1 } from '@modules/PDFView/CVTemplates/Templates/Template1';
+import { Template2 } from '@modules/PDFView/CVTemplates/Templates/Template2';
+import { Template3 } from '@modules/PDFView/CVTemplates/Templates/Template3';
+import { Template4 } from '@modules/PDFView/CVTemplates/Templates/Template4';
 import { registerFonts } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import {
   Certificate,
@@ -44,29 +43,13 @@ export const getTemplate = (
 ) => {
   switch (templateName) {
     case TemplateName.CVTemplate1:
-      return (
-        <Document>
-          <Template1 {...options} />
-        </Document>
-      );
+      return <Template1 {...options} />;
     case TemplateName.CVTemplate2:
-      return (
-        <Document>
-          <Template2 {...options} />
-        </Document>
-      );
+      return <Template2 {...options} />;
     case TemplateName.CVTemplate3:
-      return (
-        <Document>
-          <Template3 {...options} />
-        </Document>
-      );
+      return <Template3 {...options} />;
     case TemplateName.CVTemplate4:
-      return (
-        <Document>
-          <Template4 {...options} />
-        </Document>
-      );
+      return <Template4 {...options} />;
     default:
       return isNever(templateName);
   }
@@ -85,5 +68,8 @@ export const CVTemplate = (props: Props): JSX.Element => {
     registerFonts(template.templateName);
   }, [template.templateName]);
 
-  return getTemplate(template.templateName, options);
+  return useMemo(
+    () => getTemplate(template.templateName, options),
+    [template, ...Object.values(props)]
+  );
 };

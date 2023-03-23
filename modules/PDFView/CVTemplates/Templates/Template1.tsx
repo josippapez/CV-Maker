@@ -3,14 +3,26 @@ import {
   Certificates,
   Educations,
   Languages,
+  Projects,
+  TextDisplay,
 } from '@modules/PDFView/CVTemplates/TemplateComponents';
+import { DefaultProps } from '@modules/PDFView/CVTemplates/Templates/CVTemplateProps';
+import {
+  Document,
+  Image,
+  Page,
+  View,
+} from '@modules/PDFView/CVTemplates/Templates/Components';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
-import { Document, Image, Page, StyleSheet, View } from '@react-pdf/renderer';
-import { Skill } from '../../models';
-import { TextDisplay } from '../TemplateComponents/TextDisplay';
-import { DefaultProps } from './CVTemplateProps';
+import { Skill } from '@modules/PDFView/models';
+import { StyleSheet } from '@react-pdf/renderer';
+import { FC } from 'react';
 
-export const styles = StyleSheet.create({
+interface Props extends DefaultProps {
+  isHtml?: boolean;
+}
+
+const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
     backgroundColor: 'white',
@@ -196,20 +208,20 @@ export const styles = StyleSheet.create({
   },
 });
 
-export const CVTemplate1 = (props: DefaultProps): JSX.Element => {
-  const {
-    generalInfo,
-    professionalExperience,
-    certificates,
-    education,
-    languages,
-    skills,
-    translate,
-  } = props;
-
+export const Template1: FC<Props> = ({
+  generalInfo,
+  professionalExperience,
+  certificates,
+  education,
+  languages,
+  skills,
+  projects,
+  translate,
+  isHtml,
+}) => {
   return (
     <Document>
-      <Page size='A4' style={[styles.page]}>
+      <Page size='A4' style={styles.page}>
         <View style={styles.personalInfo}>
           <View style={[styles.topBar, styles.paddingY20, styles.paddingX40]}>
             {generalInfo && generalInfo.profilePicture && (
@@ -383,6 +395,11 @@ export const CVTemplate1 = (props: DefaultProps): JSX.Element => {
             </View>
           </View>
         )}
+        <Projects
+          projects={projects}
+          translate={translate}
+          defaultStyles={styles}
+        />
         <View
           wrap={false}
           style={{

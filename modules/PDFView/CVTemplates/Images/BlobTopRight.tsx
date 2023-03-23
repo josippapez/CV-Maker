@@ -9,7 +9,7 @@ import {
 
 export const BlobTopRight = () => {
   return (
-    <Svg id='visual' viewBox='0 0 595 100' width='100%' height='100'>
+    <Svg id='visual' viewBox='0 0 595 100' width='595' height='100'>
       <Defs>
         <LinearGradient id='grad1_0' x1='0%' y1='0%' x2='100%' y2='100%'>
           <Stop offset='30%' stopColor='#fbae3c' stopOpacity='1'></Stop>

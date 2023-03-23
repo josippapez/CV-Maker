@@ -10,22 +10,8 @@ import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { Tooltip } from '@modules/Shared/Tooltip';
 import { FC, useEffect, useState } from 'react';
 import CustomScroll from 'react-custom-scroll';
-import { pdfjs } from 'react-pdf';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
-
-const options = {
-  cMapUrl: '/cmaps/',
-  cMapPacked: true,
-};
-
-type Props = {
-  isPDFPreview?: boolean;
-};
-
-export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
+export const PDFDisplay: FC = () => {
   const dispatch = useAppDispatch();
   const windowSize = useWindowSize();
   const { user } = useAuth();
@@ -56,8 +42,6 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
     });
 
   const [saveData] = useDebouncedFunction(() => {
-    if (isPDFPreview) return;
-
     if (initial) {
       setInitial(false);
       return;
@@ -78,8 +62,6 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
   ]);
 
   useEffect(() => {
-    if (isPDFPreview) return;
-
     if (initial) {
       setInitial(false);
       return;
@@ -91,7 +73,7 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
     <>
       <div
         className={`flex items-center justify-center drop-shadow-xl transition-colors dark:bg-neutral-700 ${
-          windowSize.width < 1550 || isPDFPreview ? 'w-full' : 'w-5/12'
+          windowSize.width < 1550 ? 'w-full' : 'w-5/12'
         }`}
       >
         <CustomScroll allowOuterScroll>
@@ -102,7 +84,7 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
               height: 842,
             }}
           >
-            <Template />
+            {!displayDownloadModal && <Template />}
             <div className='document-controls'>
               <button
                 className='pdf-download'
@@ -129,7 +111,7 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false }) => {
         </CustomScroll>
       </div>
       <PDFDownload
-        pdfInstance={Template}
+        PdfInstance={Template}
         show={displayDownloadModal}
         closeModal={() => setDisplayDownloadModal(false)}
       />

@@ -51,6 +51,25 @@ export type PropsDocument = PropsWithChildren<DocumentProps>;
 
 export type { Style as StylePDF };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // react-pdf/ types
 interface NodeProps {
   id?: string;

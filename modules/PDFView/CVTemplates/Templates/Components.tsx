@@ -28,19 +28,23 @@ import {
   Svg,
   Text,
   View,
+  Link,
 } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
-const getCacheIsHtml = () => {
-  const cache = sessionStorage.getItem('cvIsHTML');
-  console.log(cache);
+let isHtml = true;
 
-  if ((cache && cache === 'true') || cache === null) return true;
-  return false;
+export const usePDFComponentsAreHTML = () => {
+  const [html, setHtml] = useState(isHtml);
+
+  isHtml = html;
+
+  return {
+    isHTML: html,
+    setHtml,
+  };
 };
-
-const isHtml = getCacheIsHtml();
 
 const adjustStyles = (style: Style) => {
   if (!style) return;
@@ -73,8 +77,6 @@ export const CustomView: FC<PropsView> = ({
   style,
   ...rest
 }): any => {
-  // console.log(isHtml);
-
   if (isHtml) {
     let newStyle = style;
     if (Array.isArray(style)) {
@@ -211,7 +213,11 @@ export const CustomLink: FC<PropsLink> = ({
       </a>
     );
   }
-  return <Text {...rest}>{children}</Text>;
+  return (
+    <Link {...rest} style={style}>
+      {children}
+    </Link>
+  );
 };
 
 export const CustomG: FC<PropsG> = ({ children, ...rest }): any => {
@@ -236,18 +242,17 @@ export const CustomRect: FC<PropsRect> = ({ children, ...rest }): any => {
 };
 
 export const CustomSVG: FC<PropsSVG> = ({ children, ...rest }): any => {
-  rest.style = {
-    ...rest.style,
-    left: 0,
-    right: 0,
-  };
-
   if (isHtml) {
+    const style = {
+      ...rest.style,
+      left: 0,
+      right: 0,
+    };
     return (
       <svg
         {...rest}
         style={{
-          ...(rest.style as { [key: string]: string }),
+          ...(style as { [key: string]: string | number }),
         }}
       >
         {children}
