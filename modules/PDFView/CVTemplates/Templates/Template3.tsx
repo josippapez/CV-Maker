@@ -5,8 +5,9 @@ import {
   Languages,
   ProfessionalExperienceDisplay,
   Projects,
+  TextDisplay,
 } from '@modules/PDFView/CVTemplates/TemplateComponents';
-import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
+import { DefaultProps } from '@modules/PDFView/CVTemplates/Templates/CVTemplateProps';
 import {
   Defs,
   Document,
@@ -15,13 +16,18 @@ import {
   Page,
   Rect,
   Stop,
-  StyleSheet,
   Svg,
   View,
-} from '@react-pdf/renderer';
-import { Skill } from '../../models';
-import { TextDisplay } from '../TemplateComponents/TextDisplay';
-import { DefaultProps } from './CVTemplateProps';
+  usePDFComponentsAreHTML,
+} from '@modules/PDFView/CVTemplates/Templates/Components';
+import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
+import { Skill } from '@modules/PDFView/models';
+import { StyleSheet } from '@react-pdf/renderer';
+import { FC } from 'react';
+
+interface Props extends DefaultProps {
+  isHtml?: boolean;
+}
 
 const styles = StyleSheet.create({
   page: {
@@ -161,18 +167,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export const CVTemplate3 = (props: DefaultProps): JSX.Element => {
-  const {
-    generalInfo,
-    professionalExperience,
-    certificates,
-    education,
-    languages,
-    skills,
-    projects,
-    translate,
-  } = props;
-
+export const Template3: FC<Props> = ({
+  generalInfo,
+  certificates,
+  languages,
+  projects,
+  skills,
+  professionalExperience,
+  education,
+  translate,
+}) => {
+  const { isHTML } = usePDFComponentsAreHTML();
   return (
     <Document>
       <Page size='A4' style={[styles.page]}>
@@ -183,8 +188,6 @@ export const CVTemplate3 = (props: DefaultProps): JSX.Element => {
             styles.marginBottom20,
           ]}
         >
-          {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore */}
           <Svg
             viewBox='0 0 595 200'
             width={595}
@@ -194,15 +197,18 @@ export const CVTemplate3 = (props: DefaultProps): JSX.Element => {
             }}
           >
             <Defs>
-              {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore */}
-              <LinearGradient id='myLinearGradient' x1={1} x2={0} y1={0} y2={1}>
+              <LinearGradient
+                id='myLinearGradient'
+                x1={isHTML ? 0 : 1}
+                x2={0}
+                y1={0}
+                y2={1}
+              >
                 <Stop offset={0.5} stopOpacity={1} stopColor='#242424' />
                 <Stop offset={0.7} stopOpacity={1} stopColor='#13171a' />
                 <Stop offset={1} stopOpacity={1} stopColor='#13171a' />
               </LinearGradient>
             </Defs>
-
             <Rect
               x={0}
               y={0}

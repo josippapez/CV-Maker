@@ -10,7 +10,7 @@ export const PageLoader = ({ children, isLoading, inline }: Props) => {
     <div
       className={`${
         !inline ? 'fixed' : ''
-      } top-0 right-0 left-0 bottom-0 dark:bg-neutral-700 w-full h-full flex justify-center items-center z-50`}
+      } top-0 right-0 left-0 bottom-0 z-50 flex h-full w-full items-center justify-center bg-white dark:bg-neutral-700`}
     >
       <div className={`${style.loader}`} />
     </div>

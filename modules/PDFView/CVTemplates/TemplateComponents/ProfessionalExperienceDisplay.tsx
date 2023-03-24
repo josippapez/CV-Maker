@@ -1,8 +1,9 @@
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
 import { ComponentProps } from '@modules/PDFView/CVTemplates/TemplateComponents/models/ComponentProps';
+import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { ProfessionalExperience } from '@modules/PDFView/models';
-import { StyleSheet, View } from '@react-pdf/renderer';
+import { StyleSheet } from '@react-pdf/renderer';
 import { TFunction } from 'next-i18next';
 import { FC } from 'react';
 

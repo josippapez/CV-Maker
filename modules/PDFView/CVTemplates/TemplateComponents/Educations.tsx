@@ -1,10 +1,11 @@
 import { EducationItem } from '@modules/PDFView/CVTemplates/TemplateComponents/EducationItem';
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
 import { Education } from '@modules/PDFView/models';
-import { StyleSheet, View } from '@react-pdf/renderer';
+import { StyleSheet } from '@react-pdf/renderer';
 import { TFunction } from 'next-i18next';
 import { FC } from 'react';
 import { Style } from '@react-pdf/types';
+import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 
 type Props = {
   education?: Education[];

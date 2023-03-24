@@ -1,6 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import { G, Path, Svg } from '@react-pdf/renderer';
+import {
+  G,
+  Path,
+  Svg,
+} from '@modules/PDFView/CVTemplates/Templates/Components';
 
 export const Facebook = (props: { width?: number; height?: number }) => {
   const { width, height } = props;

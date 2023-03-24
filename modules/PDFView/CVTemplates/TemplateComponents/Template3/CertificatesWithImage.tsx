@@ -2,8 +2,9 @@ import { BlobTopLeft } from '@modules/PDFView/CVTemplates/Images/BlobTopLeft';
 import { LayeredWaves } from '@modules/PDFView/CVTemplates/Images/LayeredWaves';
 import { CertificateItem } from '@modules/PDFView/CVTemplates/TemplateComponents/CertificateItem';
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
+import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { Certificate } from '@modules/PDFView/models';
-import { StyleSheet, View } from '@react-pdf/renderer';
+import { StyleSheet } from '@react-pdf/renderer';
 import { TFunction } from 'next-i18next';
 import { FC } from 'react';
 
@@ -47,11 +48,7 @@ export const CertificatesWithImage: FC<Props> = ({
         <BlobTopLeft />
       </View>
       {certificates.map((cert, index) => (
-        <CertificateItem
-          key={`cert-${index}`}
-          styles={styles}
-          cert={cert}
-        />
+        <CertificateItem key={`cert-${index}`} styles={styles} cert={cert} />
       ))}
       <View
         wrap={false}

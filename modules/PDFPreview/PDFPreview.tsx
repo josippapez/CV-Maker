@@ -2,6 +2,7 @@ import {
   DocumentPDFData,
   getCVPreviewForUser,
 } from '@/store/actions/syncActions';
+import { usePDFComponentsAreHTML } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { PageLoader } from '@modules/Shared/Loader';
 import dynamic from 'next/dynamic';
@@ -11,8 +12,8 @@ import { getI18n } from 'react-i18next';
 
 const DynamicPDFDisplay = dynamic(
   () =>
-    import('@modules/Shared/PDFDisplay/PDFDisplay').then(mod => ({
-      default: mod.PDFDisplay,
+    import('@modules/Shared/PDFDisplay/PDFPreview').then(mod => ({
+      default: mod.PDFPreview,
     })),
   {
     ssr: false,
@@ -27,11 +28,13 @@ const isQueryUserIdString = (
 export const PDFPreview = () => {
   const { query } = useRouter();
   const { setActiveTemplate, setAllData } = usePDFData();
+  const { setHtml } = usePDFComponentsAreHTML();
 
   const userId = isQueryUserIdString(query.userId) ? query.userId : null;
   const isPDFPreview = Boolean(userId);
 
   useEffect(() => {
+    setHtml(false);
     if (isPDFPreview) {
       if (!userId) return;
 
@@ -46,5 +49,5 @@ export const PDFPreview = () => {
     }
   }, []);
 
-  return <DynamicPDFDisplay isPDFPreview />;
+  return <DynamicPDFDisplay />;
 };

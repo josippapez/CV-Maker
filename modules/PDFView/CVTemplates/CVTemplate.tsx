@@ -1,8 +1,8 @@
 import { Template, TemplateName } from '@/store/reducers/template';
-import { CVTemplate1 } from '@modules/PDFView/CVTemplates/Templates/CVTemplate1';
-import { CVTemplate2 } from '@modules/PDFView/CVTemplates/Templates/CVTemplate2';
-import { CVTemplate3 } from '@modules/PDFView/CVTemplates/Templates/CVTemplate3';
-import { CVTemplate4 } from '@modules/PDFView/CVTemplates/Templates/CVTemplate4';
+import { Template1 } from '@modules/PDFView/CVTemplates/Templates/Template1';
+import { Template2 } from '@modules/PDFView/CVTemplates/Templates/Template2';
+import { Template3 } from '@modules/PDFView/CVTemplates/Templates/Template3';
+import { Template4 } from '@modules/PDFView/CVTemplates/Templates/Template4';
 import { registerFonts } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import {
   Certificate,
@@ -26,6 +26,7 @@ interface Props {
   template: Template;
   skills: Skill[];
   projects: Project[];
+  isHtml?: boolean;
 }
 
 interface OptionType extends Props {
@@ -42,13 +43,13 @@ export const getTemplate = (
 ) => {
   switch (templateName) {
     case TemplateName.CVTemplate1:
-      return <CVTemplate1 {...options} />;
+      return <Template1 {...options} />;
     case TemplateName.CVTemplate2:
-      return <CVTemplate2 {...options} />;
+      return <Template2 {...options} />;
     case TemplateName.CVTemplate3:
-      return <CVTemplate3 {...options} />;
+      return <Template3 {...options} />;
     case TemplateName.CVTemplate4:
-      return <CVTemplate4 {...options} />;
+      return <Template4 {...options} />;
     default:
       return isNever(templateName);
   }
@@ -56,16 +57,7 @@ export const getTemplate = (
 
 export const CVTemplate = (props: Props): JSX.Element => {
   const { t } = useTranslation('CVTemplates');
-  const {
-    generalInfo,
-    professionalExperience,
-    certificates,
-    education,
-    languages,
-    skills,
-    template,
-    projects,
-  } = props;
+  const { template } = props;
 
   const options: OptionType = {
     ...props,
@@ -78,15 +70,6 @@ export const CVTemplate = (props: Props): JSX.Element => {
 
   return useMemo(
     () => getTemplate(template.templateName, options),
-    [
-      projects,
-      template,
-      generalInfo,
-      professionalExperience,
-      certificates,
-      education,
-      languages,
-      skills,
-    ]
+    [template, ...Object.values(props)]
   );
 };

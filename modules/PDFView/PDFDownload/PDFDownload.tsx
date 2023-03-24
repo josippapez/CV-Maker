@@ -1,20 +1,41 @@
+import { usePDFComponentsAreHTML } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { Modal } from '@modules/Shared/Modal';
-import { useState } from 'react';
+import ReactPDF, { PDFDownloadLink } from '@react-pdf/renderer';
+import { useEffect, useState } from 'react';
 
 type Props = {
-  pdfInstance: {
-    url: string;
-    blob: Blob;
-  };
+  PdfInstance?: () => JSX.Element;
+  pdfBlob?: ReactPDF.UsePDFInstance;
   closeModal(): void;
   show: boolean;
 };
 
-export const PDFDownload = (props: Props) => {
-  const { pdfInstance, show, closeModal } = props;
+export const PDFDownload = ({
+  PdfInstance,
+  show,
+  closeModal,
+  pdfBlob,
+}: Props) => {
+  const { isHTML, setHtml } = usePDFComponentsAreHTML();
   const [cvName, setCvName] = useState('CV');
+  const [download, setDownload] = useState(false);
+
+  useEffect(() => {
+    if (show) setHtml(false);
+  }, [show]);
+
   return (
-    <Modal show={show} position='center' closeModal={closeModal}>
+    <Modal
+      show={show}
+      position='center'
+      closeModal={() => {
+        setHtml(true);
+        setDownload(false);
+        setTimeout(() => {
+          closeModal();
+        }, 100);
+      }}
+    >
       <div className='relative h-fit w-fit flex-col bg-white p-5'>
         <div className='flex items-center justify-between'>
           <h1 className='text-2xl font-bold'>Download CV</h1>
@@ -44,13 +65,35 @@ export const PDFDownload = (props: Props) => {
           />
         </div>
         <div className='mt-4 flex justify-center'>
-          <a
-            className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
-            href={pdfInstance?.url}
-            download={`${cvName}.pdf`}
-          >
-            Download
-          </a>
+          {pdfBlob && (
+            <a
+              className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
+              href={pdfBlob?.url || ''}
+              download={`${cvName}.pdf`}
+            >
+              Download
+            </a>
+          )}
+          {!pdfBlob &&
+            (download ? (
+              <PDFDownloadLink
+                className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
+                document={!isHTML && PdfInstance ? <PdfInstance /> : <></>}
+                fileName={`${cvName}.pdf`}
+              >
+                {({ blob, url, loading, error }) => {
+                  if (loading) return 'Loading document...';
+                  return 'Download now!';
+                }}
+              </PDFDownloadLink>
+            ) : (
+              <button
+                className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
+                onClick={() => setDownload(true)}
+              >
+                Download
+              </button>
+            ))}
         </div>
       </div>
     </Modal>

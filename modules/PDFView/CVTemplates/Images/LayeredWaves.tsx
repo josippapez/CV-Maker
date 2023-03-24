@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import { Svg, Path } from '@react-pdf/renderer';
+import { Path, Svg } from '@modules/PDFView/CVTemplates/Templates/Components';
 
 export const LayeredWaves = () => {
   return (

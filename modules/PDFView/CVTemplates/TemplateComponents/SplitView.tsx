@@ -1,4 +1,5 @@
-import { StyleSheet, View } from '@react-pdf/renderer';
+import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { StyleSheet } from '@react-pdf/renderer';
 import { FC } from 'react';
 
 type Props = {

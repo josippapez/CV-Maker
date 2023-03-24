@@ -1,7 +1,8 @@
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
+import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { Certificate } from '@modules/PDFView/models';
-import { StyleSheet, View } from '@react-pdf/renderer';
+import { StyleSheet } from '@react-pdf/renderer';
 import { FC } from 'react';
 
 type Props = {

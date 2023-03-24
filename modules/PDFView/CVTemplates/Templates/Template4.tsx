@@ -7,8 +7,17 @@ import {
   Projects,
   SplitView,
 } from '@modules/PDFView/CVTemplates/TemplateComponents';
-import { Document, Page, StyleSheet } from '@react-pdf/renderer';
-import { DefaultProps } from './CVTemplateProps';
+import { DefaultProps } from '@modules/PDFView/CVTemplates/Templates/CVTemplateProps';
+import {
+  Document,
+  Page,
+} from '@modules/PDFView/CVTemplates/Templates/Components';
+import { StyleSheet } from '@react-pdf/renderer';
+import { FC } from 'react';
+
+interface Props extends DefaultProps {
+  isHtml?: boolean;
+}
 
 const styles = StyleSheet.create({
   page: {
@@ -137,21 +146,20 @@ const styles = StyleSheet.create({
   },
 });
 
-export const CVTemplate4 = (props: DefaultProps): JSX.Element => {
-  const {
-    generalInfo,
-    professionalExperience,
-    certificates,
-    education,
-    languages,
-    skills,
-    projects,
-    translate,
-  } = props;
-
+export const Template4: FC<Props> = ({
+  generalInfo,
+  skills,
+  professionalExperience,
+  projects,
+  education,
+  certificates,
+  languages,
+  translate,
+  isHtml,
+}) => {
   return (
     <Document>
-      <Page size='A4' style={[styles.page]}>
+      <Page size='A4' style={styles.page}>
         <PersonalInfo
           styles={styles}
           generalInfo={generalInfo}
