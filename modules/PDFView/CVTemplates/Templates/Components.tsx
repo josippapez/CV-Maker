@@ -21,6 +21,7 @@ import {
   Image,
   Line,
   LinearGradient,
+  Link,
   Page,
   Path,
   Rect,
@@ -28,7 +29,6 @@ import {
   Svg,
   Text,
   View,
-  Link,
 } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
 import { FC, useState } from 'react';
@@ -72,11 +72,7 @@ const mergeStylesIntoOne = (styles: Style[]) => {
   return mergedStyle;
 };
 
-export const CustomView: FC<PropsView> = ({
-  children,
-  style,
-  ...rest
-}): any => {
+export const CustomView: FC<PropsView> = ({ children, style, ...rest }) => {
   if (isHtml) {
     let newStyle = style;
     if (Array.isArray(style)) {
@@ -110,11 +106,7 @@ export const CustomView: FC<PropsView> = ({
   );
 };
 
-export const CustomText: FC<PropsText> = ({
-  children,
-  style,
-  ...rest
-}): any => {
+export const CustomText: FC<PropsText> = ({ children, style, ...rest }) => {
   if (isHtml) {
     let newStyle = style;
     if (Array.isArray(style)) {
@@ -141,7 +133,7 @@ export const CustomText: FC<PropsText> = ({
   );
 };
 
-export const CustomImage: FC<PropsImage> = ({ style, ...rest }): any => {
+export const CustomImage: FC<PropsImage> = ({ style, ...rest }) => {
   if (isHtml) {
     let newStyle = style;
     if (Array.isArray(style)) {
@@ -160,11 +152,7 @@ export const CustomImage: FC<PropsImage> = ({ style, ...rest }): any => {
   return <Image style={style} {...rest} />;
 };
 
-export const CustomPage: FC<PropsPage> = ({
-  style,
-  children,
-  ...rest
-}): any => {
+export const CustomPage: FC<PropsPage> = ({ style, children, ...rest }) => {
   if (isHtml) {
     let newStyle = style;
     if (Array.isArray(style)) {
@@ -194,11 +182,7 @@ export const CustomPage: FC<PropsPage> = ({
   );
 };
 
-export const CustomLink: FC<PropsLink> = ({
-  children,
-  style,
-  ...rest
-}): any => {
+export const CustomLink: FC<PropsLink> = ({ children, style, ...rest }) => {
   if (isHtml) {
     let newStyle = style;
     if (Array.isArray(style)) {
@@ -208,7 +192,7 @@ export const CustomLink: FC<PropsLink> = ({
     }
     adjustStyles(newStyle as { [key: string]: string });
     return (
-      <a {...rest} target='_blank' rel='noopener noreferrer'>
+      <a {...rest} href={rest.src} target='_blank' rel='noopener noreferrer'>
         <div style={newStyle as { [key: string]: string }}>{children}</div>
       </a>
     );
@@ -220,28 +204,28 @@ export const CustomLink: FC<PropsLink> = ({
   );
 };
 
-export const CustomG: FC<PropsG> = ({ children, ...rest }): any => {
+export const CustomG: FC<PropsG> = ({ children, ...rest }) => {
   if (isHtml) {
     return <g {...rest}>{children}</g>;
   }
   return <G {...rest}>{children}</G>;
 };
 
-export const CustomPath: FC<PropsPath> = ({ children, ...rest }): any => {
+export const CustomPath: FC<PropsPath> = ({ children, ...rest }) => {
   if (isHtml) {
     return <path {...rest}>{children}</path>;
   }
   return <Path {...rest}>{children}</Path>;
 };
 
-export const CustomRect: FC<PropsRect> = ({ children, ...rest }): any => {
+export const CustomRect: FC<PropsRect> = ({ children, ...rest }) => {
   if (isHtml) {
     return <rect {...rest}>{children}</rect>;
   }
   return <Rect {...rest}>{children}</Rect>;
 };
 
-export const CustomSVG: FC<PropsSVG> = ({ children, ...rest }): any => {
+export const CustomSVG: FC<PropsSVG> = ({ children, ...rest }) => {
   if (isHtml) {
     const style = {
       ...rest.style,
@@ -262,21 +246,21 @@ export const CustomSVG: FC<PropsSVG> = ({ children, ...rest }): any => {
   return <Svg {...rest}>{children}</Svg>;
 };
 
-export const CustomDefs: FC<PropsDefs> = ({ children, ...rest }): any => {
+export const CustomDefs: FC<PropsDefs> = ({ children, ...rest }) => {
   if (isHtml) {
     return <defs {...rest}>{children}</defs>;
   }
   return <Defs {...rest}>{children}</Defs>;
 };
 
-export const CustomLine: FC<PropsLine> = ({ children, ...rest }): any => {
+export const CustomLine: FC<PropsLine> = ({ children, ...rest }) => {
   if (isHtml) {
     return <line {...rest}>{children}</line>;
   }
   return <Line {...rest}>{children}</Line>;
 };
 
-export const CustomStop: FC<PropsStop> = ({ children, ...rest }): any => {
+export const CustomStop: FC<PropsStop> = ({ children, ...rest }) => {
   if (isHtml) {
     return <stop {...rest}>{children}</stop>;
   }
@@ -286,17 +270,14 @@ export const CustomStop: FC<PropsStop> = ({ children, ...rest }): any => {
 export const CustomLinearGradient: FC<PropsLinearGradient> = ({
   children,
   ...rest
-}): any => {
+}) => {
   if (isHtml) {
     return <linearGradient {...rest}>{children}</linearGradient>;
   }
   return <LinearGradient {...rest}>{children}</LinearGradient>;
 };
 
-export const CustomDocument: FC<PropsDocument> = ({
-  children,
-  ...rest
-}): any => {
+export const CustomDocument: FC<PropsDocument> = ({ children, ...rest }) => {
   if (isHtml) {
     return (
       <div
