@@ -2,14 +2,15 @@ import { useKeyPress } from '@modules/Shared/Hooks';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { getAnimation } from '@modules/Shared/Modal/getAnimations';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import style from './Modal.module.scss';
 
 interface Props {
-  closeModal(): void;
+  testid?: string;
+  closeModal?(): void;
   position?: 'center' | 'left' | 'right' | 'bottom' | 'top';
-  children: JSX.Element;
+  children: React.ReactNode;
   contentClassname?: string;
   show: boolean;
   width?: 'screen' | string;
@@ -21,71 +22,59 @@ interface Props {
     | 'slide-right'
     | 'slide-top'
     | 'slide-bottom';
-  ratio?:
-    | '1 / 1'
-    | '4 / 3'
-    | '16 / 9'
-    | '16 / 10'
-    | '21 / 9'
-    | '9 / 16'
-    | '3 / 4'
-    | string;
 }
 
-export const Modal = (props: Props): JSX.Element => {
+export const Modal: FC<Props> = ({
+  closeModal = () => {
+    return;
+  },
+  position = 'center',
+  children,
+  show,
+  width = 'auto',
+  height = 'auto',
+  animation,
+  zindex = 30,
+  contentClassname,
+  testid,
+}) => {
   const windowSize = useWindowSize();
   const escPressed = useKeyPress('Escape');
-  const {
-    closeModal,
-    position,
-    children,
-    show,
-    width,
-    height,
-    animation,
-    ratio,
-    contentClassname,
-    zindex,
-  } = props;
-
   const animate = getAnimation(animation);
 
   useEffect(() => {
     if (escPressed) closeModal();
   }, [escPressed, closeModal]);
 
-  useEffect(() => {
-    document.body.style.overflow = show ? 'hidden' : 'auto';
-  }, [show]);
-
   return createPortal(
     <AnimatePresence>
       {show && (
         <motion.div
+          data-testid={testid}
           initial={'hide'}
           animate={'show'}
           exit={'hide'}
           variants={{
             show: {
-              opacity: 1,
+              background: 'rgba(0, 0, 0, 0.5)',
               transition: {
                 duration: 0.15,
               },
             },
             hide: {
-              opacity: 0,
+              background: 'rgba(0, 0, 0, 0.0)',
               transition: {
                 duration: 0.05,
                 delay: 0.15,
               },
             },
           }}
-          style={{
-            zIndex: zindex,
-          }}
           id='modal-overlay'
           aria-hidden='true'
           role='button'
+          style={{
+            zIndex: zindex,
+          }}
           className={`
             overflow-hidden
             ${style.overlay}
@@ -99,22 +88,16 @@ export const Modal = (props: Props): JSX.Element => {
             animate={'show'}
             exit={'hide'}
             variants={animate}
-            id='modal-children'
+            id={style['modal-children']}
             aria-hidden='true'
-            className={`
-              overflow-auto
-              ${style.children}
-              ${contentClassname}
-              relative
-              flex flex-col
-              subpixel-antialiased
-            `}
+            className={`${
+              contentClassname ?? ''
+            } relative subpixel-antialiased`}
             onMouseDown={e => e.stopPropagation()}
             style={{
               width: width === 'screen' ? '100vw' : width,
               height: height === 'screen' ? '100vh' : height,
               maxHeight: windowSize.height + 'px',
-              aspectRatio: ratio,
               zIndex: zindex ? zindex + 1 : 'auto',
             }}
           >
@@ -125,14 +108,4 @@ export const Modal = (props: Props): JSX.Element => {
     </AnimatePresence>,
     document.getElementById('__next') as Element
   );
-};
-
-Modal.defaultProps = {
-  zindex: 30,
-  position: 'center',
-  width: 'auto',
-  ratio: 'auto',
-  closeModal: () => {
-    return;
-  },
 };

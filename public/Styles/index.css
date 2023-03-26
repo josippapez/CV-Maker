@@ -52,6 +52,9 @@ textarea {
   background-color: #d6d6d6 !important;
 }
 
+.document-display::-webkit-scrollbar {
+  display: none;
+}
 .document-controls {
   display: flex;
   position: absolute;

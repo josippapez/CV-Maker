@@ -6,6 +6,7 @@ import { TemplatesModal } from '@modules/PDFView/CVTemplates/TemplatesModal';
 import { Tab } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { VersionHistoryModal } from '@modules/PDFView/VersionHistory/VersionHistoryModal';
 import { useAuth } from '@modules/Providers';
+import { useWindowSize } from '@modules/Shared/Hooks';
 import { Tooltip } from '@modules/Shared/Tooltip';
 import AcademicCap from '@public/Styles/Assets/Images/academic-cap.svg';
 import Briefcase from '@public/Styles/Assets/Images/briefcase.svg';
@@ -14,8 +15,8 @@ import Google from '@public/Styles/Assets/Images/google.svg';
 import Language from '@public/Styles/Assets/Images/language.svg';
 import Logout from '@public/Styles/Assets/Images/logout.svg';
 import Profile from '@public/Styles/Assets/Images/profile.svg';
-import Tools from '@public/Styles/Assets/Images/tools.svg';
 import ProjectFolder from '@public/Styles/Assets/Images/projectFolder.svg';
+import Tools from '@public/Styles/Assets/Images/tools.svg';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useMemo, useState } from 'react';
@@ -25,13 +26,14 @@ type Props = {
   selectedTab: Tab;
 };
 
-export const PDFTabNavigationPresenter = (props: Props) => {
+export const PDFTabNavigationPresenter = ({
+  setSelectedTab,
+  selectedTab,
+}: Props) => {
   const dispatch = useAppDispatch();
+  const windowSize = useWindowSize(10);
   const { t } = useTranslation('PDFTabNavigation');
-
-  const { setSelectedTab, selectedTab } = props;
   const { user } = useAuth();
-
   const [displayTemplateChooseModal, setDisplayTemplateChooseModal] =
     useState(false);
 
@@ -83,7 +85,11 @@ export const PDFTabNavigationPresenter = (props: Props) => {
   );
 
   return (
-    <div className='relative z-10 w-32 p-6 shadow-sm'>
+    <div
+      className={`relative z-10  ${
+        windowSize.width < 500 ? 'w-16' : 'w-32'
+      } p-6 shadow-sm`}
+    >
       <div className='flex h-full flex-col justify-between'>
         <div className='flex w-full min-w-full flex-col items-center justify-evenly gap-2'>
           {user ? (

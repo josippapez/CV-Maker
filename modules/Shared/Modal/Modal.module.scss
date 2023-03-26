@@ -8,9 +8,7 @@
   align-items: center;
   z-index: 1;
   cursor: default;
-  background: rgba(17, 21, 24, 0.616);
-  user-select: none;
-
+  // user-select: none;
   &.center {
     justify-content: center;
   }
@@ -25,17 +23,13 @@
     justify-content: center;
     align-items: start;
   }
-  .children {
-    z-index: 2;
-    cursor: default;
+}
 
-    // transform: scaleX(var(--scale-x)) scaleY(var(--scale-y));
-  }
-  .children > * {
-    flex-grow: 1;
-    width: 100%;
-  }
-  .children > * > *[class*='modal-body'] {
-    flex-grow: 1;
-  }
+#modal-children {
+  z-index: 2;
+  cursor: default;
+  overflow-y: auto;
+}
+#modal-children > * > *[class*='modal-body'] {
+  flex-grow: 1;
 }

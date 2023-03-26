@@ -9,7 +9,6 @@ import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { Tooltip } from '@modules/Shared/Tooltip';
 import { FC, useEffect, useState } from 'react';
-import CustomScroll from 'react-custom-scroll';
 
 export const PDFDisplay: FC = () => {
   const dispatch = useAppDispatch();
@@ -69,47 +68,58 @@ export const PDFDisplay: FC = () => {
     dispatch(saveDataForUser());
   }, [template]);
 
+  const scale =
+    windowSize.height < windowSize.width
+      ? windowSize.height / 842
+      : windowSize.width / 595;
+
   return (
     <>
       <div
-        className={`flex items-center justify-center drop-shadow-xl transition-colors dark:bg-neutral-700 ${
+        className={`documentPDFView flex h-full flex-col items-center justify-center overflow-hidden drop-shadow-xl transition-colors dark:bg-neutral-700 ${
           windowSize.width < 1550 ? 'w-full' : 'w-5/12'
         }`}
       >
-        <CustomScroll allowOuterScroll>
-          <div
-            className='documentPDFView'
-            style={{
-              width: 595,
-              height: 842,
-            }}
-          >
-            {!displayDownloadModal && <Template />}
-            <div className='document-controls'>
+        <div
+          className='document-display overflow-y-scroll'
+          style={{
+            width: 595,
+            height: 842,
+            transform: `scaleX(${scale}) scaleY(
+                ${scale}
+              )`,
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          {!displayDownloadModal && <Template />}
+        </div>
+
+        <div className='document-controls'>
+          <button
+            className='pdf-download'
+            onClick={() => setDisplayDownloadModal(true)}
+          />
+          {userIsLoggedIn && (
+            <Tooltip
+              tooltipText={'Copied link to clipboard'}
+              position='top'
+              showOnClick
+              showOnHover={false}
+            >
               <button
-                className='pdf-download'
-                onClick={() => setDisplayDownloadModal(true)}
+                className='pdf-share'
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `${window.location.origin}/cv/${user?.uid}`
+                  );
+                }}
               />
-              {userIsLoggedIn && (
-                <Tooltip
-                  tooltipText={'Copied link to clipboard'}
-                  position='top'
-                  showOnClick
-                >
-                  <button
-                    className='pdf-share'
-                    onClick={() => {
-                      navigator.clipboard.writeText(
-                        `${window.location.origin}/cv/${user?.uid}`
-                      );
-                    }}
-                  />
-                </Tooltip>
-              )}
-            </div>
-          </div>
-        </CustomScroll>
+            </Tooltip>
+          )}
+        </div>
       </div>
+
       <PDFDownload
         PdfInstance={Template}
         show={displayDownloadModal}

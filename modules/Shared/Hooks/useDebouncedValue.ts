@@ -4,7 +4,11 @@ import { useState } from 'react';
 type DebouncedValue = <T>(
   initialState: T | (() => T),
   customTimeout?: number
-) => [T, (value: T | (() => T)) => void];
+) => [
+  T,
+  (value: T | (() => T)) => void,
+  React.Dispatch<React.SetStateAction<T>>
+];
 
 export const useDebouncedValue: DebouncedValue = (
   initialState,
@@ -19,5 +23,5 @@ export const useDebouncedValue: DebouncedValue = (
     customTimeout
   );
 
-  return [value, setDebouncedValue];
+  return [value, setDebouncedValue, setValue];
 };

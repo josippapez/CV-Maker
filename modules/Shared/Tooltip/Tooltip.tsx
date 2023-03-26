@@ -1,5 +1,6 @@
+import { useDebouncedValue } from '@modules/Shared/Hooks';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FC, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, ReactNode, useCallback, useMemo } from 'react';
 
 type Props = {
   children: ReactNode;
@@ -7,6 +8,7 @@ type Props = {
   delayShow?: number;
   position?: 'top' | 'bottom' | 'left' | 'right';
   showOnClick?: boolean;
+  showOnHover?: boolean;
 };
 
 export const Tooltip: FC<Props> = ({
@@ -15,29 +17,24 @@ export const Tooltip: FC<Props> = ({
   delayShow = 0,
   position = 'right',
   showOnClick,
+  showOnHover = true,
 }) => {
-  const [showTooltip, setShowTooltip] = useState(false);
-  const updateInstanceRef: { current: null | ReturnType<typeof setTimeout> } =
-    useRef(null);
+  const [showTooltip, setShowTooltip, resetValue] = useDebouncedValue(
+    false,
+    1000
+  );
 
   const handleShow = useCallback(() => {
-    setShowTooltip(true);
+    resetValue(true);
   }, []);
 
   const handleHide = useCallback(() => {
-    setShowTooltip(false);
+    resetValue(false);
   }, []);
 
   const handleClicked = useCallback(() => {
-    if (updateInstanceRef.current) {
-      clearTimeout(updateInstanceRef.current);
-    }
-
-    setShowTooltip(true);
-
-    updateInstanceRef.current = setTimeout(() => {
-      setShowTooltip(false);
-    }, 1000);
+    resetValue(true);
+    setShowTooltip(false);
   }, []);
 
   const getPostion = useMemo(() => {
@@ -58,8 +55,8 @@ export const Tooltip: FC<Props> = ({
   return (
     <div className='flex'>
       <div
-        onMouseEnter={!showOnClick ? handleShow : undefined}
-        onMouseLeave={!showOnClick ? handleHide : undefined}
+        onMouseEnter={showOnHover ? handleShow : undefined}
+        onMouseLeave={showOnHover ? handleHide : undefined}
         onClick={showOnClick ? handleClicked : undefined}
       >
         {children}

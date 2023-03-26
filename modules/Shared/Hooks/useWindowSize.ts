@@ -1,27 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useDebouncedValue } from '@modules/Shared/Hooks/useDebouncedValue';
+import { useEffect } from 'react';
 
-interface WindowSize {
-  width: number;
-  height: number;
-}
-
-export const useWindowSize = (): WindowSize => {
-  const [windowSize, setWindowSize] = useState<WindowSize>({
+export const useWindowSize = (threshold = 100) => {
+  const [debouncedWindowSize, setDebouncedWindowSize] = useDebouncedValue({
     width: window.innerWidth,
     height: window.innerHeight,
   });
 
-  const handleSize = () => {
-    setWindowSize({
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
-  };
-
   useEffect(() => {
-    window.addEventListener('resize', handleSize);
-    return () => window.removeEventListener('resize', handleSize);
+    const handleResize = () => {
+      const newWindowSize = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      };
+
+      if (
+        Math.abs(debouncedWindowSize.width - newWindowSize.width) > threshold ||
+        Math.abs(debouncedWindowSize.height - newWindowSize.height) > threshold
+      ) {
+        setDebouncedWindowSize(newWindowSize);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
-  return windowSize;
+  return debouncedWindowSize;
 };
