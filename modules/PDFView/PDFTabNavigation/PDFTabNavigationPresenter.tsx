@@ -88,9 +88,9 @@ export const PDFTabNavigationPresenter = ({
     <div
       className={`relative z-10  ${
         windowSize.width < 500 ? 'w-16' : 'w-32'
-      } p-6 shadow-sm`}
+      } py-8 shadow-sm`}
     >
-      <div className='flex h-full flex-col justify-between'>
+      <div className='flex h-full flex-col justify-between gap-6'>
         <div className='flex w-full min-w-full flex-col items-center justify-evenly gap-2'>
           {user ? (
             <button
