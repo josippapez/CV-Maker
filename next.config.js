@@ -3,12 +3,17 @@
 
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+});
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled:
     process.env.ANALYZE === 'true' && process.env.NODE_ENV === 'production',
 });
 
-const nextConfig = {
+const nextConfig = withPWA({
   transpilePackages: ['redux-persist'],
   reactStrictMode: true,
   swcMinify: true,
@@ -45,6 +50,6 @@ const nextConfig = {
 
     return config;
   },
-};
+});
 
 module.exports = withBundleAnalyzer(nextConfig);
