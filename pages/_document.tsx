@@ -42,7 +42,6 @@ export default function Document(props: {
         <meta name='googlebot' content='index, follow' />
         <meta name='google' content='nositelinkssearchbox' />
         <meta name='google' content='notranslate' />
-        <title>CV Maker</title>
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <meta name='apple-mobile-web-app-status-bar-style' content='default' />
         <meta name='apple-mobile-web-app-title' content='PWA App' />
@@ -61,22 +60,7 @@ export default function Document(props: {
           content='Pa7EgWXkYbyNhyNiDDHiMurSrf0fMjBaZzIWth-N0Wo'
         />
 
-        <link rel='apple-touch-icon' href='/icons/touch-icon-iphone.png' />
-        <link
-          rel='apple-touch-icon'
-          sizes='152x152'
-          href='/icons/touch-icon-ipad.png'
-        />
-        <link
-          rel='apple-touch-icon'
-          sizes='180x180'
-          href='/icons/touch-icon-iphone-retina.png'
-        />
-        <link
-          rel='apple-touch-icon'
-          sizes='167x167'
-          href='/icons/touch-icon-ipad-retina.png'
-        />
+        <link rel='apple-touch-icon' href='/icons/apple-touch-icon.png' />
 
         <link
           rel='icon'
@@ -91,11 +75,6 @@ export default function Document(props: {
           href='/icons/favicon-16x16.png'
         />
         <link rel='manifest' href='/manifest.json' />
-        <link
-          rel='mask-icon'
-          href='/icons/safari-pinned-tab.svg'
-          color='#5bbad5'
-        />
         <link rel='shortcut icon' href='/icons/favicon.ico' />
         <link
           rel='stylesheet'
