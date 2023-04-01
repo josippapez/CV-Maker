@@ -75,10 +75,11 @@ export const PDFDownload = ({
             </a>
           )}
           {!pdfBlob &&
+            PdfInstance &&
             (download ? (
               <PDFDownloadLink
                 className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
-                document={!isHTML && PdfInstance ? <PdfInstance /> : <></>}
+                document={!isHTML ? <PdfInstance /> : <></>}
                 fileName={`${cvName}.pdf`}
               >
                 {({ blob, url, loading, error }) => {

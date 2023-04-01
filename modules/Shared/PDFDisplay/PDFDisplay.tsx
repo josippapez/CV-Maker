@@ -1,6 +1,7 @@
 import { saveDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch } from '@/store/hooks';
 import { CVTemplate } from '@modules/PDFView/CVTemplates/CVTemplate';
+import { usePDFComponentsAreHTML } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { PDFDownload } from '@modules/PDFView/PDFDownload/PDFDownload';
 import { useAuth } from '@modules/Providers';
 import { useDebouncedFunction } from '@modules/Shared/Hooks';
@@ -8,7 +9,7 @@ import { useDebouncedValue } from '@modules/Shared/Hooks/useDebouncedValue';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { Tooltip } from '@modules/Shared/Tooltip';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 export const PDFDisplay: FC = () => {
   const dispatch = useAppDispatch();
@@ -26,19 +27,37 @@ export const PDFDisplay: FC = () => {
   } = usePDFData();
   const [displayDownloadModal, setDisplayDownloadModal] = useState(false);
   const [initial, setInitial] = useDebouncedValue(true, 2000);
+  const { isHTML } = usePDFComponentsAreHTML();
 
   const userIsLoggedIn = !!user?.uid;
-  const Template = () =>
-    CVTemplate({
-      generalInfo,
-      professionalExperience,
-      certificates,
-      education,
-      languages,
-      skills,
-      template,
-      projects,
-    });
+  const TemplateNotHtml = useCallback(
+    () =>
+      CVTemplate({
+        generalInfo,
+        professionalExperience,
+        certificates,
+        education,
+        languages,
+        skills,
+        template,
+        projects,
+      }),
+    [isHTML]
+  );
+  const Template = useCallback(
+    () =>
+      CVTemplate({
+        generalInfo,
+        professionalExperience,
+        certificates,
+        education,
+        languages,
+        skills,
+        template,
+        projects,
+      }),
+    []
+  );
 
   const [saveData] = useDebouncedFunction(() => {
     if (initial) {
@@ -92,7 +111,7 @@ export const PDFDisplay: FC = () => {
             msOverflowStyle: 'none',
           }}
         >
-          {!displayDownloadModal && <Template />}
+          <Template />
         </div>
 
         <div className='document-controls'>
@@ -121,7 +140,7 @@ export const PDFDisplay: FC = () => {
       </div>
 
       <PDFDownload
-        PdfInstance={Template}
+        PdfInstance={TemplateNotHtml}
         show={displayDownloadModal}
         closeModal={() => setDisplayDownloadModal(false)}
       />

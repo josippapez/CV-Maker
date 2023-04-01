@@ -87,7 +87,7 @@ export const PDFTabNavigationPresenter = ({
   return (
     <div
       className={`relative z-10  ${
-        windowSize.width < 500 ? 'w-16' : 'w-32'
+        windowSize.width < 500 ? 'w-16' : 'w-28'
       } py-8 shadow-sm`}
     >
       <div className='flex h-full flex-col justify-between gap-6'>
@@ -131,7 +131,9 @@ export const PDFTabNavigationPresenter = ({
                       : 'hover:bg-gray-100'
                   } focus:shadow-outline flex cursor-pointer
                 select-none items-center
-                justify-center rounded-md p-4
+                justify-center rounded-md ${
+                  windowSize.width < 500 ? 'p-3' : 'p-4'
+                }
                 text-center text-sm
                 font-bold transition-all
                 duration-300 ease-in-out focus:outline-none
@@ -144,7 +146,9 @@ export const PDFTabNavigationPresenter = ({
                 </div>
                 {selectedTab === tab.tab && (
                   <motion.div
-                    className='absolute top-0 left-[-20px] h-full w-1 rounded-full bg-blue-800'
+                    className={`absolute top-0 ${
+                      windowSize.width < 500 ? 'left-[-10px]' : 'left-[-15px]'
+                    } h-full w-1 rounded-full bg-blue-800`}
                     layoutId='bar'
                   ></motion.div>
                 )}

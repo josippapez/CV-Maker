@@ -1,4 +1,5 @@
 import { Template, TemplateName } from '@/store/reducers/template';
+import i18n from '@/translations/i18n';
 import { Template1 } from '@modules/PDFView/CVTemplates/Templates/Template1';
 import { Template2 } from '@modules/PDFView/CVTemplates/Templates/Template2';
 import { Template3 } from '@modules/PDFView/CVTemplates/Templates/Template3';
@@ -14,7 +15,7 @@ import {
   Skill,
 } from '@modules/PDFView/models';
 import { TFunction } from 'i18next';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -59,10 +60,16 @@ export const CVTemplate = (props: Props): JSX.Element => {
   const { t } = useTranslation('CVTemplates');
   const { template } = props;
 
-  const options: OptionType = {
-    ...props,
-    translate: t,
-  };
+  useEffect(() => {
+    i18n.init();
+  }, []);
+
+  const options: OptionType = useMemo(() => {
+    return {
+      ...props,
+      translate: t,
+    };
+  }, []);
 
   useMemo(() => {
     registerFonts(template.templateName);

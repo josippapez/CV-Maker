@@ -19,6 +19,8 @@ firestore-debug.log
 /.env
 sw.js
 workbox-*.js
+sw.*.map
+workbox-*.js.map
 
 # misc
 .DS_Store
