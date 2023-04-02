@@ -18,7 +18,7 @@ export const DarkModeButton = (props: Props) => {
       onClick={darkTheme.toggle}
     >
       {darkTheme.theme === 'dark' ? (
-        <SunIcon className='h-8 w-8' fill='white' stroke='white' />
+        <SunIcon className='h-8 w-8' />
       ) : (
         <MoonIcon className='h-8 w-8' />
       )}

@@ -51,7 +51,7 @@ export const LanguagesItem: FC<Props> = ({
       onDragEnd={() => {
         setIsDragging(false);
       }}
-      className='mt-4 select-none rounded-md transition-colors first:mt-0 hover:bg-green-100'
+      className='mt-4 select-none rounded-md transition-colors first:mt-0 hover:bg-green-100 dark:hover:bg-green-900'
       dragListener={false}
       dragControls={controls}
     >

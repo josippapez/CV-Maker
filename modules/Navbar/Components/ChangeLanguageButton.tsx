@@ -1,10 +1,16 @@
 import { useChangeLanguage } from '@modules/Navbar/hooks';
+import { useCloseOnClickOutside } from '@modules/Shared/Hooks/useCloseOnClickOutside';
 import Translate from '@public/Styles/Assets/Images/translate.svg';
 import { useTranslation } from 'next-i18next';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useRef, useState } from 'react';
 
 interface Props {
-  dropdownPosition?: 'left' | 'right';
+  dropdownPosition?:
+    | 'left'
+    | 'right'
+    | 'bottom'
+    | 'bottom-left'
+    | 'bottom-right';
   onChangeLanguage?: () => void;
   className?: string;
   iconStrokeColor?: string;
@@ -23,20 +29,7 @@ export const ChangeLanguageButton: FC<Props> = ({
     useState<boolean>(false);
   const component: { current: null | HTMLDivElement } = useRef(null);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        component.current &&
-        !component.current.contains(event.target as Node)
-      ) {
-        setDisplayLanguageDropdown(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [component]);
+  useCloseOnClickOutside(component, () => setDisplayLanguageDropdown(false));
 
   const handleSelectLanguage = useCallback(
     (language: string) => {
@@ -45,6 +38,14 @@ export const ChangeLanguageButton: FC<Props> = ({
     },
     [changeLanguage]
   );
+
+  const dropdownPositionProperty = {
+    left: 'right-12',
+    right: 'left-20',
+    bottom: 'top-12',
+    'bottom-left': 'top-12 right-0',
+    'bottom-right': 'top-12 left-0',
+  };
 
   return (
     <div
@@ -60,9 +61,7 @@ export const ChangeLanguageButton: FC<Props> = ({
         className={`${iconStrokeColor ?? 'stroke-gray-700'}`}
       />
       <div
-        className={`absolute top-0 drop-shadow-md ${
-          dropdownPosition === 'left' ? 'right-12' : 'left-20'
-        }`}
+        className={`absolute top-0 drop-shadow-md ${dropdownPositionProperty[dropdownPosition]}`}
         hidden={!displayLanguageDropdown}
       >
         <div

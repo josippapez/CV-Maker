@@ -49,7 +49,7 @@ export const TextInput = (props: Props) => {
     id,
     disabled,
     required,
-    className: `h-auto max-h-64 w-full rounded-md p-2 ring-0 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-indigo-500 sm:text-sm
+    className: `h-auto max-h-64 w-full rounded-md p-2 ring-0 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-indigo-500 sm:text-sm dark:bg-almost-black-input
   ${
     error
       ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
@@ -74,7 +74,7 @@ export const TextInput = (props: Props) => {
     id,
     disabled,
     required,
-    className: `h-10 w-full rounded-md px-4 ring-0 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-indigo-500 sm:text-sm
+    className: `h-10 w-full rounded-md px-4 ring-0 transition-all duration-300 ease-in-out focus:ring-2 focus:ring-indigo-500 sm:text-sm dark:bg-almost-black-input
     ${
       error
         ? 'border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red-500'
@@ -105,7 +105,7 @@ export const TextInput = (props: Props) => {
         fullWidth ? 'w-full' : ''
       } drop-shadow-sm`}
     >
-      {label && <label className='font-medium text-gray-700'>{label}</label>}
+      {label && <label className='font-medium'>{label}</label>}
       {textarea &&
         (typeof value !== 'undefined' ? (
           <textarea

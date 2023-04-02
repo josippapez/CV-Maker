@@ -83,7 +83,7 @@ export const Tooltip: FC<Props> = ({
                 },
               },
             }}
-            className={`absolute w-max rounded-md bg-gray-200 p-3 ${getPostion} drop-shadow-md`}
+            className={`absolute w-max rounded-md bg-gray-200 dark:bg-gray-600 p-3 ${getPostion} drop-shadow-md`}
           >
             {tooltipText}
           </motion.div>

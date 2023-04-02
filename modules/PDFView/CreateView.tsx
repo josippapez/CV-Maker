@@ -30,11 +30,9 @@ export const CreateView: FC = () => {
 
   return (
     <div
-      className={`flex h-full max-h-screen min-h-screen w-full ${
-        isMobileView ? 'flex-col' : 'flex-row'
-      }`}
+      className={`flex w-full flex-grow overflow-hidden ${isMobileView ? 'flex-col' : 'flex-row'}`}
     >
-      <div className={`h-full ${isMobileView ? 'w-full' : 'w-7/12'}`}>
+      <div className={`flex max-h-full ${isMobileView ? 'w-full' : 'w-7/12'}`}>
         <PDFInputsContainer />
       </div>
       {isMobileView && (

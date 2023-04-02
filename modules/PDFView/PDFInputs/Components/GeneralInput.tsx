@@ -85,7 +85,7 @@ export const GeneralInput = () => {
             </div>
           ) : (
             <div className='flex w-full flex-col'>
-              <label className='font-medium text-gray-700'>
+              <label className='font-medium'>
                 {t('profilePicture')}
               </label>
               <label

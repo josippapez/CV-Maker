@@ -64,7 +64,7 @@ export const DatePicker = (props: Props) => {
       closeModal={closeDatePicker}
       zindex={10}
     >
-      <div className='relative rounded-md bg-white p-4'>
+      <div className='relative rounded-md bg-white p-4 text-almost-black'>
         <DatePickerHeader
           type={selectedType}
           hideMonth={selectedType === 'year' || selectedType === 'month'}

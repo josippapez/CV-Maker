@@ -34,12 +34,10 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 
   return (
     <>
-      <div className='h-screen'>
-        <ToastContainer />
-        <PageLoader isLoading={loading}>
-          <Component {...pageProps} />
-        </PageLoader>
-      </div>
+      <ToastContainer />
+      <PageLoader isLoading={loading}>
+        <Component {...pageProps} />
+      </PageLoader>
     </>
   );
 }

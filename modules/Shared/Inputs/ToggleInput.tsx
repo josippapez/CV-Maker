@@ -49,7 +49,7 @@ export const ToggleInput = (props: Props) => {
       } drop-shadow-sm ${wrapperClassName}`}
     >
       {label && (
-        <label className={`${labelFontWeight} text-gray-700`}>{label}</label>
+        <label className={`${labelFontWeight}`}>{label}</label>
       )}
       <input
         placeholder={placeholder}

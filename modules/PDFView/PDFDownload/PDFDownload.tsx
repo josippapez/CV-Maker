@@ -36,7 +36,7 @@ export const PDFDownload = ({
         }, 100);
       }}
     >
-      <div className='relative h-fit w-fit flex-col bg-white p-5'>
+      <div className='relative h-fit w-fit flex-col bg-white p-5 text-almost-black'>
         <div className='flex items-center justify-between'>
           <h1 className='text-2xl font-bold'>Download CV</h1>
           <button

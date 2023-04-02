@@ -33,3 +33,19 @@
 #modal-children > * > *[class*='modal-body'] {
   flex-grow: 1;
 }
+
+.closeButton {
+  display: flex;
+  &:hover {
+    cursor: pointer;
+  }
+  &.left {
+    align-self: flex-start;
+  }
+  &.right {
+    align-self: flex-end;
+  }
+  &.center {
+    align-self: center;
+  }
+}

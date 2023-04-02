@@ -20,7 +20,7 @@ export const LandingPage: FC<Props> = ({ routesWithLocale }) => {
   });
 
   return (
-    <div className='h-screen overflow-y-hidden bg-jacarta-white text-jacarta-purple transition-colors dark:bg-jacarta-purple dark:text-jacarta-white'>
+    <div className='flex-grow overflow-y-hidden'>
       <div className='flex h-full items-center justify-center'>
         <div className='flex w-full flex-col'>
           <div className='flex items-center justify-center'>
@@ -28,7 +28,7 @@ export const LandingPage: FC<Props> = ({ routesWithLocale }) => {
               initial={combinedStyleInitial}
               animate={combinedStyleFinal}
               transition={{ duration: 0.2 }}
-              className='w-2/6 text-center text-6xl font-bold text-blue-900 dark:text-white'
+              className='w-2/6 text-center text-6xl font-bold'
             >
               {t('pageName')}
             </motion.header>

@@ -41,44 +41,31 @@ export const PDFTabNavigationPresenter = ({
     () => [
       {
         tab: Tab.generalInfo,
-        label: (
-          <Profile
-            height={30}
-            width={35}
-            strokeWidth={2.5}
-            className='fill-gray-700 stroke-gray-700'
-          />
-        ),
+        label: <Profile height={30} width={35} strokeWidth={6} />,
       },
       {
         tab: Tab.professionalExperience,
-        label: <Briefcase height={30} width={35} className='stroke-gray-700' />,
+        label: <Briefcase height={30} width={35} />,
       },
       {
         tab: Tab.projects,
-        label: (
-          <ProjectFolder height={30} width={35} className='stroke-gray-700' />
-        ),
+        label: <ProjectFolder height={30} width={35} />,
       },
       {
         tab: Tab.education,
-        label: (
-          <AcademicCap height={30} width={35} className='stroke-gray-700' />
-        ),
+        label: <AcademicCap height={30} width={35} />,
       },
       {
         tab: Tab.certificates,
-        label: (
-          <CertificateIcon height={30} width={35} className='stroke-gray-700' />
-        ),
+        label: <CertificateIcon height={30} width={35} />,
       },
       {
         tab: Tab.languages,
-        label: <Language height={30} width={35} className='fill-gray-700' />,
+        label: <Language height={30} width={35} />,
       },
       {
         tab: Tab.skills,
-        label: <Tools height={30} width={35} className='fill-gray-700' />,
+        label: <Tools height={30} width={35} />,
       },
     ],
     []
@@ -86,15 +73,15 @@ export const PDFTabNavigationPresenter = ({
 
   return (
     <div
-      className={`relative z-10  ${
-        windowSize.width < 500 ? 'w-16' : 'w-28'
+      className={`z-10 flex ${
+        windowSize.width < 500 ? 'w-[70px]' : 'w-28'
       } py-8 shadow-sm`}
     >
-      <div className='flex h-full flex-col justify-between gap-6'>
+      <div className='flex flex-grow flex-col justify-between gap-6'>
         <div className='flex w-full min-w-full flex-col items-center justify-evenly gap-2'>
           {user ? (
             <button
-              className={`focus:shadow-outline mt-4 mb-4 rounded-full bg-[#f5f5f5] p-4 transition-all duration-300  ease-in-out hover:bg-gray-100 focus:outline-none`}
+              className={`focus:shadow-outline mt-4 mb-4 rounded-full p-4 transition-all duration-300 ease-in-out focus:outline-none`}
               type='button'
               onClick={() => {
                 dispatch(logout());
@@ -104,7 +91,7 @@ export const PDFTabNavigationPresenter = ({
             </button>
           ) : (
             <button
-              className={`focus:shadow-outline mt-4 mb-4 rounded-full bg-[#f5f5f5] p-4 transition-all duration-300  ease-in-out hover:bg-gray-100 focus:outline-none`}
+              className={`focus:shadow-outline mt-4 mb-4 rounded-full p-4 transition-all duration-300 ease-in-out focus:outline-none`}
               type='button'
               onClick={() => {
                 dispatch(signInWithGoogle());
@@ -127,8 +114,8 @@ export const PDFTabNavigationPresenter = ({
                   id={tab.tab}
                   className={`${
                     selectedTab === tab.tab
-                      ? 'bg-[#f3f3f3]'
-                      : 'hover:bg-gray-100'
+                      ? 'bg-[#f3f3f3] dark:bg-gray-500'
+                      : 'hover:bg-gray-100 dark:hover:bg-gray-600'
                   } focus:shadow-outline flex cursor-pointer
                 select-none items-center
                 justify-center rounded-md ${
@@ -148,7 +135,7 @@ export const PDFTabNavigationPresenter = ({
                   <motion.div
                     className={`absolute top-0 ${
                       windowSize.width < 500 ? 'left-[-10px]' : 'left-[-15px]'
-                    } h-full w-1 rounded-full bg-blue-800`}
+                    } h-full w-1 rounded-full bg-jacarta-purple dark:bg-jacarta-white`}
                     layoutId='bar'
                   ></motion.div>
                 )}
@@ -173,7 +160,7 @@ export const PDFTabNavigationPresenter = ({
               className='focus:shadow-outline cursor-pointer select-none rounded-md
             p-4 text-sm
             font-bold transition-all
-            duration-300 ease-in-out hover:bg-gray-100 focus:outline-none'
+            duration-300 ease-in-out hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-600'
             />
           </motion.div>
           <motion.div
@@ -187,11 +174,10 @@ export const PDFTabNavigationPresenter = ({
             }}
           >
             <TemplatesButton
-              iconClassname='stroke-gray-700'
-              className='focus:shadow-outline cursor-pointer select-none rounded-md
+              className='cursor-pointer select-none rounded-md
               p-4 text-sm
               font-bold transition-all
-              duration-300 ease-in-out hover:bg-gray-100 focus:outline-none'
+              duration-300 ease-in-out hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-600'
               onClick={() => setDisplayTemplateChooseModal(true)}
             />
           </motion.div>

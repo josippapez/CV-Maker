@@ -1,4 +1,3 @@
-import { NavbarPresenter } from '@modules/Navbar';
 import { PageLoader } from '@modules/Shared/Loader';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
@@ -13,13 +12,21 @@ const DynamicCVMakerPage = dynamic(
   }
 );
 
+const DynamicNavbar = dynamic(
+  () => import('@modules/Navbar').then(mod => mod.NavbarPresenter),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
+
 const Create: NextPage = () => {
   return (
     <>
       <Head>
         <title>Create CV</title>
       </Head>
-      <NavbarPresenter />
+      <DynamicNavbar />
       <DynamicCVMakerPage />
     </>
   );
@@ -39,5 +46,6 @@ const getStaticProps = makeStaticProps([
   'DatePicker',
   'VersionHistoryModal',
   'PDFTabNavigation',
+  'Navbar',
 ]);
 export { getStaticPaths, getStaticProps };

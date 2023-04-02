@@ -119,6 +119,7 @@ export const CustomText: FC<PropsText> = ({ children, style, ...rest }) => {
       <div
         style={{
           whiteSpace: 'break-spaces',
+          position: 'relative',
           ...(newStyle as { [key: string]: string }),
         }}
       >

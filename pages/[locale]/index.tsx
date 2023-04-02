@@ -1,11 +1,19 @@
 import { LandingPage } from '@modules/LandingPage';
-import { NavbarPresenter } from '@modules/Navbar';
 import { InferGetStaticPropsType } from 'next';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { getStaticPaths, makeStaticProps } from 'ssg-setup/getStatic';
 
-const getStaticProps = makeStaticProps(['LandingPage']);
+const getStaticProps = makeStaticProps(['LandingPage', 'Navbar']);
 export { getStaticPaths, getStaticProps };
+
+const DynamicNavbar = dynamic(
+  () => import('@modules/Navbar').then(mod => mod.NavbarPresenter),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+);
 
 function LoginPage({
   RoutesWithLocale,
@@ -15,7 +23,7 @@ function LoginPage({
       <Head>
         <title>CV Maker</title>
       </Head>
-      <NavbarPresenter routesWithLocale={RoutesWithLocale} />
+      <DynamicNavbar routesWithLocale={RoutesWithLocale} />
       <LandingPage routesWithLocale={RoutesWithLocale} />
     </>
   );
