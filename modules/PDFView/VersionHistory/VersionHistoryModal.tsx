@@ -42,7 +42,7 @@ export const VersionHistoryModal: FC = () => {
       }
       width='45rem'
     >
-      <div className='rounded-md bg-white px-8 py-6 tracking-wide'>
+      <div className='rounded-md bg-white text-almost-black px-8 py-6 tracking-wide'>
         <p>{t('conflict')}</p>
         <p className='mt-2 font-semibold'>{t('conflict-local')}</p>
         <p className='mt-2 font-semibold'>{t('conflict-cloud')}</p>
