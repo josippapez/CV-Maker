@@ -10,18 +10,11 @@ type Props = {
   setShowNavigation: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const isActiveRoute = (route: string) => {
-  return route === window.location.pathname;
-};
-
 export const NavbarModal: FC<Props> = ({
   showNavigation,
   setShowNavigation,
 }) => {
   const { t } = useTranslation('Navbar');
-  const activeRouteClass = (route: string) => {
-    return isActiveRoute(route) ? 'active' : '';
-  };
 
   const navbarLinkDivider = 'h-[1px] w-full bg-gray-200';
   return (
@@ -45,9 +38,7 @@ export const NavbarModal: FC<Props> = ({
             <Link
               shallow
               href={RoutesWithLocale.LANDING_PAGE}
-              className={`mobile w-full py-4 px-5 text-left text-3xl ${activeRouteClass(
-                RoutesWithLocale.LANDING_PAGE
-              )}`}
+              className={`mobile w-full py-4 px-5 text-left text-3xl`}
             >
               {t('home')}
             </Link>
@@ -55,9 +46,7 @@ export const NavbarModal: FC<Props> = ({
             <Link
               shallow
               href={RoutesWithLocale.CREATE}
-              className={`mobile w-full py-4 px-5 text-left text-3xl ${activeRouteClass(
-                RoutesWithLocale.CREATE
-              )}`}
+              className={`mobile w-full py-4 px-5 text-left text-3xl`}
             >
               {t('create')}
             </Link>

@@ -66,7 +66,7 @@ const mergeStylesIntoOne = (styles: Style[]) => {
 
   styles.forEach(style => {
     Object.keys(style).forEach(key => {
-      mergedStyle[key] = style[key];
+      mergedStyle[key as keyof Style] = style[key as keyof Style];
     });
   });
   return mergedStyle;

@@ -1,6 +1,10 @@
 {
   "pageName": "CV Maker",
   "createYourCV": "Create your CV",
-  "createYourCVDescription": "Create your CV in just a few minutes with our easy-to-use CV maker. You can fill out your CV and download it as a PDF file.",
+  "welcome": "Welcome to CV Maker",
+  "welcomeDescription": "The easiest way to create and download professional CVs. Choose a template, fill in your details, and download your finished CV in PDF format.",
+  "offerDescription": "We offer a variety of templates to choose from, including modern, traditional, creative, and minimalist designs. Whether you're a recent graduate or an experienced professional, our templates will help you create a standout CV that highlights your skills and achievements.",
+  "integrationDescription": "With our Google account integration, you can save your data and work on your CV anytime, anywhere. Plus, you can easily share your online CV with others by sending them the link.",
+  "createYourCVDescription": "Sign up for CV Maker today and create a standout CV that gets you noticed by employers and recruiters. Our user-friendly interface and wide selection of templates make it easy to create a professional-looking CV in just a few minutes.",
   "templatesDescription": "Choose from a variety of templates to create your CV. Template can be changed at any time without losing your progress."
 }

@@ -13,13 +13,11 @@ interface Props {
     | 'bottom-right';
   onChangeLanguage?: () => void;
   className?: string;
-  iconStrokeColor?: string;
 }
 
 export const ChangeLanguageButton: FC<Props> = ({
   dropdownPosition = 'left',
   className,
-  iconStrokeColor,
   onChangeLanguage,
 }) => {
   const { t } = useTranslation('Navbar');
@@ -51,17 +49,13 @@ export const ChangeLanguageButton: FC<Props> = ({
     <div
       ref={component}
       className={` ${
-        displayLanguageDropdown ? 'bg-gray-100' : ''
+        displayLanguageDropdown ? 'bg-gray-100 dark:bg-almost-black-input' : ''
       } relative flex items-center justify-center ${className}`}
       onClick={() => setDisplayLanguageDropdown(!displayLanguageDropdown)}
     >
-      <Translate
-        height={30}
-        width={35}
-        className={`${iconStrokeColor ?? 'stroke-gray-700'}`}
-      />
+      <Translate height={30} width={35} />
       <div
-        className={`absolute top-0 drop-shadow-md ${dropdownPositionProperty[dropdownPosition]}`}
+        className={`absolute top-0 z-10 drop-shadow-md ${dropdownPositionProperty[dropdownPosition]}`}
         hidden={!displayLanguageDropdown}
       >
         <div

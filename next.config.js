@@ -20,6 +20,7 @@ const nextConfig = withPWA({
   swcMinify: true,
   images: {
     domains: ['firebasestorage.googleapis.com', 'localhost'],
+    unoptimized: true,
   },
   webpack: config => {
     config.module.rules.push({

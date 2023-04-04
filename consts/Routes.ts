@@ -12,7 +12,7 @@ const Routes = {
   CV: '/cv',
 };
 
-const RouteKeys = Object.keys(Routes) as (keyof typeof Routes)[];
+export const RouteKeys = Object.keys(Routes) as (keyof typeof Routes)[];
 
 const calculateRoutesWithLocale = (locale: string) =>
   RouteKeys.reduce((acc, key) => {
