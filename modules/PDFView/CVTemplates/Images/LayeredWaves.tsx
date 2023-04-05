@@ -1,8 +1,14 @@
 import { Path, Svg } from '@modules/PDFView/CVTemplates/Templates/Components';
 
-export const LayeredWaves = () => {
+export const LayeredWaves = ({
+  height,
+  width,
+}: {
+  height?: number | string;
+  width?: number | string;
+}) => {
   return (
-    <Svg id='visual' viewBox='0 0 595 100' width='595' height='100'>
+    <Svg id='visual' viewBox='0 0 595 100' width={width} height={height}>
       <Path
         d='M0 59L14.2 59.2C28.3 59.3 56.7 59.7 85 62C113.3 64.3 141.7 68.7 170 68.8C198.3 69 226.7 65 255 64.7C283.3 64.3 311.7 67.7 340 67.5C368.3 67.3 396.7 63.7 425 63.2C453.3 62.7 481.7 65.3 510 65C538.3 64.7 566.7 61.3 580.8 59.7L595 58L595 101L580.8 101C566.7 101 538.3 101 510 101C481.7 101 453.3 101 425 101C396.7 101 368.3 101 340 101C311.7 101 283.3 101 255 101C226.7 101 198.3 101 170 101C141.7 101 113.3 101 85 101C56.7 101 28.3 101 14.2 101L0 101Z'
         fill='#13171a'

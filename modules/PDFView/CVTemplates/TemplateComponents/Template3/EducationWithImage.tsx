@@ -49,10 +49,9 @@ export const EducationWithImage: FC<Props> = ({
               wrap={false}
               style={{
                 position: 'absolute',
-                width: '100%',
-                height: 100,
                 zIndex: -1,
                 top: 0,
+                right: 0,
               }}
             >
               <BlobTopRight />
@@ -65,8 +64,6 @@ export const EducationWithImage: FC<Props> = ({
                 wrap={false}
                 style={{
                   position: 'absolute',
-                  width: 595,
-                  height: 100,
                   zIndex: -1,
                   bottom: 0,
                 }}
@@ -79,8 +76,6 @@ export const EducationWithImage: FC<Props> = ({
                 wrap={false}
                 style={{
                   position: 'absolute',
-                  width: 595,
-                  height: 100,
                   zIndex: -1,
                   bottom: 0,
                 }}

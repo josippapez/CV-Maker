@@ -42,7 +42,17 @@ export const PDFDisplay: FC = () => {
         template,
         projects,
       }),
-    [isHTML]
+    [
+      isHTML,
+      generalInfo,
+      professionalExperience,
+      certificates,
+      education,
+      languages,
+      skills,
+      template,
+      projects,
+    ]
   );
   const Template = () =>
     CVTemplate({

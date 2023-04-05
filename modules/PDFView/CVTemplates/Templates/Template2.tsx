@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     fontFamily: 'Opensans',
     fontSize: 11,
-    lineHeight: 2
+    lineHeight: 2,
+    color: 'black',
   },
   column: {
     flexDirection: 'column',

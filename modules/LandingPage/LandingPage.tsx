@@ -1,11 +1,20 @@
 import { LandingPageSection } from '@modules/LandingPage/LandingPageSection';
+import {
+  BlobBottomLeft,
+  BlobBottomRight,
+  BlobTopLeft,
+  BlobTopRight,
+  LayeredWaves,
+} from '@modules/PDFView/CVTemplates/Images';
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
-import { RoutesWithLocale } from 'consts/Routes';
+import Google from '@public/Styles/Assets/Images/google.svg';
+import { RoutesWithLocale, useRoutesWithLocale } from 'consts/Routes';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { FC, useRef } from 'react';
-import Google from '@public/Styles/Assets/Images/google.svg';
 import styles from './LandingPage.module.scss';
+
+import Link from 'next/link';
 
 type Props = {
   routesWithLocale: typeof RoutesWithLocale;
@@ -27,7 +36,7 @@ export const LandingPage: FC<Props> = () => {
   return (
     <div
       ref={container}
-      className='page-container desktop_col-32 mobile_col-16 gap-y-10 pb-20 drop-shadow-md'
+      className='page-container desktop_col-32 mobile_col-16 gap-y-20 drop-shadow-md'
     >
       <LandingPageSection sectionClass='min-h-[calc(100vh_-_81px)]'>
         {isInView => (
@@ -65,7 +74,15 @@ export const LandingPage: FC<Props> = () => {
           </div>
         )}
       </LandingPageSection>
-      <LandingPageSection sectionClass='min-h-[calc(100vh_-_81px)]'>
+
+      <LandingPageSection sectionClass='full-bleed overflow-visible'>
+        <div className='absolute flex w-full flex-col items-end'>
+          <BlobBottomRight height={180} />
+          <BlobTopRight height={180} />
+        </div>
+      </LandingPageSection>
+
+      <LandingPageSection sectionClass={`min-h-[calc(100vh_-_81px)]`}>
         {isInView => (
           <div className='flex items-center gap-5'>
             <motion.img
@@ -99,8 +116,16 @@ export const LandingPage: FC<Props> = () => {
           </div>
         )}
       </LandingPageSection>
+
+      <LandingPageSection sectionClass='full-bleed overflow-visible'>
+        <div className='absolute flex w-full flex-col items-start'>
+          <BlobBottomLeft height={180} />
+          <BlobTopLeft height={180} />
+        </div>
+      </LandingPageSection>
+
       <LandingPageSection
-        sectionClass={`desktop_col-24 min-h-[50vh] justify-center ${styles.diagonalLRline} before:bg-almost-black dark:before:bg-almost-white`}
+        sectionClass={`desktop_col-24 mobile_col-12 min-h-[50vh] justify-center`}
       >
         {isInView => (
           <div className='flex flex-col items-center gap-5'>
@@ -135,10 +160,11 @@ export const LandingPage: FC<Props> = () => {
           </div>
         )}
       </LandingPageSection>
+
       <LandingPageSection>
         {isInView => (
-          <div className='flex h-[20vh] flex-col justify-between'>
-            <motion.p
+          <div className='flex min-h-[20vh] flex-col justify-between gap-10'>
+            <motion.img
               initial={combinedStyleInitial}
               animate={
                 isInView
@@ -148,10 +174,10 @@ export const LandingPage: FC<Props> = () => {
                     }
               }
               transition={{ duration: 0.2 }}
-              className='text-lg'
-            >
-              {t('templatesDescription')}
-            </motion.p>
+              src={'./Styles/Assets/Images/Templates.png'}
+              width={'100%'}
+              alt='Template3'
+            />
             <motion.p
               initial={combinedStyleInitial}
               animate={
@@ -164,38 +190,50 @@ export const LandingPage: FC<Props> = () => {
               transition={{ duration: 0.2, delay: 0.1 }}
               className='text-lg'
             >
-              {t('createYourCVDescription')}
+              {t('templatesDescription')}
             </motion.p>
           </div>
         )}
       </LandingPageSection>
-      {/* <motion.div
+
+      <LandingPageSection sectionClass='mt-40'>
+        {isInView => (
+          <motion.p
+            initial={combinedStyleInitial}
+            animate={
+              isInView
+                ? combinedStyleFinal
+                : {
+                    opacity: 0,
+                  }
+            }
+            transition={{ duration: 0.2, delay: 0.1 }}
+            className='text-lg'
+          >
+            {t('createYourCVDescription')}
+          </motion.p>
+        )}
+      </LandingPageSection>
+
+      <motion.div
         className='text-center'
         initial={combinedStyleInitial}
         animate={combinedStyleFinal}
         transition={{ duration: 0.2, delay: 0.7 }}
       >
-        <Link href={routesWithLocale.CREATE} className={style.createYourCVLink}>
+        <Link
+          href={useRoutesWithLocale().CREATE}
+          className={styles.createYourCVLink}
+        >
           {t('createYourCV')}
         </Link>
-      </motion.div> */}
+      </motion.div>
 
-      {/* Creating a CV with CV Maker is simple and straightforward. Just choose a template that suits your needs, fill in your personal and professional details, and download your finished CV in PDF format. We offer a range of templates to choose from, including modern, traditional, creative, and minimalist designs. Whether you're a recent graduate or an experienced professional, our templates will help you create a standout CV that highlights your skills and achievements.
-
-With CV Maker, you can also log in with your Google account to save your data and access it from anywhere. This means you can work on your CV whenever and wherever you want, without having to worry about losing your progress. And when you're finished, you can easily share your CV with others by simply sending them the link to your online CV.
-
-At CV Maker, we understand the importance of having a professional-looking CV that stands out from the crowd. That's why we've designed our web app to be easy to use, intuitive, and flexible. Whether you're a job seeker, a freelancer, or a student, CV Maker has everything you need to create a CV that showcases your skills and accomplishments in the best possible light.
-
-So why wait? Sign up for CV Maker today and start creating your perfect CV in minutes. With our user-friendly interface, wide selection of templates, and Google account integration, you'll be able to create a standout CV that gets you noticed by employers and recruiters alike. */}
-
-      {/*
-Welcome to CV Maker – the easiest way to create and download professional CVs. Choose a template, fill in your details, and download your finished CV in PDF format.
-
-We offer a variety of templates to choose from, including modern, traditional, creative, and minimalist designs. Whether you're a recent graduate or an experienced professional, our templates will help you create a standout CV that highlights your skills and achievements.
-
-With our Google account integration, you can save your data and work on your CV anytime, anywhere. Plus, you can easily share your online CV with others by sending them the link.
-
-Sign up for CV Maker today and create a standout CV that gets you noticed by employers and recruiters. Our user-friendly interface and wide selection of templates make it easy to create a professional-looking CV in just a few minutes. */}
+      <LandingPageSection sectionClass='full-bleed overflow-visible'>
+        <div className='absolute flex w-full flex-col items-start'>
+          <LayeredWaves width={'100%'} />
+        </div>
+      </LandingPageSection>
     </div>
   );
 };
