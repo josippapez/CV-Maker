@@ -75,7 +75,7 @@ export const LandingPage: FC<Props> = () => {
         )}
       </LandingPageSection>
 
-      <LandingPageSection sectionClass='full-bleed overflow-visible'>
+      <LandingPageSection sectionClass='full-bleed overflow-visible -z-10'>
         <div className='absolute flex w-full flex-col items-end'>
           <BlobBottomRight height={180} />
           <BlobTopRight height={180} />
@@ -117,7 +117,7 @@ export const LandingPage: FC<Props> = () => {
         )}
       </LandingPageSection>
 
-      <LandingPageSection sectionClass='full-bleed overflow-visible'>
+      <LandingPageSection sectionClass='full-bleed overflow-visible -z-10'>
         <div className='absolute flex w-full flex-col items-start'>
           <BlobBottomLeft height={180} />
           <BlobTopLeft height={180} />
