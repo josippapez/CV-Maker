@@ -7,10 +7,7 @@ import { ProjectsInput } from '@modules/PDFView/PDFInputs/Components/ProjectsInp
 import { SkillsInput } from '@modules/PDFView/PDFInputs/Components/SkillsInput';
 import { Tab } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { PDFTabNavigationPresenter } from '@modules/PDFView/PDFTabNavigation/PDFTabNavigationPresenter';
-import { AnimatePresence } from 'framer-motion';
 import { useCallback } from 'react';
-import CustomScroll from 'react-custom-scroll';
-import 'react-custom-scroll/dist/customScroll.css';
 
 type Props = {
   selectedTab: Tab;
@@ -40,16 +37,14 @@ export const PDFInputsPresenter = (props: Props) => {
   }, [selectedTab]);
 
   return (
-    <div className='flex h-full w-full flex-row'>
+    <div className='flex w-full flex-row'>
       <PDFTabNavigationPresenter
         setSelectedTab={setSelectedTab}
         selectedTab={selectedTab}
       />
-      <CustomScroll flex={'1'} allowOuterScroll>
-        <div className='page-container min-h-full bg-[#f7f7f7] py-10'>
-          {getInputs()}
-        </div>
-      </CustomScroll>
+      <div className='page-container desktop_col-28 mobile_col-16 flex-grow overflow-y-scroll rounded-md bg-[#f7f7f7] py-10 dark:bg-transparent'>
+        {getInputs()}
+      </div>
     </div>
   );
 };

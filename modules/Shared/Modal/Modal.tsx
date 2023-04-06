@@ -97,7 +97,7 @@ export const Modal: FC<Props> = ({
             style={{
               width: width === 'screen' ? '100vw' : width,
               height: height === 'screen' ? '100vh' : height,
-              maxHeight: windowSize.height + 'px',
+              maxHeight: window.innerHeight + 'px',
               zIndex: zindex ? zindex + 1 : 'auto',
             }}
           >

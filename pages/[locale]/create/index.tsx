@@ -39,5 +39,6 @@ const getStaticProps = makeStaticProps([
   'DatePicker',
   'VersionHistoryModal',
   'PDFTabNavigation',
+  'Navbar',
 ]);
 export { getStaticPaths, getStaticProps };

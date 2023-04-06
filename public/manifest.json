@@ -1,12 +1,12 @@
 {
     "theme_color": "#938f8f",
     "background_color": "#ffffff",
-    "display": "fullscreen",
+    "display": "minimal-ui",
     "scope": "/",
     "start_url": "/",
     "name": "CV Maker",
-    "short_name": "CVMaker",
-    "description": "CV Maker/Geenerator page",
+    "short_name": "CV Maker",
+    "description": "CV Maker/Generator with templates to choose from",
     "icons": [
         {
             "src": "/icon-192x192.png",

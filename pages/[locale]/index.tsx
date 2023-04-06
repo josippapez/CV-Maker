@@ -4,7 +4,7 @@ import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import { getStaticPaths, makeStaticProps } from 'ssg-setup/getStatic';
 
-const getStaticProps = makeStaticProps(['LandingPage']);
+const getStaticProps = makeStaticProps(['LandingPage', 'Navbar']);
 export { getStaticPaths, getStaticProps };
 
 function LoginPage({

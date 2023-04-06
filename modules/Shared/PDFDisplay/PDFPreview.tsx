@@ -113,6 +113,7 @@ export const PDFPreview: FC = () => {
                       onClick={() => setPageNumber(pageNumber - 1)}
                       type='button'
                       aria-label='Previous page'
+                      className='text-almost-black'
                     >
                       ‹
                     </button>
@@ -124,6 +125,7 @@ export const PDFPreview: FC = () => {
                       onClick={() => setPageNumber(pageNumber + 1)}
                       type='button'
                       aria-label='Next page'
+                      className='text-almost-black'
                     >
                       ›
                     </button>

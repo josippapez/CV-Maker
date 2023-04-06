@@ -49,13 +49,13 @@ export const DateInput = (props: Props) => {
         fullWidth ? 'w-full' : ''
       } drop-shadow-sm`}
     >
-      {label && <label className='font-medium text-gray-700'>{label}</label>}
+      {label && <label className='font-medium'>{label}</label>}
       <input
         disabled={disabled}
         type='button'
         className='w-ful flex h-10 flex-row rounded-md bg-white
-        px-4 text-start ring-0 transition-all duration-300 ease-in-out
-        hover:cursor-pointer focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500'
+        px-4 text-start ring-0 transition-all duration-300 ease-in-out hover:cursor-pointer
+        focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-500 dark:bg-almost-black-input'
         onClick={() => setShowDatePicker(true)}
         defaultValue={
           value ? DateTime.fromISO(value).toLocaleString(newFormat) : ''

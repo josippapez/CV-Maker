@@ -1,5 +1,5 @@
 import { PageLoader } from '@modules/Shared/Loader';
-import { Modal } from '@modules/Shared/Modal';
+import { CloseButton, Modal } from '@modules/Shared/Modal';
 import DocumentButton from '@public/Styles/Assets/Images/documentButton.svg';
 import dynamic from 'next/dynamic';
 import { FC, useState } from 'react';
@@ -44,14 +44,15 @@ export const DisplayPdfModalButton: FC<Props> = ({
         position='center'
         height='screen'
         show={displayPdfModal}
+        contentClassname='bg-white dark:bg-almost-black'
         closeModal={() => setDisplayPdfModal(false)}
       >
-        <button
-          className='absolute top-1 left-3 z-10 flex rounded-full text-4xl font-bold text-white'
+        <CloseButton
           onClick={() => setDisplayPdfModal(false)}
-        >
-          &times;
-        </button>
+          align='left'
+          imageClassName='dark:fill-white'
+          buttonClassName='p-4'
+        />
         <DynamicPDFDisplay />
       </Modal>
     </>

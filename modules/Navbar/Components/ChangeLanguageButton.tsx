@@ -1,19 +1,23 @@
 import { useChangeLanguage } from '@modules/Navbar/hooks';
+import { useCloseOnClickOutside } from '@modules/Shared/Hooks/useCloseOnClickOutside';
 import Translate from '@public/Styles/Assets/Images/translate.svg';
 import { useTranslation } from 'next-i18next';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useRef, useState } from 'react';
 
 interface Props {
-  dropdownPosition?: 'left' | 'right';
+  dropdownPosition?:
+    | 'left'
+    | 'right'
+    | 'bottom'
+    | 'bottom-left'
+    | 'bottom-right';
   onChangeLanguage?: () => void;
   className?: string;
-  iconStrokeColor?: string;
 }
 
 export const ChangeLanguageButton: FC<Props> = ({
   dropdownPosition = 'left',
   className,
-  iconStrokeColor,
   onChangeLanguage,
 }) => {
   const { t } = useTranslation('Navbar');
@@ -23,20 +27,7 @@ export const ChangeLanguageButton: FC<Props> = ({
     useState<boolean>(false);
   const component: { current: null | HTMLDivElement } = useRef(null);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        component.current &&
-        !component.current.contains(event.target as Node)
-      ) {
-        setDisplayLanguageDropdown(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [component]);
+  useCloseOnClickOutside(component, () => setDisplayLanguageDropdown(false));
 
   const handleSelectLanguage = useCallback(
     (language: string) => {
@@ -46,23 +37,25 @@ export const ChangeLanguageButton: FC<Props> = ({
     [changeLanguage]
   );
 
+  const dropdownPositionProperty = {
+    left: 'right-12',
+    right: 'left-20',
+    bottom: 'top-12',
+    'bottom-left': 'top-12 right-0',
+    'bottom-right': 'top-12 left-0',
+  };
+
   return (
     <div
       ref={component}
       className={` ${
-        displayLanguageDropdown ? 'bg-gray-100' : ''
+        displayLanguageDropdown ? 'bg-gray-100 dark:bg-almost-black-input' : ''
       } relative flex items-center justify-center ${className}`}
       onClick={() => setDisplayLanguageDropdown(!displayLanguageDropdown)}
     >
-      <Translate
-        height={30}
-        width={35}
-        className={`${iconStrokeColor ?? 'stroke-gray-700'}`}
-      />
+      <Translate height={30} width={35} />
       <div
-        className={`absolute top-0 drop-shadow-md ${
-          dropdownPosition === 'left' ? 'right-12' : 'left-20'
-        }`}
+        className={`absolute top-0 z-10 drop-shadow-md ${dropdownPositionProperty[dropdownPosition]}`}
         hidden={!displayLanguageDropdown}
       >
         <div

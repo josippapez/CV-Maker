@@ -42,22 +42,29 @@ export const PDFDisplay: FC = () => {
         template,
         projects,
       }),
-    [isHTML]
+    [
+      isHTML,
+      generalInfo,
+      professionalExperience,
+      certificates,
+      education,
+      languages,
+      skills,
+      template,
+      projects,
+    ]
   );
-  const Template = useCallback(
-    () =>
-      CVTemplate({
-        generalInfo,
-        professionalExperience,
-        certificates,
-        education,
-        languages,
-        skills,
-        template,
-        projects,
-      }),
-    []
-  );
+  const Template = () =>
+    CVTemplate({
+      generalInfo,
+      professionalExperience,
+      certificates,
+      education,
+      languages,
+      skills,
+      template,
+      projects,
+    });
 
   const [saveData] = useDebouncedFunction(() => {
     if (initial) {
@@ -89,13 +96,13 @@ export const PDFDisplay: FC = () => {
 
   const scale =
     windowSize.height < windowSize.width
-      ? windowSize.height / 842
+      ? (windowSize.height - 80) / 842
       : windowSize.width / 595;
 
   return (
     <>
       <div
-        className={`documentPDFView flex h-full flex-col items-center justify-center overflow-hidden drop-shadow-xl transition-colors dark:bg-neutral-700 ${
+        className={`documentPDFView flex flex-col items-center justify-center overflow-hidden drop-shadow-xl ${
           windowSize.width < 1550 ? 'w-full' : 'w-5/12'
         }`}
       >

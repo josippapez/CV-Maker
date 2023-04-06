@@ -4,8 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'jacarta-purple': 'rgb(60,50,101)',
-        'jacarta-white': 'rgb(223,209,207)',
+        midnight: '#121230',
+        'almost-black-input': '#2f3132',
+        'almost-black': '#1e1f1f',
+        'almost-white': '#adaca9',
+        'slight-gray': '#deded4',
       },
     },
   },

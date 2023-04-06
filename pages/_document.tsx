@@ -28,7 +28,6 @@ export default function Document(props: {
   return (
     <Html lang={currentLocale}>
       <Head>
-        <meta name='viewport' content='width=device-width, initial-scale=1' />
         <meta
           name='description'
           content='CV Maker tool with templates to choose from.'
@@ -52,9 +51,6 @@ export default function Document(props: {
         <meta name='msapplication-TileColor' content='#2B5797' />
         <meta name='msapplication-tap-highlight' content='no' />
         <meta name='theme-color' content='#000000' />
-        <meta property='og:title' content='CV Maker' />
-        <meta property='og:type' content='website' />
-        <meta property='og:url' content='https://cvmaker-os.web.app/' />
         <meta
           name='google-site-verification'
           content='Pa7EgWXkYbyNhyNiDDHiMurSrf0fMjBaZzIWth-N0Wo'
@@ -76,10 +72,9 @@ export default function Document(props: {
         />
         <link rel='manifest' href='/manifest.json' />
         <link rel='shortcut icon' href='/icons/favicon.ico' />
-        <link
-          rel='stylesheet'
-          href='https://fonts.googleapis.com/css?family=Roboto:300,400,500'
-        />
+        <meta property='og:title' content='CV Maker' />
+        <meta property='og:type' content='website' />
+        <meta property='og:url' content='https://cvmaker-os.web.app/' />
       </Head>
       <body>
         <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />

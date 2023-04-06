@@ -23,7 +23,6 @@ export const useWindowSize = (threshold = 100) => {
     };
 
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };

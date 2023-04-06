@@ -1,0 +1,33 @@
+.mobile-navigation-menu {
+  @media screen and (min-width: 800px) {
+    display: none;
+  }
+}
+
+.desktop-navigation-menu {
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
+}
+
+.create-cv-link {
+  background: transparent;
+  &:hover {
+    animation: rotate-box-shadow 1s ease-in-out infinite;
+  }
+}
+
+@keyframes rotate-box-shadow {
+  0% {
+    box-shadow: 0 0 0.25rem #00000080, -0.125rem -0.125rem 1rem #ef476580,
+      0.125rem 0.125rem 1rem #ff9a5a80;
+  }
+  50% {
+    box-shadow: 0 0 0.25rem #00000080, -0.125rem -0.125rem 1rem #ff9a5a80,
+      0.125rem 0.125rem 1rem #ef476580;
+  }
+  100% {
+    box-shadow: 0 0 0.25rem #00000080, -0.125rem -0.125rem 1rem #ef476580,
+      0.125rem 0.125rem 1rem #ff9a5a80;
+  }
+}

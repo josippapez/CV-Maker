@@ -66,7 +66,7 @@ const mergeStylesIntoOne = (styles: Style[]) => {
 
   styles.forEach(style => {
     Object.keys(style).forEach(key => {
-      mergedStyle[key] = style[key];
+      mergedStyle[key as keyof Style] = style[key as keyof Style];
     });
   });
   return mergedStyle;
@@ -107,18 +107,20 @@ export const CustomView: FC<PropsView> = ({ children, style, ...rest }) => {
 };
 
 export const CustomText: FC<PropsText> = ({ children, style, ...rest }) => {
+  let newStyle = style;
+  if (Array.isArray(style)) {
+    newStyle = mergeStylesIntoOne(style) as {
+      [key: string]: string;
+    };
+  }
+
   if (isHtml) {
-    let newStyle = style;
-    if (Array.isArray(style)) {
-      newStyle = mergeStylesIntoOne(style) as {
-        [key: string]: string;
-      };
-    }
     adjustStyles(newStyle as { [key: string]: string });
     return (
       <div
         style={{
           whiteSpace: 'break-spaces',
+          position: 'relative',
           ...(newStyle as { [key: string]: string }),
         }}
       >
@@ -126,8 +128,15 @@ export const CustomText: FC<PropsText> = ({ children, style, ...rest }) => {
       </div>
     );
   }
+
   return (
-    <Text style={style} {...rest}>
+    <Text
+      style={{
+        verticalAlign: 'sub',
+        ...newStyle,
+      }}
+      {...rest}
+    >
       {children}
     </Text>
   );
@@ -228,9 +237,9 @@ export const CustomRect: FC<PropsRect> = ({ children, ...rest }) => {
 export const CustomSVG: FC<PropsSVG> = ({ children, ...rest }) => {
   if (isHtml) {
     const style = {
-      ...rest.style,
       left: 0,
       right: 0,
+      ...rest.style,
     };
     return (
       <svg

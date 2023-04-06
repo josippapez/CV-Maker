@@ -7,9 +7,15 @@ import {
   Svg,
 } from '@modules/PDFView/CVTemplates/Templates/Components';
 
-export const BlobTopLeft = () => {
+export const BlobTopLeft = ({
+  height,
+  width,
+}: {
+  height?: number | string;
+  width?: number | string;
+}) => {
   return (
-    <Svg id='visual' viewBox='0 0 595 100' width='595' height='100'>
+    <Svg id='visual' viewBox='0 0 595 90' height={height} width={width}>
       <Defs>
         <LinearGradient id='grad1_0' x1='0%' y1='0%' x2='100%' y2='100%'>
           <Stop offset='30%' stopColor='#fbae3c' stopOpacity='1'></Stop>

@@ -50,7 +50,7 @@ export const ProfessionalExperienceDisplay: FC<Props> = ({
           key={index}
           style={[
             styles.row,
-            styles.paddingY10,
+            styles.paddingY20,
             {
               borderTop: showBorder
                 ? index === 0

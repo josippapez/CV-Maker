@@ -1,4 +1,4 @@
-<svg x="0px" y="0px" viewBox="0 0 512 512" stroke="currentColor">
+<svg x="0px" y="0px" viewBox="0 0 512 512" stroke='currentColor' fill='currentColor'>
 	<path stroke-linecap="round" stroke-linejoin="round" d="M309.333,277.333h149.333c5.888,0,10.667-4.779,10.667-10.667S464.555,256,458.667,256H309.333
 				c-5.888,0-10.667,4.779-10.667,10.667S303.445,277.333,309.333,277.333z" />
 	<path stroke-linecap="round" stroke-linejoin="round" d="M309.333,213.333h149.333c5.888,0,10.667-4.779,10.667-10.667S464.555,192,458.667,192H309.333

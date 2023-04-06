@@ -1,4 +1,4 @@
-import { NavbarPresenter } from '@modules/Navbar';
+import i18n from '@/translations/i18n';
 import { PageLoader } from '@modules/Shared/Loader';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
@@ -15,14 +15,24 @@ const DynamicPDFView = dynamic(
   }
 );
 
+const DynamicNavbar = dynamic(
+  () =>
+    import('@modules/Navbar/NavbarPresenter').then(mod => mod.NavbarPresenter),
+  {
+    ssr: false,
+    loading: () => <PageLoader isLoading />,
+  }
+);
+
 const Create: NextPage = () => {
+  i18n.init();
   return (
     <>
       <Head>
         <title>View CV</title>
         <meta name='robots' content='noindex, nofollow' />
       </Head>
-      <NavbarPresenter />
+      <DynamicNavbar />
       <DynamicPDFView />
     </>
   );
