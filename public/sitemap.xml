@@ -3,22 +3,22 @@
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
   <url>
-    <loc>https://cvmaker-os.web.app/hr</loc>
-    <lastmod>2023-03-06T15:08:01+00:00</lastmod>
+    <loc>https://cv-maker.dev/hr</loc>
+    <lastmod>2023-04-07T07:08:01+00:00</lastmod>
   </url>
 
   <url>
-    <loc>https://cvmaker-os.web.app/en-US</loc>
-    <lastmod>2023-03-06T15:08:01+00:00</lastmod>
+    <loc>https://cv-maker.dev/en-US</loc>
+    <lastmod>2023-04-07T07:08:01+00:00</lastmod>
   </url>
 
   <url>
-    <loc>https://cvmaker-os.web.app/en-US/create</loc>
-    <lastmod>2023-03-06T15:08:01+00:00</lastmod>
+    <loc>https://cv-maker.dev/en-US/create</loc>
+    <lastmod>2023-04-07T07:08:01+00:00</lastmod>
   </url>
 
   <url>
-    <loc>https://cvmaker-os.web.app/hr/create</loc>
-    <lastmod>2023-03-06T15:08:01+00:00</lastmod>
+    <loc>https://cv-maker.dev/hr/create</loc>
+    <lastmod>2023-04-07T07:08:01+00:00</lastmod>
   </url>
 </urlset>

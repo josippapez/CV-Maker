@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://cvmaker-os.web.app/sitemap.xml
+Sitemap: https://cv-maker.dev/sitemap.xml
