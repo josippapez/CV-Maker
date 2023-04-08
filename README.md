@@ -1,4 +1,4 @@
-### Working demo: [DEMO](https://cvmaker-os.web.app/)
+### Working demo: [DEMO](https://cv-maker.dev/)
 
 ### Made using TailwindCSS, NextJS, Redux, i18n, webpack.
 ### `npm start`
