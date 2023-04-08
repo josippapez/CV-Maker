@@ -36,11 +36,11 @@ export const LandingPage: FC<Props> = () => {
   return (
     <div
       ref={container}
-      className='page-container desktop_col-32 mobile_col-16 gap-y-20 drop-shadow-md'
+      className='page-container desktop_col-32 mobile_col-16 gap-y-20 py-8 drop-shadow-md'
     >
-      <LandingPageSection sectionClass='min-h-[calc(100vh_-_81px)]'>
+      <LandingPageSection sectionClass='md:min-h-[calc(100vh_-_81px)]'>
         {isInView => (
-          <div className='flex items-center gap-5'>
+          <div className='flex flex-col items-center justify-center gap-16 md:flex-row md:gap-5'>
             <div className='flex flex-col gap-5'>
               <motion.p
                 initial={combinedStyleInitial}
@@ -82,9 +82,9 @@ export const LandingPage: FC<Props> = () => {
         </div>
       </LandingPageSection>
 
-      <LandingPageSection sectionClass={`min-h-[calc(100vh_-_81px)]`}>
+      <LandingPageSection sectionClass={`md:min-h-[calc(100vh_-_81px)]`}>
         {isInView => (
-          <div className='flex items-center gap-5'>
+          <div className='flex flex-col items-center justify-center gap-16 md:flex-row md:gap-5'>
             <motion.img
               initial={horizontalAnimationMinus.combinedStyleInitial}
               animate={
@@ -196,7 +196,7 @@ export const LandingPage: FC<Props> = () => {
         )}
       </LandingPageSection>
 
-      <LandingPageSection sectionClass='mt-40'>
+      <LandingPageSection sectionClass='md:mt-40'>
         {isInView => (
           <motion.p
             initial={combinedStyleInitial}

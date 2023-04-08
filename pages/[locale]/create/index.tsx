@@ -18,6 +18,10 @@ const Create: NextPage = () => {
     <>
       <Head>
         <title>Create CV</title>
+        <meta
+          name='description'
+          content='Create your CV using beautiful templates and save your data to google cloud or just download or share your CV using sharable link'
+        />
       </Head>
       <NavbarPresenter />
       <DynamicCVMakerPage />

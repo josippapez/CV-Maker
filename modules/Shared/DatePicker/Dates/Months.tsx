@@ -64,7 +64,7 @@ export const Months = (props: Props) => {
                 day: 1,
                 year,
                 month: index + 1,
-              }).toISODate()
+              }).toISODate() || ''
             );
           }
         }}

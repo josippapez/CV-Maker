@@ -14,6 +14,10 @@ function LoginPage({
     <>
       <Head>
         <title>CV Maker</title>
+        <meta
+          name='description'
+          content='CV Maker tool with templates to choose from, google data sync, and with the ability to share your CV with others.'
+        />
       </Head>
       <NavbarPresenter routesWithLocale={RoutesWithLocale} />
       <LandingPage routesWithLocale={RoutesWithLocale} />

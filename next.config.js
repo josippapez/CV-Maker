@@ -18,6 +18,7 @@ const nextConfig = withPWA({
   transpilePackages: ['redux-persist'],
   reactStrictMode: true,
   swcMinify: true,
+  output: 'export',
   images: {
     domains: ['firebasestorage.googleapis.com', 'localhost'],
     unoptimized: true,

@@ -20,7 +20,7 @@ export const ChangeLanguageButton: FC<Props> = ({
   className,
   onChangeLanguage,
 }) => {
-  const { t } = useTranslation('Navbar');
+  const { t, i18n } = useTranslation('Navbar');
   const { changeLanguage } = useChangeLanguage();
 
   const [displayLanguageDropdown, setDisplayLanguageDropdown] =
@@ -45,6 +45,17 @@ export const ChangeLanguageButton: FC<Props> = ({
     'bottom-right': 'top-12 left-0',
   };
 
+  console.log(i18n.language);
+
+  const selectedLanguageClass = (language: string) => {
+    const classNames =
+      'w-full cursor-pointer px-6 py-1 hover:bg-gray-200 hover:dark:bg-gray-200 hover:dark:text-almost-black';
+    if (i18n.language === language) {
+      return `${classNames} bg-gray-600 text-slight-gray hover:bg-gray-600 hover:text-slight-gray`;
+    }
+    return classNames;
+  };
+
   return (
     <div
       ref={component}
@@ -55,14 +66,12 @@ export const ChangeLanguageButton: FC<Props> = ({
     >
       <Translate height={30} width={35} />
       <div
-        className={`absolute top-0 z-10 drop-shadow-md ${dropdownPositionProperty[dropdownPosition]}`}
+        className={`absolute top-0 z-10 ${dropdownPositionProperty[dropdownPosition]}`}
         hidden={!displayLanguageDropdown}
       >
-        <div
-          className={`w-fit rounded-md bg-slate-300 p-3 text-zinc-900 dark:bg-slate-800 dark:text-zinc-100`}
-        >
+        <div className={`w-fit rounded-md border py-3`}>
           <button
-            className={`cursor-pointer rounded-md px-1 py-[2px] hover:bg-gray-400 hover:dark:bg-slate-600`}
+            className={`${selectedLanguageClass('en-US')}`}
             onClick={() => {
               handleSelectLanguage('en-US');
             }}
@@ -70,7 +79,7 @@ export const ChangeLanguageButton: FC<Props> = ({
             {t('English')}
           </button>
           <button
-            className='cursor-pointer rounded-md px-1 py-[2px] hover:bg-gray-400 hover:dark:bg-slate-600'
+            className={`${selectedLanguageClass('hr')}`}
             onClick={() => {
               handleSelectLanguage('hr');
             }}

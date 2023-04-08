@@ -29,10 +29,6 @@ export default function Document(props: {
     <Html lang={currentLocale}>
       <Head>
         <meta
-          name='description'
-          content='CV Maker tool with templates to choose from.'
-        />
-        <meta
           name='keywords'
           content='CV, Resume, Maker, maker, Template, CV Template, CV Maker, CV Maker Hrvatski, Životopis, Kreiranje životopisa, Posao, CV Posao, Profesionalni CV, Profesionalni životopis, CV Builder, CV Builder Hrvatski, Builder, Job, Experience, Professional, Professional Experience, Job Experience, Resume, Resume Maker, Resume Builder, Share, Share CV, Share Resume, Download, Download CV, Download Resume, Print, Print CV, Print Resume, PDF, PDF CV, PDF Resume, Google Drive, Google Drive CV, Google Drive Resume, Register, Login, Sync Resume, Sync CV, Sync, Sy'
         />
