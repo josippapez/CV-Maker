@@ -66,7 +66,7 @@ export const ChangeLanguageButton: FC<Props> = ({
     >
       <Translate height={30} width={35} />
       <div
-        className={`absolute top-0 z-10 ${dropdownPositionProperty[dropdownPosition]}`}
+        className={`absolute top-0 z-10 bg-white dark:bg-almost-black ${dropdownPositionProperty[dropdownPosition]}`}
         hidden={!displayLanguageDropdown}
       >
         <div className={`w-fit rounded-md border py-3`}>
