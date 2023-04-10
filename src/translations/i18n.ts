@@ -1,5 +1,5 @@
 import { translations } from '@/translations/Translations';
-import i18next from 'i18next';
+import i18next, { use } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
 import { initReactI18next } from 'react-i18next';
@@ -11,8 +11,7 @@ declare module 'i18next' {
 }
 
 if (!i18next.isInitialized) {
-  i18next
-    .use(intervalPlural)
+  use(intervalPlural)
     .use(initReactI18next)
     .use(LanguageDetector)
     .init({

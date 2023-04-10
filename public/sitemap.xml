@@ -4,11 +4,31 @@
   <!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
   <url>
     <loc>https://cv-maker.dev/</loc>
-    <lastmod>2023-04-08T07:08:01+00:00</lastmod>
+    <lastmod>2023-04-10T07:08:01+00:00</lastmod>
   </url>
 
   <url>
     <loc>https://cv-maker.dev/create</loc>
-    <lastmod>2023-04-08T07:08:01+00:00</lastmod>
+    <lastmod>2023-04-10T07:08:01+00:00</lastmod>
+  </url>
+
+  <url>
+    <loc>https://cv-maker.dev/en-US/</loc>
+    <lastmod>2023-04-10T07:08:01+00:00</lastmod>
+  </url>
+
+  <url>
+    <loc>https://cv-maker.dev/en-US/create</loc>
+    <lastmod>2023-04-10T07:08:01+00:00</lastmod>
+  </url>
+
+  <url>
+    <loc>https://cv-maker.dev/hr/</loc>
+    <lastmod>2023-04-10T07:08:01+00:00</lastmod>
+  </url>
+
+  <url>
+    <loc>https://cv-maker.dev/hr/create</loc>
+    <lastmod>2023-04-10T07:08:01+00:00</lastmod>
   </url>
 </urlset>

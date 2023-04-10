@@ -45,8 +45,6 @@ export const ChangeLanguageButton: FC<Props> = ({
     'bottom-right': 'top-12 left-0',
   };
 
-  console.log(i18n.language);
-
   const selectedLanguageClass = (language: string) => {
     const classNames =
       'w-full cursor-pointer px-6 py-1 hover:bg-gray-200 hover:dark:bg-gray-200 hover:dark:text-almost-black';
