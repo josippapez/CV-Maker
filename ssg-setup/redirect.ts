@@ -12,7 +12,6 @@ export const useRedirect = (to?: string) => {
     const detectedLng = lngDetector.detect([
       'querystring',
       'localStorage',
-      'htmlTag',
     ]);
     if (!detectedLng) return;
 

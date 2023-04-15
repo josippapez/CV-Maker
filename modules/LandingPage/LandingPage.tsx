@@ -8,19 +8,16 @@ import {
 } from '@modules/PDFView/CVTemplates/Images';
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import Google from '@public/Styles/Assets/Images/google.svg';
-import { RoutesWithLocale, useRoutesWithLocale } from 'consts/Routes';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { FC, useRef } from 'react';
 import styles from './LandingPage.module.scss';
 
+import { useRoutes } from '@modules/Providers';
 import Link from 'next/link';
 
-type Props = {
-  routesWithLocale: typeof RoutesWithLocale;
-};
-
-export const LandingPage: FC<Props> = () => {
+export const LandingPage: FC = () => {
+  const routesWithLocale = useRoutes();
   const { t } = useTranslation('LandingPage');
   const container = useRef(null);
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
@@ -222,7 +219,7 @@ export const LandingPage: FC<Props> = () => {
         transition={{ duration: 0.2, delay: 0.7 }}
       >
         <Link
-          href={useRoutesWithLocale().CREATE}
+          href={routesWithLocale.CREATE}
           className={styles.createYourCVLink}
         >
           {t('createYourCV')}

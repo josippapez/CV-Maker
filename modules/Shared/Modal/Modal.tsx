@@ -1,5 +1,4 @@
 import { useKeyPress } from '@modules/Shared/Hooks';
-import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { getAnimation } from '@modules/Shared/Modal/getAnimations';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FC, useEffect } from 'react';
@@ -38,7 +37,6 @@ export const Modal: FC<Props> = ({
   contentClassname,
   testid,
 }) => {
-  const windowSize = useWindowSize();
   const escPressed = useKeyPress('Escape');
   const animate = getAnimation(animation);
 

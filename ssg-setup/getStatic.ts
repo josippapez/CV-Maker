@@ -1,5 +1,6 @@
-import { Routes, RouteKeys } from 'consts/Routes';
+import { calculateRoutesWithLocale } from 'consts/Routes';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import lngDetector from 'ssg-setup/lngDetector';
 import i18nextConfig from '../next-i18next.config';
 
 export const getI18nPaths = () =>
@@ -18,15 +19,8 @@ export const getStaticPaths = (ctx: any) => {
 
 export async function getI18nProps(ctx: any, ns: string[] = []) {
   const locale = ctx?.params?.locale;
-
-  const RoutesWithLocale = (Object.keys(Routes) as typeof RouteKeys).reduce(
-    (acc, key) => {
-      acc[key] = `/${locale}${Routes[key]}`;
-      if (acc[key].endsWith('/')) acc[key] = acc[key].slice(0, -1);
-      return acc;
-    },
-    {} as { [key in keyof typeof Routes]: string }
-  );
+  lngDetector.cache?.(locale);
+  const RoutesWithLocale = calculateRoutesWithLocale(locale);
 
   const props = {
     ...(await serverSideTranslations(locale, ns, {

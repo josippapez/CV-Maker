@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import lngDetector from 'ssg-setup/lngDetector';
 
 const isClientSide = typeof window !== 'undefined';
-
-const locale = isClientSide
+let locale = isClientSide
   ? window?.localStorage.getItem('i18nextLng') || 'en-US'
   : 'en-US';
 
@@ -14,7 +14,7 @@ const Routes = {
 
 export const RouteKeys = Object.keys(Routes) as (keyof typeof Routes)[];
 
-const calculateRoutesWithLocale = (locale: string) =>
+export const calculateRoutesWithLocale = (locale: string) =>
   RouteKeys.reduce((acc, key) => {
     acc[key] = `/${locale}${Routes[key]}`;
     if (acc[key].endsWith('/')) acc[key] = acc[key].slice(0, -1);
@@ -24,11 +24,8 @@ const calculateRoutesWithLocale = (locale: string) =>
 const RoutesWithLocale = calculateRoutesWithLocale(locale);
 
 const useRoutesWithLocale = () => {
-  const [locale, setLocale] = useState(
-    typeof window !== 'undefined'
-      ? window?.localStorage.getItem('i18nextLng') || 'en-US'
-      : 'en-US'
-  );
+  const detectedLng = lngDetector.detect(['localStorage']);
+   const [localLocale, setLocalLocale] = useState(detectedLng ?? 'en-US');
 
   const [routesWithLocale, setRoutesWithLocale] = useState(
     calculateRoutesWithLocale(locale)
@@ -37,11 +34,12 @@ const useRoutesWithLocale = () => {
   useEffect(() => {
     const handleLocaleChange = () => {
       const newLocale = window.localStorage.getItem('i18nextLng') || 'en-US';
-      setLocale(newLocale);
+      setLocalLocale(newLocale);
+      locale = newLocale;
     };
     window.addEventListener('storage', handleLocaleChange);
 
-    setRoutesWithLocale(calculateRoutesWithLocale(locale));
+    setRoutesWithLocale(calculateRoutesWithLocale(localLocale));
 
     return () => {
       window.removeEventListener('storage', handleLocaleChange);
@@ -51,4 +49,4 @@ const useRoutesWithLocale = () => {
   return routesWithLocale;
 };
 
-export { Routes, RoutesWithLocale, locale, useRoutesWithLocale };
+export { Routes, RoutesWithLocale, useRoutesWithLocale };

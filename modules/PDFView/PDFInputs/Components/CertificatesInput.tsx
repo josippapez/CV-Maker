@@ -6,6 +6,7 @@ import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
+import { useId } from 'react';
 
 export const CertificatesInput = () => {
   const { setCertificates, certificates } = usePDFData();
@@ -39,7 +40,9 @@ export const CertificatesInput = () => {
             t={t}
             key={
               certificate.id ||
-              `no-id-provided-${certificate.name || certificate.institution}`
+              `no-id-provided-${
+                certificate.name || certificate.institution || certificate.date
+              }`
             }
           />
         ))}
@@ -52,7 +55,7 @@ export const CertificatesInput = () => {
             date: '',
             institution: '',
             description: '',
-            id: crypto.randomUUID(),
+            id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString(),
           });
         }}
         title={t('addCertification')}

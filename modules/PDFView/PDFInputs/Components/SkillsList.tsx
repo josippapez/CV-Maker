@@ -10,12 +10,12 @@ export const SkillsList = () => {
   };
 
   return (
-    <div className='mb-4 flex flex-wrap'>
+    <div className='mb-4 flex flex-wrap max-w gap-2'>
       <AnimatePresence>
         {skills.map((skill, index) => (
           <motion.div
-            key={skill.id}
-            className={`mr-2 mb-2 rounded-md bg-green-500 p-3 text-white`}
+            key={skill.id || `no-id-provided-${skill.name}`}
+            className={`rounded-md bg-green-500 p-3 text-white`}
             initial='hidden'
             animate='visible'
             exit='exit'

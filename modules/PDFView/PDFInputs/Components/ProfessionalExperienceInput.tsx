@@ -36,7 +36,15 @@ export const ProfessionalExperienceInput = () => {
             experience={experience}
             setProfessionalExperience={setProfessionalExperience}
             t={t}
-            key={experience.id || `no-id-provided-${experience.company}`}
+            key={
+              experience.id ||
+              `no-id-provided-${
+                experience.company ||
+                experience.location ||
+                experience.startDate ||
+                experience.position
+              }`
+            }
           />
         ))}
       </ReorderProvider>
@@ -51,7 +59,7 @@ export const ProfessionalExperienceInput = () => {
             description: '',
             location: '',
             currentlyEnrolled: false,
-            id: crypto.randomUUID(),
+            id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString()
           });
         }}
         title={t('addExperience')}

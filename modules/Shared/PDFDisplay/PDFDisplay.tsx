@@ -94,10 +94,7 @@ export const PDFDisplay: FC = () => {
     dispatch(saveDataForUser());
   }, [template]);
 
-  const scale =
-    windowSize.height < windowSize.width
-      ? (windowSize.height - 80) / 842
-      : windowSize.width / 595;
+  const scale = (windowSize.height - 100) / 842;
 
   return (
     <>
@@ -105,6 +102,9 @@ export const PDFDisplay: FC = () => {
         className={`documentPDFView flex flex-col items-center justify-center overflow-hidden drop-shadow-xl ${
           windowSize.width < 1550 ? 'w-full' : 'w-5/12'
         }`}
+        style={{
+          height: 842 * scale,
+        }}
       >
         <div
           className='document-display overflow-y-scroll'

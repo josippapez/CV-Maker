@@ -20,7 +20,7 @@ if (!i18next.isInitialized) {
       fallbackLng: 'hr',
       lng:
         typeof window !== 'undefined'
-          ? window?.localStorage.getItem('language') || 'en-US'
+          ? window?.localStorage.getItem('i18nextLng') || 'en-US'
           : 'en-US',
       interpolation: {
         escapeValue: false,

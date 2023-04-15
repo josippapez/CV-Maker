@@ -36,7 +36,8 @@ export const ProjectsInput = () => {
         {reorderList?.map((project, index) => (
           <ProjectItem
             key={
-              project.id || `no-id-provided-${project.name || project.owner}`
+              project.id ||
+              `no-id-provided-${project.name || project.owner || project.startDate}`
             }
             animation={animation}
             index={index}
@@ -56,7 +57,7 @@ export const ProjectsInput = () => {
             currentlyWorking: false,
             owner: '',
             url: '',
-            id: crypto.randomUUID(),
+            id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString()
           });
         }}
         title={t('addProject')}

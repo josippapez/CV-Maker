@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import style from './PageLoader.module.scss';
 
 type Props = { isLoading?: boolean; inline?: boolean };
@@ -8,13 +8,15 @@ export const Loader: FC<Props> = ({ isLoading, inline }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  const start = useCallback(() => {
+    setLoading(true);
+  }, []);
+
+  const end = useCallback(() => {
+    setLoading(false);
+  }, []);
+
   useEffect(() => {
-    const start = () => {
-      setLoading(true);
-    };
-    const end = () => {
-      setLoading(false);
-    };
     router.events.on('routeChangeStart', start);
     router.events.on('routeChangeComplete', end);
     router.events.on('routeChangeError', end);

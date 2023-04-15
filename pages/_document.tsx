@@ -26,11 +26,11 @@ export default function Document(props: {
 `;
 
   return (
-    <Html lang={currentLocale}>
+    <Html>
       <Head>
         <meta
           name='keywords'
-          content='CV, Resume, Maker, maker, Template, CV Template, CV Maker, CV Maker Hrvatski, Životopis, Kreiranje životopisa, Posao, CV Posao, Profesionalni CV, Profesionalni životopis, CV Builder, CV Builder Hrvatski, Builder, Job, Experience, Professional, Professional Experience, Job Experience, Resume, Resume Maker, Resume Builder, Share, Share CV, Share Resume, Download, Download CV, Download Resume, Print, Print CV, Print Resume, PDF, PDF CV, PDF Resume, Google Drive, Google Drive CV, Google Drive Resume, Register, Login, Sync Resume, Sync CV, Sync, Sy'
+          content='CV, Resume, Maker, Template, CV Template, CV Maker, CV Maker Hrvatski, CV Maker English, Resume builder, Online CV maker, Online Resume builder, Životopis, Kreiranje životopisa, Zivotopis, Kreiranje Zivotopisa, Kreiranje zivotopisa online, Posao, CV Posao, Profesionalni CV, Profesionalni životopis, CV Builder, CV Builder Hrvatski, Builder, Job CV, Experience CV, Professional CV, Resume Maker, Share CV, Share Resume, Download CV, Download Resume, Print CV, Print Resume, PDF CV, PDF Resume, Google Drive CV, Google Drive Resume, Save resume, Sync Resume, Sync CV'
         />
         <meta name='author' content='Josip Papež' />
         <meta name='robots' content='index, follow' />
@@ -70,7 +70,6 @@ export default function Document(props: {
         <link rel='shortcut icon' href='/icons/favicon.ico' />
         <meta property='og:title' content='CV Maker' />
         <meta property='og:type' content='website' />
-        <meta property='og:url' content='https://cv-maker.dev/' />
       </Head>
       <body>
         <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />

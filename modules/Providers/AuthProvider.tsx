@@ -1,8 +1,11 @@
-import firebase from 'firebase/compat/app';
+import { FirebaseService } from '@modules/Services';
+import { User } from 'firebase/auth';
 import Cookies from 'js-cookie';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-const AuthContext = createContext<{ user: firebase.User | null }>({
+const firebase = FirebaseService.getInstance();
+
+const AuthContext = createContext<{ user: User | null }>({
   user: null,
 });
 
@@ -11,12 +14,12 @@ export const useAuth = () => {
 };
 
 export function AuthProvider({ children }: any) {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   // listen for token changes
   // call setUser and write new token as a cookie
   useEffect(() => {
-    return firebase.auth().onIdTokenChanged(async user => {
+    return firebase.getAuth().onIdTokenChanged(async user => {
       if (!user) {
         setUser(null);
         Cookies.remove('accessToken');
@@ -34,7 +37,7 @@ export function AuthProvider({ children }: any) {
   // force refresh the token every 10 minutes
   useEffect(() => {
     const handle = setInterval(async () => {
-      const user = firebase.auth().currentUser;
+      const user = firebase.getUser();
       if (user) await user.getIdToken(true);
     }, 10 * 60 * 1000);
 

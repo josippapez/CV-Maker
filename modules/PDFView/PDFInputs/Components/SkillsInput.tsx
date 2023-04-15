@@ -4,9 +4,10 @@ import { SkillsList } from '@modules/PDFView/PDFInputs/Components/SkillsList';
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { TextInput } from '@modules/Shared/Inputs/TextInput';
+import { getRandomValues } from 'crypto';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 
 export const SkillsInput = () => {
   const { t } = useTranslation('SkillsInput');
@@ -37,7 +38,7 @@ export const SkillsInput = () => {
             if (skill) {
               setSkills(Operations.ADD, {
                 name: skill,
-                id: crypto.randomUUID(),
+                id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString(),
               });
               setSkill('');
             }
@@ -50,7 +51,7 @@ export const SkillsInput = () => {
           if (skill) {
             setSkills(Operations.ADD, {
               name: skill,
-              id: crypto.randomUUID(),
+              id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString(),
             });
             setSkill('');
           }

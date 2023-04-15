@@ -31,7 +31,16 @@ export const EducationInput = () => {
       <ReorderProvider reorderContextValue={reorderContextValue}>
         {reorderList?.map((item, index) => (
           <EducationItem
-            key={item.id || `no-id-provided-${item.school || item.url}`}
+            key={
+              item.id ||
+              `no-id-provided-${
+                item.school ||
+                item.degree ||
+                item.fieldOfStudy ||
+                item.location ||
+                item.url
+              }`
+            }
             education={item}
             index={index}
             animation={animation}
@@ -54,7 +63,7 @@ export const EducationInput = () => {
             endDate: '',
             description: '',
             currentlyEnrolled: false,
-            id: crypto.randomUUID(),
+            id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString()
           });
         }}
         title={t('addEducation')}

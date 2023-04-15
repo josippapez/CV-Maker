@@ -48,7 +48,7 @@ export const LanguagesInput = () => {
           setLanguages(Operations.ADD, {
             name: '',
             proficiency: LanguageProficiencyLevel.BEGINNER,
-            id: crypto.randomUUID(),
+            id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString()
           });
         }}
         title={t('addLanguage')}
