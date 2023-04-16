@@ -94,7 +94,10 @@ export const PDFDisplay: FC = () => {
     dispatch(saveDataForUser());
   }, [template]);
 
-  const scale = (windowSize.height - 100) / 842;
+  const scale =
+    windowSize.height < windowSize.width
+      ? (windowSize.height - 50) / 842
+      : (windowSize.width - 50) / 595;
 
   return (
     <>

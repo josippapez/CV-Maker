@@ -3,23 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
-  <url>
-    <loc>https://cv-maker.dev/</loc>
-    <xhtml:link rel="alternate" hreflang="en-US" href="https://cv-maker.dev/en-US/" />
-    <xhtml:link rel="alternate" hreflang="hr" href="https://cv-maker.dev/hr/" />
-    <lastmod>2023-04-10T07:08:01+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://cv-maker.dev/create</loc>
-    <xhtml:link rel="alternate" hreflang="en-US" href="https://cv-maker.dev/en-US/create" />
-    <xhtml:link rel="alternate" hreflang="hr" href="https://cv-maker.dev/hr/create" />
-    <lastmod>2023-04-10T07:08:01+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
 
   <url>
     <loc>https://cv-maker.dev/en-US/</loc>

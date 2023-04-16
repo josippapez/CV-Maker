@@ -1,29 +1,22 @@
 import { AppDispatch, AppState, persistor } from '@/store/store';
+import { FirebaseService } from '@modules/Services';
 import { FirebaseError } from 'firebase/app';
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithPopup,
-  signOut,
 } from 'firebase/auth';
-import {
-  addDoc,
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 
+const firebase = FirebaseService.getInstance();
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 export const signInWithGoogle = () => {
   return async (dispatch: AppDispatch, getState: AppState) => {
     try {
-      const auth = getAuth();
-      const db = getFirestore();
+      const auth = firebase.getAuth();
+      const db = firebase.getFirestore();
       const res = await signInWithPopup(auth, googleProvider);
       const user = res.user;
       const q = query(collection(db, 'users'), where('uid', '==', user.uid));
@@ -46,8 +39,8 @@ export const registerWithEmailAndPassword = async (
   password: string
 ) => {
   try {
-    const auth = getAuth();
-    const db = getFirestore();
+    const auth = firebase.getAuth();
+    const db = firebase.getFirestore();
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
     await addDoc(collection(db, 'users'), {
@@ -104,8 +97,7 @@ export const logout = () => {
   return async (dispatch: AppDispatch) => {
     await persistor.purge();
     await persistor.flush();
-    const auth = getAuth();
-    await signOut(auth);
+    await firebase.getAuth().signOut();
     localStorage.clear();
     location.reload();
   };

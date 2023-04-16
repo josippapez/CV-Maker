@@ -74,7 +74,7 @@ export const PDFTabNavigationPresenter = ({
   return (
     <div
       className={`z-10 flex ${
-        windowSize.width < 500 ? 'w-[70px]' : 'w-28'
+        windowSize.width < 500 ? 'w-[70px]' : 'w-28 min-w-[7rem]'
       } py-8 shadow-sm`}
     >
       <div className='flex flex-grow flex-col justify-between gap-6'>

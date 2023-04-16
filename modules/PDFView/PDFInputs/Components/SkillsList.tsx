@@ -10,7 +10,7 @@ export const SkillsList = () => {
   };
 
   return (
-    <div className='mb-4 flex flex-wrap max-w gap-2'>
+    <div className='mb-4 flex flex-wrap max-w-full gap-2'>
       <AnimatePresence>
         {skills.map((skill, index) => (
           <motion.div
