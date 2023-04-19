@@ -32,8 +32,6 @@ function Create({
           name='keywords'
           content='Resume, Resume builder, CV, CV builder, CV Maker, Build a resume, Professional resume builder, Build a CV, Professional CV Builder, Resume Templates, CV Templates, Resume builder with templates, CV builder with templates, Resume builder with google data sync, CV builder with google data sync,'
         />
-        <meta property='og:url' content='https://cv-maker.dev/create' />
-        <link rel='canonical' href='https://cv-maker.dev/create' />
         <meta name='language' content={i18n.language || 'en-US'} />
       </Head>
       <NavbarPresenter />

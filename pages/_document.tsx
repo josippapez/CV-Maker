@@ -70,6 +70,8 @@ export default function Document(props: {
         <link rel='shortcut icon' href='/icons/favicon.ico' />
         <meta property='og:title' content='CV Maker' />
         <meta property='og:type' content='website' />
+        <meta property='og:url' content='https://cv-maker.dev/' />
+        <link rel='canonical' href='https://cv-maker.dev/' />
       </Head>
       <body>
         <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
