@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import lngDetector from 'ssg-setup/lngDetector';
 
 const isClientSide = typeof window !== 'undefined';
-let locale = isClientSide
+const locale = isClientSide
   ? window?.localStorage.getItem('i18nextLng') || 'en-US'
   : 'en-US';
 
@@ -24,27 +24,9 @@ export const calculateRoutesWithLocale = (locale: string) =>
 const RoutesWithLocale = calculateRoutesWithLocale(locale);
 
 const useRoutesWithLocale = () => {
-  const detectedLng = lngDetector.detect(['localStorage']);
-   const [localLocale, setLocalLocale] = useState(detectedLng ?? 'en-US');
-
   const [routesWithLocale, setRoutesWithLocale] = useState(
     calculateRoutesWithLocale(locale)
   );
-
-  useEffect(() => {
-    const handleLocaleChange = () => {
-      const newLocale = window.localStorage.getItem('i18nextLng') || 'en-US';
-      setLocalLocale(newLocale);
-      locale = newLocale;
-    };
-    window.addEventListener('storage', handleLocaleChange);
-
-    setRoutesWithLocale(calculateRoutesWithLocale(localLocale));
-
-    return () => {
-      window.removeEventListener('storage', handleLocaleChange);
-    };
-  }, [locale]);
 
   return routesWithLocale;
 };

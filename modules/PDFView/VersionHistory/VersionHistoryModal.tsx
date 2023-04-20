@@ -3,13 +3,14 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { cacheAllData, setModified } from '@/store/reducers/pdfData';
 import { setTemplate } from '@/store/reducers/template';
 import { setDisplayVersionHistory } from '@/store/reducers/versionHistory';
+import { useChangeLanguage } from '@modules/Navbar';
 import { Modal } from '@modules/Shared/Modal';
-import { Settings } from 'luxon';
-import { i18n, useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next';
 import { FC, useCallback, useEffect } from 'react';
 
 export const VersionHistoryModal: FC = () => {
   const dispatch = useAppDispatch();
+  const { changeLanguage } = useChangeLanguage();
   const { t } = useTranslation('VersionHistoryModal');
   const { displayVersionHistory, tempPdfData } = useAppSelector(
     state => state.versionHistory
@@ -42,7 +43,7 @@ export const VersionHistoryModal: FC = () => {
       }
       width='45rem'
     >
-      <div className='rounded-md bg-white text-almost-black px-8 py-6 tracking-wide'>
+      <div className='rounded-md bg-white px-8 py-6 tracking-wide text-almost-black'>
         <p>{t('conflict')}</p>
         <p className='mt-2 font-semibold'>{t('conflict-local')}</p>
         <p className='mt-2 font-semibold'>{t('conflict-cloud')}</p>
@@ -58,11 +59,9 @@ export const VersionHistoryModal: FC = () => {
           </button>
           <button
             className='rounded-md bg-green-200 px-3 py-2 hover:bg-green-300'
-            onClick={() => {
+            onClick={async () => {
               if (!tempPdfData) return;
-              i18n?.changeLanguage(tempPdfData.language);
-              localStorage.setItem('i18nextLng', tempPdfData.language);
-              Settings.defaultLocale = tempPdfData.language;
+              await changeLanguage(tempPdfData.language);
               dispatch(cacheAllData(tempPdfData));
               dispatch(setTemplate(tempPdfData.template.templateName));
               closeModal();

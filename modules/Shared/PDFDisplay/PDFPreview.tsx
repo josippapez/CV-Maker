@@ -49,7 +49,7 @@ export const PDFPreview: FC = () => {
   const pageExists = !!pageNumber && !!numPages;
 
   const [updateInstanceDebounce] = useDebouncedFunction(() => {
-    if (!instance.loading) updateInstance();
+    updateInstance();
   }, 600);
 
   useEffect(() => {

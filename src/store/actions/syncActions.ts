@@ -75,7 +75,7 @@ export const deleteDataForUser = () => {
 export const getDataForUser = (props?: {
   preventVersionHistory?: boolean;
   userId?: string;
-  successCallback?: () => void;
+  successCallback?: (data?: DocumentPDFData) => void;
 }) => {
   return async (dispatch: AppDispatch, getState: AppState) => {
     const id = getAuth().currentUser?.uid || props?.userId;
@@ -118,11 +118,10 @@ export const getDataForUser = (props?: {
       );
     }
 
-    i18n?.changeLanguage(pdfData.language);
     dispatch(cacheAllData(pdfData));
     dispatch(setTemplate(pdfData.template.templateName));
     if (props?.successCallback) {
-      props.successCallback();
+      props.successCallback(pdfData);
     }
   };
 };

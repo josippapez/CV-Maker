@@ -1,3 +1,4 @@
+import { usePDFComponentsAreHTML } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { DisplayPdfModalButton } from '@modules/PDFView/DisplayPdfModalButton';
 import { PDFInputsContainer } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { useAuth } from '@modules/Providers';
@@ -22,7 +23,12 @@ export const CreateView: FC = () => {
   const windowSize = useWindowSize();
   const isMobileView = windowSize.width < 1550;
   const { user } = useAuth();
+  const { setHtml } = usePDFComponentsAreHTML();
   const { getUserData } = usePDFData();
+
+  useEffect(() => {
+    setHtml(true);
+  }, []);
 
   useEffect(() => {
     getUserData();

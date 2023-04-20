@@ -1,4 +1,4 @@
-import { getDataForUser } from '@/store/actions/syncActions';
+import { DocumentPDFData, getDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   Operations,
@@ -14,7 +14,12 @@ import {
   pdfDataSelector,
   setLoaded,
 } from '@/store/reducers/pdfData';
+import {
+  cacheAllPreviewData,
+  pdfPreviewDataSelector,
+} from '@/store/reducers/pdfPreviewData';
 import { TemplateName, setTemplate } from '@/store/reducers/template';
+import { useChangeLanguage } from '@modules/Navbar/hooks';
 import {
   Certificate,
   Education,
@@ -29,6 +34,7 @@ import { useCallback, useMemo } from 'react';
 
 export const usePDFData = () => {
   const dispatch = useAppDispatch();
+  const { changeLanguage } = useChangeLanguage();
   const {
     certificates,
     education,
@@ -39,6 +45,7 @@ export const usePDFData = () => {
     loaded,
     projects,
   } = useAppSelector(pdfDataSelector);
+  const previewData = useAppSelector(pdfPreviewDataSelector);
   const template = useAppSelector(state => state.template);
 
   const setDataLoaded = useCallback(
@@ -134,6 +141,9 @@ export const usePDFData = () => {
   const [setAllData] = useDebouncedFunction((data: PDFData) =>
     dispatch(cacheAllData(data))
   );
+  const [setAllPreviewData] = useDebouncedFunction((data: DocumentPDFData) =>
+    dispatch(cacheAllPreviewData(data))
+  );
   const setActiveTemplate = (template: TemplateName) =>
     dispatch(setTemplate(template));
   const getUserData = useCallback(() => {
@@ -142,6 +152,10 @@ export const usePDFData = () => {
         preventVersionHistory: Boolean(
           localStorage.getItem('preventVersionHistory')
         ),
+        successCallback: async pdfData => {
+          if (!pdfData?.language) return;
+          await changeLanguage(pdfData.language || 'en-US');
+        },
       })
     );
   }, []);
@@ -157,6 +171,7 @@ export const usePDFData = () => {
       loaded,
       template,
       projects,
+      previewData,
     };
   }, [
     certificates,
@@ -168,6 +183,7 @@ export const usePDFData = () => {
     projects,
     loaded,
     template,
+    previewData,
   ]);
 
   return {
@@ -181,6 +197,7 @@ export const usePDFData = () => {
     setSkills,
     setProjects,
     setAllData,
+    setAllPreviewData,
     setActiveTemplate,
     getUserData,
     dispatch,

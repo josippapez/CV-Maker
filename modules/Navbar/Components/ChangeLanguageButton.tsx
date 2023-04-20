@@ -30,8 +30,8 @@ export const ChangeLanguageButton: FC<Props> = ({
   useCloseOnClickOutside(component, () => setDisplayLanguageDropdown(false));
 
   const handleSelectLanguage = useCallback(
-    (language: string) => {
-      changeLanguage(language, onChangeLanguage);
+    async (language: string) => {
+      await changeLanguage(language, onChangeLanguage);
       setDisplayLanguageDropdown(false);
     },
     [changeLanguage]
