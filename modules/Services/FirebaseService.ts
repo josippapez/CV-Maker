@@ -28,16 +28,13 @@ export class FirebaseService {
   private user: User | null;
 
   private constructor() {
-    const fbConfig =
-      process.env.NODE_ENV === 'development'
-        ? firebaseConfig
-        : firebaseConfigProd;
+    const fbConfig = firebaseConfigProd;
 
     this.firebaseApp = initializeApp(fbConfig);
     this.auth = getAuth(this.firebaseApp);
     this.firestore = getFirestore(this.firebaseApp);
     this.storage = getStorage(this.firebaseApp);
-    this.functions = getFunctions(this.firebaseApp);
+    this.functions = getFunctions(this.firebaseApp, 'europe-west1');
     this.user = this.auth.currentUser;
     this.auth.useDeviceLanguage();
     if (process.env.NODE_ENV === 'development') this.initEmulators();

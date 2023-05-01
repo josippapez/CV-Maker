@@ -9,7 +9,7 @@ import { useDebouncedValue } from '@modules/Shared/Hooks/useDebouncedValue';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { Tooltip } from '@modules/Shared/Tooltip';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 type Props = {
   isPDFPreview?: boolean;
@@ -91,7 +91,7 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview }) => {
 
   const scale =
     windowSize.height < windowSize.width
-      ? (windowSize.height - 50) / 842
+      ? (windowSize.height - 100) / 842
       : (windowSize.width - 50) / 595;
 
   return (

@@ -6105,6 +6105,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.1.3, axios@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "axios@npm:1.4.0"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 7fb6a4313bae7f45e89d62c70a800913c303df653f19eafec88e56cea2e3821066b8409bc68be1930ecca80e861c52aa787659df0ffec6ad4d451c7816b9386b
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:^2.2.0":
   version: 2.2.0
   resolution: "axobject-query@npm:2.2.0"
@@ -8017,6 +8028,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.57.1
     "@typescript-eslint/parser": ^5.57.1
     autoprefixer: ^10.4.14
+    axios: ^1.4.0
     compressorjs: ^1.2.1
     copy-webpack-plugin: ^11.0.0
     css-loader: ^6.7.3
@@ -8035,6 +8047,7 @@ __metadata:
     i18next-intervalplural-postprocessor: ^3.0.0
     js-cookie: ^3.0.1
     jspdf: ^2.5.1
+    linkedin-api-client: ^0.3.0
     luxon: ^3.3.0
     mini-css-extract-plugin: ^2.7.5
     next: ^13.3.0
@@ -8054,6 +8067,7 @@ __metadata:
     react-custom-scroll: ^5.0.0
     react-dom: ^18.2.0
     react-i18next: ^12.2.0
+    react-linkedin-login-oauth2: ^2.0.1
     react-pdf: ^6.2.2
     react-pdf-html: ^1.1.18
     react-redux: ^8.0.5
@@ -9909,7 +9923,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.15.0":
   version: 1.15.2
   resolution: "follow-redirects@npm:1.15.2"
   peerDependenciesMeta:
@@ -12982,6 +12996,17 @@ __metadata:
   version: 1.2.4
   resolution: "lines-and-columns@npm:1.2.4"
   checksum: 0c37f9f7fa212b38912b7145e1cd16a5f3cd34d782441c3e6ca653485d326f58b3caccda66efce1c5812bde4961bbde3374fae4b0d11bf1226152337f3894aa5
+  languageName: node
+  linkType: hard
+
+"linkedin-api-client@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "linkedin-api-client@npm:0.3.0"
+  dependencies:
+    axios: ^1.1.3
+    lodash: ^4.17.21
+    qs: ^6.11.0
+  checksum: 90149693dc445ed631752710306c0dd2e8e8da6337ae9169da1c75f8d5a518af889b11d1046e93b33d1767f7892ec271df9e789c8c1cc6ac64325500c32d2e7e
   languageName: node
   linkType: hard
 
@@ -16312,7 +16337,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-from-env@npm:^1.0.0":
+"proxy-from-env@npm:^1.0.0, proxy-from-env@npm:^1.1.0":
   version: 1.1.0
   resolution: "proxy-from-env@npm:1.1.0"
   checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
@@ -16395,6 +16420,15 @@ __metadata:
   dependencies:
     side-channel: ^1.0.4
   checksum: 6e1f29dd5385f7488ec74ac7b6c92f4d09a90408882d0c208414a34dd33badc1a621019d4c799a3df15ab9b1d0292f97c1dd71dc7c045e69f81a8064e5af7297
+  languageName: node
+  linkType: hard
+
+"qs@npm:^6.11.0":
+  version: 6.11.1
+  resolution: "qs@npm:6.11.1"
+  dependencies:
+    side-channel: ^1.0.4
+  checksum: 82ee78ef12a16f3372fae5b64f76f8aedecb000feea882bbff1af146c147f6eb66b08f9c3f34d7e076f28563586956318b9b2ca41141846cdd6d5ad6f241d52f
   languageName: node
   linkType: hard
 
@@ -16608,6 +16642,16 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
+  languageName: node
+  linkType: hard
+
+"react-linkedin-login-oauth2@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "react-linkedin-login-oauth2@npm:2.0.1"
+  peerDependencies:
+    react: 16.x || 17.x || 18.x
+    react-dom: 16.x || 17.x || 18.x
+  checksum: 103f1e552d7a220e5602a18f78ffadaeb9eb9772370d1003991c47a3e81da226eca42217e948e948c518e1702186de46ab28e6cfb33518196f3feca8133ab434
   languageName: node
   linkType: hard
 

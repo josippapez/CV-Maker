@@ -66,6 +66,11 @@ export default function Document(props: {
           sizes='16x16'
           href='/icons/favicon-16x16.png'
         />
+        <link
+          rel='icon'
+          type='image/svg+xml'
+          href='/Styles/Images/favicon.svg'
+        />
         <link rel='manifest' href='/manifest.json' />
         <link rel='shortcut icon' href='/icons/favicon.ico' />
         <meta property='og:title' content='CV Maker' />

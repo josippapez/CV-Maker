@@ -21,6 +21,12 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useMemo, useState } from 'react';
 
+// const restliClient = new RestliClient();
+// restliClient.setDebugParams({ enabled: true });
+
+// const firebase = FirebaseService.getInstance();
+// const functions = firebase.getFunctions();
+
 type Props = {
   setSelectedTab: (tab: Tab) => void;
   selectedTab: Tab;
@@ -36,6 +42,61 @@ export const PDFTabNavigationPresenter = ({
   const { user } = useAuth();
   const [displayTemplateChooseModal, setDisplayTemplateChooseModal] =
     useState(false);
+
+  // const getAccessToken = httpsCallable(functions, 'getAccessTokenForLinkedin');
+  // const getLinkedInUserData = httpsCallable(functions, 'getLinkedinProfile');
+  // let popup: null | Window = null;
+  // const receiveLinkedInMessage = async ({
+  //   origin,
+  //   data: { state, code, error, ...rest },
+  // }: {
+  //   origin: string;
+  //   data: Record<string, string>;
+  // }) => {
+  //   if (!popup) return;
+
+  //   if (origin !== window.location.origin || state !== LINKEDIN_STATE) return;
+
+  //   if (code) {
+  //     localStorage.setItem('linkedInProfileCode', code);
+
+  //     try {
+  //       const res = await getAccessToken({ code }).then(res => {
+  //         return res;
+  //       });
+  //       console.log(res, 'res');
+
+  //       const { access_token, id_token } = res.data;
+
+  //       localStorage.setItem('linkedInProfileAccessToken', access_token);
+  //       localStorage.setItem('linkedInProfileIdToken', id_token);
+  //     } catch (error) {
+  //       console.log(error);
+  //       popup.close();
+  //     }
+  //   } else if (
+  //     error &&
+  //     !['user_cancelled_login', 'user_cancelled_authorize'].includes(error)
+  //   ) {
+  //     console.log('error', error, rest);
+  //   }
+  //   popup.close();
+  //   window.removeEventListener('message', receiveLinkedInMessage);
+  // };
+
+  // const signInWithLinkedin = () => {
+  //   popup = window.open(LINKEDIN_URL, '_blank', 'width=600,height=600');
+  //   window.addEventListener('message', receiveLinkedInMessage, {
+  //     once: true,
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   return () => {
+  //     window.removeEventListener('message', receiveLinkedInMessage);
+  //     popup?.close();
+  //   };
+  // }, []);
 
   const arrayOfTabs: Array<{ tab: Tab; label: string | JSX.Element }> = useMemo(
     () => [
@@ -81,7 +142,7 @@ export const PDFTabNavigationPresenter = ({
         <div className='flex w-full min-w-full flex-col items-center justify-evenly gap-2'>
           {user ? (
             <button
-              className={`focus:shadow-outline mt-4 mb-4 rounded-full p-4 transition-all duration-300 ease-in-out focus:outline-none`}
+              className={`focus:shadow-outline mb-4 mt-4 rounded-full p-4 transition-all duration-300 ease-in-out focus:outline-none`}
               type='button'
               onClick={() => {
                 dispatch(logout());
@@ -91,7 +152,7 @@ export const PDFTabNavigationPresenter = ({
             </button>
           ) : (
             <button
-              className={`focus:shadow-outline mt-4 mb-4 rounded-full p-4 transition-all duration-300 ease-in-out focus:outline-none`}
+              className={`focus:shadow-outline mb-4 mt-4 rounded-full p-4 transition-all duration-300 ease-in-out focus:outline-none`}
               type='button'
               onClick={() => {
                 dispatch(signInWithGoogle());
@@ -100,6 +161,34 @@ export const PDFTabNavigationPresenter = ({
               <Google height={24} className='m-auto block' />
             </button>
           )}
+          {/* <button
+            onClick={signInWithLinkedin}
+            style={{ maxWidth: '180px', cursor: 'pointer' }}
+          >
+            <img src={linkedin} alt='Sign in with Linked In' />
+          </button>
+          <button
+            className={`focus:shadow-outline mb-4 mt-4 rounded-full p-4 transition-all duration-300 ease-in-out focus:outline-none`}
+            type='button'
+            onClick={async () => {
+              // await test();
+              const linkedInUserData = await getLinkedInUserData({
+                access_token: localStorage.getItem(
+                  'linkedInProfileAccessToken'
+                ),
+              })
+                .then(res => {
+                  console.log('DATA', 'res');
+                  return res;
+                })
+                .catch(err => {
+                  console.log(err, 'err');
+                });
+            }}
+          >
+            Get linkedin data
+          </button> */}
+
           {arrayOfTabs.map((tab, index) => (
             <motion.div
               key={tab.tab}
@@ -135,7 +224,7 @@ export const PDFTabNavigationPresenter = ({
                   <motion.div
                     className={`absolute top-0 ${
                       windowSize.width < 500 ? 'left-[-10px]' : 'left-[-15px]'
-                    } h-full w-1 rounded-full bg-jacarta-purple dark:bg-jacarta-white`}
+                    } bg-jacarta-purple dark:bg-jacarta-white h-full w-1 rounded-full`}
                     layoutId='bar'
                   ></motion.div>
                 )}

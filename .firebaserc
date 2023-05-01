@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "cv-maker-jp",
+    "default": "cvmaker-os",
     "development": "cv-maker-jp",
     "prod": "cvmaker-os"
   }
