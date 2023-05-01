@@ -34,7 +34,7 @@ export class FirebaseService {
     this.auth = getAuth(this.firebaseApp);
     this.firestore = getFirestore(this.firebaseApp);
     this.storage = getStorage(this.firebaseApp);
-    this.functions = getFunctions(this.firebaseApp, 'europe-west1');
+    this.functions = getFunctions(this.firebaseApp, 'europe-west3');
     this.user = this.auth.currentUser;
     this.auth.useDeviceLanguage();
     if (process.env.NODE_ENV === 'development') this.initEmulators();

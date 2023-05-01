@@ -123,7 +123,7 @@ export const LanguagesItem: FC<Props> = ({
               {t('level')}
             </label>
             <select
-              className='w-3/4 rounded-md border-2 p-1 focus:border-slate-400'
+              className='w-3/4 rounded-md border-2 p-1 focus:border-slate-400 dark:bg-almost-black-input'
               value={language.proficiency}
               onChange={e => {
                 setLanguages(
