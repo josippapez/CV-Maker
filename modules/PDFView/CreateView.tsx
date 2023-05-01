@@ -1,7 +1,10 @@
+import { saveDataForUser } from '@/store/actions/syncActions';
+import { useAppDispatch } from '@/store/hooks';
 import { usePDFComponentsAreHTML } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { DisplayPdfModalButton } from '@modules/PDFView/DisplayPdfModalButton';
 import { PDFInputsContainer } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { useAuth } from '@modules/Providers';
+import { useDebouncedFunction, useDebouncedValue } from '@modules/Shared/Hooks';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { PageLoader } from '@modules/Shared/Loader';
@@ -20,11 +23,24 @@ const DynamicPDFDisplay = dynamic(
 );
 
 export const CreateView: FC = () => {
+  const dispatch = useAppDispatch();
   const windowSize = useWindowSize();
   const isMobileView = windowSize.width < 1550;
   const { user } = useAuth();
   const { setHtml } = usePDFComponentsAreHTML();
-  const { getUserData } = usePDFData();
+  const {
+    getUserData,
+    certificates,
+    education,
+    generalInfo,
+    languages,
+    professionalExperience,
+    skills,
+    template,
+    projects,
+  } = usePDFData();
+
+  const [initial, setInitial] = useDebouncedValue(true, 2000);
 
   useEffect(() => {
     setHtml(true);
@@ -33,6 +49,37 @@ export const CreateView: FC = () => {
   useEffect(() => {
     getUserData();
   }, [user]);
+
+  const data = {
+    generalInfo,
+    professionalExperience,
+    certificates,
+    education,
+    languages,
+    skills,
+    template,
+    projects,
+  };
+
+  const [saveData] = useDebouncedFunction(() => {
+    if (initial) {
+      setInitial(false);
+      return;
+    }
+    dispatch(saveDataForUser());
+  }, 600);
+
+  useEffect(() => {
+    saveData();
+  }, [data]);
+
+  useEffect(() => {
+    if (initial) {
+      setInitial(false);
+      return;
+    }
+    dispatch(saveDataForUser());
+  }, [data.template]);
 
   return (
     <div
@@ -54,15 +101,16 @@ export const CreateView: FC = () => {
           select-none rounded-full bg-[#b8b8b8] text-sm font-bold shadow-md
           transition-all focus:outline-none dark:bg-[#616161]'
           iconStrokeColor='dark:stroke-white stroke-black'
+          data={data}
         />
       )}
       {!isMobileView &&
         (process.env.NODE_ENV === 'production' ? (
-          <DynamicPDFDisplay />
+          <DynamicPDFDisplay data={data} />
         ) : (
           (!process.env.NEXT_PUBLIC_HIDE_PDF ||
             process.env.NEXT_PUBLIC_HIDE_PDF === 'false') && (
-            <DynamicPDFDisplay />
+            <DynamicPDFDisplay data={data} />
           )
         ))}
     </div>

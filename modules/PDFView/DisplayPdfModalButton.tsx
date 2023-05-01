@@ -1,3 +1,4 @@
+import { PDFData } from '@modules/PDFView/models';
 import { PageLoader } from '@modules/Shared/Loader';
 import { CloseButton, Modal } from '@modules/Shared/Modal';
 import DocumentButton from '@public/Styles/Assets/Images/documentButton.svg';
@@ -18,11 +19,13 @@ const DynamicPDFDisplay = dynamic(
 type Props = {
   className?: string;
   iconStrokeColor?: string;
+  data: PDFData;
 };
 
 export const DisplayPdfModalButton: FC<Props> = ({
   className,
   iconStrokeColor,
+  data,
 }) => {
   const [displayPdfModal, setDisplayPdfModal] = useState(false);
 
@@ -53,7 +56,7 @@ export const DisplayPdfModalButton: FC<Props> = ({
           imageClassName='dark:fill-white'
           buttonClassName='p-4'
         />
-        <DynamicPDFDisplay />
+        <DynamicPDFDisplay data={data} />
       </Modal>
     </>
   );

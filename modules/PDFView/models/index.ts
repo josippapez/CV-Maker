@@ -3,6 +3,7 @@ export * from './Education';
 export * from './GeneralInfo';
 export * from './LanguageProficiency';
 export * from './LanguageSkill';
+export * from './PDFData';
 export * from './ProfessionalExperience';
 export * from './Project';
 export * from './Skill';

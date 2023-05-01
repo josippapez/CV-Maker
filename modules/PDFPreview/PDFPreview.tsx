@@ -26,10 +26,21 @@ const isQueryUserIdString = (
 
 export const PDFPreview = () => {
   const { query } = useRouter();
-  const { setAllPreviewData } = usePDFData();
+  const { setAllPreviewData, previewData } = usePDFData();
 
   const userId = isQueryUserIdString(query.userId) ? query.userId : null;
   const isPDFPreview = Boolean(userId);
+
+  const data = {
+    generalInfo: previewData?.generalInfo,
+    professionalExperience: previewData?.professionalExperience,
+    certificates: previewData?.certificates,
+    education: previewData?.education,
+    languages: previewData?.languages,
+    skills: previewData?.skills,
+    template: { templateName: previewData?.template },
+    projects: previewData?.projects,
+  };
 
   useEffect(() => {
     if (isPDFPreview) {
@@ -42,5 +53,5 @@ export const PDFPreview = () => {
     }
   }, []);
 
-  return <DynamicPDFDisplay isPDFPreview />;
+  return <DynamicPDFDisplay isPDFPreview data={data} />;
 };
