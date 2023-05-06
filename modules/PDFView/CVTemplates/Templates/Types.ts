@@ -51,24 +51,22 @@ export type PropsDocument = PropsWithChildren<DocumentProps>;
 
 export type { Style as StylePDF };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export type fontWeight =
+  | number
+  | 'thin'
+  | 'hairline'
+  | 'ultralight'
+  | 'extralight'
+  | 'light'
+  | 'normal'
+  | 'medium'
+  | 'semibold'
+  | 'demibold'
+  | 'bold'
+  | 'ultrabold'
+  | 'extrabold'
+  | 'heavy'
+  | 'black';
 
 // react-pdf/ types
 interface NodeProps {

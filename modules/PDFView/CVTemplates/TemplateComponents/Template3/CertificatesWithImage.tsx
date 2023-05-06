@@ -41,6 +41,7 @@ export const CertificatesWithImage: FC<Props> = ({
           position: 'absolute',
           zIndex: -1,
           top: 0,
+          left: 0,
         }}
       >
         <BlobTopLeft />
@@ -52,13 +53,11 @@ export const CertificatesWithImage: FC<Props> = ({
         wrap={false}
         style={{
           position: 'absolute',
-          width: 595,
-          height: 100,
           zIndex: -1,
           bottom: 0,
         }}
       >
-        <LayeredWaves />
+        <LayeredWaves width={595} height={100} />
       </View>
     </View>
   );

@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     fontFamily: 'Opensans',
     fontSize: 11,
-    lineHeight: 2,
-    color: 'black'
+    lineHeight: 1.5,
+    color: 'black',
   },
   column: {
     flexDirection: 'column',

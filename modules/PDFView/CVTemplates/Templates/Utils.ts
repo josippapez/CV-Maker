@@ -18,58 +18,58 @@ export const registerFonts = (template: string) => {
   const Unbounded = [
     {
       src: '/Styles/Assets/Fonts/Unbound/Unbounded-Regular.woff',
-      fontWeight: 'normal',
+      fontWeight: 400,
     },
     {
       src: '/Styles/Assets/Fonts/Unbound/Unbounded-Bold.woff',
-      fontWeight: 'bold',
+      fontWeight: 700,
     },
     {
       src: '/Styles/Assets/Fonts/Unbound/Unbounded-Light.woff',
-      fontWeight: 'light',
+      fontWeight: 300,
     },
     {
       src: '/Styles/Assets/Fonts/Unbound/Unbounded-ExtraLight.woff',
-      fontWeight: 'extralight',
+      fontWeight: 200,
     },
     {
       src: '/Styles/Assets/Fonts/Unbound/Unbounded-SemiBold.woff',
-      fontWeight: 'semibold',
+      fontWeight: 600,
     },
     {
       src: '/Styles/Assets/Fonts/Unbound/Unbounded-Medium.woff',
-      fontWeight: 'medium',
+      fontWeight: 500,
     },
     {
       src: '@public/Styles/Assets/Fonts/Unbound/Unbounded-ExtraBold.woff',
-      fontWeight: 'extrabold',
+      fontWeight: 800,
     },
   ];
 
   const OpenSans = [
     {
       src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Regular.woff',
-      fontWeight: 'normal',
+      fontWeight: 400,
     },
     {
       src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Bold.woff',
-      fontWeight: 'bold',
+      fontWeight: 700,
     },
     {
       src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Light.woff',
-      fontWeight: 'light',
+      fontWeight: 300,
     },
     {
       src: '/Styles/Assets/Fonts/OpenSans/OpenSans-SemiBold.woff',
-      fontWeight: 'semibold',
+      fontWeight: 600,
     },
     {
       src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Medium.woff',
-      fontWeight: 'medium',
+      fontWeight: 500,
     },
     {
       src: '/Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.woff',
-      fontWeight: 'extrabold',
+      fontWeight: 800,
     },
     {
       src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Italic.woff',
@@ -86,7 +86,7 @@ export const registerFonts = (template: string) => {
     Unbounded.forEach(font => {
       document.fonts.add(
         new FontFace('Unbounded', `url(${font.src})`, {
-          weight: font.fontWeight,
+          weight: font.fontWeight.toString(),
         })
       );
     });
@@ -101,7 +101,7 @@ export const registerFonts = (template: string) => {
     OpenSans.forEach(font => {
       document.fonts.add(
         new FontFace('OpenSans', `url(${font.src})`, {
-          weight: font.fontWeight,
+          weight: font.fontWeight?.toString(),
           style: font.fontStyle,
         })
       );

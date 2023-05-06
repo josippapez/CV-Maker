@@ -23,25 +23,23 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false, data }) => {
   const Template = () => CVTemplate(data);
 
   const scale =
-    windowSize.height < windowSize.width
-      ? (windowSize.height - 100) / 842
-      : (windowSize.width - 50) / 595;
+    windowSize.width * 1.414213562 < windowSize.height
+      ? (windowSize.width - 80) / 595
+      : (windowSize.height - 80) / 842;
 
   return (
     <>
       <div
         className={`documentPDFView flex flex-col items-center justify-center overflow-hidden drop-shadow-xl ${
-          windowSize.width < 1550 || isPDFPreview ? 'w-full' : 'w-5/12'
+          windowSize.width < 1550 || isPDFPreview ? 'w-full h-full' : 'w-5/12'
         }`}
-        style={{
-          height: 842 * scale,
-        }}
       >
         <div
           className='document-display overflow-y-scroll'
           style={{
             width: 595,
             height: 842,
+            aspectRatio: 1.414213562,
             transform: `scaleX(${scale}) scaleY(
                 ${scale}
               )`,

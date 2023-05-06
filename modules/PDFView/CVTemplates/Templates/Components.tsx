@@ -13,7 +13,8 @@ import {
   PropsStop,
   PropsText,
   PropsView,
-} from '@modules/PDFView/CVTemplates/Templates/Types';
+  fontWeight,
+} from './Types';
 import {
   Defs,
   Document,
@@ -46,6 +47,42 @@ export const usePDFComponentsAreHTML = () => {
   };
 };
 
+const fontWeightConverter = (fontWeight?: fontWeight) => {
+  if (typeof fontWeight === 'number') return fontWeight;
+  switch (fontWeight) {
+    case 'thin':
+      return 100;
+    case 'hairline':
+      return 100;
+    case 'ultralight':
+      return 200;
+    case 'extralight':
+      return 200;
+    case 'light':
+      return 300;
+    case 'normal':
+      return 400;
+    case 'medium':
+      return 500;
+    case 'semibold':
+      return 600;
+    case 'demibold':
+      return 600;
+    case 'bold':
+      return 700;
+    case 'ultrabold':
+      return 800;
+    case 'extrabold':
+      return 800;
+    case 'heavy':
+      return 900;
+    case 'black':
+      return 900;
+    default:
+      return 400;
+  }
+};
+
 const adjustStyles = (style: Style) => {
   if (!style) return;
 
@@ -56,7 +93,10 @@ const adjustStyles = (style: Style) => {
     } else if (key === 'paddingHorizontal') {
       style.paddingLeft = style[key];
       style.paddingRight = style[key];
+    } else if (key === 'fontWeight') {
+      style.fontWeight = fontWeightConverter(style[key]);
     }
+    return style;
   });
 };
 const mergeStylesIntoOne = (styles: Style[]) => {
@@ -98,6 +138,22 @@ export const CustomView: FC<PropsView> = ({ children, style, ...rest }) => {
         {children}
       </div>
     );
+  }
+
+  if (Array.isArray(style)) {
+    style = [
+      {
+        left: 0,
+        right: 0,
+      },
+      ...style,
+    ];
+  } else {
+    style = {
+      left: 0,
+      right: 0,
+      ...style,
+    };
   }
   return (
     <View style={style} {...rest}>
@@ -177,6 +233,8 @@ export const CustomPage: FC<PropsPage> = ({ style, children, ...rest }) => {
           flexDirection: 'column',
           position: 'relative',
           isolation: 'isolate',
+          height: '100%',
+          lineHeight: 'initial',
           ...(newStyle as { [key: string]: string }),
         }}
       >
@@ -297,6 +355,7 @@ export const CustomDocument: FC<PropsDocument> = ({ children, ...rest }) => {
           isolation: 'isolate',
           left: 0,
           right: 0,
+          minHeight: '100%',
         }}
       >
         {children}
