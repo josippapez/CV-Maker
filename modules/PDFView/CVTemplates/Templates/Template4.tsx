@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     fontWeight: 'light',
     fontSize: 10,
     color: 'white',
-    lineHeight: 2
+    lineHeight: 1.5
   },
   column: {
     flexDirection: 'column',
