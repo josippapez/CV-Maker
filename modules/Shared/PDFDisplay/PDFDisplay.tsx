@@ -27,11 +27,13 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false, data }) => {
       ? (windowSize.width - 80) / 595
       : (windowSize.height - 80) / 842;
 
+  if (!data) return null;
+
   return (
     <>
       <div
         className={`documentPDFView flex flex-col items-center justify-center overflow-hidden drop-shadow-xl ${
-          windowSize.width < 1550 || isPDFPreview ? 'w-full h-full' : 'w-5/12'
+          windowSize.width < 1550 || isPDFPreview ? 'h-full w-full' : 'w-5/12'
         }`}
       >
         <div

@@ -143,6 +143,9 @@ export const CustomView: FC<PropsView> = ({ children, style, ...rest }) => {
   if (Array.isArray(style)) {
     style = [
       {
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
         left: 0,
         right: 0,
       },
@@ -150,6 +153,9 @@ export const CustomView: FC<PropsView> = ({ children, style, ...rest }) => {
     ];
   } else {
     style = {
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
       left: 0,
       right: 0,
       ...style,

@@ -12,13 +12,6 @@ declare global {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // if (typeof window === 'object' && window.location.search) {
-  //   const params = queryToObject(window.location.search);
-  //   if (params.state === LINKEDIN_STATE && window.opener) {
-  //     window.opener.postMessage(params);
-  //   }
-  // }
-
   return (
     <>
       <ToastContainer />
