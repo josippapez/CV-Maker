@@ -37,7 +37,7 @@ export class FirebaseService {
     this.functions = getFunctions(this.firebaseApp, 'europe-west3');
     this.user = this.auth.currentUser;
     this.auth.useDeviceLanguage();
-    if (process.env.NODE_ENV === 'production') this.initEmulators();
+    if (process.env.NODE_ENV === 'development') this.initEmulators();
   }
 
   static getInstance(): FirebaseService {
