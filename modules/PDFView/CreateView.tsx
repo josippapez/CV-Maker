@@ -1,10 +1,6 @@
-import { saveDataForUser } from '@/store/actions/syncActions';
-import { useAppDispatch } from '@/store/hooks';
 import { usePDFComponentsAreHTML } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { DisplayPdfModalButton } from '@modules/PDFView/DisplayPdfModalButton';
 import { PDFInputsContainer } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
-import { useAuth } from '@modules/Providers';
-import { useDebouncedFunction, useDebouncedValue } from '@modules/Shared/Hooks';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { PageLoader } from '@modules/Shared/Loader';
@@ -23,13 +19,11 @@ const DynamicPDFDisplay = dynamic(
 );
 
 export const CreateView: FC = () => {
-  const dispatch = useAppDispatch();
   const windowSize = useWindowSize();
   const isMobileView = windowSize.width < 1550;
-  const { user } = useAuth();
+
   const { setHtml } = usePDFComponentsAreHTML();
   const {
-    getUserData,
     certificates,
     education,
     generalInfo,
@@ -40,15 +34,9 @@ export const CreateView: FC = () => {
     projects,
   } = usePDFData();
 
-  const [initial, setInitial] = useDebouncedValue(true, 2000);
-
   useEffect(() => {
     setHtml(true);
   }, []);
-
-  useEffect(() => {
-    getUserData();
-  }, [user]);
 
   const data = {
     generalInfo,
@@ -60,26 +48,6 @@ export const CreateView: FC = () => {
     template,
     projects,
   };
-
-  const [saveData] = useDebouncedFunction(() => {
-    if (initial) {
-      setInitial(false);
-      return;
-    }
-    dispatch(saveDataForUser());
-  }, 600);
-
-  useEffect(() => {
-    saveData();
-  }, [data]);
-
-  useEffect(() => {
-    if (initial) {
-      setInitial(false);
-      return;
-    }
-    dispatch(saveDataForUser());
-  }, [data.template]);
 
   return (
     <div

@@ -1,4 +1,5 @@
 import { FirebaseService } from '@modules/Services';
+import { usePDFData } from '@modules/Shared/Hooks';
 import { User } from 'firebase/auth';
 import Cookies from 'js-cookie';
 import { createContext, useContext, useEffect, useState } from 'react';
@@ -6,7 +7,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const firebase = FirebaseService.getInstance();
 
 const AuthContext = createContext<{ user: User | null }>({
-  user: null,
+  user: FirebaseService.getInstance().getAuth().currentUser,
 });
 
 export const useAuth = () => {
@@ -14,6 +15,7 @@ export const useAuth = () => {
 };
 
 export function AuthProvider({ children }: any) {
+  const { getUserData } = usePDFData();
   const [user, setUser] = useState<User | null>(null);
 
   // listen for token changes
@@ -22,14 +24,9 @@ export function AuthProvider({ children }: any) {
     return firebase.getAuth().onIdTokenChanged(async user => {
       if (!user) {
         setUser(null);
-        Cookies.remove('accessToken');
-        Cookies.remove('refreshToken');
       } else {
-        const token = await user.getIdToken();
-        const refreshToken = user.refreshToken;
         setUser(user);
-        Cookies.set('accessToken', token, { expires: 14 });
-        Cookies.set('refreshToken', refreshToken, { expires: 14 });
+        getUserData();
       }
     });
   }, []);

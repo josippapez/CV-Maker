@@ -1,5 +1,5 @@
 import { setDisplayVersionHistory } from '@/store/reducers/versionHistory';
-import { getAuth } from 'firebase/auth';
+import { FirebaseService } from '@modules/Services';
 import { i18n } from 'next-i18next';
 import { toast } from 'react-toastify';
 import { cacheAllData, PDFData } from '../reducers/pdfData';
@@ -12,9 +12,11 @@ export interface DocumentPDFData extends PDFData {
   language: string;
 }
 
+const firebaseAuth = FirebaseService.getInstance().getAuth();
+
 export const saveDataForUser = () => {
   return async (dispatch: AppDispatch, getState: AppState) => {
-    if (!getAuth().currentUser) return;
+    if (!firebaseAuth.currentUser) return;
 
     const { add } = FirebaseCollectionActions('user-data');
 
@@ -48,7 +50,7 @@ export const saveDataForUser = () => {
 export const deleteDataForUser = () => {
   return (dispatch: AppDispatch, getState: AppState) => {
     const { delete: deleteData } = FirebaseCollectionActions('user-data');
-    const id = getAuth().currentUser?.uid;
+    const id = firebaseAuth.currentUser?.uid;
     if (!id) {
       throw new Error('User not logged in');
     }
@@ -78,7 +80,7 @@ export const getDataForUser = (props?: {
   successCallback?: (data?: DocumentPDFData) => void;
 }) => {
   return async (dispatch: AppDispatch, getState: AppState) => {
-    const id = getAuth().currentUser?.uid || props?.userId;
+    const id = firebaseAuth.currentUser?.uid || props?.userId;
 
     if (!id) return;
 

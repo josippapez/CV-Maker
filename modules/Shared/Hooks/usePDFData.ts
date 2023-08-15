@@ -1,4 +1,8 @@
-import { DocumentPDFData, getDataForUser } from '@/store/actions/syncActions';
+import {
+  DocumentPDFData,
+  getDataForUser,
+  saveDataForUser,
+} from '@/store/actions/syncActions';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   Operations,
@@ -13,6 +17,7 @@ import {
   cacheSkills,
   pdfDataSelector,
   setLoaded,
+  setModified,
 } from '@/store/reducers/pdfData';
 import {
   cacheAllPreviewData,
@@ -29,8 +34,29 @@ import {
   Project,
   Skill,
 } from '@modules/PDFView/models';
+import { FirebaseService } from '@modules/Services';
 import { useDebouncedFunction } from '@modules/Shared/Hooks/useDebouncedFunction';
-import { useCallback, useMemo } from 'react';
+import { useDebouncedValue } from '@modules/Shared/Hooks/useDebouncedValue';
+import { useCallback, useMemo, useEffect } from 'react';
+
+const firebaseAuth = FirebaseService.getInstance().getAuth();
+
+let tempGeneralInfo: Partial<GeneralInfo> = {};
+let tempProfessionalExperience:
+  | Partial<ProfessionalExperience>
+  | Partial<ProfessionalExperience>[]
+  | undefined = undefined;
+let tempCertificates:
+  | Partial<Certificate>
+  | Partial<Certificate>[]
+  | undefined = undefined;
+let tempEducation: Partial<Education> | Partial<Education>[] | undefined =
+  undefined;
+let tempLanguages:
+  | Partial<LanguageSkill>
+  | Partial<LanguageSkill>[]
+  | undefined = undefined;
+let tempProjects: Partial<Project> | Partial<Project>[] | undefined = undefined;
 
 export const usePDFData = () => {
   const dispatch = useAppDispatch();
@@ -44,100 +70,275 @@ export const usePDFData = () => {
     skills,
     loaded,
     projects,
+    modified,
   } = useAppSelector(pdfDataSelector);
   const previewData = useAppSelector(pdfPreviewDataSelector);
   const template = useAppSelector(state => state.template);
+  const currentUser = firebaseAuth.currentUser;
+
+  const [initial, setInitial] = useDebouncedValue(true, 2000);
+
+  console.log(
+    certificates,
+    education,
+    generalInfo,
+    languages,
+    professionalExperience,
+    skills,
+    projects
+  );
+
+  const [saveData] = useDebouncedFunction(() => {
+    if (initial) {
+      setInitial(false);
+      return;
+    }
+    dispatch(saveDataForUser());
+  }, 600);
+
+  useEffect(() => {
+    if (!currentUser) return;
+    saveData();
+  }, [modified]);
+
+  useEffect(() => {
+    if (initial) {
+      setInitial(false);
+      return;
+    }
+    dispatch(saveDataForUser());
+  }, [template]);
 
   const setDataLoaded = useCallback(
     (loaded: boolean) => dispatch(setLoaded(loaded)),
     [dispatch]
   );
-  const [setGeneralInfo] = useDebouncedFunction((value: Partial<GeneralInfo>) =>
-    dispatch(cacheGeneralInfo(value))
+
+  const [setDebouncedGeneralInfo] = useDebouncedFunction(() => {
+    dispatch(
+      cacheGeneralInfo({
+        ...generalInfo,
+        ...tempGeneralInfo,
+      })
+    );
+    dispatch(setModified(true));
+    tempGeneralInfo = {};
+  });
+  const setGeneralInfo = useCallback(
+    (value: Partial<GeneralInfo>) => {
+      tempGeneralInfo = {
+        ...tempGeneralInfo,
+        ...value,
+      };
+      setDebouncedGeneralInfo();
+    },
+    [generalInfo]
   );
-  const [setProfessionalExperience] = useDebouncedFunction(
-    (
-      operation: Operations,
-      professionalExperience?:
-        | Partial<ProfessionalExperience>
-        | Partial<ProfessionalExperience>[],
-      index?: number
-    ) =>
+
+  const [setDebouncedProfessionalExperience] = useDebouncedFunction(
+    (operation: Operations, index?: number) => {
       dispatch(
         cacheProfessionalExperience({
           operation,
-          data: professionalExperience,
+          data: tempProfessionalExperience,
           index,
         })
-      )
+      );
+      dispatch(setModified(true));
+      tempProfessionalExperience = undefined;
+    }
   );
-  const [setCertificates] = useDebouncedFunction(
+  const setProfessionalExperience = useCallback(
     (
       operation: Operations,
-      data?: Partial<Certificate> | Partial<Certificate>[],
+      professionalExperienceValue?:
+        | Partial<ProfessionalExperience>
+        | Partial<ProfessionalExperience>[],
       index?: number
-    ) =>
+    ) => {
+      if (operation === Operations.UPDATE) {
+        if (index === undefined) return;
+        if (!tempProfessionalExperience) {
+          tempProfessionalExperience = professionalExperience[index];
+        }
+        tempProfessionalExperience = {
+          ...tempProfessionalExperience,
+          ...professionalExperienceValue,
+        };
+      } else {
+        tempProfessionalExperience = professionalExperienceValue;
+      }
+
+      setDebouncedProfessionalExperience(operation, index);
+    },
+    []
+  );
+
+  const [setDebouncedCertificates] = useDebouncedFunction(
+    (operation: Operations, index?: number) => {
       dispatch(
         cacheCertificates({
           operation,
-          data,
+          data: tempCertificates,
           index,
         })
-      )
+      );
+      dispatch(setModified(true));
+      tempCertificates = undefined;
+    }
   );
-  const [setEducation] = useDebouncedFunction(
+  const setCertificates = useCallback(
     (
       operation: Operations,
-      data?: Partial<Education> | Partial<Education>[],
+      certificate?: Partial<Certificate> | Partial<Certificate>[],
       index?: number
-    ) =>
+    ) => {
+      if (operation === Operations.UPDATE) {
+        if (index === undefined) return;
+        if (!tempCertificates) {
+          tempCertificates = certificates[index];
+        }
+        tempCertificates = {
+          ...tempCertificates,
+          ...certificate,
+        };
+      } else {
+        tempCertificates = certificate;
+      }
+
+      setDebouncedCertificates(operation, index);
+    },
+    []
+  );
+
+  const [setDebouncedEducation] = useDebouncedFunction(
+    (operation: Operations, index?: number) => {
       dispatch(
         cacheEducation({
           operation,
-          data,
+          data: tempEducation,
           index,
         })
-      )
+      );
+      dispatch(setModified(true));
+      tempEducation = undefined;
+    }
   );
-  const [setLanguages] = useDebouncedFunction(
+  const setEducation = useCallback(
     (
       operation: Operations,
-      data?: Partial<LanguageSkill> | Partial<LanguageSkill>[],
+      educationValue?: Partial<Education> | Partial<Education>[],
       index?: number
-    ) =>
+    ) => {
+      if (operation === Operations.UPDATE) {
+        if (index === undefined) return;
+        if (!tempEducation) {
+          tempEducation = education[index];
+        }
+        tempEducation = {
+          ...tempEducation,
+          ...educationValue,
+        };
+      } else {
+        tempEducation = educationValue;
+      }
+
+      setDebouncedEducation(operation, index);
+    },
+    []
+  );
+
+  const [setDebouncedLanguages] = useDebouncedFunction(
+    (
+      operation: Operations,
+
+      index?: number
+    ) => {
       dispatch(
         cacheLanguages({
           operation,
-          data,
+          data: tempLanguages,
           index,
         })
-      )
+      );
+      dispatch(setModified(true));
+      tempLanguages = undefined;
+    }
   );
+  const setLanguages = useCallback(
+    (
+      operation: Operations,
+      languageValue?: Partial<LanguageSkill> | Partial<LanguageSkill>[],
+      index?: number
+    ) => {
+      if (operation === Operations.UPDATE) {
+        if (index === undefined) return;
+        if (!tempLanguages) {
+          tempLanguages = languages[index];
+        }
+        tempLanguages = {
+          ...tempLanguages,
+          ...languageValue,
+        };
+      } else {
+        tempLanguages = languageValue;
+      }
+
+      setDebouncedLanguages(operation, index);
+    },
+    []
+  );
+
   const [setSkills] = useDebouncedFunction(
-    (operation: Operations, skill?: Partial<Skill>, index?: number) =>
+    (operation: Operations, skill?: Partial<Skill>, index?: number) => {
       dispatch(
         cacheSkills({
           operation,
           skill,
           index,
         })
-      ),
+      );
+      dispatch(setModified(true));
+    },
     0
   );
-  const [setProjects] = useDebouncedFunction(
-    (
-      operation: Operations,
-      data?: Partial<Project> | Partial<Project>[],
-      index?: number
-    ) =>
+  const [setDebouncedProjects] = useDebouncedFunction(
+    (operation: Operations, index?: number) => {
       dispatch(
         cacheProjects({
           operation,
-          data,
+          data: tempProjects,
           index,
         })
-      )
+      );
+      dispatch(setModified(true));
+      tempProjects = undefined;
+    }
   );
+  const setProjects = useCallback(
+    (
+      operation: Operations,
+      projectValue?: Partial<Project> | Partial<Project>[],
+      index?: number
+    ) => {
+      if (operation === Operations.UPDATE) {
+        if (index === undefined) return;
+        if (!tempProjects) {
+          tempProjects = projects[index];
+        }
+        tempProjects = {
+          ...tempProjects,
+          ...projectValue,
+        };
+      } else {
+        tempProjects = projectValue;
+      }
+
+      setDebouncedProjects(operation, index);
+    },
+    []
+  );
+
   const [setAllData] = useDebouncedFunction((data: PDFData) =>
     dispatch(cacheAllData(data))
   );

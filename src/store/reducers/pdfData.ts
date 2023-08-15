@@ -124,20 +124,19 @@ export const pdfData = createSlice({
       }
       state.timestamp = Date.now();
       state.generalInfo = action.payload.generalInfo;
-      state.professionalExperience = action.payload.professionalExperience;
-      state.certificates = action.payload.certificates;
-      state.education = action.payload.education;
-      state.languages = action.payload.languages;
-      state.skills = action.payload.skills;
-      state.projects = action.payload.projects;
-      state.modified = true;
+      state.professionalExperience =
+        action.payload.professionalExperience || [];
+      state.certificates = action.payload.certificates || [];
+      state.education = action.payload.education || [];
+      state.languages = action.payload.languages || [];
+      state.skills = action.payload.skills || [];
+      state.projects = action.payload.projects || [];
     },
     cacheGeneralInfo: (state, action: PayloadAction<Partial<GeneralInfo>>) => {
       state.generalInfo = {
         ...state.generalInfo,
         ...action.payload,
       };
-      state.modified = true;
     },
     cacheProfessionalExperience: (
       state,
@@ -152,18 +151,17 @@ export const pdfData = createSlice({
       const { operation, data, index } = action.payload;
       if (!state.professionalExperience) state.professionalExperience = [];
 
-      const isDataArray = isArray(data);
+      // const isDataArray = isArray(data);
 
-      if (isDataArray) {
-        state.professionalExperience = [...(data as ProfessionalExperience[])];
-        return;
-      }
+      // if (isDataArray) {
+      //   state.professionalExperience = [...(data as ProfessionalExperience[])];
+      //   return;
+      // }
       updateArray(state.professionalExperience, {
         operation,
         item: data,
         index,
       });
-      state.modified = true;
     },
     cacheCertificates: (
       state,
@@ -187,7 +185,6 @@ export const pdfData = createSlice({
         item: data,
         index,
       });
-      state.modified = true;
     },
     cacheEducation: (
       state,
@@ -211,7 +208,6 @@ export const pdfData = createSlice({
         item: data,
         index,
       });
-      state.modified = true;
     },
     cacheLanguages: (
       state,
@@ -234,7 +230,6 @@ export const pdfData = createSlice({
         item: data,
         index,
       });
-      state.modified = true;
     },
     cacheSkills: (
       state,
@@ -250,7 +245,6 @@ export const pdfData = createSlice({
         item: skill,
         index,
       });
-      state.modified = true;
     },
     cacheProjects: (
       state,
@@ -273,7 +267,6 @@ export const pdfData = createSlice({
         item: data,
         index,
       });
-      state.modified = true;
     },
   },
 });

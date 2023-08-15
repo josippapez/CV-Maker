@@ -95,9 +95,9 @@ export const registerWithEmailAndPassword = async (
 
 export const logout = () => {
   return async (dispatch: AppDispatch) => {
+    await firebase.getAuth().signOut();
     await persistor.purge();
     await persistor.flush();
-    await firebase.getAuth().signOut();
     localStorage.clear();
     location.reload();
   };
