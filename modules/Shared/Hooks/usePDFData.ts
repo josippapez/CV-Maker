@@ -78,16 +78,6 @@ export const usePDFData = () => {
 
   const [initial, setInitial] = useDebouncedValue(true, 2000);
 
-  console.log(
-    certificates,
-    education,
-    generalInfo,
-    languages,
-    professionalExperience,
-    skills,
-    projects
-  );
-
   const [saveData] = useDebouncedFunction(() => {
     if (initial) {
       setInitial(false);

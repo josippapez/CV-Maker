@@ -151,12 +151,12 @@ export const pdfData = createSlice({
       const { operation, data, index } = action.payload;
       if (!state.professionalExperience) state.professionalExperience = [];
 
-      // const isDataArray = isArray(data);
+      const isDataArray = isArray(data);
 
-      // if (isDataArray) {
-      //   state.professionalExperience = [...(data as ProfessionalExperience[])];
-      //   return;
-      // }
+      if (isDataArray) {
+        state.professionalExperience = [...(data as ProfessionalExperience[])];
+        return;
+      }
       updateArray(state.professionalExperience, {
         operation,
         item: data,

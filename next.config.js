@@ -3,18 +3,20 @@
 
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
-});
+// const withPWA = require('next-pwa')({
+//   dest: 'public',
+//   register: true,
+//   skipWaiting: true,
+//   disable: process.env.NODE_ENV === 'development',
+// });
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled:
     process.env.ANALYZE === 'true' && process.env.NODE_ENV === 'production',
 });
 
-const nextConfig = withPWA({
+const nextConfig =
+//  withPWA(
+  {
   transpilePackages: ['redux-persist'],
   reactStrictMode: true,
   swcMinify: true,
@@ -53,6 +55,7 @@ const nextConfig = withPWA({
 
     return config;
   },
-});
+}
+// );
 
 module.exports = withBundleAnalyzer(nextConfig);
