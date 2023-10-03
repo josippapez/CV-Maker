@@ -18,9 +18,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   height: 100%;
-  font-size: 13px;
+  font-size: 1rem;
   line-height: 2;
-  font-family: 'Unbounded-variable', sans-serif;
+  font-family: 'Switzer-variable', sans-serif;
   @apply text-midnight;
   @apply bg-white;
   @apply transition-colors;
@@ -58,13 +58,9 @@ textarea {
 }
 
 @font-face {
-  src: url('./Assets/Fonts/Unbounded-VariableFont_wght.ttf');
-  font-family: 'Unbounded-variable';
-}
-
-@font-face {
-  src: url('./Assets/Fonts/Inter-VariableFont_wght.ttf');
-  font-family: 'Inter-variable';
+  font-weight: 100 900;
+  src: url('./Assets/Fonts/Switzer-Variable.ttf');
+  font-family: 'Switzer-variable';
 }
 
 .privacy-screen {

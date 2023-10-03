@@ -44,47 +44,51 @@ export const ProfessionalExperienceDisplay: FC<Props> = ({
       <TextDisplay style={[styles.sectionTitle]}>
         {translate('professionalExperience')}
       </TextDisplay>
-      {professionalExperience.map((experience, index) => (
-        <View
-          wrap={false}
-          key={index}
-          style={[
-            styles.row,
-            styles.paddingY10,
-            {
-              borderTop: showBorder
-                ? index === 0
-                  ? 'none'
-                  : `1px solid ${borderColor}`
-                : 'none',
-            },
-          ]}
-        >
-          <View style={[styles.column, { width: '50%' }]}>
-            <TextDisplay style={[styles.name]}>
-              {experience.company}
-            </TextDisplay>
-            <TextDisplay style={[styles.duration, { marginTop: 5 }]}>
-              {experience.startDate && displayDate(experience.startDate)} -{' '}
-              {experience.currentlyEnrolled
-                ? translate('present')
-                : experience.endDate && displayDate(experience.endDate)}
-            </TextDisplay>
-            <TextDisplay style={[styles.location]}>
-              {experience.location}
-            </TextDisplay>
-          </View>
+      <View style={[{ rowGap: 30 }]}>
+        {professionalExperience.map((experience, index) => (
+          <View
+            key={index}
+            wrap={false}
+            style={[
+              styles.row,
+              styles.paddingY10,
+              {
+                borderBottom: showBorder
+                  ? index === professionalExperience.length - 1
+                    ? 'none'
+                    : `1px solid ${borderColor}`
+                  : 'none',
+              },
+            ]}
+          >
+            <View style={[styles.column, { width: '50%' }]}>
+              <TextDisplay style={[styles.name]}>
+                {experience.company}
+              </TextDisplay>
+              <TextDisplay style={[styles.duration, { marginTop: 5 }]}>
+                {experience.startDate && displayDate(experience.startDate)} -{' '}
+                {experience.currentlyEnrolled
+                  ? translate('present')
+                  : experience.endDate && displayDate(experience.endDate)}
+              </TextDisplay>
+              <TextDisplay style={[styles.location]}>
+                {experience.location}
+              </TextDisplay>
+            </View>
 
-          <View style={[styles.column, styles.paddingX20, { width: '50%' }]}>
-            <TextDisplay style={[styles.companyPosition]}>
-              {experience.position}
-            </TextDisplay>
-            <TextDisplay style={{ marginTop: 10 }}>
-              {experience.description}
-            </TextDisplay>
+            <View style={[styles.column, { width: '50%' }]}>
+              <TextDisplay style={[styles.companyPosition]}>
+                {experience.position}
+              </TextDisplay>
+              <TextDisplay
+                style={[styles.companyDescription, { marginTop: 10 }]}
+              >
+                {experience.description}
+              </TextDisplay>
+            </View>
           </View>
-        </View>
-      ))}
+        ))}
+      </View>
     </View>
   );
 };

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     fontWeight: 'light',
     fontSize: 10,
     color: 'white',
-    lineHeight: 1.5
+    lineHeight: 1.5,
   },
   column: {
     flexDirection: 'column',
@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
   },
   topBarText: {
     marginTop: 10,
-    fontSize: 10,
+    fontSize: 12,
+    fontFamily: 'Switzer',
   },
   additionalInfoBar: {
     maxHeight: 150,
@@ -165,6 +166,16 @@ const styles = StyleSheet.create({
     fontWeight: 'light',
     color: '#a3a3a3',
     paddingBottom: 10,
+  },
+  companyPosition: {
+    fontFamily: 'Switzer',
+    fontWeight: 'medium',
+    fontSize: 11,
+  },
+  companyDescription: {
+    fontSize: 11,
+    fontFamily: 'Switzer',
+    fontWeight: 'extralight',
   },
 });
 

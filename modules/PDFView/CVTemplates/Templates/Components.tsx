@@ -32,7 +32,8 @@ import {
   View,
 } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
-import { FC, useState } from 'react';
+import { clsx } from 'clsx';
+import { CSSProperties, FC, HTMLAttributes, useState } from 'react';
 
 let isHtml = true;
 
@@ -51,11 +52,9 @@ const fontWeightConverter = (fontWeight?: fontWeight) => {
   if (typeof fontWeight === 'number') return fontWeight;
   switch (fontWeight) {
     case 'thin':
-      return 100;
     case 'hairline':
       return 100;
     case 'ultralight':
-      return 200;
     case 'extralight':
       return 200;
     case 'light':
@@ -65,17 +64,14 @@ const fontWeightConverter = (fontWeight?: fontWeight) => {
     case 'medium':
       return 500;
     case 'semibold':
-      return 600;
     case 'demibold':
       return 600;
     case 'bold':
       return 700;
     case 'ultrabold':
-      return 800;
     case 'extrabold':
       return 800;
     case 'heavy':
-      return 900;
     case 'black':
       return 900;
     default:
@@ -113,6 +109,7 @@ const mergeStylesIntoOne = (styles: Style[]) => {
 };
 
 export const CustomView: FC<PropsView> = ({ children, style, ...rest }) => {
+  const isDebug = rest.debug;
   if (isHtml) {
     let newStyle = style;
     if (Array.isArray(style)) {
@@ -123,21 +120,21 @@ export const CustomView: FC<PropsView> = ({ children, style, ...rest }) => {
 
     adjustStyles(newStyle as { [key: string]: string });
 
-    return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'relative',
-          isolation: 'isolate',
-          left: 0,
-          right: 0,
-          ...(newStyle as { [key: string]: string }),
-        }}
-      >
-        {children}
-      </div>
-    );
+    let styles: CSSProperties = {
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
+      isolation: 'isolate',
+      left: 0,
+      right: 0,
+      ...(newStyle as { [key: string]: string }),
+    };
+
+    if (isDebug) {
+      styles.border = '1px solid red';
+    }
+
+    return <div style={styles}>{children}</div>;
   }
 
   if (Array.isArray(style)) {
@@ -177,18 +174,21 @@ export const CustomText: FC<PropsText> = ({ children, style, ...rest }) => {
   }
 
   if (isHtml) {
+    const isDebug = rest.debug;
     adjustStyles(newStyle as { [key: string]: string });
-    return (
-      <div
-        style={{
-          whiteSpace: 'break-spaces',
-          position: 'relative',
-          ...(newStyle as { [key: string]: string }),
-        }}
-      >
-        {children}
-      </div>
-    );
+
+    let styles: CSSProperties = {
+      whiteSpace: 'break-spaces',
+      position: 'relative',
+      border: isDebug ? '1px solid red' : 'none',
+      ...(newStyle as { [key: string]: string }),
+    };
+
+    if (isDebug) {
+      styles.border = '1px solid red';
+    }
+
+    return <div style={styles}>{children}</div>;
   }
 
   return (

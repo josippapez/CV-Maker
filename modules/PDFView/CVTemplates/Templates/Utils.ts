@@ -41,8 +41,31 @@ export const registerFonts = (template: string) => {
       fontWeight: 500,
     },
     {
-      src: '@public/Styles/Assets/Fonts/Unbound/Unbounded-ExtraBold.woff',
+      src: '/Styles/Assets/Fonts/Unbound/Unbounded-ExtraBold.woff',
       fontWeight: 800,
+    },
+  ];
+
+  const Switzer = [
+    {
+      src: '/Styles/Assets/Fonts/Switzer/Switzer-Extralight.woff',
+      fontWeight: 200,
+    },
+    {
+      src: '/Styles/Assets/Fonts/Switzer/Switzer-Regular.woff',
+      fontWeight: 400,
+    },
+    {
+      src: '/Styles/Assets/Fonts/Switzer/Switzer-Medium.woff',
+      fontWeight: 500,
+    },
+    {
+      src: '/Styles/Assets/Fonts/Switzer/Switzer-SemiBold.woff',
+      fontWeight: 600,
+    },
+    {
+      src: '/Styles/Assets/Fonts/Switzer/Switzer-Bold.woff',
+      fontWeight: 700,
     },
   ];
 
@@ -82,10 +105,21 @@ export const registerFonts = (template: string) => {
       family: 'Unbounded',
       fonts: Unbounded,
     });
+    Font.register({
+      family: 'Switzer',
+      fonts: Switzer,
+    });
 
     Unbounded.forEach(font => {
       document.fonts.add(
         new FontFace('Unbounded', `url(${font.src})`, {
+          weight: font.fontWeight.toString(),
+        })
+      );
+    });
+    Switzer.forEach(font => {
+      document.fonts.add(
+        new FontFace('Switzer', `url(${font.src})`, {
           weight: font.fontWeight.toString(),
         })
       );
