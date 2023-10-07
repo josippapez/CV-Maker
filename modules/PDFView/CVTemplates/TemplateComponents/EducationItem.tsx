@@ -2,14 +2,14 @@ import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/Tex
 import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { Education } from '@modules/PDFView/models';
-import { Link, StyleSheet, Text } from '@react-pdf/renderer';
-import { TFunction } from 'next-i18next';
+import { StyleSheet } from '@react-pdf/renderer';
+import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 
 type Props = {
   edu: Education;
   styles: ReturnType<typeof StyleSheet.create>;
-  translate: TFunction;
+  translate: ReturnType<typeof useTranslations<string>>;
 };
 
 const educationStyles = StyleSheet.create({

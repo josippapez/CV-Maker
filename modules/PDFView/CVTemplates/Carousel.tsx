@@ -1,14 +1,14 @@
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { TemplateName } from '@/store/reducers/template';
-import { useTranslation } from 'next-i18next';
 import style from './TemplatesModal.module.scss';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   closeModal(): void;
 };
 
 export const Carousel = (props: Props) => {
-  const { t } = useTranslation('CVTemplates');
+  const t = useTranslations('Templates');
   const { closeModal } = props;
   const { setActiveTemplate } = usePDFData();
   return (

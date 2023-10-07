@@ -6,9 +6,9 @@ import {
   Day,
   useCalculateEachDayOfMonth,
 } from '@modules/Shared/Hooks/calculateEachDayOfMonth';
-import { Modal } from '@modules/Shared/Modal';
+import { Modal } from '@modules/Shared/Modal/Modal';
 import { DateTime } from 'luxon';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 type Props = {
@@ -35,7 +35,7 @@ export const DatePicker = (props: Props) => {
     type = 'date',
   } = props;
 
-  const { t } = useTranslation('DatePicker');
+  const t = useTranslations('DatePicker');
   const [tempDate, setTempDate] = useState(initialDate || '');
   const [showYearPicker, setShowYearPicker] = useState(
     initialDate?.length === 4
@@ -107,7 +107,7 @@ export const DatePicker = (props: Props) => {
         </div>
         <div className='flex justify-end'>
           <button
-            className='rounded py-2 px-4 font-bold hover:bg-slate-200'
+            className='rounded px-4 py-2 font-bold hover:bg-slate-200'
             onClick={() => {
               closeDatePicker();
               resetData();
@@ -116,7 +116,7 @@ export const DatePicker = (props: Props) => {
             {t('cancel')}
           </button>
           <button
-            className='rounded py-2 px-4 font-bold hover:bg-slate-200'
+            className='rounded px-4 py-2 font-bold hover:bg-slate-200'
             onClick={() => {
               closeDatePicker();
               resetData();
@@ -125,7 +125,7 @@ export const DatePicker = (props: Props) => {
             {t('clear')}
           </button>
           <button
-            className='rounded py-2 px-4 font-bold hover:bg-slate-200'
+            className='rounded px-4 py-2 font-bold hover:bg-slate-200'
             onClick={() => {
               setDate(tempDate);
               closeDatePicker();

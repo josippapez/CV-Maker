@@ -1,3 +1,5 @@
+'use client';
+
 import { persistor, store } from '@/store/store';
 import { CreateView } from '@modules/PDFView/CreateView';
 import { AuthProvider } from '@modules/Providers/AuthProvider';

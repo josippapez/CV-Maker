@@ -1,0 +1,81 @@
+{
+  "CertificatesInput": {
+    "name": "Naziv",
+    "date": "Datum",
+    "institution": "Institucija",
+    "description": "Opis",
+    "addCertification": "Dodaj certifikate"
+  },
+  "EducationInput": {
+    "school": "Škola",
+    "degree": "Stručna sprema",
+    "fieldOfStudy": "Polje studija",
+    "location": "Lokacija",
+    "startDate": "Početak",
+    "endDate": "Kraj",
+    "present": "Trenutno",
+    "description": "Opis",
+    "addEducation": "Dodaj obrazovanje",
+    "currentlyEnrolled": "Trenutno",
+
+    "course": "Tečaj",
+    "url": "URL (Link na stranicu tečaja)"
+  },
+  "GeneralInput": {
+    "profilePicture": "Profilna slika",
+    "firstName": "Ime",
+    "lastName": "Prezime",
+    "dob": "Datum rođenja",
+    "position": "Pozicija",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "address": "Adresa",
+    "address1": "Ulica",
+    "address2": "Broj",
+    "city": "Grad",
+    "zip": "Poštanski broj",
+    "country": "Država",
+    "website": "Web stranica",
+    "LinkedIn": "LinkedIn",
+    "Facebook": "Facebook",
+    "Twitter": "Twitter",
+    "GitHub": "Github",
+    "aboutMe": "O meni",
+    "remove": "Ukloni"
+  },
+  "LanguagesInput": {
+    "addLanguage": "Dodaj jezike",
+    "level": "Razina",
+    "language": "Jezik",
+    "BEGINNER": "Početnik",
+    "CONVERSATIONAL": "Razgovorni",
+    "NATIVE": "Materinji",
+    "FLUENT": "Tečan"
+  },
+  "ProfessionalExperienceInput": {
+    "company": "Tvrtka",
+    "position": "Pozicija",
+    "location": "Lokacija",
+    "startDate": "Početak",
+    "endDate": "Kraj",
+    "present": "Trenutno",
+    "description": "Opis",
+    "addExperience": "Dodaj iskustvo",
+    "currentlyEnrolled": "Trenutno"
+  },
+  "ProjectsInput": {
+    "name": "Naziv",
+    "description": "Opis",
+    "startDate": "Datum početka",
+    "endDate": "Datum završetka",
+    "owner": "Vlasnik",
+    "url": "URL",
+    "currentlyWorking": "Trenutno radim",
+    "addProject": "Dodaj projekt"
+  },
+  "SkillsInput": {
+    "skill": "Vještina",
+    "addSkills": "Dodaj vještine",
+    "noSkills": "Nema vještina"
+  }
+}

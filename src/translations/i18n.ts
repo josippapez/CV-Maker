@@ -1,33 +1,20 @@
-import { translations } from '@/translations/Translations';
-import i18next, { use } from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import intervalPlural from 'i18next-intervalplural-postprocessor';
-import { initReactI18next } from 'react-i18next';
+import { DEFAULT_LOCALE } from '@/translations/locales';
+import { getRequestConfig } from 'next-intl/server';
 
-declare module 'i18next' {
-  interface CustomTypeOptions {
-    returnNull: false;
+export default getRequestConfig(async ({ locale }) => {
+  let translations;
+
+  try {
+    translations = await import(`@public/translations/${locale}.json`).then(
+      (module) => module.default,
+    );
+  } catch (error) {
+    translations = await import(`@public/translations/${DEFAULT_LOCALE}.json`).then(
+      (module) => module.default,
+    );
   }
-}
 
-if (!i18next.isInitialized) {
-  use(intervalPlural)
-    .use(initReactI18next)
-    .use(LanguageDetector)
-    .init({
-      returnNull: false,
-      debug: false,
-      fallbackLng: 'hr',
-      lng:
-        typeof window !== 'undefined'
-          ? window?.localStorage.getItem('i18nextLng') || 'en-US'
-          : 'en-US',
-      interpolation: {
-        escapeValue: false,
-      },
-      resources: translations,
-      defaultNS: 'translation',
-    });
-}
-
-export default i18next;
+  return {
+    messages: translations,
+  };
+});

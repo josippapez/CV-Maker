@@ -1,0 +1,9 @@
+{
+  "VersionHistoryModal": {
+    "conflict": "Sukob verzija: Vaš životopis je uređen lokalno a pokušavate povuči spremljene podatke sa oblaka. Želite li zadržati svoje lokalne promjene ili verziju sa oblaka? Odaberite opciju ispod da biste nastavili.",
+    "conflict-local": "U slučaju zadržavanja lokalne verzije, ona će biti spremljena na oblak.",
+    "conflict-cloud": "U slučaju zadržavanja verzije sa oblaka, lokalne promjene će biti izgubljene.",
+    "conflict_keep_local": "Zadrži lokalne promjene",
+    "conflict_keep_cloud": "Zadrži verziju sa oblaka"
+  }
+}

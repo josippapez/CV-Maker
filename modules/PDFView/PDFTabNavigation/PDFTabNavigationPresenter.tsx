@@ -1,11 +1,12 @@
 import { logout, signInWithGoogle } from '@/store/actions/authActions';
 import { saveDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch } from '@/store/hooks';
-import { ChangeLanguageButton, TemplatesButton } from '@modules/Navbar';
+import { ChangeLanguageButton } from '@modules/Navbar/Components/ChangeLanguageButton';
+import { TemplatesButton } from '@modules/Navbar/Components/TemplatesButton';
 import { TemplatesModal } from '@modules/PDFView/CVTemplates/TemplatesModal';
 import { Tab } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { VersionHistoryModal } from '@modules/PDFView/VersionHistory/VersionHistoryModal';
-import { useAuth } from '@modules/Providers';
+import { useAuth } from '@modules/Providers/AuthProvider';
 import { useWindowSize } from '@modules/Shared/Hooks';
 import { Tooltip } from '@modules/Shared/Tooltip';
 import AcademicCap from '@public/Styles/Assets/Images/academic-cap.svg';
@@ -18,7 +19,7 @@ import Profile from '@public/Styles/Assets/Images/profile.svg';
 import ProjectFolder from '@public/Styles/Assets/Images/projectFolder.svg';
 import Tools from '@public/Styles/Assets/Images/tools.svg';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
 // const restliClient = new RestliClient();
@@ -38,7 +39,7 @@ export const PDFTabNavigationPresenter = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const windowSize = useWindowSize(10);
-  const { t } = useTranslation('PDFTabNavigation');
+  const t = useTranslations('PDFTabNavigation');
   const { user } = useAuth();
   const [displayTemplateChooseModal, setDisplayTemplateChooseModal] =
     useState(false);

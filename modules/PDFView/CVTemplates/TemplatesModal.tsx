@@ -1,6 +1,6 @@
 import { Carousel } from '@modules/PDFView/CVTemplates/Carousel';
-import { Modal } from '@modules/Shared/Modal';
-import { useTranslation } from 'next-i18next';
+import { Modal } from '@modules/Shared/Modal/Modal';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   closeModal(): void;
@@ -9,7 +9,7 @@ type Props = {
 
 export const TemplatesModal = (props: Props) => {
   const { closeModal, show } = props;
-  const { t } = useTranslation('CVTemplates');
+  const t = useTranslations('Templates');
   return (
     <Modal
       show={show}
@@ -26,7 +26,7 @@ export const TemplatesModal = (props: Props) => {
             {t('chooseYourTemplate')}
           </h1>
           <button
-            className='absolute top-1 right-3 rounded-full text-4xl font-bold text-white'
+            className='absolute right-3 top-1 rounded-full text-4xl font-bold text-white'
             onClick={() => {
               closeModal();
             }}

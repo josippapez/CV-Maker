@@ -1,7 +1,6 @@
 import { FirebaseService } from '@modules/Services';
 import { usePDFData } from '@modules/Shared/Hooks';
 import { User } from 'firebase/auth';
-import Cookies from 'js-cookie';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const firebase = FirebaseService.getInstance();
@@ -33,10 +32,13 @@ export function AuthProvider({ children }: any) {
 
   // force refresh the token every 10 minutes
   useEffect(() => {
-    const handle = setInterval(async () => {
-      const user = firebase.getUser();
-      if (user) await user.getIdToken(true);
-    }, 10 * 60 * 1000);
+    const handle = setInterval(
+      async () => {
+        const user = firebase.getUser();
+        if (user) await user.getIdToken(true);
+      },
+      10 * 60 * 1000
+    );
 
     // clean up setInterval
     return () => clearInterval(handle);

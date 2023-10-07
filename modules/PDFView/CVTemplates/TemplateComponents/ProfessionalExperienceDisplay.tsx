@@ -4,13 +4,13 @@ import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { ProfessionalExperience } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';
-import { TFunction } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 
 interface Props extends ComponentProps {
   styles: ReturnType<typeof StyleSheet.create>;
   professionalExperience?: ProfessionalExperience[];
-  translate: TFunction;
+  translate: ReturnType<typeof useTranslations<string>>;
   showBorder?: boolean;
   borderColor?: string;
 }

@@ -24,7 +24,6 @@ import {
   pdfPreviewDataSelector,
 } from '@/store/reducers/pdfPreviewData';
 import { TemplateName, setTemplate } from '@/store/reducers/template';
-import { useChangeLanguage } from '@modules/Navbar/hooks';
 import {
   Certificate,
   Education,
@@ -60,7 +59,6 @@ let tempProjects: Partial<Project> | Partial<Project>[] | undefined = undefined;
 
 export const usePDFData = () => {
   const dispatch = useAppDispatch();
-  const { changeLanguage } = useChangeLanguage();
   const {
     certificates,
     education,
@@ -111,7 +109,7 @@ export const usePDFData = () => {
         ...tempGeneralInfo,
       })
     );
-    dispatch(setModified(true));
+    dispatch(setModified(!modified));
     tempGeneralInfo = {};
   });
   const setGeneralInfo = useCallback(
@@ -134,7 +132,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(true));
+      dispatch(setModified(!modified));
       tempProfessionalExperience = undefined;
     }
   );
@@ -173,7 +171,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(true));
+      dispatch(setModified(!modified));
       tempCertificates = undefined;
     }
   );
@@ -210,7 +208,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(true));
+      dispatch(setModified(!modified));
       tempEducation = undefined;
     }
   );
@@ -251,7 +249,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(true));
+      dispatch(setModified(!modified));
       tempLanguages = undefined;
     }
   );
@@ -288,7 +286,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(true));
+      dispatch(setModified(!modified));
     },
     0
   );
@@ -301,7 +299,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(true));
+      dispatch(setModified(!modified));
       tempProjects = undefined;
     }
   );
@@ -343,10 +341,6 @@ export const usePDFData = () => {
         preventVersionHistory: Boolean(
           localStorage.getItem('preventVersionHistory')
         ),
-        successCallback: async pdfData => {
-          if (!pdfData?.language) return;
-          await changeLanguage(pdfData.language || 'en-US');
-        },
       })
     );
   }, []);

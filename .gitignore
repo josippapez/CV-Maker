@@ -47,5 +47,6 @@ cmaps/
 pdf.worker.min.js
 
 /public/locales
+/public/translations
 
 *.pem

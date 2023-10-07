@@ -2,7 +2,7 @@ import { CVTemplate } from '@modules/PDFView/CVTemplates/CVTemplate';
 import { usePDFComponentsAreHTML } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { PDFDownload } from '@modules/PDFView/PDFDownload/PDFDownload';
 import { PDFData } from '@modules/PDFView/models';
-import { useAuth } from '@modules/Providers';
+import { useAuth } from '@modules/Providers/AuthProvider';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { Tooltip } from '@modules/Shared/Tooltip';
 import { FC, useCallback, useState } from 'react';

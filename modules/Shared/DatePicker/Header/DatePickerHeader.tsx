@@ -2,7 +2,7 @@ import { useMobileView } from '@modules/Shared/Hooks/useMobileView';
 import ArrowLeft from '@public/Styles/Assets/Images/left-arrow.svg';
 import ArrowRight from '@public/Styles/Assets/Images/right-arrow.svg';
 import { DateTime } from 'luxon';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   type?: 'date' | 'month' | 'year';
@@ -28,7 +28,7 @@ export const DatePickerHeader = (props: Props) => {
     hideYear,
     setShowYearPicker,
   } = props;
-  const { t } = useTranslation('DatePicker');
+  const t = useTranslations('DatePicker');
   const mobileView = useMobileView();
 
   const shouldShowSelectMonth =

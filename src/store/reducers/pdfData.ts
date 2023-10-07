@@ -1,3 +1,4 @@
+import { DEFAULT_LOCALE } from '@/translations/locales';
 import {
   Certificate,
   Education,
@@ -64,6 +65,7 @@ export interface PDFData {
   skills: Skill[];
   projects: Project[];
   loaded: boolean;
+  language: string;
 }
 
 export interface PDFDataWithTimestamp extends PDFData {
@@ -100,6 +102,7 @@ const initialState: PDFDataWithTimestamp = {
   timestamp: 0,
   loaded: false,
   modified: false,
+  language: DEFAULT_LOCALE,
 };
 
 export const pdfData = createSlice({
@@ -114,6 +117,9 @@ export const pdfData = createSlice({
     },
     setLoaded: (state, action: PayloadAction<boolean>) => {
       state.loaded = action.payload;
+    },
+    setLanguage: (state, action: PayloadAction<string>) => {
+      state.language = action.payload;
     },
     cacheAllData: (
       state,
@@ -131,6 +137,7 @@ export const pdfData = createSlice({
       state.languages = action.payload.languages || [];
       state.skills = action.payload.skills || [];
       state.projects = action.payload.projects || [];
+      state.language = action.payload.language || DEFAULT_LOCALE;
     },
     cacheGeneralInfo: (state, action: PayloadAction<Partial<GeneralInfo>>) => {
       state.generalInfo = {
@@ -282,6 +289,7 @@ export const {
   cacheProjects,
   setLoaded,
   setModified,
+  setLanguage,
 } = pdfData.actions;
 
 export const pdfDataSelector = createSelector(

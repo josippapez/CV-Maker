@@ -6,7 +6,7 @@ import { TextInput } from '@modules/Shared/Inputs/TextInput';
 import Plus from '@public/Styles/Assets/Images/plus.svg';
 import Compressor from 'compressorjs';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 const arrayOfGeneralInputs: Array<{
   inputName: string;
@@ -35,7 +35,7 @@ const arrayOfGeneralTextAreas: Array<{
 
 export const GeneralInput = () => {
   const { generalInfo, setGeneralInfo } = usePDFData();
-  const { t } = useTranslation('GeneralInput');
+  const t = useTranslations('GeneralInput');
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
   });

@@ -1,16 +1,16 @@
 import { EducationItem } from '@modules/PDFView/CVTemplates/TemplateComponents/EducationItem';
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
+import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { Education } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';
-import { TFunction } from 'next-i18next';
-import { FC } from 'react';
 import { Style } from '@react-pdf/types';
-import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { useTranslations } from 'next-intl';
+import { FC } from 'react';
 
 type Props = {
   education?: Education[];
   defaultStyles: ReturnType<typeof StyleSheet.create>;
-  translate: TFunction;
+  translate: ReturnType<typeof useTranslations<string>>;
   wrapperStyle?: Style;
 };
 

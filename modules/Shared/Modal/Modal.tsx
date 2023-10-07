@@ -1,9 +1,11 @@
+'use client';
+
 import { useKeyPress } from '@modules/Shared/Hooks';
 import { getAnimation } from '@modules/Shared/Modal/getAnimations';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FC, useEffect } from 'react';
-import { createPortal } from 'react-dom';
+import { FC, useEffect, useState } from 'react';
 import style from './Modal.module.scss';
+import { createPortal } from 'react-dom';
 
 interface Props {
   testid?: string;
@@ -23,6 +25,9 @@ interface Props {
     | 'slide-bottom';
 }
 
+// This is a counter to keep track of how many modals are opened at the same time
+let opened = 0;
+
 export const Modal: FC<Props> = ({
   closeModal = () => {
     return;
@@ -39,14 +44,42 @@ export const Modal: FC<Props> = ({
 }) => {
   const escPressed = useKeyPress('Escape');
   const animate = getAnimation(animation);
+  const [startClosing, setStartClosing] = useState(false);
 
   useEffect(() => {
-    if (escPressed) closeModal();
+    if (escPressed) setStartClosing(true);
   }, [escPressed, closeModal]);
 
+  useEffect(() => {
+    if (opened === 0) {
+      document.body.style.overflow = show ? 'hidden' : 'auto';
+    }
+    if (show) {
+      opened++;
+    }
+    return () => {
+      if (show) {
+        opened--;
+      }
+    };
+  }, [show]);
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
+  if (typeof window === 'undefined') return null;
+
   return createPortal(
-    <AnimatePresence>
-      {show && (
+    <AnimatePresence
+      onExitComplete={() => {
+        closeModal();
+        setStartClosing(false);
+      }}
+    >
+      {show && !startClosing && (
         <motion.div
           data-testid={testid}
           initial={'hide'}
@@ -104,6 +137,6 @@ export const Modal: FC<Props> = ({
         </motion.div>
       )}
     </AnimatePresence>,
-    document.getElementById('__next') as Element
+    document.body
   );
 };

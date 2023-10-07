@@ -5,11 +5,11 @@ import { ReorderProvider, useReorderProvider } from '@modules/Shared/Hooks';
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 export const EducationInput = () => {
   const { education, setEducation } = usePDFData();
-  const { t } = useTranslation('EducationInput');
+  const t = useTranslations('EducationInput');
   const animation = useAnimation({
     amountY: 10,
   });
@@ -63,7 +63,7 @@ export const EducationInput = () => {
             endDate: '',
             description: '',
             currentlyEnrolled: false,
-            id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString()
+            id: window.crypto.getRandomValues(new Uint32Array(1))[0].toString(),
           });
         }}
         title={t('addEducation')}

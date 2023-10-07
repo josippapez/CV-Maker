@@ -5,11 +5,11 @@ import { ReorderProvider, useReorderProvider } from '@modules/Shared/Hooks';
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 export const ProfessionalExperienceInput = () => {
   const { setProfessionalExperience, professionalExperience } = usePDFData();
-  const { t } = useTranslation('ProfessionalExperienceInput');
+  const t = useTranslations('ProfessionalExperienceInput');
   const animation = useAnimation({
     amountY: 10,
   });

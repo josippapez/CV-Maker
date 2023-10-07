@@ -1,5 +1,4 @@
 import { Template, TemplateName } from '@/store/reducers/template';
-import i18n from '@/translations/i18n';
 import { Template1 } from '@modules/PDFView/CVTemplates/Templates/Template1';
 import { Template2 } from '@modules/PDFView/CVTemplates/Templates/Template2';
 import { Template3 } from '@modules/PDFView/CVTemplates/Templates/Template3';
@@ -14,9 +13,8 @@ import {
   Project,
   Skill,
 } from '@modules/PDFView/models';
-import { TFunction } from 'i18next';
-import { useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 
 interface Props {
   generalInfo: GeneralInfo;
@@ -31,7 +29,7 @@ interface Props {
 }
 
 interface OptionType extends Props {
-  translate: TFunction;
+  translate: ReturnType<typeof useTranslations<string>>;
 }
 
 function isNever(template: never): never {
@@ -57,12 +55,8 @@ export const getTemplate = (
 };
 
 export const CVTemplate = (props: Props): JSX.Element => {
-  const { t } = useTranslation('CVTemplates');
+  const t = useTranslations('Templates');
   const { template } = props;
-
-  useEffect(() => {
-    i18n.init();
-  }, []);
 
   const options: OptionType = useMemo(() => {
     return {

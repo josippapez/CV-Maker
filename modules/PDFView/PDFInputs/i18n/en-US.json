@@ -1,0 +1,81 @@
+{
+  "CertificatesInput": {
+    "name": "Name",
+    "date": "Date",
+    "institution": "Institution",
+    "description": "Description",
+    "addCertification": "Add certification"
+  },
+  "EducationInput": {
+    "location": "Location",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "present": "Present",
+    "description": "Description",
+    "school": "School",
+    "degree": "Degree",
+    "fieldOfStudy": "Field of study",
+    "addEducation": "Add education",
+    "currentlyEnrolled": "Now",
+
+    "course": "Course",
+    "url": "URL (Link to course page)"
+  },
+  "GeneralInput": {
+    "profilePicture": "Profile picture",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "dob": "Date of birth",
+    "position": "Position",
+    "phone": "Phone",
+    "address": "Address",
+    "address1": "Address 1",
+    "address2": "Address 2",
+    "city": "City",
+    "zip": "Zip code",
+    "country": "Country",
+    "website": "Website",
+    "LinkedIn": "LinkedIn",
+    "Facebook": "Facebook",
+    "Twitter": "Twitter",
+    "GitHub": "Github",
+    "aboutMe": "About me",
+    "remove": "Remove"
+  },
+  "LanguagesInput": {
+    "level": "Level",
+    "language": "Language",
+    "BEGINNER": "Beginner",
+    "CONVERSATIONAL": "Conversational",
+    "NATIVE": "Native",
+    "FLUENT": "Fluent",
+    "addLanguage": "Add language"
+  },
+  "ProfessionalExperienceInput": {
+    "company": "Company",
+    "position": "Position",
+    "location": "Location",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "present": "Present",
+    "description": "Description",
+    "addExperience": "Add experience",
+    "currentlyEnrolled": "Currently Enrolled"
+  },
+  "ProjectsInput": {
+    "name": "Name",
+    "description": "Description",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "owner": "Owner",
+    "url": "URL",
+    "currentlyWorking": "Currently working",
+    "addProject": "Add project"
+  },
+  "SkillsInput": {
+    "skill": "Skill",
+    "addSkills": "Add skill",
+    "noSkills": "No skills"
+  }
+}

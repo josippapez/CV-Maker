@@ -13,7 +13,7 @@ import {
   useDragControls,
   useMotionValue,
 } from 'framer-motion';
-import { TFunction } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { FC, useContext } from 'react';
 
 type Props = {
@@ -25,7 +25,7 @@ type Props = {
   ) => void;
   language: LanguageSkill;
   index: number;
-  t: TFunction;
+  t: ReturnType<typeof useTranslations<string>>;
 };
 
 export const LanguagesItem: FC<Props> = ({

@@ -5,13 +5,13 @@ import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { Project } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
-import { TFunction } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 
 interface Props extends ComponentProps {
   defaultStyles: ReturnType<typeof StyleSheet.create>;
   projects?: Project[];
-  translate: TFunction;
+  translate: ReturnType<typeof useTranslations<string>>;
   wrapperStyle?: Style;
 }
 
