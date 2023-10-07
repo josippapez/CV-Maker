@@ -1,4 +1,3 @@
-import firebaseConfig from '@/store/fbConfig';
 import firebaseConfigProd from '@/store/fbConfig-prod';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Auth, User, connectAuthEmulator, getAuth } from 'firebase/auth';
