@@ -27,11 +27,10 @@
     "web-vitals": "^3.5.0"
   },
   "scripts": {
-    "predev": "yarn run translations:watch &",
+    "predev": "npm run translations:watch &",
     "dev": "next dev",
-    "prebuild": "yarn translations:compile",
+    "prebuild": "npm run translations:compile",
     "build": "next build",
-    "postbuild": "ts-node RemoveTranslations.ts",
     "start": "next start",
     "lint": "next lint",
     "start:emulators": "firebase emulators:start",

@@ -46,8 +46,6 @@ function appendTranslationFile(filePath) {
 
     const translationFile = JSON.parse(fs.readFileSync(filePath));
     const language = filePath.split('/').pop().replace('.json', '');
-    const componentName = filePath.split('/').slice(-2)[0];
-    console.log(componentName, language);
 
     const translationsFolder = 'public/translations';
     if (!fs.existsSync(translationsFolder)) {
