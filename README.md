@@ -1,6 +1,6 @@
 ### Working demo: [DEMO](https://cv-maker.dev/)
 
-### Made using TailwindCSS, NextJS, Redux, i18n, webpack.
+### Made using TailwindCSS, NextJS, Redux, next-intl(beta).
 ### `npm start`
 
 Runs the app in the development mode.\
