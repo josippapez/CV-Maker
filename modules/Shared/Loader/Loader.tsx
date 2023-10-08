@@ -1,31 +1,30 @@
-import { useRouter } from 'next/router';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import style from './PageLoader.module.scss';
 
 type Props = { isLoading?: boolean; inline?: boolean };
 
 export const Loader: FC<Props> = ({ isLoading, inline }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const start = useCallback(() => {
-    setLoading(true);
-  }, []);
+  // const start = useCallback(() => {
+  //   setLoading(true);
+  // }, []);
 
-  const end = useCallback(() => {
-    setLoading(false);
-  }, []);
+  // const end = useCallback(() => {
+  //   setLoading(false);
+  // }, []);
 
-  useEffect(() => {
-    router.events.on('routeChangeStart', start);
-    router.events.on('routeChangeComplete', end);
-    router.events.on('routeChangeError', end);
-    return () => {
-      router.events.off('routeChangeStart', start);
-      router.events.off('routeChangeComplete', end);
-      router.events.off('routeChangeError', end);
-    };
-  }, []);
+  // useEffect(() => {
+  //   router.events.on('routeChangeStart', start);
+  //   router.events.on('routeChangeComplete', end);
+  //   router.events.on('routeChangeError', end);
+  //   return () => {
+  //     router.events.off('routeChangeStart', start);
+  //     router.events.off('routeChangeComplete', end);
+  //     router.events.off('routeChangeError', end);
+  //   };
+  // }, []);
 
   return loading || isLoading ? (
     <div

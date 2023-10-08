@@ -1,4 +1,4 @@
-import { TFunction } from 'i18next';
+import { useTranslations } from 'next-intl';
 import {
   Certificate,
   Education,
@@ -17,5 +17,5 @@ export interface DefaultProps {
   languages?: LanguageSkill[];
   projects?: Project[];
   skills: Skill[];
-  translate: TFunction;
+  translate: ReturnType<typeof useTranslations<string>>;
 }

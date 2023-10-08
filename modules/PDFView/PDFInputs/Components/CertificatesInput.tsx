@@ -5,12 +5,11 @@ import { ReorderProvider, useReorderProvider } from '@modules/Shared/Hooks';
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
-import { useId } from 'react';
+import { useTranslations } from 'next-intl';
 
 export const CertificatesInput = () => {
   const { setCertificates, certificates } = usePDFData();
-  const { t } = useTranslation('CertificatesInput');
+  const t = useTranslations('CertificatesInput');
   const animation = useAnimation({
     amountY: 10,
   });

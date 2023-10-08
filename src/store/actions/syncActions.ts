@@ -1,11 +1,11 @@
 import { setDisplayVersionHistory } from '@/store/reducers/versionHistory';
 import { FirebaseService } from '@modules/Services';
-import { i18n } from 'next-i18next';
 import { toast } from 'react-toastify';
 import { cacheAllData, PDFData } from '../reducers/pdfData';
 import { setTemplate, Template } from '../reducers/template';
 import { AppDispatch, AppState } from '../store';
 import { FirebaseCollectionActions } from './FirebaseCollectionActions';
+import { DEFAULT_LOCALE } from '@/translations/locales';
 
 export interface DocumentPDFData extends PDFData {
   template: Template;
@@ -17,7 +17,7 @@ const firebaseAuth = FirebaseService.getInstance().getAuth();
 export const saveDataForUser = () => {
   return async (dispatch: AppDispatch, getState: AppState) => {
     if (!firebaseAuth.currentUser) return;
-
+    const language = localStorage.getItem('locale') || DEFAULT_LOCALE;
     const { add } = FirebaseCollectionActions('user-data');
 
     const data = Object.keys(getState().pdfData).reduce((acc, key) => {
@@ -34,7 +34,7 @@ export const saveDataForUser = () => {
           ...data,
           template: getState().template,
           timestamp: Date.now(),
-          language: i18n?.language || 'en-US',
+          language,
         },
         () => {
           console.log('saved user data');

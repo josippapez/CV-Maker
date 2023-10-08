@@ -5,13 +5,13 @@ import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/Tex
 import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { Certificate } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';
-import { TFunction } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 
 type Props = {
   certificates?: Certificate[];
   styles: ReturnType<typeof StyleSheet.create>;
-  translate: TFunction;
+  translate: ReturnType<typeof useTranslations<string>>;
 };
 
 export const CertificatesWithImage: FC<Props> = ({

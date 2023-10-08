@@ -6,10 +6,10 @@ import { ReorderProvider, useReorderProvider } from '@modules/Shared/Hooks';
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 export const LanguagesInput = () => {
-  const { t } = useTranslation('LanguagesInput');
+  const t = useTranslations('LanguagesInput');
   const { languages, setLanguages } = usePDFData();
   const animation = useAnimation({
     amountY: 10,

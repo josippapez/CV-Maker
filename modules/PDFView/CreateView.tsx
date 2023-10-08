@@ -3,7 +3,7 @@ import { DisplayPdfModalButton } from '@modules/PDFView/DisplayPdfModalButton';
 import { PDFInputsContainer } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
-import { PageLoader } from '@modules/Shared/Loader';
+import { PageLoader } from '@modules/Shared/Loader/PageLoader';
 import dynamic from 'next/dynamic';
 import { FC, useEffect } from 'react';
 

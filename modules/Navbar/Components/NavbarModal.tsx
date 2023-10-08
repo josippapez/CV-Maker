@@ -1,9 +1,10 @@
-import { CloseButton, Modal } from '@modules/Shared/Modal';
-import { RoutesWithLocale } from 'consts/Routes';
+import { CloseButton } from '@modules/Shared/Modal/Components';
+import { Modal } from '@modules/Shared/Modal/Modal';
 import Logo from '@public/Styles/Assets/Images/logo.svg';
+import { Routes } from 'consts/Routes';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
 type Props = {
   showNavigation: boolean;
@@ -14,7 +15,7 @@ export const NavbarModal: FC<Props> = ({
   showNavigation,
   setShowNavigation,
 }) => {
-  const { t } = useTranslation('Navbar');
+  const t = useTranslations('Navbar');
 
   const navbarLinkDivider = 'h-[1px] w-full bg-gray-200';
   return (
@@ -37,16 +38,16 @@ export const NavbarModal: FC<Props> = ({
           <div className='flex flex-col'>
             <Link
               shallow
-              href={RoutesWithLocale.LANDING_PAGE}
-              className={`mobile w-full py-4 px-5 text-left text-3xl`}
+              href={Routes.LANDING_PAGE}
+              className={`mobile w-full px-5 py-4 text-left text-3xl`}
             >
               {t('home')}
             </Link>
             <div className={navbarLinkDivider} />
             <Link
               shallow
-              href={RoutesWithLocale.CREATE}
-              className={`mobile w-full py-4 px-5 text-left text-3xl`}
+              href={Routes.CREATE}
+              className={`mobile w-full px-5 py-4 text-left text-3xl`}
             >
               {t('create')}
             </Link>

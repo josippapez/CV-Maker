@@ -6,14 +6,14 @@ import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/Tex
 import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
 import { Certificate, Education } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';
-import { TFunction } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { FC, Fragment } from 'react';
 
 type Props = {
   styles: ReturnType<typeof StyleSheet.create>;
   education?: Education[];
   certificates?: Certificate[];
-  translate: TFunction;
+  translate: ReturnType<typeof useTranslations<string>>;
 };
 
 export const EducationWithImage: FC<Props> = ({

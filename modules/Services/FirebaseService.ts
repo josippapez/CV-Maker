@@ -1,4 +1,3 @@
-import firebaseConfig from '@/store/fbConfig';
 import firebaseConfigProd from '@/store/fbConfig-prod';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Auth, User, connectAuthEmulator, getAuth } from 'firebase/auth';
@@ -37,7 +36,7 @@ export class FirebaseService {
     this.functions = getFunctions(this.firebaseApp, 'europe-west3');
     this.user = this.auth.currentUser;
     this.auth.useDeviceLanguage();
-    // if (process.env.NODE_ENV === 'development') this.initEmulators();
+    if (process.env.NODE_ENV === 'development') this.initEmulators();
   }
 
   static getInstance(): FirebaseService {

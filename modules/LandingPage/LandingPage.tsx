@@ -1,3 +1,5 @@
+'use client';
+
 import { LandingPageSection } from '@modules/LandingPage/LandingPageSection';
 import {
   BlobBottomLeft,
@@ -8,17 +10,14 @@ import {
 } from '@modules/PDFView/CVTemplates/Images';
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import Google from '@public/Styles/Assets/Images/google.svg';
+import { Routes } from 'consts/Routes';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
+import Link from 'next-intl/link';
 import { FC, useRef } from 'react';
-import styles from './LandingPage.module.scss';
-
-import { useRoutes } from '@modules/Providers';
-import Link from 'next/link';
 
 export const LandingPage: FC = () => {
-  const routesWithLocale = useRoutes();
-  const { t } = useTranslation('LandingPage');
+  const t = useTranslations('LandingPage');
   const container = useRef(null);
   const { combinedStyleFinal, combinedStyleInitial } = useAnimation({
     amountY: 10,
@@ -218,10 +217,7 @@ export const LandingPage: FC = () => {
         animate={combinedStyleFinal}
         transition={{ duration: 0.2, delay: 0.7 }}
       >
-        <Link
-          href={routesWithLocale.CREATE}
-          className={styles.createYourCVLink}
-        >
+        <Link href={Routes.CREATE} className={'createYourCVLink'}>
           {t('createYourCV')}
         </Link>
       </motion.div>

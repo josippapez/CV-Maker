@@ -1,6 +1,7 @@
 import { PDFData } from '@modules/PDFView/models';
-import { PageLoader } from '@modules/Shared/Loader';
-import { CloseButton, Modal } from '@modules/Shared/Modal';
+import { PageLoader } from '@modules/Shared/Loader/PageLoader';
+import { CloseButton } from '@modules/Shared/Modal/Components';
+import { Modal } from '@modules/Shared/Modal/Modal';
 import DocumentButton from '@public/Styles/Assets/Images/documentButton.svg';
 import dynamic from 'next/dynamic';
 import { FC, useState } from 'react';

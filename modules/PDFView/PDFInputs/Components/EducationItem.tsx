@@ -12,7 +12,7 @@ import {
   useDragControls,
   useMotionValue,
 } from 'framer-motion';
-import { TFunction } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useCallback, useContext, useState } from 'react';
 import { DeleteButton } from './DeleteButton';
 
@@ -25,7 +25,7 @@ interface Props {
     data?: Partial<Education> | Partial<Education>[],
     index?: number
   ) => void;
-  t: TFunction;
+  t: ReturnType<typeof useTranslations<string>>;
 }
 
 const arrayOfEducationInputs: Array<{

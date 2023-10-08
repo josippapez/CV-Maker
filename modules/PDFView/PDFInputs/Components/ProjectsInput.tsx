@@ -8,10 +8,10 @@ import {
   useReorderProvider,
 } from '@modules/Shared/Hooks/useReorderProvider';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 export const ProjectsInput = () => {
-  const { t } = useTranslation('ProjectsInput');
+  const t = useTranslations('ProjectsInput');
   const { projects, setProjects } = usePDFData();
   const animation = useAnimation({
     amountY: 10,

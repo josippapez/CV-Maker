@@ -1,8 +1,9 @@
-import { useChangeLanguage } from '@modules/Navbar/hooks';
 import { useCloseOnClickOutside } from '@modules/Shared/Hooks/useCloseOnClickOutside';
 import Translate from '@public/Styles/Assets/Images/translate.svg';
-import { useTranslation } from 'next-i18next';
-import { FC, useCallback, useRef, useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
+import { usePathname } from 'next-intl/client';
+import { useRouter } from 'next/navigation';
+import { FC, MouseEvent, useRef, useState } from 'react';
 
 interface Props {
   dropdownPosition?:
@@ -11,7 +12,7 @@ interface Props {
     | 'bottom'
     | 'bottom-left'
     | 'bottom-right';
-  onChangeLanguage?: () => void;
+  onChangeLanguage?: () => void | Promise<void>;
   className?: string;
 }
 
@@ -20,8 +21,10 @@ export const ChangeLanguageButton: FC<Props> = ({
   className,
   onChangeLanguage,
 }) => {
-  const { t, i18n } = useTranslation('Navbar');
-  const { changeLanguage } = useChangeLanguage();
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations('Navbar');
 
   const [displayLanguageDropdown, setDisplayLanguageDropdown] =
     useState<boolean>(false);
@@ -29,13 +32,16 @@ export const ChangeLanguageButton: FC<Props> = ({
 
   useCloseOnClickOutside(component, () => setDisplayLanguageDropdown(false));
 
-  const handleSelectLanguage = useCallback(
-    async (language: string) => {
-      await changeLanguage(language, onChangeLanguage);
-      setDisplayLanguageDropdown(false);
-    },
-    [changeLanguage]
-  );
+  const handleSelectLanguage = async (e: MouseEvent<HTMLButtonElement>) => {
+    const target = e.target as HTMLButtonElement;
+    e.preventDefault();
+    if (onChangeLanguage) {
+      if (!target.dataset.locale) return;
+      localStorage.setItem('locale', target.dataset.locale);
+      await onChangeLanguage?.();
+    }
+    router.push(`/${target.dataset.locale}${pathname}`);
+  };
 
   const dropdownPositionProperty = {
     left: 'right-12',
@@ -48,7 +54,7 @@ export const ChangeLanguageButton: FC<Props> = ({
   const selectedLanguageClass = (language: string) => {
     const classNames =
       'w-full cursor-pointer px-6 py-1 hover:bg-gray-200 hover:dark:bg-gray-200 hover:dark:text-almost-black';
-    if (i18n.language === language) {
+    if (locale === language) {
       return `${classNames} bg-gray-600 text-slight-gray hover:bg-gray-600 hover:text-slight-gray`;
     }
     return classNames;
@@ -67,20 +73,18 @@ export const ChangeLanguageButton: FC<Props> = ({
         className={`absolute top-0 z-10 bg-white dark:bg-almost-black ${dropdownPositionProperty[dropdownPosition]}`}
         hidden={!displayLanguageDropdown}
       >
-        <div className={`w-fit rounded-md border py-3`}>
+        <div className={`flex w-fit flex-col rounded-md border py-3`}>
           <button
+            data-locale='en-US'
             className={`${selectedLanguageClass('en-US')}`}
-            onClick={() => {
-              handleSelectLanguage('en-US');
-            }}
+            onClick={handleSelectLanguage}
           >
             {t('English')}
           </button>
           <button
+            data-locale='hr'
             className={`${selectedLanguageClass('hr')}`}
-            onClick={() => {
-              handleSelectLanguage('hr');
-            }}
+            onClick={handleSelectLanguage}
           >
             {t('Croatian')}
           </button>

@@ -71,31 +71,31 @@ export const registerFonts = (template: string) => {
 
   const OpenSans = [
     {
-      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Regular.woff',
+      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Regular.ttf',
       fontWeight: 400,
     },
     {
-      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Bold.woff',
+      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Bold.ttf',
       fontWeight: 700,
     },
     {
-      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Light.woff',
+      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Light.ttf',
       fontWeight: 300,
     },
     {
-      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-SemiBold.woff',
+      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-SemiBold.ttf',
       fontWeight: 600,
     },
     {
-      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Medium.woff',
+      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Medium.ttf',
       fontWeight: 500,
     },
     {
-      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.woff',
+      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-ExtraBold.ttf',
       fontWeight: 800,
     },
     {
-      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Italic.woff',
+      src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Italic.ttf',
       fontStyle: 'italic',
     },
   ];

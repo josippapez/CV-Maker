@@ -11,7 +11,7 @@ import {
   useDragControls,
   useMotionValue,
 } from 'framer-motion';
-import { TFunction } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { FC, useCallback, useContext } from 'react';
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
   ) => void;
   certificate: Certificate;
   index: number;
-  t: TFunction;
+  t: ReturnType<typeof useTranslations<string>>;
 };
 
 const arrayOfCertificatesInputs: Array<{
