@@ -1,4 +1,4 @@
-import { Text } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { Text } from '@rawwee/react-pdf-html';
 import { Style } from '@react-pdf/types';
 
 type Props = {

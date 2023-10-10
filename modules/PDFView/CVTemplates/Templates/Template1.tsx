@@ -12,7 +12,7 @@ import {
   Image,
   Page,
   View,
-} from '@modules/PDFView/CVTemplates/Templates/Components';
+} from '@rawwee/react-pdf-html';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { Skill } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';

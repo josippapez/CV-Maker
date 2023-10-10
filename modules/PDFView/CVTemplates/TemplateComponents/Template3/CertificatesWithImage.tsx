@@ -2,7 +2,7 @@ import { BlobTopLeft } from '@modules/PDFView/CVTemplates/Images/BlobTopLeft';
 import { LayeredWaves } from '@modules/PDFView/CVTemplates/Images/LayeredWaves';
 import { CertificateItem } from '@modules/PDFView/CVTemplates/TemplateComponents/CertificateItem';
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
-import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { View } from '@rawwee/react-pdf-html';
 import { Certificate } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';
 import { useTranslations } from 'next-intl';

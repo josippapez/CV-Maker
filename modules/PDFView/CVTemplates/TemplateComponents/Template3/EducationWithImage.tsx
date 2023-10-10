@@ -3,7 +3,7 @@ import { BlobTopRight } from '@modules/PDFView/CVTemplates/Images/BlobTopRight';
 import { LayeredWaves } from '@modules/PDFView/CVTemplates/Images/LayeredWaves';
 import { EducationItem } from '@modules/PDFView/CVTemplates/TemplateComponents/EducationItem';
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
-import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { View } from '@rawwee/react-pdf-html';
 import { Certificate, Education } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';
 import { useTranslations } from 'next-intl';

@@ -12,7 +12,7 @@ import {
   Link,
   Text,
   View,
-} from '@modules/PDFView/CVTemplates/Templates/Components';
+} from '@rawwee/react-pdf-html';
 import { StyleSheet } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
 import { FC } from 'react';

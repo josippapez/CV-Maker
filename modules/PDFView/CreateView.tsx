@@ -1,4 +1,4 @@
-import { usePDFComponentsAreHTML } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
 import { DisplayPdfModalButton } from '@modules/PDFView/DisplayPdfModalButton';
 import { PDFInputsContainer } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';

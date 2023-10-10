@@ -28,7 +28,8 @@ export const Carousel = (props: Props) => {
           >
             <div className={`${style.templateImage} ${style[value[0]]}`} />
             <div className={`${style.templateName} text-white`}>
-              {t(templateName)}
+              {/* {t(templateName)} */}
+              {templateName}
             </div>
           </div>
         );

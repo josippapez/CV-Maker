@@ -1,6 +1,6 @@
 import { getCurrentTranslations } from '@/translations/hooks/getCurrentTranslations';
 import { DEFAULT_LOCALE } from '@/translations/locales';
-import { usePDFComponentsAreHTML } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
 import { Modal } from '@modules/Shared/Modal/Modal';
 import ReactPDF, { PDFDownloadLink } from '@react-pdf/renderer';
 import { NextIntlClientProvider, useLocale } from 'next-intl';

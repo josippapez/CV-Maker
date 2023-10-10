@@ -2,7 +2,7 @@ import {
   G,
   Path,
   Svg,
-} from '@modules/PDFView/CVTemplates/Templates/Components';
+} from '@rawwee/react-pdf-html';
 
 export const GitHub = (props: { width?: number; height?: number }) => {
   const { width, height } = props;

@@ -1,4 +1,4 @@
-import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { View } from '@rawwee/react-pdf-html';
 import { StyleSheet } from '@react-pdf/renderer';
 import { FC } from 'react';
 

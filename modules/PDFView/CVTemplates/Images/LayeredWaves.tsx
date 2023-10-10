@@ -1,4 +1,4 @@
-import { Path, Svg } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { Path, Svg } from '@rawwee/react-pdf-html';
 
 export const LayeredWaves = ({
   height,

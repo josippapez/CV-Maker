@@ -2,7 +2,7 @@ import {
   G,
   Path,
   Svg,
-} from '@modules/PDFView/CVTemplates/Templates/Components';
+} from '@rawwee/react-pdf-html';
 
 export const Pin = (props: { width?: number; height?: number }) => {
   const { width, height } = props;

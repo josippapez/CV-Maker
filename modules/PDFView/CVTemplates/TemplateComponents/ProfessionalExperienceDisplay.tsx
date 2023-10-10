@@ -1,6 +1,6 @@
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
 import { ComponentProps } from '@modules/PDFView/CVTemplates/TemplateComponents/models/ComponentProps';
-import { View } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { View } from '@rawwee/react-pdf-html';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { ProfessionalExperience } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';

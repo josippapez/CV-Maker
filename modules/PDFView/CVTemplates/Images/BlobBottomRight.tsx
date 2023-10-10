@@ -5,7 +5,7 @@ import {
   Path,
   Stop,
   Svg,
-} from '@modules/PDFView/CVTemplates/Templates/Components';
+} from '@rawwee/react-pdf-html';
 
 export const BlobBottomRight = ({
   height,

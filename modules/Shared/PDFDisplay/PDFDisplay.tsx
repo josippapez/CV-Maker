@@ -1,5 +1,5 @@
 import { CVTemplate } from '@modules/PDFView/CVTemplates/CVTemplate';
-import { usePDFComponentsAreHTML } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
 import { PDFDownload } from '@modules/PDFView/PDFDownload/PDFDownload';
 import { PDFData } from '@modules/PDFView/models';
 import { useAuth } from '@modules/Providers/AuthProvider';

@@ -1,4 +1,4 @@
-import { G, Path, Svg } from '@modules/PDFView/CVTemplates/Templates/Components';
+import { G, Path, Svg } from '@rawwee/react-pdf-html';
 
 export const Email = (props: { width?: number; height?: number }) => {
   const { width, height } = props;

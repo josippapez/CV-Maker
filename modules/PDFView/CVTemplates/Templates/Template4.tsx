@@ -11,7 +11,7 @@ import { DefaultProps } from '@modules/PDFView/CVTemplates/Templates/CVTemplateP
 import {
   Document,
   Page,
-} from '@modules/PDFView/CVTemplates/Templates/Components';
+} from '@rawwee/react-pdf-html';
 import { StyleSheet } from '@react-pdf/renderer';
 import { FC } from 'react';
 
