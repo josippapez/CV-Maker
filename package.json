@@ -27,9 +27,9 @@
     "web-vitals": "^3.5.0"
   },
   "scripts": {
-    "predev": "npm run translations:watch &",
+    "predev": "bun run translations:watch &",
     "dev": "next dev",
-    "prebuild": "npm run translations:compile",
+    "prebuild": "bun run translations:compile",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
