@@ -1,0 +1,11 @@
+{
+  "ErrorPage": {
+    "errorTitle": "Nešto je pošlo krivo.",
+    "errorDescription": "Molimo pokušajte ponovno ili pokušajte kasnije.",
+    "retry": "Pokušaj ponovno",
+    "Metadata": {
+      "title": "Error page",
+      "description": "Error page."
+    }
+  }
+}

@@ -46,6 +46,7 @@ export default async function middleware(
 
   request.cookies.set(LOCALIZATION_KEY, locale);
   request.cookies.set('accept-language', locale);
+  // @ts-ignore-next-line
   const Response = handleI18nRouting(request);
   Response.headers.set('x-default-locale', locale);
   return Response;

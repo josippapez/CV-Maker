@@ -1,0 +1,11 @@
+{
+  "ErrorPage": {
+    "errorTitle": "Something went wrong.",
+    "errorDescription": "Please retry or try again later.",
+    "retry": "Retry",
+    "Metadata": {
+      "title": "Error page",
+      "description": "Error page."
+    }
+  }
+}

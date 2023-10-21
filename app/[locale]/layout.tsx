@@ -21,16 +21,14 @@ export default async function LocaleLayout({
   };
 
   return (
-    <>
-      <html lang={locale}>
-        <body id='__next' className='relative'>
-          <NextIntlClientProvider {...config}>
-            <NavbarPresenter params={{ locale }} />
-            <ToastContainer />
-            {children}
-          </NextIntlClientProvider>
-        </body>
-      </html>
-    </>
+    <html lang={locale}>
+      <body id='__next' className='relative'>
+        <NextIntlClientProvider {...config}>
+          <NavbarPresenter params={{ locale }} />
+          <ToastContainer />
+          {children}
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

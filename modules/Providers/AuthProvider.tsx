@@ -6,7 +6,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const firebase = FirebaseService.getInstance();
 
 const AuthContext = createContext<{ user: User | null }>({
-  user: FirebaseService.getInstance().getAuth().currentUser,
+  user: firebase.getAuth().currentUser,
 });
 
 export const useAuth = () => {

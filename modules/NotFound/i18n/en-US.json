@@ -1,0 +1,12 @@
+{
+  "NotFoundPage": {
+    "notFound": "Page not found",
+    "message": "Please navigate back to the {homepage} or to the {createCV}.",
+    "homePage": "Home page",
+    "createCVPage": "create CV page",
+    "Metadata": {
+      "title": "404 - Page not found",
+      "description": "Page not found."
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "NotFoundPage": {
+    "notFound": "Stranica nije pronađena",
+    "message": "Vratite se natrag na {homepage} ili na {createCV}.",
+    "homePage": "Naslovnu stranicu",
+    "createCVPage": "stranicu za kreiranje životopisa",
+    "Metadata": {
+      "title": "404 - Stranica nije pronađena",
+      "description": "Stranica nije pronađena."
+    }
+  }
+}

@@ -49,3 +49,5 @@ pdf.worker.min.js
 /public/translations
 
 *.pem
+
+/seed-data
