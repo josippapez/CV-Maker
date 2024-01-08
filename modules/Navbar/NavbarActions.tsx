@@ -28,7 +28,7 @@ export const NavbarActions: React.FC = () => {
       />
       <div className='relative flex gap-8'>
         <DarkModeButton className='cursor-pointer select-none' />
-        {pathname === Routes.CREATE && (
+        {pathname === Routes.LANDING_PAGE && (
           <ChangeLanguageButton
             dropdownPosition='bottom-left'
             className='cursor-pointer select-none rounded-full text-sm font-bold transition-all'
