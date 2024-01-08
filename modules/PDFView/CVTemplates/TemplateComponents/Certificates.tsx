@@ -14,12 +14,12 @@ type Props = {
   wrapperStyle?: Style;
 };
 
-export const Certificates: FC<Props> = ({
+export const Certificates = ({
   certificateList,
   defaultStyles: styles,
   translate,
   wrapperStyle = {},
-}) => {
+}: Props) => {
   if (!certificateList || certificateList.length === 0) return null;
 
   return (

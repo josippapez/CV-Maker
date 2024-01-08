@@ -1,10 +1,10 @@
 'use client';
 
+import { usePathname } from '@/translations/navigation';
 import { ChangeLanguageButton } from '@modules/Navbar/Components/ChangeLanguageButton';
 import { DarkModeButton } from '@modules/Navbar/Components/DarkModeButton';
 import { NavbarModal } from '@modules/Navbar/Components/NavbarModal';
 import { Routes } from 'consts/Routes';
-import { usePathname } from 'next-intl/client';
 import Image from 'next/image';
 import { useState } from 'react';
 

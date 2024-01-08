@@ -1,11 +1,10 @@
 import { EducationItem } from '@modules/PDFView/CVTemplates/TemplateComponents/EducationItem';
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
-import { View } from '@rawwee/react-pdf-html';
 import { Education } from '@modules/PDFView/models';
+import { View } from '@rawwee/react-pdf-html';
 import { StyleSheet } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
 import { useTranslations } from 'next-intl';
-import { FC } from 'react';
 
 type Props = {
   education?: Education[];
@@ -14,12 +13,12 @@ type Props = {
   wrapperStyle?: Style;
 };
 
-export const Educations: FC<Props> = ({
+export const Educations = ({
   education,
   defaultStyles: styles,
   translate,
   wrapperStyle = {},
-}) => {
+}: Props) => {
   if (!education || education.length === 0) return null;
 
   return (

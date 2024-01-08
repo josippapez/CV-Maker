@@ -1,14 +1,14 @@
+import { Link } from '@/translations/navigation';
 import { NavbarActions } from '@modules/Navbar/NavbarActions';
 import { Routes } from 'consts/Routes';
-import Link from 'next-intl/link';
-import { getTranslator } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 export default async function NavbarPresenter({
   params: { locale },
 }: {
   params: { locale: string };
 }) {
-  const t = await getTranslator(locale, 'Navbar');
+  const t = await getTranslations('Navbar');
 
   return (
     <div className='page-container desktop_col-28 mobile_col-16'>

@@ -1,6 +1,6 @@
 import { CVMakerPreviewPage } from '@modules/PDFPreview/CVMakerPreviewPage';
 import { generateSeo } from '@modules/SEO/generateSeo';
-import { getTranslator } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({
   params: { locale },
@@ -9,7 +9,7 @@ export async function generateMetadata({
     locale: string;
   };
 }) {
-  const t = await getTranslator(locale, 'PreviewPage.Metadata');
+  const t = await getTranslations('PreviewPage.Metadata');
 
   return generateSeo({
     title: t('title'),

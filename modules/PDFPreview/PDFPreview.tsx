@@ -2,11 +2,11 @@ import {
   DocumentPDFData,
   getCVPreviewForUser,
 } from '@/store/actions/syncActions';
+import { useRouter } from '@/translations/navigation';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { PageLoader } from '@modules/Shared/Loader/PageLoader';
 import { Routes } from 'consts/Routes';
 import { useLocale } from 'next-intl';
-import { useRouter } from 'next-intl/client';
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
@@ -31,7 +31,7 @@ export const PDFPreview = () => {
   const locale = useLocale();
   const { setAllPreviewData, previewData } = usePDFData();
 
-  const userId = isQueryString(params.userid) ? params.userid : null;
+  const userId = isQueryString(params?.userid) ? params?.userid : null;
   const isPDFPreview = Boolean(userId);
 
   const data = {
@@ -52,10 +52,7 @@ export const PDFPreview = () => {
       getCVPreviewForUser(userId, (data: DocumentPDFData) => {
         setAllPreviewData(data);
         if (locale !== data.language) {
-          router.push(
-            `${Routes.CV}/${userId}`,
-            {locale: data.language}
-          );
+          router.push(`${Routes.CV}/${userId}`, { locale: data.language });
         }
       });
     }

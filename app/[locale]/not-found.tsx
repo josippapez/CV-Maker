@@ -2,7 +2,7 @@
 
 import { Routes } from 'consts/Routes';
 import { useTranslations } from 'next-intl';
-import Link from 'next-intl/link';
+import { Link } from '@/translations/navigation';
 
 export default function NotFound() {
   const t = useTranslations('NotFoundPage');

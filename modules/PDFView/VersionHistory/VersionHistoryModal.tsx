@@ -5,7 +5,7 @@ import { setTemplate } from '@/store/reducers/template';
 import { setDisplayVersionHistory } from '@/store/reducers/versionHistory';
 import { Modal } from '@modules/Shared/Modal/Modal';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next-intl/client';
+import { useRouter } from '@/translations/navigation';
 import { FC, useCallback, useEffect } from 'react';
 
 export const VersionHistoryModal: FC = () => {

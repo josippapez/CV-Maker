@@ -1,5 +1,6 @@
 'use client';
 
+import { Link } from '@/translations/navigation';
 import { LandingPageSection } from '@modules/LandingPage/LandingPageSection';
 import {
   BlobBottomLeft,
@@ -13,7 +14,6 @@ import Google from '@public/Styles/Assets/Images/google.svg';
 import { Routes } from 'consts/Routes';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import Link from 'next-intl/link';
 import { FC, useRef } from 'react';
 
 export const LandingPage: FC = () => {
@@ -63,7 +63,7 @@ export const LandingPage: FC = () => {
                   : { opacity: 0 }
               }
               transition={{ duration: 0.2, delay: 0.1 }}
-              src={'./Styles/Assets/Images/Template4.png'}
+              src={'/Styles/Assets/Images/Template4.png'}
               width={'45%'}
               alt='Template4'
             />
@@ -91,7 +91,7 @@ export const LandingPage: FC = () => {
                     }
               }
               transition={{ duration: 0.2 }}
-              src={'./Styles/Assets/Images/Template3.png'}
+              src={'/Styles/Assets/Images/Template3.png'}
               width={'45%'}
               alt='Template3'
             />
@@ -170,7 +170,7 @@ export const LandingPage: FC = () => {
                     }
               }
               transition={{ duration: 0.2 }}
-              src={'./Styles/Assets/Images/Templates.png'}
+              src={'/Styles/Assets/Images/Templates.png'}
               width={'100%'}
               alt='Template3'
             />

@@ -1,6 +1,6 @@
 import { CVMakerPage } from '@modules/PDFView/CVMakerPage';
 import { generateSeo } from '@modules/SEO/generateSeo';
-import { getTranslator } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({
   params: { locale },
@@ -9,7 +9,7 @@ export async function generateMetadata({
     locale: string;
   };
 }) {
-  const t = await getTranslator(locale, 'MakerPage.Metadata');
+  const t = await getTranslations('MakerPage.Metadata');
 
   return generateSeo({
     title: t('title'),

@@ -3,8 +3,8 @@ import { StyleSheet } from '@react-pdf/renderer';
 import { FC } from 'react';
 
 type Props = {
-  Component1: React.ReactNode | null;
-  Component2: React.ReactNode | null;
+  Component1: React.JSX.Element | null;
+  Component2: React.JSX.Element | null;
 };
 
 const styles = StyleSheet.create({

@@ -1,6 +1,6 @@
 import { LandingPage } from '@modules/LandingPage/LandingPage';
 import { generateSeo } from '@modules/SEO/generateSeo';
-import { getTranslator } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({
   params: { locale },
@@ -9,7 +9,7 @@ export async function generateMetadata({
     locale: string;
   };
 }) {
-  const t = await getTranslator(locale, 'LandingPage.Metadata');
+  const t = await getTranslations('LandingPage.Metadata');
 
   return generateSeo({
     title: t('title'),

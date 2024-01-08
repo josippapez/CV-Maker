@@ -19,6 +19,7 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 const nextConfig = {
   // transpilePackages: ['redux-persist'],
   reactStrictMode: true,
+  trailingSlash: true,
   experimental: {
     forceSwcTransforms: true,
   },

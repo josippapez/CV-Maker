@@ -1,8 +1,7 @@
+import { usePathname, useRouter } from '@/translations/navigation';
 import { useCloseOnClickOutside } from '@modules/Shared/Hooks/useCloseOnClickOutside';
 import Translate from '@public/Styles/Assets/Images/translate.svg';
 import { useLocale, useTranslations } from 'next-intl';
-import { usePathname } from 'next-intl/client';
-import { useRouter } from 'next/navigation';
 import { FC, MouseEvent, useRef, useState } from 'react';
 
 interface Props {
@@ -40,7 +39,9 @@ export const ChangeLanguageButton: FC<Props> = ({
       localStorage.setItem('locale', target.dataset.locale);
       await onChangeLanguage?.();
     }
-    router.push(`/${target.dataset.locale}${pathname}`);
+    router.push(pathname, {
+      locale: target.dataset.locale,
+    });
   };
 
   const dropdownPositionProperty = {
