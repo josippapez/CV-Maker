@@ -34,9 +34,9 @@ import {
   Skill,
 } from '@modules/PDFView/models';
 import { FirebaseService } from '@modules/Services';
-import { useDebouncedFunction } from '@modules/Shared/Hooks/useDebouncedFunction';
 import { useDebouncedValue } from '@modules/Shared/Hooks/useDebouncedValue';
 import { useCallback, useMemo, useEffect } from 'react';
+import { debounce } from 'lodash';
 
 const firebaseAuth = FirebaseService.getInstance().getAuth();
 
@@ -76,7 +76,7 @@ export const usePDFData = () => {
 
   const [initial, setInitial] = useDebouncedValue(true, 2000);
 
-  const [saveData] = useDebouncedFunction(() => {
+  const saveData = debounce(() => {
     if (initial) {
       setInitial(false);
       return;
@@ -102,7 +102,7 @@ export const usePDFData = () => {
     [dispatch]
   );
 
-  const [setDebouncedGeneralInfo] = useDebouncedFunction(() => {
+  const setDebouncedGeneralInfo = debounce(() => {
     dispatch(
       cacheGeneralInfo({
         ...generalInfo,
@@ -123,7 +123,7 @@ export const usePDFData = () => {
     [generalInfo]
   );
 
-  const [setDebouncedProfessionalExperience] = useDebouncedFunction(
+  const setDebouncedProfessionalExperience = debounce(
     (operation: Operations, index?: number) => {
       dispatch(
         cacheProfessionalExperience({
@@ -162,7 +162,7 @@ export const usePDFData = () => {
     []
   );
 
-  const [setDebouncedCertificates] = useDebouncedFunction(
+  const setDebouncedCertificates = debounce(
     (operation: Operations, index?: number) => {
       dispatch(
         cacheCertificates({
@@ -199,7 +199,7 @@ export const usePDFData = () => {
     []
   );
 
-  const [setDebouncedEducation] = useDebouncedFunction(
+  const setDebouncedEducation = debounce(
     (operation: Operations, index?: number) => {
       dispatch(
         cacheEducation({
@@ -236,7 +236,7 @@ export const usePDFData = () => {
     []
   );
 
-  const [setDebouncedLanguages] = useDebouncedFunction(
+  const setDebouncedLanguages = debounce(
     (
       operation: Operations,
 
@@ -277,7 +277,7 @@ export const usePDFData = () => {
     []
   );
 
-  const [setSkills] = useDebouncedFunction(
+  const setSkills = debounce(
     (operation: Operations, skill?: Partial<Skill>, index?: number) => {
       dispatch(
         cacheSkills({
@@ -290,7 +290,7 @@ export const usePDFData = () => {
     },
     0
   );
-  const [setDebouncedProjects] = useDebouncedFunction(
+  const setDebouncedProjects = debounce(
     (operation: Operations, index?: number) => {
       dispatch(
         cacheProjects({
@@ -327,10 +327,8 @@ export const usePDFData = () => {
     []
   );
 
-  const [setAllData] = useDebouncedFunction((data: PDFData) =>
-    dispatch(cacheAllData(data))
-  );
-  const [setAllPreviewData] = useDebouncedFunction((data: DocumentPDFData) =>
+  const setAllData = debounce((data: PDFData) => dispatch(cacheAllData(data)));
+  const setAllPreviewData = debounce((data: DocumentPDFData) =>
     dispatch(cacheAllPreviewData(data))
   );
   const setActiveTemplate = (template: TemplateName) =>

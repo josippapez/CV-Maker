@@ -4,8 +4,8 @@ import { useKeyPress } from '@modules/Shared/Hooks';
 import { getAnimation } from '@modules/Shared/Modal/getAnimations';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FC, useEffect, useState } from 'react';
-import style from './Modal.module.scss';
 import { createPortal } from 'react-dom';
+import style from './Modal.module.scss';
 
 interface Props {
   testid?: string;
@@ -111,7 +111,7 @@ export const Modal: FC<Props> = ({
             ${style.overlay}
             ${style[`${position}`]}
           `}
-          onMouseDown={() => closeModal()}
+          onMouseDown={() => setStartClosing(true)}
           onTouchStart={e => e.stopPropagation()}
         >
           <motion.div
@@ -128,7 +128,7 @@ export const Modal: FC<Props> = ({
             style={{
               width: width === 'screen' ? '100vw' : width,
               height: height === 'screen' ? '100vh' : height,
-              maxHeight: window.innerHeight + 'px',
+              maxHeight: '100dvh',
               zIndex: zindex ? zindex + 1 : 'auto',
             }}
           >
@@ -137,6 +137,6 @@ export const Modal: FC<Props> = ({
         </motion.div>
       )}
     </AnimatePresence>,
-    document.body
+    document.getElementById('__next') as Element
   );
 };
