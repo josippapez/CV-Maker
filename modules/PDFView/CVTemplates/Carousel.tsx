@@ -1,6 +1,6 @@
-import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
+import { cn } from '@/lib/utils';
 import { TemplateName } from '@/store/reducers/template';
-import style from './TemplatesModal.module.scss';
+import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { useTranslations } from 'next-intl';
 
 type Props = {
@@ -12,22 +12,28 @@ export const Carousel = (props: Props) => {
   const { closeModal } = props;
   const { setActiveTemplate } = usePDFData();
   return (
-    <div className='h-full pt-5 mt-3 flex flex-wrap overflow-auto justify-center'>
-      {Object.entries(TemplateName).map(value => {
+    <div className='mt-3 flex h-full flex-wrap justify-center gap-3 overflow-auto pt-5'>
+      {Object.entries(TemplateName).map((value, index) => {
         const templateName = value[1];
         return (
           <div
             key={templateName}
-            className={`${style.template} ${
-              style[value[0]]
-            } cursor-pointer h-fit rounded-md transition-all hover:ring-2 hover:ring-blue-400`}
+            className={cn(
+              'h-fit cursor-pointer rounded-md transition-all hover:ring-2 hover:ring-blue-400',
+              'h-[410px] w-[320px] hover:scale-105 max-sm:h-auto max-sm:w-full'
+            )}
             onClick={() => {
               setActiveTemplate(value[1]);
               closeModal();
             }}
           >
-            <div className={`${style.templateImage} ${style[value[0]]}`} />
-            <div className={`${style.templateName} text-white`}>
+            <div
+              className={cn(
+                `bg-[url("/Styles/Assets/Images/Template${index + 1}.png")]`,
+                `h-[calc(100%-2rem)] bg-contain bg-center bg-no-repeat`
+              )}
+            />
+            <div className={`mt-3 text-center text-base text-white`}>
               {/* {t(templateName)} */}
               {templateName}
             </div>

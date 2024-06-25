@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { logout, signInWithGoogle } from '@/store/actions/authActions';
 import { saveDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch } from '@/store/hooks';
@@ -135,9 +136,9 @@ export const PDFTabNavigationPresenter = ({
 
   return (
     <div
-      className={`z-10 flex ${
-        windowSize.width < 500 ? 'w-[70px]' : 'w-28 min-w-[7rem]'
-      } py-8 shadow-sm`}
+      className={cn(
+        'z-10 flex w-28 shadow-sm max-[500px]:w-[70px] min-[500px]:min-w-[7rem] overflow-auto md: py-8'
+      )}
     >
       <div className='flex flex-grow flex-col justify-between gap-6'>
         <div className='flex w-full min-w-full flex-col items-center justify-evenly gap-2'>

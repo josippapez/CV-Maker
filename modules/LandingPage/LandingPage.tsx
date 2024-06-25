@@ -224,7 +224,7 @@ export const LandingPage: FC = () => {
 
       <LandingPageSection sectionClass='full-bleed overflow-visible'>
         <div className='absolute flex w-full max-w-full flex-col items-start'>
-          <LayeredWaves width={'100%'} customViewBox='0 0 180 100' />
+          <LayeredWaves width={'100%'} />
         </div>
       </LandingPageSection>
     </div>
