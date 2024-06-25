@@ -7,6 +7,14 @@ type Props = {
   closeModal(): void;
 };
 
+// used at build time to display correct template images
+const templates = [
+  'bg-[url("/Styles/Assets/Images/Template1.png")]',
+  'bg-[url("/Styles/Assets/Images/Template2.png")]',
+  'bg-[url("/Styles/Assets/Images/Template3.png")]',
+  'bg-[url("/Styles/Assets/Images/Template4.png")]',
+];
+
 export const Carousel = (props: Props) => {
   const t = useTranslations('Templates');
   const { closeModal } = props;
