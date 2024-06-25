@@ -1,13 +1,12 @@
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { saveDataForUser } from '@/store/actions/syncActions';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { cacheAllData, setModified } from '@/store/reducers/pdfData';
 import { setTemplate } from '@/store/reducers/template';
 import { setDisplayVersionHistory } from '@/store/reducers/versionHistory';
-import { Modal } from '@modules/Shared/Modal/Modal';
-import { useTranslations } from 'next-intl';
 import { useRouter } from '@/translations/navigation';
+import { useTranslations } from 'next-intl';
 import { FC, useCallback, useEffect } from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 export const VersionHistoryModal: FC = () => {
   const dispatch = useAppDispatch();

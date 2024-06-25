@@ -1,6 +1,6 @@
+import { cn } from '@/lib/utils';
 import XImage from '@public/Styles/Assets/Images/X.svg';
 import { FC } from 'react';
-import style from '../Modal.module.scss';
 
 type Props = {
   onClick: () => void;
@@ -24,7 +24,13 @@ export const CloseButton: FC<Props> = ({
   return (
     <button
       onClick={onClick}
-      className={`${style.closeButton} ${align} ${buttonClassName}`}
+      className={cn(
+        'flex hover:cursor-pointer',
+        align === 'left' && 'self-start',
+        align === 'right' && 'self-end',
+        align === 'center' && 'self-center',
+        buttonClassName
+      )}
     >
       <XImage
         height={height}

@@ -1,7 +1,7 @@
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { getCurrentTranslations } from '@/translations/hooks/getCurrentTranslations';
 import { DEFAULT_LOCALE } from '@/translations/locales';
 import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
-import { Modal } from '@modules/Shared/Modal/Modal';
 import ReactPDF, { PDFDownloadLink } from '@react-pdf/renderer';
 import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -42,87 +42,81 @@ export const PDFDownload = ({
   }, [show]);
 
   return (
-    <Modal
-      show={show}
-      position='center'
-      closeModal={() => {
-        setHtml(true);
-        setDownload(false);
-        setTimeout(() => {
-          closeModal();
-        }, 100);
-      }}
-    >
-      <div className='relative h-fit w-fit flex-col bg-white p-5 text-almost-black'>
-        <div className='flex items-center justify-between'>
-          <h1 className='text-2xl font-bold'>Download CV</h1>
-          <button
-            className='absolute right-3 top-1 rounded-full font-bold hover:bg-slate-500 hover:text-white'
-            style={{
-              lineHeight: '10px',
-              fontSize: '20px',
-              width: '30px',
-              height: '30px',
-            }}
-            onClick={() => {
-              closeModal();
-            }}
-          >
-            &times;
-          </button>
-        </div>
-        <div className='mt-4 flex justify-center'>
-          <span className='mr-3 w-auto self-center font-bold'>CV PDF name</span>
-          <input
-            className='w-auto border border-gray-400 p-2'
-            type='text'
-            placeholder='Enter CV name'
-            value={cvName}
-            onChange={e => setCvName(e.target.value)}
-          />
-        </div>
-        <div className='mt-4 flex justify-center'>
-          {pdfBlob && (
-            <a
-              className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
-              href={pdfBlob?.url || ''}
-              download={`${cvName}.pdf`}
+    <Dialog open={show} onOpenChange={closeModal}>
+      <DialogContent showCloseButton={false}>
+        <div className='relative h-fit w-fit flex-col bg-white p-5 text-almost-black'>
+          <div className='flex items-center justify-between'>
+            <h1 className='text-2xl font-bold'>Download CV</h1>
+            <button
+              className='absolute right-3 top-1 rounded-full font-bold hover:bg-slate-500 hover:text-white'
+              style={{
+                lineHeight: '10px',
+                fontSize: '20px',
+                width: '30px',
+                height: '30px',
+              }}
+              onClick={() => {
+                closeModal();
+              }}
             >
-              Download
-            </a>
-          )}
-          {!pdfBlob &&
-            PdfInstance &&
-            messages &&
-            (download ? (
-              <PDFDownloadLink
+              &times;
+            </button>
+          </div>
+          <div className='mt-4 flex flex-wrap justify-center'>
+            <span className='mr-3 w-auto self-center font-bold'>
+              CV PDF name
+            </span>
+            <input
+              className='w-auto border border-gray-400 p-2'
+              type='text'
+              placeholder='Enter CV name'
+              value={cvName}
+              onChange={e => setCvName(e.target.value)}
+            />
+          </div>
+          <div className='mt-4 flex justify-center'>
+            {pdfBlob && (
+              <a
                 className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
-                document={
-                  !isHTML ? (
-                    <NextIntlClientProvider {...config}>
-                      <PdfInstance />
-                    </NextIntlClientProvider>
-                  ) : (
-                    <></>
-                  )
-                }
-                fileName={`${cvName}.pdf`}
-              >
-                {({ blob, url, loading, error }) => {
-                  if (loading) return 'Loading document...';
-                  return 'Download now!';
-                }}
-              </PDFDownloadLink>
-            ) : (
-              <button
-                className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
-                onClick={() => setDownload(true)}
+                href={pdfBlob?.url || ''}
+                download={`${cvName}.pdf`}
               >
                 Download
-              </button>
-            ))}
+              </a>
+            )}
+            {!pdfBlob &&
+              PdfInstance &&
+              messages &&
+              (download ? (
+                <PDFDownloadLink
+                  className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
+                  document={
+                    !isHTML ? (
+                      <NextIntlClientProvider {...config}>
+                        <PdfInstance />
+                      </NextIntlClientProvider>
+                    ) : (
+                      <></>
+                    )
+                  }
+                  fileName={`${cvName}.pdf`}
+                >
+                  {({ blob, url, loading, error }) => {
+                    if (loading) return 'Loading document...';
+                    return 'Download now!';
+                  }}
+                </PDFDownloadLink>
+              ) : (
+                <button
+                  className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
+                  onClick={() => setDownload(true)}
+                >
+                  Download
+                </button>
+              ))}
+          </div>
         </div>
-      </div>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 };

@@ -1,4 +1,4 @@
-import { useMobileView } from '@modules/Shared/Hooks/useMobileView';
+import { cn } from '@/lib/utils';
 import ArrowLeft from '@public/Styles/Assets/Images/left-arrow.svg';
 import ArrowRight from '@public/Styles/Assets/Images/right-arrow.svg';
 import { DateTime } from 'luxon';
@@ -29,7 +29,6 @@ export const DatePickerHeader = (props: Props) => {
     setShowYearPicker,
   } = props;
   const t = useTranslations('DatePicker');
-  const mobileView = useMobileView();
 
   const shouldShowSelectMonth =
     !hideMonth && setSelectedMonth && !!selectedMonth;
@@ -48,13 +47,17 @@ export const DatePickerHeader = (props: Props) => {
         </button>
       </div>
       <div
-        className={`flex select-none justify-center gap-3 drop-shadow-md ${className}`}
+        className={cn(
+          `flex select-none flex-wrap justify-center gap-3 drop-shadow-md`,
+          className
+        )}
       >
         {shouldShowSelectMonth ? (
           <div
-            className={`flex items-center ${
-              mobileView ? 'w-[165px]' : 'w-36'
-            } h-10 rounded-md`}
+            className={cn(
+              `flex h-10 w-36 items-center rounded-md`,
+              'max-md:w-[165px]'
+            )}
           >
             <button
               onClick={() => {
