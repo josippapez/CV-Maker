@@ -15,7 +15,7 @@ export const BlobTopRight = ({
   width?: number | string;
 }) => {
   return (
-    <Svg id='visual' viewBox='0 0 595 90' height={height} width={width}>
+    <Svg id='visual' viewBox='0 0 90 90' height={height} width={width}>
       <Defs>
         <LinearGradient id='grad1_0' x1='0%' y1='0%' x2='100%' y2='100%'>
           <Stop offset='30%' stopColor='#fbae3c' stopOpacity='1'></Stop>
@@ -112,7 +112,7 @@ export const BlobTopRight = ({
           <Stop offset='70%' stopColor='#1d2540' stopOpacity='1'></Stop>
         </LinearGradient>
       </Defs>
-      <G transform='translate(595, 0)'>
+      <G transform='translate(90, 0)'>
         <Path
           d='M0 90C-9 87.6 -18.1 85.1 -26.6 81.8C-35.1 78.4 -43.1 74.2 -50 68.8C-56.8 63.3 -62.5 56.8 -68.8 50C-75.1 43.2 -82 36.2 -85.6 27.8C-89.2 19.5 -89.6 9.7 -90 0L0 0Z'
           fill='#0f1d33'

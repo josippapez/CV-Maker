@@ -1,7 +1,12 @@
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import { PDFData } from '@modules/PDFView/models';
 import { PageLoader } from '@modules/Shared/Loader/PageLoader';
 import { CloseButton } from '@modules/Shared/Modal/Components';
-import { Modal } from '@modules/Shared/Modal/Modal';
 import DocumentButton from '@public/Styles/Assets/Images/documentButton.svg';
 import dynamic from 'next/dynamic';
 import { FC, useState } from 'react';
@@ -31,34 +36,31 @@ export const DisplayPdfModalButton: FC<Props> = ({
   const [displayPdfModal, setDisplayPdfModal] = useState(false);
 
   return (
-    <>
-      <div
-        className={`flex items-center justify-center ${className}`}
-        onClick={() => setDisplayPdfModal(true)}
-      >
+    <Sheet open={displayPdfModal} onOpenChange={setDisplayPdfModal}>
+      <SheetTrigger className={`flex items-center justify-center ${className}`}>
         <DocumentButton
           height={30}
           width={35}
           className={`${iconStrokeColor ?? 'stroke-gray-700'}`}
         />
-      </div>
-      <Modal
-        width='screen'
-        animation='slide-right'
-        position='center'
-        height='screen'
-        show={displayPdfModal}
-        contentClassname='bg-white dark:bg-almost-black'
-        closeModal={() => setDisplayPdfModal(false)}
+      </SheetTrigger>
+      <SheetContent
+        side='right'
+        showCloseButton={false}
+        className='h-full w-full border-none bg-white dark:bg-almost-black'
       >
-        <CloseButton
-          onClick={() => setDisplayPdfModal(false)}
-          align='left'
-          imageClassName='dark:fill-white'
-          buttonClassName='p-4'
-        />
+        <SheetClose asChild>
+          <CloseButton
+            onClick={() => {
+              setDisplayPdfModal(false);
+            }}
+            align='left'
+            imageClassName='dark:fill-white'
+            buttonClassName='p-4'
+          />
+        </SheetClose>
         <DynamicPDFDisplay data={data} />
-      </Modal>
-    </>
+      </SheetContent>
+    </Sheet>
   );
 };

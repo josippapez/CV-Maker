@@ -72,7 +72,7 @@ export const LandingPage: FC = () => {
       </LandingPageSection>
 
       <LandingPageSection sectionClass='full-bleed overflow-visible -z-10'>
-        <div className='absolute flex w-full flex-col items-end'>
+        <div className='absolute flex w-full max-w-full flex-col items-end'>
           <BlobBottomRight height={180} />
           <BlobTopRight height={180} />
         </div>
@@ -114,7 +114,7 @@ export const LandingPage: FC = () => {
       </LandingPageSection>
 
       <LandingPageSection sectionClass='full-bleed overflow-visible -z-10'>
-        <div className='absolute flex w-full flex-col items-start'>
+        <div className='absolute flex w-full max-w-full flex-col items-start'>
           <BlobBottomLeft height={180} />
           <BlobTopLeft height={180} />
         </div>
@@ -223,8 +223,8 @@ export const LandingPage: FC = () => {
       </motion.div>
 
       <LandingPageSection sectionClass='full-bleed overflow-visible'>
-        <div className='absolute flex w-full flex-col items-start'>
-          <LayeredWaves width={'100%'} />
+        <div className='absolute flex w-full max-w-full flex-col items-start'>
+          <LayeredWaves width={'100%'} customViewBox='0 0 180 100' />
         </div>
       </LandingPageSection>
     </div>

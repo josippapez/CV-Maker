@@ -15,7 +15,7 @@ export const BlobTopLeft = ({
   width?: number | string;
 }) => {
   return (
-    <Svg id='visual' viewBox='0 0 595 90' height={height} width={width}>
+    <Svg id='visual' viewBox='0 0 90 90' height={height} width={width}>
       <Defs>
         <LinearGradient id='grad1_0' x1='0%' y1='0%' x2='100%' y2='100%'>
           <Stop offset='30%' stopColor='#fbae3c' stopOpacity='1'></Stop>

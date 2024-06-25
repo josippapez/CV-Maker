@@ -7,6 +7,7 @@ import { Modal } from '@modules/Shared/Modal/Modal';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/translations/navigation';
 import { FC, useCallback, useEffect } from 'react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 export const VersionHistoryModal: FC = () => {
   const dispatch = useAppDispatch();
@@ -37,40 +38,48 @@ export const VersionHistoryModal: FC = () => {
   }, []);
 
   return (
-    <Modal
-      show={
+    <Dialog
+      open={
         displayVersionHistory && !localStorage.getItem('preventVersionHistory')
       }
-      width='45rem'
+      onOpenChange={closeModal}
     >
-      <div className='rounded-md bg-white px-8 py-6 tracking-wide text-almost-black'>
-        <p>{t('conflict')}</p>
-        <p className='mt-2 font-semibold'>{t('conflict-local')}</p>
-        <p className='mt-2 font-semibold'>{t('conflict-cloud')}</p>
-        <div className='mt-7 flex justify-around'>
-          <button
-            className='rounded-md bg-blue-200 px-3 py-2 hover:bg-blue-300'
-            onClick={() => {
-              dispatch(saveDataForUser());
-              closeModal();
-            }}
-          >
-            <p>{t('conflict_keep_local')}</p>
-          </button>
-          <button
-            className='rounded-md bg-green-200 px-3 py-2 hover:bg-green-300'
-            onClick={async () => {
-              if (!tempPdfData) return;
-              dispatch(setTemplate(tempPdfData.template.templateName));
-              dispatch(cacheAllData(tempPdfData));
-              router.push('/create');
-              closeModal();
-            }}
-          >
-            <p>{t('conflict_keep_cloud')}</p>
-          </button>
+      <DialogContent
+        onEscapeKeyDown={e => {
+          e.preventDefault();
+        }}
+        showCloseButton={false}
+        className='w-[min(45rem,100%)]'
+      >
+        <div className='rounded-md bg-white px-8 py-6 tracking-wide text-almost-black'>
+          <p>{t('conflict')}</p>
+          <p className='mt-2 font-semibold'>{t('conflict-local')}</p>
+          <p className='mt-2 font-semibold'>{t('conflict-cloud')}</p>
+          <div className='mt-7 flex justify-around'>
+            <button
+              className='rounded-md bg-blue-200 px-3 py-2 hover:bg-blue-300'
+              onClick={() => {
+                dispatch(saveDataForUser());
+                closeModal();
+              }}
+            >
+              <p>{t('conflict_keep_local')}</p>
+            </button>
+            <button
+              className='rounded-md bg-green-200 px-3 py-2 hover:bg-green-300'
+              onClick={async () => {
+                if (!tempPdfData) return;
+                dispatch(setTemplate(tempPdfData.template.templateName));
+                dispatch(cacheAllData(tempPdfData));
+                router.push('/create');
+                closeModal();
+              }}
+            >
+              <p>{t('conflict_keep_cloud')}</p>
+            </button>
+          </div>
         </div>
-      </div>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 };

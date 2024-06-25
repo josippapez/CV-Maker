@@ -82,20 +82,24 @@ textarea {
 
 @keyframes rotate-box-shadow {
   0% {
-    box-shadow: 0 0 0.25rem #00000080, -0.125rem -0.125rem 1rem #ef476580,
+    box-shadow:
+      0 0 0.25rem #00000080,
+      -0.125rem -0.125rem 1rem #ef476580,
       0.125rem 0.125rem 1rem #ff9a5a80;
   }
   50% {
-    box-shadow: 0 0 0.25rem #00000080, -0.125rem -0.125rem 1rem #ff9a5a80,
+    box-shadow:
+      0 0 0.25rem #00000080,
+      -0.125rem -0.125rem 1rem #ff9a5a80,
       0.125rem 0.125rem 1rem #ef476580;
   }
   100% {
-    box-shadow: 0 0 0.25rem #00000080, -0.125rem -0.125rem 1rem #ef476580,
+    box-shadow:
+      0 0 0.25rem #00000080,
+      -0.125rem -0.125rem 1rem #ef476580,
       0.125rem 0.125rem 1rem #ff9a5a80;
   }
 }
-
-
 
 .privacy-screen {
   position: fixed;
