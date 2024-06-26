@@ -1,5 +1,3 @@
-/** @type {import('next').NextConfig} */
-
 import withNextIntl from 'next-intl/plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import path from 'path';
@@ -16,12 +14,18 @@ const withBundleAnalyzer = NextBundleAnalyzer({
     process.env.ANALYZE === 'true' && process.env.NODE_ENV === 'production',
 });
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   // transpilePackages: ['redux-persist'],
   reactStrictMode: true,
   trailingSlash: true,
   experimental: {
     forceSwcTransforms: true,
+  },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
   },
   images: {
     domains: ['firebasestorage.googleapis.com', 'localhost'],

@@ -17,7 +17,7 @@ function getLocaleAndRoute(request: NextRequest) {
   let previousRoute = request.headers.get('referer') ?? undefined;
   // always will be of one of these formats: /[locale]/[route] or /[route]
   const splitLink = request.nextUrl.clone().pathname.slice(1).split('/');
-  const linkHasLocale = Object.keys(LOCALES).includes(splitLink[0]);
+  const linkHasLocale = LOCALES.includes(splitLink[0]);
 
   const linkLocale = linkHasLocale ? splitLink[0] : undefined;
   const cookieLocale =
@@ -54,5 +54,5 @@ export default async function middleware(
 
 export const config = {
   // Skip all paths that should not be internationalized
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };

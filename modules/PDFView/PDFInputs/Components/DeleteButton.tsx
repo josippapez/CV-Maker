@@ -8,9 +8,13 @@ type Props = {
   colorHover?: string;
 };
 
-export const DeleteButton = (props: Props) => {
-  const { onClick, color, colorHover, positionRight, positionTop } = props;
-
+export const DeleteButton: React.FC<Props> = ({
+  onClick,
+  color = 'gray',
+  colorHover = 'hover:stroke-red-600',
+  positionRight = '1rem',
+  positionTop = '1rem',
+}) => {
   return (
     <button
       type='button'
@@ -29,11 +33,4 @@ export const DeleteButton = (props: Props) => {
       />
     </button>
   );
-};
-
-DeleteButton.defaultProps = {
-  positionTop: '1rem',
-  positionRight: '1rem',
-  color: 'gray',
-  colorHover: 'hover:stroke-red-600',
 };
