@@ -8,7 +8,6 @@ import { TemplatesModal } from '@modules/PDFView/CVTemplates/TemplatesModal';
 import { Tab } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { VersionHistoryModal } from '@modules/PDFView/VersionHistory/VersionHistoryModal';
 import { useAuth } from '@modules/Providers/AuthProvider';
-import { useWindowSize } from '@modules/Shared/Hooks';
 import { Tooltip } from '@modules/Shared/Tooltip';
 import AcademicCap from '@public/Styles/Assets/Images/academic-cap.svg';
 import Briefcase from '@public/Styles/Assets/Images/briefcase.svg';
@@ -39,7 +38,6 @@ export const PDFTabNavigationPresenter = ({
   selectedTab,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const windowSize = useWindowSize(10);
   const t = useTranslations('PDFTabNavigation');
   const { user } = useAuth();
   const [displayTemplateChooseModal, setDisplayTemplateChooseModal] =
@@ -137,7 +135,7 @@ export const PDFTabNavigationPresenter = ({
   return (
     <div
       className={cn(
-        'md: z-10 flex w-28 overflow-auto py-8 shadow-sm max-[500px]:w-[70px] min-[500px]:min-w-[7rem]'
+        'z-10 flex w-28 min-w-fit overflow-y-auto overflow-x-hidden px-1 py-8 shadow-sm max-[500px]:w-[70px] min-[500px]:w-28 min-[500px]:min-w-[7rem]'
       )}
     >
       <div className='flex flex-grow flex-col justify-between gap-6'>
@@ -207,15 +205,7 @@ export const PDFTabNavigationPresenter = ({
                     selectedTab === tab.tab
                       ? 'bg-[#f3f3f3] dark:bg-gray-500'
                       : 'hover:bg-gray-100 dark:hover:bg-gray-600'
-                  } focus:shadow-outline flex cursor-pointer
-                select-none items-center
-                justify-center rounded-md ${
-                  windowSize.width < 500 ? 'p-3' : 'p-4'
-                }
-                text-center text-sm
-                font-bold transition-all
-                duration-300 ease-in-out focus:outline-none
-              `}
+                  } focus:shadow-outline flex cursor-pointer select-none items-center justify-center rounded-md p-4 text-center text-sm font-bold transition-all duration-300 ease-in-out focus:outline-none max-[500px]:p-3`}
                   onClick={() => {
                     setSelectedTab(tab.tab);
                   }}
@@ -224,9 +214,7 @@ export const PDFTabNavigationPresenter = ({
                 </button>
                 {selectedTab === tab.tab && (
                   <motion.div
-                    className={`absolute top-0 ${
-                      windowSize.width < 500 ? 'left-[-10px]' : 'left-[-15px]'
-                    } bg-jacarta-purple dark:bg-jacarta-white h-full w-1 rounded-full`}
+                    className={`bg-jacarta-purple dark:bg-jacarta-white absolute -left-[15px] top-0 h-full w-1 rounded-full max-[500px]:-left-[10px]`}
                     layoutId='bar'
                   ></motion.div>
                 )}
@@ -248,10 +236,7 @@ export const PDFTabNavigationPresenter = ({
             <ChangeLanguageButton
               onChangeLanguage={() => dispatch(saveDataForUser())}
               dropdownPosition='right'
-              className='focus:shadow-outline cursor-pointer select-none rounded-md
-            p-4 text-sm
-            font-bold transition-all
-            duration-300 ease-in-out hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-600'
+              className='focus:shadow-outline cursor-pointer select-none rounded-md p-4 text-sm font-bold transition-all duration-300 ease-in-out hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-600'
             />
           </motion.div>
           <motion.div
@@ -265,10 +250,7 @@ export const PDFTabNavigationPresenter = ({
             }}
           >
             <TemplatesButton
-              className='cursor-pointer select-none rounded-md
-              p-4 text-sm
-              font-bold transition-all
-              duration-300 ease-in-out hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-600'
+              className='cursor-pointer select-none rounded-md p-4 text-sm font-bold transition-all duration-300 ease-in-out hover:bg-gray-100 focus:outline-none dark:hover:bg-gray-600'
               onClick={() => setDisplayTemplateChooseModal(true)}
             />
           </motion.div>

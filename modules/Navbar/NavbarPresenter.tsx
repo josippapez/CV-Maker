@@ -1,6 +1,11 @@
 import { Link } from '@/translations/navigation';
 import { NavbarActions } from '@modules/Navbar/NavbarActions';
 import { Routes } from 'consts/Routes';
+import {
+  desktopCol28Class,
+  mobileCol16Class,
+  pageContainerClass,
+} from 'consts/pageGrid';
 import { getTranslations } from 'next-intl/server';
 
 export default async function NavbarPresenter({
@@ -11,7 +16,9 @@ export default async function NavbarPresenter({
   const t = await getTranslations('Navbar');
 
   return (
-    <div className='page-container desktop_col-28 mobile_col-16'>
+    <div
+      className={`${pageContainerClass} ${desktopCol28Class} ${mobileCol16Class}`}
+    >
       <div className='flex w-full justify-between py-6'>
         <nav className='flex gap-20 max-md:hidden'>
           <Link href={Routes.LANDING_PAGE}>

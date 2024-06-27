@@ -29,7 +29,21 @@
   "i18n-ally.displayLanguage": "en-US",
   "i18n-ally.sourceLanguage": "en-US",
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "tailwindCSS.classAttributes": ["class", "className", "ngClass"],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "classNames",
+    "ngClass",
+    ".*Styles",
+    ".*Classes",
+    ".*ClassName",
+    ".*ClassNames",
+    ".*Class",
+    ".width",
+    ".height",
+    ".maxWidth",
+    ".maxHeight"
+  ],
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]

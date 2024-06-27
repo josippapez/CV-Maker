@@ -12,6 +12,11 @@ import {
 import { useAnimation } from '@modules/Shared/Hooks/useAnimation';
 import Google from '@public/Styles/Assets/Images/google.svg';
 import { Routes } from 'consts/Routes';
+import {
+  desktopCol32Class,
+  mobileCol16Class,
+  pageContainerClass,
+} from 'consts/pageGrid';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { FC, useRef } from 'react';
@@ -32,7 +37,7 @@ export const LandingPage: FC = () => {
   return (
     <div
       ref={container}
-      className='page-container desktop_col-32 mobile_col-16 gap-y-20 py-8 drop-shadow-md'
+      className={`${pageContainerClass} ${desktopCol32Class} ${mobileCol16Class} gap-y-20 py-8 drop-shadow-md`}
     >
       <LandingPageSection sectionClass='md:min-h-[calc(100vh_-_81px)]'>
         {isInView => (
