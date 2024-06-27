@@ -62,7 +62,6 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false, data }) => {
               tooltipText={'Copied link to clipboard'}
               position='top'
               showOnClick
-              showOnHover={false}
             >
               <button
                 className='pdf-share'

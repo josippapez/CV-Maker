@@ -30,7 +30,7 @@ export const NavbarActions: React.FC = () => {
         <DarkModeButton className='cursor-pointer select-none' />
         {pathname === Routes.LANDING_PAGE && (
           <ChangeLanguageButton
-            dropdownPosition='bottom-left'
+            dropdownPosition='bottom'
             className='cursor-pointer select-none rounded-full text-sm font-bold transition-all'
           />
         )}
