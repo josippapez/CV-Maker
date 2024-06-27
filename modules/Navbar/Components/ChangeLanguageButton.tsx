@@ -1,16 +1,15 @@
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { usePathname, useRouter } from '@/translations/navigation';
-import { useCloseOnClickOutside } from '@modules/Shared/Hooks/useCloseOnClickOutside';
 import Translate from '@public/Styles/Assets/Images/translate.svg';
 import { useLocale, useTranslations } from 'next-intl';
-import { FC, MouseEvent, useRef, useState } from 'react';
+import { FC, MouseEvent, useState } from 'react';
 
 interface Props {
-  dropdownPosition?:
-    | 'left'
-    | 'right'
-    | 'bottom'
-    | 'bottom-left'
-    | 'bottom-right';
+  dropdownPosition?: 'left' | 'right' | 'bottom' | 'top';
   onChangeLanguage?: () => void | Promise<void>;
   className?: string;
 }
@@ -27,9 +26,6 @@ export const ChangeLanguageButton: FC<Props> = ({
 
   const [displayLanguageDropdown, setDisplayLanguageDropdown] =
     useState<boolean>(false);
-  const component: { current: null | HTMLDivElement } = useRef(null);
-
-  useCloseOnClickOutside(component, () => setDisplayLanguageDropdown(false));
 
   const handleSelectLanguage = async (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLButtonElement;
@@ -44,14 +40,6 @@ export const ChangeLanguageButton: FC<Props> = ({
     });
   };
 
-  const dropdownPositionProperty = {
-    left: 'right-12',
-    right: 'left-20',
-    bottom: 'top-12',
-    'bottom-left': 'top-12 right-0',
-    'bottom-right': 'top-12 left-0',
-  };
-
   const selectedLanguageClass = (language: string) => {
     const classNames =
       'w-full cursor-pointer px-6 py-1 hover:bg-gray-200 hover:dark:bg-gray-200 hover:dark:text-almost-black';
@@ -62,19 +50,18 @@ export const ChangeLanguageButton: FC<Props> = ({
   };
 
   return (
-    <div
-      ref={component}
-      className={` ${
-        displayLanguageDropdown ? 'bg-gray-100 dark:bg-almost-black-input' : ''
-      } relative flex items-center justify-center ${className}`}
-      onClick={() => setDisplayLanguageDropdown(!displayLanguageDropdown)}
-    >
-      <Translate height={30} width={35} />
-      <div
-        className={`absolute top-0 z-10 bg-white dark:bg-almost-black ${dropdownPositionProperty[dropdownPosition]}`}
-        hidden={!displayLanguageDropdown}
+    <Popover onOpenChange={isOpen => setDisplayLanguageDropdown(isOpen)}>
+      <PopoverTrigger
+        className={` ${
+          displayLanguageDropdown
+            ? 'bg-gray-100 dark:bg-almost-black-input'
+            : ''
+        } relative flex items-center justify-center ${className}`}
       >
-        <div className={`flex w-fit flex-col rounded-md border py-3`}>
+        <Translate height={30} width={35} />
+      </PopoverTrigger>
+      <PopoverContent side={dropdownPosition} asChild>
+        <div className={`flex w-fit flex-col rounded-md border py-3 !bg-gray-100 dark:!bg-almost-black-input`}>
           <button
             data-locale='en-US'
             className={`${selectedLanguageClass('en-US')}`}
@@ -90,7 +77,7 @@ export const ChangeLanguageButton: FC<Props> = ({
             {t('Croatian')}
           </button>
         </div>
-      </div>
-    </div>
+      </PopoverContent>
+    </Popover>
   );
 };

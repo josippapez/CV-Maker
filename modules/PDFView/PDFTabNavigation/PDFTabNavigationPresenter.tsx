@@ -137,7 +137,7 @@ export const PDFTabNavigationPresenter = ({
   return (
     <div
       className={cn(
-        'z-10 flex w-28 shadow-sm max-[500px]:w-[70px] min-[500px]:min-w-[7rem] overflow-auto md: py-8'
+        'md: z-10 flex w-28 overflow-auto py-8 shadow-sm max-[500px]:w-[70px] min-[500px]:min-w-[7rem]'
       )}
     >
       <div className='flex flex-grow flex-col justify-between gap-6'>
@@ -200,8 +200,8 @@ export const PDFTabNavigationPresenter = ({
               transition={{ duration: 0.2, delay: 0.05 * index }}
               className='relative'
             >
-              <Tooltip tooltipText={t(tab.tab)} delayShow={0.4}>
-                <div
+              <Tooltip tooltipText={t(tab.tab)} delayShow={300}>
+                <button
                   id={tab.tab}
                   className={`${
                     selectedTab === tab.tab
@@ -221,7 +221,7 @@ export const PDFTabNavigationPresenter = ({
                   }}
                 >
                   {tab.label}
-                </div>
+                </button>
                 {selectedTab === tab.tab && (
                   <motion.div
                     className={`absolute top-0 ${
