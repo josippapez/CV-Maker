@@ -15,8 +15,8 @@ jobs:
         id: vercel
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-          scope: ${{ secrets.TEAM_SLUG}} # Needed for team deployment
-          vercel-args: '--prod' #Optional
-          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional
-          vercel-org-id: ${{ secrets.VERCEL_ORGANIZATION_ID}} #Required
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required
+          vercel-org-id: ${{ secrets.VERCEL_ORGANIZATION_ID}} #Required
+          vercel-args: '--prod --confirm' #Optional
+          scope: ${{ secrets.VERCEL_ORGANIZATION_ID}} # Needed for team deployment
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional

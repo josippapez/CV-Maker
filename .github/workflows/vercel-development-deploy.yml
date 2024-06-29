@@ -8,18 +8,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: development
     steps:
       - uses: actions/checkout@v3
-      - uses: amondnet/vercel-action@v25
+      - name: Vercel Action
+        uses: amondnet/vercel-action@v25.2.0
+        id: vercel
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
           scope: ${{ secrets.VERCEL_ORGANIZATION_ID}} # Needed for team deployment
           github-token: ${{ secrets.GITHUB_TOKEN }} #Optional
           vercel-org-id: ${{ secrets.VERCEL_ORGANIZATION_ID}} #Required
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required
-
-
-
-
+          vercel-args: '--confirm' #Optional
 
