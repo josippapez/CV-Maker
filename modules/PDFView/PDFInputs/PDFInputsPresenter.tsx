@@ -48,7 +48,7 @@ export const PDFInputsPresenter = (props: Props) => {
         selectedTab={selectedTab}
       />
       <div
-        className={`${pageContainerClass} ${desktopCol28Class} ${mobileCol16Class} flex-grow overflow-y-scroll rounded-md bg-[#f7f7f7] px-3 py-10 dark:bg-transparent`}
+        className={`${pageContainerClass} ${desktopCol28Class} ${mobileCol16Class} flex-grow overflow-y-scroll rounded-md bg-[#f7f7f7] md:px-3 py-10 dark:bg-transparent`}
       >
         {getInputs()}
       </div>

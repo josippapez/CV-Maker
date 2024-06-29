@@ -62,13 +62,6 @@ export const LanguagesItem: FC<Props> = ({
           if (value) stopReorder();
         }}
       />
-      <DeleteButton
-        positionTop={8}
-        positionRight={20}
-        onClick={() => {
-          setLanguages(Operations.REMOVE, language, index);
-        }}
-      />
 
       {isDragging && (
         <motion.div
@@ -93,63 +86,70 @@ export const LanguagesItem: FC<Props> = ({
       )}
 
       {!isDragging && (
-        <motion.div
-          key={index + '-' + 'LanguagesInput'}
-          initial={combinedStyleInitial}
-          animate={combinedStyleFinal}
-          exit={combinedStyleInitial}
-          transition={{ duration: 0.2 }}
-          className='relative flex flex-col gap-4 p-10'
-        >
-          <TextInput
-            key={index + '-' + 'LanguagesInput' + '-' + t('language')}
-            label={t('language').toString()}
-            defaultValue={language.name}
-            name='language'
-            onChange={e => {
-              setLanguages(
-                Operations.UPDATE,
-                {
-                  name: e.target.value,
-                },
-                index
-              );
+        <>
+          <DeleteButton
+            className='right-0 top-2 md:right-5'
+            onClick={() => {
+              setLanguages(Operations.REMOVE, language, index);
             }}
-            fullWidth
           />
-
-          <div className='mt-2 flex'>
-            <label className='w-1/4 self-center font-medium'>
-              {t('level')}
-            </label>
-            <select
-              className='w-3/4 rounded-md border-2 p-1 focus:border-slate-400 dark:bg-almost-black-input'
-              value={language.proficiency}
+          <motion.div
+            key={index + '-' + 'LanguagesInput'}
+            initial={combinedStyleInitial}
+            animate={combinedStyleFinal}
+            exit={combinedStyleInitial}
+            transition={{ duration: 0.2 }}
+            className='relative flex flex-col gap-4 px-0 py-10 md:p-10'
+          >
+            <TextInput
+              key={index + '-' + 'LanguagesInput' + '-' + t('language')}
+              label={t('language').toString()}
+              defaultValue={language.name}
+              name='language'
               onChange={e => {
                 setLanguages(
                   Operations.UPDATE,
                   {
-                    proficiency: e.target.value as LanguageProficiencyLevel,
+                    name: e.target.value,
                   },
                   index
                 );
               }}
-            >
-              <option value={LanguageProficiencyLevel.BEGINNER}>
-                {t(LanguageProficiencyLevel.BEGINNER)}
-              </option>
-              <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
-                {t(LanguageProficiencyLevel.CONVERSATIONAL)}
-              </option>
-              <option value={LanguageProficiencyLevel.FLUENT}>
-                {t(LanguageProficiencyLevel.FLUENT)}
-              </option>
-              <option value={LanguageProficiencyLevel.NATIVE}>
-                {t(LanguageProficiencyLevel.NATIVE)}
-              </option>
-            </select>
-          </div>
-        </motion.div>
+              fullWidth
+            />
+            <div className='mt-2 flex'>
+              <label className='w-1/4 self-center font-medium'>
+                {t('level')}
+              </label>
+              <select
+                className='w-3/4 rounded-md border-2 p-1 focus:border-slate-400 dark:bg-almost-black-input'
+                value={language.proficiency}
+                onChange={e => {
+                  setLanguages(
+                    Operations.UPDATE,
+                    {
+                      proficiency: e.target.value as LanguageProficiencyLevel,
+                    },
+                    index
+                  );
+                }}
+              >
+                <option value={LanguageProficiencyLevel.BEGINNER}>
+                  {t(LanguageProficiencyLevel.BEGINNER)}
+                </option>
+                <option value={LanguageProficiencyLevel.CONVERSATIONAL}>
+                  {t(LanguageProficiencyLevel.CONVERSATIONAL)}
+                </option>
+                <option value={LanguageProficiencyLevel.FLUENT}>
+                  {t(LanguageProficiencyLevel.FLUENT)}
+                </option>
+                <option value={LanguageProficiencyLevel.NATIVE}>
+                  {t(LanguageProficiencyLevel.NATIVE)}
+                </option>
+              </select>
+            </div>
+          </motion.div>
+        </>
       )}
     </Reorder.Item>
   );

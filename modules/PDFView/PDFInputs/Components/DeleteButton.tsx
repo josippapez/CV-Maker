@@ -1,9 +1,9 @@
+import { cn } from '@/lib/utils';
 import DeleteIcon from '@public/Styles/Assets/Images/deleteIcon.svg';
 
 type Props = {
   onClick: () => void;
-  positionTop?: number;
-  positionRight?: number;
+  className?: string;
   color?: string;
   colorHover?: string;
 };
@@ -12,17 +12,12 @@ export const DeleteButton: React.FC<Props> = ({
   onClick,
   color = 'gray',
   colorHover = 'hover:stroke-red-600',
-  positionRight = '1rem',
-  positionTop = '1rem',
+  className,
 }) => {
   return (
     <button
       type='button'
-      className='absolute z-10'
-      style={{
-        top: positionTop,
-        right: positionRight,
-      }}
+      className={cn('absolute z-10', className)}
       onClick={onClick}
     >
       <DeleteIcon

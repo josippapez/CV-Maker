@@ -117,8 +117,7 @@ export const ProjectItem: FC<Props> = ({
       {!isDragging && (
         <>
           <DeleteButton
-            positionTop={8}
-            positionRight={20}
+            className='right-0 top-2 md:right-5'
             onClick={() => {
               setProjects(Operations.REMOVE, project, index);
             }}
@@ -132,7 +131,7 @@ export const ProjectItem: FC<Props> = ({
               },
             }}
             transition={{ duration: 0.2 }}
-            className='relative flex flex-col gap-4 p-10'
+            className='relative flex flex-col gap-4 px-0 py-10 md:p-10'
           >
             {arrayOfInputs.map((input, currentIndex) => (
               <motion.div

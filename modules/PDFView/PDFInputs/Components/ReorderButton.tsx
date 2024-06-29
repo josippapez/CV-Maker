@@ -11,7 +11,7 @@ export const ReorderButton: FC<Props> = ({ controls, setIsDragging }) => {
   return (
     <button
       type='button'
-      className='absolute top-2 left-2 z-10 cursor-grab'
+      className='absolute top-2 md:left-2 z-10 cursor-grab'
       onPointerDown={e => {
         controls.start(e);
         setIsDragging(true);

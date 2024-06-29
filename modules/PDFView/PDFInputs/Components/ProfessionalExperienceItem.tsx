@@ -116,8 +116,7 @@ export const ProfessionalExperienceItem: FC<Props> = ({
         {!isDragging && (
           <>
             <DeleteButton
-              positionTop={8}
-              positionRight={20}
+              className='top-2 right-0 md:right-5'
               onClick={() => {
                 setProfessionalExperience(Operations.REMOVE, experience, index);
               }}
@@ -128,7 +127,7 @@ export const ProfessionalExperienceItem: FC<Props> = ({
               transition={{
                 duration: 0.2,
               }}
-              className='relative flex flex-col gap-4 p-10'
+              className='relative flex flex-col gap-4 px-0 py-10 md:p-10'
             >
               {arrayOfProfessionalExperienceInputs.map(
                 (input, currentIndex) => (

@@ -89,13 +89,6 @@ export const CertificateItem: FC<Props> = ({
           if (value) stopReorder();
         }}
       />
-      <DeleteButton
-        positionTop={8}
-        positionRight={20}
-        onClick={() => {
-          setCertificates(Operations.REMOVE, certificate, index);
-        }}
-      />
 
       {isDragging && (
         <motion.div
@@ -120,83 +113,93 @@ export const CertificateItem: FC<Props> = ({
       )}
 
       {!isDragging && (
-        <motion.div
-          {...animation}
-          animate={{
-            ...combinedStyleFinal,
-            transition: {
-              delay: isDragging ? 0.2 : 0,
-            },
-          }}
-          transition={{
-            duration: 0.2,
-          }}
-          className='relative flex flex-col gap-4 p-10'
-        >
-          {arrayOfCertificatesInputs.map((input, currentIndex) => (
-            <motion.div
-              key={`certificates-${index}-${currentIndex}-input`}
-              {...animation}
-              transition={{
-                duration: 0.2,
-                delay: currentIndex * 0.05,
-              }}
-            >
-              {input.type === 'date' ? (
-                <DateInput
-                  type='month'
-                  label={t(`${input.inputValue}`).toString()}
-                  value={certificate[input.inputValue] as string}
-                  setData={date =>
-                    handleSaveData(date, index, input.inputValue)
-                  }
-                  resetData={() => handleSaveData('', index, input.inputValue)}
-                  format={{
-                    month: 'short',
-                    year: 'numeric',
-                  }}
-                />
-              ) : (
-                <TextInput
-                  key={index + '-' + 'CertificatesInput' + '-' + currentIndex}
-                  label={t(`${input.inputValue}`).toString()}
-                  defaultValue={certificate[input.inputValue]}
-                  name={input.inputValue}
-                  onChange={e =>
-                    handleSaveData(e.target.value, index, input.inputValue)
-                  }
-                  fullWidth
-                />
-              )}
-            </motion.div>
-          ))}
+        <>
+          <DeleteButton
+            className='right-0 top-2 md:right-5'
+            onClick={() => {
+              setCertificates(Operations.REMOVE, certificate, index);
+            }}
+          />
           <motion.div
-            key={
-              index +
-              '-' +
-              'CertificatesInput' +
-              '-' +
-              (arrayOfCertificatesInputs.length - 1)
-            }
             {...animation}
-            exit={{ ...combinedStyleInitial, y: 0 }}
+            animate={{
+              ...combinedStyleFinal,
+              transition: {
+                delay: isDragging ? 0.2 : 0,
+              },
+            }}
             transition={{
               duration: 0.2,
-              delay: (arrayOfCertificatesInputs.length - 1) * 0.05,
             }}
+            className='relative flex flex-col gap-4 px-0 py-10 md:p-10'
           >
-            <TextInput
-              label={t('description').toString()}
-              defaultValue={certificate.description}
-              name='certificate-description'
-              onChange={e =>
-                handleSaveData(e.target.value, index, 'description')
+            {arrayOfCertificatesInputs.map((input, currentIndex) => (
+              <motion.div
+                key={`certificates-${index}-${currentIndex}-input`}
+                {...animation}
+                transition={{
+                  duration: 0.2,
+                  delay: currentIndex * 0.05,
+                }}
+              >
+                {input.type === 'date' ? (
+                  <DateInput
+                    type='month'
+                    label={t(`${input.inputValue}`).toString()}
+                    value={certificate[input.inputValue] as string}
+                    setData={date =>
+                      handleSaveData(date, index, input.inputValue)
+                    }
+                    resetData={() =>
+                      handleSaveData('', index, input.inputValue)
+                    }
+                    format={{
+                      month: 'short',
+                      year: 'numeric',
+                    }}
+                  />
+                ) : (
+                  <TextInput
+                    key={index + '-' + 'CertificatesInput' + '-' + currentIndex}
+                    label={t(`${input.inputValue}`).toString()}
+                    defaultValue={certificate[input.inputValue]}
+                    name={input.inputValue}
+                    onChange={e =>
+                      handleSaveData(e.target.value, index, input.inputValue)
+                    }
+                    fullWidth
+                  />
+                )}
+              </motion.div>
+            ))}
+            <motion.div
+              key={
+                index +
+                '-' +
+                'CertificatesInput' +
+                '-' +
+                (arrayOfCertificatesInputs.length - 1)
               }
-              fullWidth
-              textarea
-            />
+              {...animation}
+              exit={{ ...combinedStyleInitial, y: 0 }}
+              transition={{
+                duration: 0.2,
+                delay: (arrayOfCertificatesInputs.length - 1) * 0.05,
+              }}
+            >
+              <TextInput
+                label={t('description').toString()}
+                defaultValue={certificate.description}
+                name='certificate-description'
+                onChange={e =>
+                  handleSaveData(e.target.value, index, 'description')
+                }
+                fullWidth
+                textarea
+              />
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </>
       )}
     </Reorder.Item>
   );
