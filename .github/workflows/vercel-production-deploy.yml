@@ -1,0 +1,20 @@
+name: 'Deploy: Production'
+
+on:
+ release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v3
+      - uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          scope: ${{ secrets.VERCEL_ORGANIZATION_ID}} # Needed for team deployment
+          vercel-args: "--prod" #Optional
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional
+          vercel-org-id: ${{ secrets.VERCEL_ORGANIZATION_ID}} #Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required

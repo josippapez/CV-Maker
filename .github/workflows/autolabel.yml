@@ -1,0 +1,25 @@
+name: 'Pull request labeler'
+
+# ** What it does? **
+#    - Auto labels PRs if certain files are changed and assign users as reviewers based on that labels.
+# ** Why we have it? **
+#    - To easily determine what changes have happened.
+# ** Who does it impact? **
+#    - All developers.
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  label_pull_request:
+    name: 'Add labels to pull request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Label PR with labels in labeler.yml'
+        uses: actions/labeler@v4
+        with:
+          repo-token: ${{ github.token}}

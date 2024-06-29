@@ -1,0 +1,67 @@
+name: 'Generate changelog'
+
+# ** What it does? **
+#    - Generate changelogs for each release.
+# ** Why we have it? **
+#    - To have the consistent CHANGELOG.md file in our repository.
+# ** Who does it impact? **
+#    - All contributors.
+
+on:
+  release:
+    types:
+      - released
+
+jobs:
+  update:
+    name: 'Generate changelog'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          # Fetch entire history of repository to ensure relase date can be
+          # extracted from commit of the given tag.
+          fetch-depth: 0
+          # Checkout target branch of this release. Ensures that the CHANGELOG
+          # is not out of date.
+          ref: ${{ github.event.release.target_commitish }}
+
+      - name: Check CHANGELOG.md existence
+        id: check_files
+        uses: andstor/file-existence-action@v2
+        with:
+          files: 'CHANGELOG.md'
+
+      - name: Create CHANGELOG.md
+        if: steps.check_files.outputs.files_exists == 'false'
+        # Only runs if CHANGELOG.md doesn't exist
+        uses: 1arp/create-a-file-action@0.2
+        with:
+          path: '.'
+          file: 'CHANGELOG.md'
+          content: |
+            # Changelog
+
+      - name: Extract release date from git tag
+        id: release_date
+        run: |
+          echo "::set-output name=date::$(git log -1 --date=short --format=%ad '${{ github.event.release.tag_name }}')"
+
+      - name: Update Changelog
+        uses: stefanzweifel/changelog-updater-action@v1
+        with:
+          # Pass extracted release date, release notes and version to the Action.
+          release-date: ${{ steps.release_date.outputs.date }}
+          release-notes: ${{ github.event.release.body }}
+          latest-version: '[${{ github.event.release.tag_name }}]'
+          compare-url-target-revision: ${{ github.event.release.target_commitish }}
+
+      - name: Commit updated CHANGELOG
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          # Push updated CHANGELOG to release target branch.
+          branch: ${{ github.event.release.target_commitish }}
+          commit_message: Update CHANGELOG
+          file_pattern: CHANGELOG.md

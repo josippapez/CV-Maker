@@ -1,0 +1,4 @@
+# Add github usernames of people that are developers on this project. So they are automatically added to PRs.
+# Pattern: 
+#   folder/path @username - sets users as PR reviewer for changes at only that folder path
+#   * @username - adds user as PR reviewer for all changes
