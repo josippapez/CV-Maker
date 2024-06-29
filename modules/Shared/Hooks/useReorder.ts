@@ -15,7 +15,7 @@ export const useReorder = <T>(
 
   const [reOrder, clear] = useDebouncedFunction((newOrder: T[]) => {
     setFunction(Operations.SET, newOrder);
-  }, 3000);
+  }, 0);
 
   return {
     reorderList,

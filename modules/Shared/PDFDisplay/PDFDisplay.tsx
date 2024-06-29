@@ -62,15 +62,13 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false, data }) => {
               tooltipText={'Copied link to clipboard'}
               position='top'
               showOnClick
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `${window.location.origin}/cv/${user?.uid}`
+                );
+              }}
             >
-              <button
-                className='pdf-share'
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    `${window.location.origin}/cv/${user?.uid}`
-                  );
-                }}
-              />
+              <div className='pdf-share' />
             </Tooltip>
           )}
         </div>

@@ -60,7 +60,8 @@ export const ProjectItem: FC<Props> = ({
 }) => {
   const y = useMotionValue(0);
   const controls = useDragControls();
-  const { setIsDragging, isDragging, stopReorder } = useContext(ReorderContext);
+  const { setIsDragging, isDragging, reOrder, reorderList } =
+    useContext(ReorderContext);
 
   const animation = {
     initial: combinedStyleInitial,
@@ -78,6 +79,7 @@ export const ProjectItem: FC<Props> = ({
       }}
       onDragEnd={() => {
         setIsDragging(false);
+        reOrder(reorderList);
       }}
       className='mt-4 select-none rounded-md transition-colors first:mt-0 hover:bg-green-100 dark:hover:bg-green-900'
       dragListener={false}
@@ -87,16 +89,9 @@ export const ProjectItem: FC<Props> = ({
         controls={controls}
         setIsDragging={value => {
           setIsDragging(value);
-          if (value) stopReorder();
         }}
       />
-      <DeleteButton
-        positionTop={8}
-        positionRight={20}
-        onClick={() => {
-          setProjects(Operations.REMOVE, project, index);
-        }}
-      />
+
       {isDragging && (
         <motion.div
           initial={combinedStyleInitial}
@@ -113,104 +108,113 @@ export const ProjectItem: FC<Props> = ({
               duration: 0.05,
             },
           }}
-          className='p-10 '
+          className='p-10'
         >
           {project.name}
         </motion.div>
       )}
 
       {!isDragging && (
-        <motion.div
-          {...animation}
-          animate={{
-            ...combinedStyleFinal,
-            transition: {
-              delay: isDragging ? 0.2 : 0,
-            },
-          }}
-          transition={{ duration: 0.2 }}
-          className='relative flex flex-col gap-4 p-10 '
-        >
-          {arrayOfInputs.map((input, currentIndex) => (
-            <motion.div
-              key={`professionalExperience-${index}-${currentIndex}-input`}
-              {...animation}
-              transition={{
-                duration: 0.2,
-                delay: currentIndex * 0.05,
-              }}
-            >
-              {input.type !== 'date' && input.type !== 'toggle' && (
-                <TextInput
-                  label={t(`${input.inputValue}`).toString()}
-                  defaultValue={project[input.inputValue] as string}
-                  name={input.inputValue}
-                  onChange={e => {
-                    setProjects(
-                      Operations.UPDATE,
-                      {
-                        [input.inputValue]: e.target.value,
-                      },
-                      index
-                    );
-                  }}
-                  fullWidth
-                  textarea={input.textarea}
-                />
-              )}
-              {input.type === 'date' && (
-                <DateInput
-                  type='month'
-                  disabled={
-                    project.currentlyWorking && input.inputValue === 'endDate'
-                  }
-                  label={t(`${input.inputValue}`).toString()}
-                  value={project[input.inputValue] as string}
-                  setData={date => {
-                    setProjects(
-                      Operations.UPDATE,
-                      {
-                        [input.inputValue]: date,
-                      },
-                      index
-                    );
-                  }}
-                  resetData={() => {
-                    setProjects(
-                      Operations.UPDATE,
-                      {
-                        [input.inputValue]: '',
-                      },
-                      index
-                    );
-                  }}
-                  format={{
-                    month: 'short',
-                    year: 'numeric',
-                  }}
-                />
-              )}
-              {input.type === 'toggle' && (
-                <ToggleInput
-                  label={t(`${input.inputValue}`).toString()}
-                  name={input.inputValue}
-                  checked={project.currentlyWorking}
-                  wrapperClassName='mt-4'
-                  onChange={e => {
-                    setProjects(
-                      Operations.UPDATE,
-                      {
-                        [input.inputValue]: e.target.checked,
-                      },
-                      index
-                    );
-                  }}
-                  fullWidth
-                />
-              )}
-            </motion.div>
-          ))}
-        </motion.div>
+        <>
+          <DeleteButton
+            positionTop={8}
+            positionRight={20}
+            onClick={() => {
+              setProjects(Operations.REMOVE, project, index);
+            }}
+          />
+          <motion.div
+            {...animation}
+            animate={{
+              ...combinedStyleFinal,
+              transition: {
+                delay: isDragging ? 0.2 : 0,
+              },
+            }}
+            transition={{ duration: 0.2 }}
+            className='relative flex flex-col gap-4 p-10'
+          >
+            {arrayOfInputs.map((input, currentIndex) => (
+              <motion.div
+                key={`professionalExperience-${index}-${currentIndex}-input`}
+                {...animation}
+                transition={{
+                  duration: 0.2,
+                  delay: currentIndex * 0.05,
+                }}
+              >
+                {input.type !== 'date' && input.type !== 'toggle' && (
+                  <TextInput
+                    label={t(`${input.inputValue}`).toString()}
+                    defaultValue={project[input.inputValue] as string}
+                    name={input.inputValue}
+                    onChange={e => {
+                      setProjects(
+                        Operations.UPDATE,
+                        {
+                          [input.inputValue]: e.target.value,
+                        },
+                        index
+                      );
+                    }}
+                    fullWidth
+                    textarea={input.textarea}
+                  />
+                )}
+                {input.type === 'date' && (
+                  <DateInput
+                    type='month'
+                    disabled={
+                      project.currentlyWorking && input.inputValue === 'endDate'
+                    }
+                    label={t(`${input.inputValue}`).toString()}
+                    value={project[input.inputValue] as string}
+                    setData={date => {
+                      setProjects(
+                        Operations.UPDATE,
+                        {
+                          [input.inputValue]: date,
+                        },
+                        index
+                      );
+                    }}
+                    resetData={() => {
+                      setProjects(
+                        Operations.UPDATE,
+                        {
+                          [input.inputValue]: '',
+                        },
+                        index
+                      );
+                    }}
+                    format={{
+                      month: 'short',
+                      year: 'numeric',
+                    }}
+                  />
+                )}
+                {input.type === 'toggle' && (
+                  <ToggleInput
+                    label={t(`${input.inputValue}`).toString()}
+                    name={input.inputValue}
+                    checked={project.currentlyWorking}
+                    wrapperClassName='mt-4'
+                    onChange={e => {
+                      setProjects(
+                        Operations.UPDATE,
+                        {
+                          [input.inputValue]: e.target.checked,
+                        },
+                        index
+                      );
+                    }}
+                    fullWidth
+                  />
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </>
       )}
     </Reorder.Item>
   );

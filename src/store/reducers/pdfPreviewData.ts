@@ -145,7 +145,9 @@ export const { cacheAllPreviewData, setLoaded, setModified } =
 
 export const pdfPreviewDataSelector = createSelector(
   (state: { pdfPreviewData: PDFDataWithTemplate }) => state.pdfPreviewData,
-  pdfPreviewData => pdfPreviewData
+  pdfPreviewData => ({
+    ...pdfPreviewData,
+  })
 );
 
 export default pdfPreviewData.reducer;

@@ -293,8 +293,8 @@ export const {
 } = pdfData.actions;
 
 export const pdfDataSelector = createSelector(
-  (state: { pdfData: PDFDataWithTimestamp }) => state.pdfData,
-  pdfData => pdfData
+  (state: { pdfData: PDFDataWithTimestamp }) => state,
+  pdfData => pdfData.pdfData
 );
 
 export default pdfData.reducer;

@@ -36,7 +36,7 @@ import {
 import { FirebaseService } from '@modules/Services';
 import { useDebouncedFunction } from '@modules/Shared/Hooks/useDebouncedFunction';
 import { useDebouncedValue } from '@modules/Shared/Hooks/useDebouncedValue';
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 const firebaseAuth = FirebaseService.getInstance().getAuth();
 
@@ -56,6 +56,7 @@ let tempLanguages:
   | Partial<LanguageSkill>[]
   | undefined = undefined;
 let tempProjects: Partial<Project> | Partial<Project>[] | undefined = undefined;
+let tempModified = false;
 
 export const usePDFData = () => {
   const dispatch = useAppDispatch();
@@ -86,6 +87,7 @@ export const usePDFData = () => {
 
   useEffect(() => {
     if (!currentUser) return;
+    tempModified = modified;
     saveData();
   }, [modified]);
 
@@ -109,7 +111,7 @@ export const usePDFData = () => {
         ...tempGeneralInfo,
       })
     );
-    dispatch(setModified(!modified));
+    dispatch(setModified(!tempModified));
     tempGeneralInfo = {};
   });
   const setGeneralInfo = useCallback(
@@ -132,7 +134,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(!modified));
+      dispatch(setModified(!tempModified));
       tempProfessionalExperience = undefined;
     }
   );
@@ -171,7 +173,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(!modified));
+      dispatch(setModified(!tempModified));
       tempCertificates = undefined;
     }
   );
@@ -208,7 +210,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(!modified));
+      dispatch(setModified(!tempModified));
       tempEducation = undefined;
     }
   );
@@ -249,7 +251,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(!modified));
+      dispatch(setModified(!tempModified));
       tempLanguages = undefined;
     }
   );
@@ -286,7 +288,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(!modified));
+      dispatch(setModified(!tempModified));
     },
     0
   );
@@ -299,7 +301,7 @@ export const usePDFData = () => {
           index,
         })
       );
-      dispatch(setModified(!modified));
+      dispatch(setModified(!tempModified));
       tempProjects = undefined;
     }
   );

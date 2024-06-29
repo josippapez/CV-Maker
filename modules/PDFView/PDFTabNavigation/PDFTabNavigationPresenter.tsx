@@ -198,20 +198,23 @@ export const PDFTabNavigationPresenter = ({
               transition={{ duration: 0.2, delay: 0.05 * index }}
               className='relative'
             >
-              <Tooltip tooltipText={t(tab.tab)} delayShow={300}>
-                <button
+              <Tooltip
+                tooltipText={t(tab.tab)}
+                delayShow={300}
+                onClick={() => {
+                  setSelectedTab(tab.tab);
+                }}
+              >
+                <div
                   id={tab.tab}
                   className={`${
                     selectedTab === tab.tab
                       ? 'bg-[#f3f3f3] dark:bg-gray-500'
                       : 'hover:bg-gray-100 dark:hover:bg-gray-600'
                   } focus:shadow-outline flex cursor-pointer select-none items-center justify-center rounded-md p-4 text-center text-sm font-bold transition-all duration-300 ease-in-out focus:outline-none max-[500px]:p-3`}
-                  onClick={() => {
-                    setSelectedTab(tab.tab);
-                  }}
                 >
                   {tab.label}
-                </button>
+                </div>
                 {selectedTab === tab.tab && (
                   <motion.div
                     className={`bg-jacarta-purple dark:bg-jacarta-white absolute -left-[15px] top-0 h-full w-1 rounded-full max-[500px]:-left-[10px]`}

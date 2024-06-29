@@ -13,6 +13,7 @@ type Props = {
   delayShow?: number;
   position?: 'top' | 'bottom' | 'left' | 'right';
   showOnClick?: boolean;
+  onClick?: () => void;
 };
 
 export const Tooltip: FC<Props> = ({
@@ -21,6 +22,7 @@ export const Tooltip: FC<Props> = ({
   delayShow = 0,
   position = 'right',
   showOnClick,
+  onClick,
 }) => {
   const [showTooltip, setShowTooltip, resetValue] = useDebouncedValue(
     false,
@@ -30,6 +32,7 @@ export const Tooltip: FC<Props> = ({
   const handleClicked = useCallback(() => {
     resetValue(true);
     setShowTooltip(false);
+    onClick && onClick();
   }, []);
 
   if (showOnClick) {
@@ -55,7 +58,7 @@ export const Tooltip: FC<Props> = ({
   return (
     <TooltipProvider delayDuration={delayShow}>
       <TooltipShadCn>
-        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipTrigger onClick={onClick}>{children}</TooltipTrigger>
         <TooltipContent side={position} sideOffset={10}>
           {tooltipText}
         </TooltipContent>

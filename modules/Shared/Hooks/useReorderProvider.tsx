@@ -52,7 +52,6 @@ export const ReorderProvider = <T,>({
         values={reorderContextValue.reorderList}
         onReorder={(newOrder: T[]) => {
           reorderContextValue.setReorderList(newOrder);
-          reorderContextValue.reOrder(newOrder);
         }}
       >
         {children}

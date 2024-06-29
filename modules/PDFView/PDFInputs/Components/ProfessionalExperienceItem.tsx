@@ -7,6 +7,7 @@ import { DateInput } from '@modules/Shared/Inputs/DateInput';
 import { TextInput } from '@modules/Shared/Inputs/TextInput';
 import { ToggleInput } from '@modules/Shared/Inputs/ToggleInput';
 import {
+  AnimatePresence,
   Reorder,
   motion,
   useDragControls,
@@ -54,7 +55,8 @@ export const ProfessionalExperienceItem: FC<Props> = ({
   index,
   t,
 }) => {
-  const { setIsDragging, isDragging, stopReorder } = useContext(ReorderContext);
+  const { setIsDragging, isDragging, reorderList, reOrder } =
+    useContext(ReorderContext);
   const y = useMotionValue(0);
   const controls = useDragControls();
 
@@ -75,6 +77,7 @@ export const ProfessionalExperienceItem: FC<Props> = ({
       }}
       onDragEnd={() => {
         setIsDragging(false);
+        reOrder(reorderList);
       }}
       className='mt-4 select-none rounded-md transition-colors first:mt-0 hover:bg-green-100 dark:hover:bg-green-900'
       dragListener={false}
@@ -84,131 +87,136 @@ export const ProfessionalExperienceItem: FC<Props> = ({
         controls={controls}
         setIsDragging={value => {
           setIsDragging(value);
-          if (value) stopReorder();
-        }}
-      />
-      <DeleteButton
-        positionTop={8}
-        positionRight={20}
-        onClick={() => {
-          setProfessionalExperience(Operations.REMOVE, experience, index);
         }}
       />
 
-      {isDragging && (
-        <motion.p
-          initial={combinedStyleInitial}
-          animate={{
-            ...combinedStyleFinal,
-            transition: {
-              duration: 0.2,
-              delay: (arrayOfProfessionalExperienceInputs.length - 1) * 0.05,
-            },
-          }}
-          exit={{
-            ...combinedStyleInitial,
-            transition: {
-              duration: 0.05,
-            },
-          }}
-          className='p-10'
-        >
-          {experience.company}
-        </motion.p>
-      )}
+      <AnimatePresence>
+        {isDragging && (
+          <motion.p
+            initial={combinedStyleInitial}
+            animate={{
+              ...combinedStyleFinal,
+              transition: {
+                duration: 0.2,
+                delay: (arrayOfProfessionalExperienceInputs.length - 1) * 0.05,
+              },
+            }}
+            exit={{
+              ...combinedStyleInitial,
+              transition: {
+                duration: 0.05,
+              },
+            }}
+            className='p-10'
+          >
+            {experience.company}
+          </motion.p>
+        )}
 
-      {!isDragging && (
-        <motion.div
-          key={`professionalExperience-${index}`}
-          {...animation}
-          transition={{
-            duration: 0.2,
-          }}
-          className='relative flex flex-col gap-4 p-10'
-        >
-          {arrayOfProfessionalExperienceInputs.map((input, currentIndex) => (
+        {!isDragging && (
+          <>
+            <DeleteButton
+              positionTop={8}
+              positionRight={20}
+              onClick={() => {
+                setProfessionalExperience(Operations.REMOVE, experience, index);
+              }}
+            />
             <motion.div
-              key={`professionalExperience-${index}-${currentIndex}-input`}
+              key={`professionalExperience-${index}`}
               {...animation}
               transition={{
                 duration: 0.2,
-                delay: currentIndex * 0.05,
               }}
+              className='relative flex flex-col gap-4 p-10'
             >
-              {input.type === 'date' ? (
-                <DateInput
-                  type='month'
-                  disabled={
-                    experience.currentlyEnrolled &&
-                    input.inputValue === 'endDate'
-                  }
-                  label={t(`${input.inputValue}`).toString()}
-                  value={experience[input.inputValue] as string}
-                  setData={date => {
-                    setProfessionalExperience(
-                      Operations.UPDATE,
-                      {
-                        [input.inputValue]: date,
-                      },
-                      index
-                    );
-                  }}
-                  resetData={() => {
-                    setProfessionalExperience(
-                      Operations.UPDATE,
-                      {
-                        [input.inputValue]: '',
-                      },
-                      index
-                    );
-                  }}
-                  format={{
-                    month: 'short',
-                    year: 'numeric',
-                  }}
-                />
-              ) : (
-                input.type !== 'toggle' && (
-                  <TextInput
-                    label={t(`${input.inputValue}`).toString()}
-                    defaultValue={experience[input.inputValue] as string}
-                    name={input.inputValue}
-                    onChange={e => {
-                      setProfessionalExperience(
-                        Operations.UPDATE,
-                        {
-                          [input.inputValue]: e.target.value,
-                        },
-                        index
-                      );
+              {arrayOfProfessionalExperienceInputs.map(
+                (input, currentIndex) => (
+                  <motion.div
+                    key={`professionalExperience-${index}-${currentIndex}-input`}
+                    {...animation}
+                    transition={{
+                      duration: 0.2,
+                      delay: currentIndex * 0.05,
                     }}
-                    fullWidth
-                    textarea={input.textarea}
-                  />
+                  >
+                    {input.type === 'date' ? (
+                      <DateInput
+                        type='month'
+                        disabled={
+                          experience.currentlyEnrolled &&
+                          input.inputValue === 'endDate'
+                        }
+                        label={t(`${input.inputValue}`).toString()}
+                        value={experience[input.inputValue] as string}
+                        setData={date => {
+                          setProfessionalExperience(
+                            Operations.UPDATE,
+                            {
+                              [input.inputValue]: date,
+                            },
+                            index
+                          );
+                        }}
+                        resetData={() => {
+                          setProfessionalExperience(
+                            Operations.UPDATE,
+                            {
+                              [input.inputValue]: '',
+                            },
+                            index
+                          );
+                        }}
+                        format={{
+                          month: 'short',
+                          year: 'numeric',
+                        }}
+                      />
+                    ) : (
+                      input.type !== 'toggle' && (
+                        <TextInput
+                          label={t(`${input.inputValue}`).toString()}
+                          defaultValue={experience[input.inputValue] as string}
+                          name={input.inputValue}
+                          onChange={e => {
+                            setProfessionalExperience(
+                              Operations.UPDATE,
+                              {
+                                [input.inputValue]: e.target.value,
+                              },
+                              index
+                            );
+                          }}
+                          fullWidth
+                          textarea={input.textarea}
+                        />
+                      )
+                    )}
+                    {input.type === 'toggle' && (
+                      <ToggleInput
+                        label={t(`${input.inputValue}`).toString()}
+                        name={input.inputValue}
+                        checked={experience.currentlyEnrolled}
+                        wrapperClassName='mt-4'
+                        onChange={e => {
+                          setProfessionalExperience(
+                            Operations.UPDATE,
+                            {
+                              [input.inputValue]: e.target.checked,
+                            },
+                            index
+                          );
+                        }}
+                        fullWidth
+                      />
+                    )}
+                  </motion.div>
                 )
               )}
-              {input.type === 'toggle' && (
-                <ToggleInput
-                  label={t(`${input.inputValue}`).toString()}
-                  name={input.inputValue}
-                  checked={experience.currentlyEnrolled}
-                  wrapperClassName='mt-4'
-                  onChange={e => {
-                    setProfessionalExperience(
-                      Operations.UPDATE,
-                      {
-                        [input.inputValue]: e.target.checked,
-                      },
-                      index
-                    );
-                  }}
-                  fullWidth
-                />
-              )}
             </motion.div>
-          ))}
-        </motion.div>
-      )}
+          </>
+        )}
+      </AnimatePresence>
     </Reorder.Item>
   );
 };

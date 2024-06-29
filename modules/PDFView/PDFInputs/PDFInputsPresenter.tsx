@@ -7,7 +7,11 @@ import { ProjectsInput } from '@modules/PDFView/PDFInputs/Components/ProjectsInp
 import { SkillsInput } from '@modules/PDFView/PDFInputs/Components/SkillsInput';
 import { Tab } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { PDFTabNavigationPresenter } from '@modules/PDFView/PDFTabNavigation/PDFTabNavigationPresenter';
-import { desktopCol28Class, mobileCol16Class } from 'consts/pageGrid';
+import {
+  desktopCol28Class,
+  mobileCol16Class,
+  pageContainerClass,
+} from 'consts/pageGrid';
 import { useCallback } from 'react';
 
 type Props = {
@@ -44,7 +48,7 @@ export const PDFInputsPresenter = (props: Props) => {
         selectedTab={selectedTab}
       />
       <div
-        className={`${desktopCol28Class} ${mobileCol16Class} flex-grow overflow-y-scroll rounded-md bg-[#f7f7f7] px-3 py-10 dark:bg-transparent`}
+        className={`${pageContainerClass} ${desktopCol28Class} ${mobileCol16Class} flex-grow overflow-y-scroll rounded-md bg-[#f7f7f7] px-3 py-10 dark:bg-transparent`}
       >
         {getInputs()}
       </div>
