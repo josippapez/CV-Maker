@@ -46,7 +46,7 @@ export const LandingPage: FC = () => {
               <motion.p
                 initial={combinedStyleInitial}
                 animate={isInView ? combinedStyleFinal : { opacity: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.1 }}
                 className='text-left text-3xl font-semibold'
               >
                 {t('welcome')}
@@ -54,7 +54,7 @@ export const LandingPage: FC = () => {
               <motion.p
                 initial={combinedStyleInitial}
                 animate={isInView ? combinedStyleFinal : { opacity: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.1 }}
                 className='text-left text-xl'
               >
                 {t('welcomeDescription')}
@@ -67,8 +67,8 @@ export const LandingPage: FC = () => {
                   ? horizontalAnimation.combinedStyleFinal
                   : { opacity: 0 }
               }
-              transition={{ duration: 0.2, delay: 0.1 }}
-              src={'/Styles/Assets/Images/Template4.png'}
+              transition={{ duration: 0.1, delay: 0.1 }}
+              src={'/Styles/Assets/Images/Template4.webp'}
               width={'45%'}
               alt='Template4'
             />
@@ -96,7 +96,7 @@ export const LandingPage: FC = () => {
                     }
               }
               transition={{ duration: 0.2 }}
-              src={'/Styles/Assets/Images/Template3.png'}
+              src={'/Styles/Assets/Images/Template3.webp'}
               width={'45%'}
               alt='Template3'
             />
@@ -175,7 +175,7 @@ export const LandingPage: FC = () => {
                     }
               }
               transition={{ duration: 0.2 }}
-              src={'/Styles/Assets/Images/Templates.png'}
+              src={'/Styles/Assets/Images/Templates.webp'}
               width={'100%'}
               alt='Template3'
             />

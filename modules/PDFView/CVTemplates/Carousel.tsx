@@ -9,10 +9,10 @@ type Props = {
 
 // used at build time to display correct template images
 const templates = [
-  'bg-[url("/Styles/Assets/Images/Template1.png")]',
-  'bg-[url("/Styles/Assets/Images/Template2.png")]',
-  'bg-[url("/Styles/Assets/Images/Template3.png")]',
-  'bg-[url("/Styles/Assets/Images/Template4.png")]',
+  'bg-[url("/Styles/Assets/Images/Template1.webp")]',
+  'bg-[url("/Styles/Assets/Images/Template2.webp")]',
+  'bg-[url("/Styles/Assets/Images/Template3.webp")]',
+  'bg-[url("/Styles/Assets/Images/Template4.webp")]',
 ];
 
 export const Carousel = (props: Props) => {
@@ -37,7 +37,7 @@ export const Carousel = (props: Props) => {
           >
             <div
               className={cn(
-                `bg-[url("/Styles/Assets/Images/Template${index + 1}.png")]`,
+                `bg-[url("/Styles/Assets/Images/Template${index + 1}.webp")]`,
                 `h-[calc(100%-2rem)] bg-contain bg-center bg-no-repeat`
               )}
             />
