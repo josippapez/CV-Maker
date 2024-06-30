@@ -82,7 +82,7 @@ export const Languages: FC<Props> = ({
           },
         ]}
       >
-        {languages.map((lang, index) => (
+        {languages?.map((lang, index) => (
           <View
             key={index}
             style={[styles.column, combinedStyles.languageCard]}

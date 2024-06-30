@@ -34,7 +34,7 @@ export const Educations = ({
       <TextDisplay style={[styles.sectionTitle]}>
         {translate('education')}
       </TextDisplay>
-      {education.map((edu, index) => (
+      {education?.map((edu, index) => (
         <EducationItem
           edu={edu}
           styles={styles}

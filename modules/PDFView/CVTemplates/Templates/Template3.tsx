@@ -8,6 +8,8 @@ import {
   TextDisplay,
 } from '@modules/PDFView/CVTemplates/TemplateComponents';
 import { DefaultProps } from '@modules/PDFView/CVTemplates/Templates/CVTemplateProps';
+import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
+import { Skill } from '@modules/PDFView/models';
 import {
   Defs,
   Document,
@@ -18,10 +20,7 @@ import {
   Stop,
   Svg,
   View,
-  usePDFComponentsAreHTML,
 } from '@rawwee/react-pdf-html';
-import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
-import { Skill } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';
 import { FC } from 'react';
 
@@ -188,144 +187,153 @@ export const Template3: FC<Props> = ({
   professionalExperience,
   education,
   translate,
+  isHtml,
 }) => {
-  const { isHTML } = usePDFComponentsAreHTML();
+  const generalInfoIsEmpty = Object.values(generalInfo).every(value => !value);
+
   return (
     <Document>
       <Page size='A4' style={[styles.page]}>
-        <View
-          style={[
-            styles.personalInfo,
-            styles.paddingX40,
-            styles.marginBottom20,
-          ]}
-        >
-          <Svg
-            viewBox='0 0 595 200'
-            width={595}
-            height={200}
-            style={{
-              position: 'absolute',
-            }}
+        {(!generalInfoIsEmpty || skills?.length > 0) && (
+          <View
+            style={[
+              styles.personalInfo,
+              styles.paddingX40,
+              styles.marginBottom20,
+            ]}
           >
-            <Defs>
-              <LinearGradient
-                id='myLinearGradient'
-                x1={isHTML ? 0 : 1}
-                x2={0}
-                y1={0}
-                y2={1}
-              >
-                <Stop offset={0.5} stopOpacity={1} stopColor='#242424' />
-                <Stop offset={0.7} stopOpacity={1} stopColor='#13171a' />
-                <Stop offset={1} stopOpacity={1} stopColor='#13171a' />
-              </LinearGradient>
-            </Defs>
-            <Rect
-              x={0}
-              y={0}
-              width='100%'
-              height='100%'
-              fill="url('#myLinearGradient')"
-            />
-          </Svg>
-          <View style={[styles.topBar, { paddingTop: 40, paddingBottom: 10 }]}>
-            {generalInfo && generalInfo.profilePicture && (
-              <View style={[styles.profilePicture]}>
-                <Image
-                  src={generalInfo.profilePicture}
-                  style={{
-                    width: 65,
-                    height: 65,
-                    borderRadius: 15,
-                    objectFit: 'cover',
-                  }}
-                />
-              </View>
-            )}
-            <View
+            <Svg
+              viewBox='0 0 595 200'
+              width={595}
+              height={200}
               style={{
-                flex: 1,
+                position: 'absolute',
               }}
             >
-              <View
-                style={{
-                  flexDirection: 'row',
-                }}
-              >
-                <TextDisplay style={styles.topBarName}>
-                  {generalInfo?.firstName} {generalInfo?.lastName}
-                </TextDisplay>
-                <TextDisplay
-                  style={[
-                    {
-                      fontWeight: 'light',
-                      fontSize: 11,
-                      paddingLeft: 20,
-                      paddingBottom: 3,
-                      alignSelf: 'flex-end',
-                    },
-                  ]}
+              <Defs>
+                <LinearGradient
+                  id='myLinearGradient'
+                  x1={isHtml ? 0 : 1}
+                  x2={0}
+                  y1={0}
+                  y2={1}
                 >
-                  {generalInfo?.dob && displayDate(generalInfo?.dob, 'default')}
-                </TextDisplay>
-              </View>
-              <TextDisplay style={styles.topBarPosition}>
-                {generalInfo?.position}
-              </TextDisplay>
-              <TextDisplay style={styles.topBarText}>
-                {generalInfo?.aboutMe}
-              </TextDisplay>
-            </View>
-          </View>
-          {skills && skills.length > 0 && (
-            <View
-              style={[
-                styles.row,
-                styles.marginTop10,
-                {
-                  flexWrap: 'wrap',
-                },
-              ]}
-            >
-              {skills.map((skill: Skill, index: number) => {
-                return (
+                  <Stop offset={0.5} stopOpacity={1} stopColor='#242424' />
+                  <Stop offset={0.7} stopOpacity={1} stopColor='#13171a' />
+                  <Stop offset={1} stopOpacity={1} stopColor='#13171a' />
+                </LinearGradient>
+              </Defs>
+              <Rect
+                x={0}
+                y={0}
+                width='100%'
+                height='100%'
+                fill="url('#myLinearGradient')"
+              />
+            </Svg>
+            {!generalInfoIsEmpty && (
+              <View
+                style={[styles.topBar, { paddingTop: 40, paddingBottom: 10 }]}
+              >
+                {generalInfo && generalInfo.profilePicture && (
+                  <View style={[styles.profilePicture]}>
+                    <Image
+                      src={generalInfo.profilePicture}
+                      style={{
+                        width: 65,
+                        height: 65,
+                        borderRadius: 15,
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </View>
+                )}
+                <View
+                  style={{
+                    flex: 1,
+                  }}
+                >
                   <View
-                    key={index}
-                    style={[
-                      styles.skill,
-                      {
-                        backgroundColor: '#242424',
-                        borderColor: '#242424',
-                      },
-                    ]}
+                    style={{
+                      flexDirection: 'row',
+                    }}
                   >
+                    <TextDisplay style={styles.topBarName}>
+                      {generalInfo?.firstName} {generalInfo?.lastName}
+                    </TextDisplay>
                     <TextDisplay
                       style={[
-                        styles.skillText,
                         {
-                          color: 'white',
+                          fontWeight: 'light',
+                          fontSize: 11,
+                          paddingLeft: 20,
+                          paddingBottom: 3,
+                          alignSelf: 'flex-end',
                         },
                       ]}
                     >
-                      {skill.name}
+                      {generalInfo?.dob &&
+                        displayDate(generalInfo?.dob, 'default')}
                     </TextDisplay>
                   </View>
-                );
-              })}
-            </View>
-          )}
-          <AdditionalInformation
-            onlyIcon
-            generalInfo={generalInfo}
-            styles={styles}
-            itemWrapperStyle={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          />
-        </View>
+                  <TextDisplay style={styles.topBarPosition}>
+                    {generalInfo?.position}
+                  </TextDisplay>
+                  <TextDisplay style={styles.topBarText}>
+                    {generalInfo?.aboutMe}
+                  </TextDisplay>
+                </View>
+              </View>
+            )}
+            {skills && skills.length > 0 && (
+              <View
+                style={[
+                  styles.row,
+                  styles.marginTop10,
+                  {
+                    flexWrap: 'wrap',
+                  },
+                ]}
+              >
+                {skills.map((skill: Skill, index: number) => {
+                  return (
+                    <View
+                      key={index}
+                      style={[
+                        styles.skill,
+                        {
+                          backgroundColor: '#242424',
+                          borderColor: '#242424',
+                        },
+                      ]}
+                    >
+                      <TextDisplay
+                        style={[
+                          styles.skillText,
+                          {
+                            color: 'white',
+                          },
+                        ]}
+                      >
+                        {skill.name}
+                      </TextDisplay>
+                    </View>
+                  );
+                })}
+              </View>
+            )}
+            <AdditionalInformation
+              onlyIcon
+              generalInfo={generalInfo}
+              styles={styles}
+              itemWrapperStyle={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            />
+          </View>
+        )}
         <ProfessionalExperienceDisplay
           styles={styles}
           translate={translate}

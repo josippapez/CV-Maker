@@ -2,6 +2,7 @@
 
 import path from 'path';
 import fs from 'fs';
+import chalk from 'chalk';
 
 /**
  *
@@ -10,10 +11,13 @@ import fs from 'fs';
  * @param {function} callback
  */
 function findTranslations(startDir, regexFilter, callback) {
-  console.log('- Finding translation files in directory:', startDir);
+  console.log(
+    chalk.blue('- Finding translation files in directory:'),
+    startDir
+  );
 
   if (!fs.existsSync(startDir)) {
-    console.log('- Directory does not exist:', startDir);
+    console.log(chalk.red('- Directory does not exist:'), startDir);
     return;
   }
 
@@ -35,7 +39,7 @@ function findTranslations(startDir, regexFilter, callback) {
  * @param {string} filePath
  */
 function appendTranslationFile(filePath) {
-  console.log('- Translation file found:', filePath);
+  console.log(chalk.green('- Translation file found:'), chalk.yellow(filePath));
 
   const translationFile = JSON.parse(fs.readFileSync(filePath));
   const language = filePath.split('/').pop().replace('.json', '');

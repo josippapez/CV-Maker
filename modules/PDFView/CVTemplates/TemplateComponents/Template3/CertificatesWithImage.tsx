@@ -42,6 +42,8 @@ export const CertificatesWithImage: FC<Props> = ({
           zIndex: -1,
           top: 0,
           left: 0,
+          height: '100px',
+          alignItems: 'flex-start',
         }}
       >
         <BlobTopLeft />

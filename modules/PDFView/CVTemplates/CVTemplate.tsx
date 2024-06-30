@@ -13,6 +13,7 @@ import {
   Project,
   Skill,
 } from '@modules/PDFView/models';
+import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
@@ -56,12 +57,14 @@ export const getTemplate = (
 
 export const CVTemplate = (props: Props): JSX.Element => {
   const t = useTranslations('Templates');
+  const { isHTML } = usePDFComponentsAreHTML();
   const { template } = props;
 
   const options: OptionType = useMemo(() => {
     return {
       ...props,
       translate: t,
+      isHtml: isHTML,
     };
   }, []);
 
