@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.0.4] - 2024-06-30
+
+### What's Changed
+
+* fix/sitemap webp images by @josippapez in https://github.com/josippapez/CV-Maker/pull/61
+
+**Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.0.3...v1.0.4
+
 ## [v1.0.3] - 2024-06-30
 
 **Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.0.2...v1.0.3
