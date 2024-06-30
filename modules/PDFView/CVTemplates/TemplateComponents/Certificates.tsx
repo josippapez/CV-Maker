@@ -1,11 +1,10 @@
 import { CertificateItem } from '@modules/PDFView/CVTemplates/TemplateComponents/CertificateItem';
 import { TextDisplay } from '@modules/PDFView/CVTemplates/TemplateComponents/TextDisplay';
-import { View } from '@rawwee/react-pdf-html';
 import { Certificate } from '@modules/PDFView/models';
+import { View } from '@rawwee/react-pdf-html';
 import { StyleSheet } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
 import { useTranslations } from 'next-intl';
-import { FC } from 'react';
 
 type Props = {
   certificateList?: Certificate[];
@@ -35,7 +34,7 @@ export const Certificates = ({
       <TextDisplay style={[styles.sectionTitle]}>
         {translate('certificates')}
       </TextDisplay>
-      {certificateList.map((cert, index) => (
+      {certificateList?.map((cert, index) => (
         <CertificateItem cert={cert} styles={styles} key={index} />
       ))}
     </View>

@@ -6,12 +6,7 @@ import {
   TextDisplay,
 } from '@modules/PDFView/CVTemplates/TemplateComponents';
 import { DefaultProps } from '@modules/PDFView/CVTemplates/Templates/CVTemplateProps';
-import {
-  Document,
-  Image,
-  Page,
-  View,
-} from '@rawwee/react-pdf-html';
+import { Document, Image, Page, View } from '@rawwee/react-pdf-html';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { Skill } from '@modules/PDFView/models';
 import { StyleSheet } from '@react-pdf/renderer';
@@ -221,48 +216,63 @@ export const Template2: FC<Props> = ({
   translate,
   isHtml,
 }) => {
+  const generalInfoIsEmpty = Object.values(generalInfo).every(value => !value);
+
+  if (
+    generalInfoIsEmpty &&
+    !skills.length &&
+    !languages?.length &&
+    !professionalExperience?.length &&
+    !projects?.length &&
+    !education?.length &&
+    !certificates?.length
+  )
+    return null;
+
   return (
     <Document>
       <Page size='A4' style={[styles.page, styles.row]}>
         <View style={[styles.sidebar, styles.column, styles.padding20]}>
-          <View style={[styles.topBar]}>
-            {generalInfo?.profilePicture && (
-              <View style={[styles.horizontalCenter, styles.profilePicture]}>
-                <Image
-                  src={generalInfo.profilePicture}
-                  style={[
-                    {
-                      width: 100,
-                      height: 100,
-                      borderRadius: 50,
-                      objectFit: 'cover',
-                    },
-                  ]}
-                />
-              </View>
-            )}
-            <TextDisplay style={styles.topBarName}>
-              {generalInfo?.firstName} {generalInfo?.lastName}
-            </TextDisplay>
-            <TextDisplay
-              style={[
-                {
-                  fontWeight: 'light',
-                  fontSize: 11,
-                  paddingTop: 5,
-                },
-              ]}
-            >
-              {generalInfo?.dob && displayDate(generalInfo?.dob, 'default')}
-            </TextDisplay>
-            <TextDisplay style={[styles.topBarPosition]}>
-              {generalInfo?.position}
-            </TextDisplay>
-            <TextDisplay style={[styles.topBarText]}>
-              {generalInfo?.aboutMe}
-            </TextDisplay>
-          </View>
-          {skills && skills.length > 0 && (
+          {!generalInfoIsEmpty && (
+            <View style={[styles.topBar]}>
+              {generalInfo?.profilePicture && (
+                <View style={[styles.horizontalCenter, styles.profilePicture]}>
+                  <Image
+                    src={generalInfo.profilePicture}
+                    style={[
+                      {
+                        width: 100,
+                        height: 100,
+                        borderRadius: 50,
+                        objectFit: 'cover',
+                      },
+                    ]}
+                  />
+                </View>
+              )}
+              <TextDisplay style={styles.topBarName}>
+                {generalInfo?.firstName} {generalInfo?.lastName}
+              </TextDisplay>
+              <TextDisplay
+                style={[
+                  {
+                    fontWeight: 'light',
+                    fontSize: 11,
+                    paddingTop: 5,
+                  },
+                ]}
+              >
+                {generalInfo?.dob && displayDate(generalInfo?.dob, 'default')}
+              </TextDisplay>
+              <TextDisplay style={[styles.topBarPosition]}>
+                {generalInfo?.position}
+              </TextDisplay>
+              <TextDisplay style={[styles.topBarText]}>
+                {generalInfo?.aboutMe}
+              </TextDisplay>
+            </View>
+          )}
+          {skills.length > 0 && (
             <View
               style={[
                 styles.row,
@@ -283,38 +293,40 @@ export const Template2: FC<Props> = ({
               })}
             </View>
           )}
-          <AdditionalInformation
-            onlyIcon
-            generalInfo={generalInfo}
-            styles={styles}
-            itemWrapperStyle={[
-              styles.row,
-              {
-                marginTop: 3.5,
-                marginBottom: 3.5,
-              },
-            ]}
-            wrapper={(wrappedInfo: JSX.Element) => {
-              return (
-                <View
-                  style={[
-                    styles.additionalInfoBar,
-                    styles.column,
-                    styles.marginTop10,
-                    {
-                      flexWrap: 'wrap',
-                    },
-                  ]}
-                >
-                  {wrappedInfo}
-                </View>
-              );
-            }}
-            wrapperStyle={{
-              gap: 10,
-            }}
-          />
-          {languages && languages.length > 0 ? (
+          {!generalInfoIsEmpty && (
+            <AdditionalInformation
+              onlyIcon
+              generalInfo={generalInfo}
+              styles={styles}
+              itemWrapperStyle={[
+                styles.row,
+                {
+                  marginTop: 3.5,
+                  marginBottom: 3.5,
+                },
+              ]}
+              wrapper={(wrappedInfo: JSX.Element) => {
+                return (
+                  <View
+                    style={[
+                      styles.additionalInfoBar,
+                      styles.column,
+                      styles.marginTop10,
+                      {
+                        flexWrap: 'wrap',
+                      },
+                    ]}
+                  >
+                    {wrappedInfo}
+                  </View>
+                );
+              }}
+              wrapperStyle={{
+                gap: 10,
+              }}
+            />
+          )}
+          {languages && languages.length > 0 && (
             <View wrap={false} style={[styles.marginTop10]}>
               <TextDisplay
                 style={[
@@ -353,7 +365,7 @@ export const Template2: FC<Props> = ({
                 ))}
               </View>
             </View>
-          ) : null}
+          )}
         </View>
         <View style={[styles.column, styles.padding20, styles.mainPage]}>
           <View style={[styles.column, styles.horizontalCenter]}>

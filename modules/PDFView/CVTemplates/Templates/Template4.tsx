@@ -8,10 +8,7 @@ import {
   SplitView,
 } from '@modules/PDFView/CVTemplates/TemplateComponents';
 import { DefaultProps } from '@modules/PDFView/CVTemplates/Templates/CVTemplateProps';
-import {
-  Document,
-  Page,
-} from '@rawwee/react-pdf-html';
+import { Document, Page } from '@rawwee/react-pdf-html';
 import { StyleSheet } from '@react-pdf/renderer';
 import { FC } from 'react';
 

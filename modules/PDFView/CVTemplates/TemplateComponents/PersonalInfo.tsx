@@ -9,11 +9,17 @@ import { FC } from 'react';
 
 type Props = {
   styles: ReturnType<typeof StyleSheet.create>;
-  generalInfo?: GeneralInfo;
+  generalInfo: GeneralInfo;
   skills?: Skill[];
 };
 
 export const PersonalInfo: FC<Props> = ({ styles, generalInfo, skills }) => {
+  const generalInfoIsEmpty = Object.values(generalInfo).every(value => !value);
+
+  if (generalInfoIsEmpty) {
+    return null;
+  }
+
   return (
     <View
       style={[

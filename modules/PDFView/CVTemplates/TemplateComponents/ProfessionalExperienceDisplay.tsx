@@ -45,7 +45,7 @@ export const ProfessionalExperienceDisplay: FC<Props> = ({
         {translate('professionalExperience')}
       </TextDisplay>
       <View style={[{ rowGap: 30 }]}>
-        {professionalExperience.map((experience, index) => (
+        {professionalExperience?.map((experience, index) => (
           <View
             key={index}
             wrap={false}

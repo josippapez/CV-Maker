@@ -12,51 +12,6 @@ import {
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist/es/constants';
 
-export enum Operations {
-  SET,
-  ADD,
-  UPDATE,
-  REMOVE,
-}
-
-interface ArrayUpdatePayload<T> {
-  operation: Operations;
-  item?: T | T[];
-  index?: number;
-}
-
-const isArray = <T>(item?: T | T[]): item is T[] => Array.isArray(item);
-
-function updateArray<T>(array: T[], payload: ArrayUpdatePayload<T>) {
-  const { operation, item, index } = payload;
-
-  const itemIsArray = isArray<T>(item);
-
-  switch (operation) {
-    case Operations.SET:
-      if (itemIsArray) array = [...item];
-      break;
-    case Operations.ADD:
-      if (item && !itemIsArray) array.push(item);
-      break;
-    case Operations.UPDATE:
-      if (index !== undefined && item && !itemIsArray) {
-        array[index] = {
-          ...array[index],
-          ...item,
-        };
-      }
-      break;
-    case Operations.REMOVE:
-      if (index !== undefined) {
-        array.splice(index, 1);
-      }
-      break;
-    default:
-      break;
-  }
-}
-
 export interface PDFData {
   generalInfo: GeneralInfo;
   professionalExperience: ProfessionalExperience[];

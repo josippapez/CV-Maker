@@ -52,6 +52,8 @@ export const EducationWithImage: FC<Props> = ({
                 zIndex: -1,
                 top: 0,
                 right: 0,
+                height: '100px',
+                alignItems: 'flex-end',
               }}
             >
               <BlobTopRight />
@@ -66,6 +68,8 @@ export const EducationWithImage: FC<Props> = ({
                   position: 'absolute',
                   zIndex: -1,
                   bottom: 0,
+                  height: '100px',
+                  alignItems: 'flex-start',
                 }}
               >
                 <BlobBottomLeft />

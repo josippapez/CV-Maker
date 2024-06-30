@@ -10,7 +10,7 @@ import {
 } from '../../models';
 
 export interface DefaultProps {
-  generalInfo?: GeneralInfo;
+  generalInfo: GeneralInfo;
   professionalExperience?: ProfessionalExperience[];
   certificates?: Certificate[];
   education?: Education[];
