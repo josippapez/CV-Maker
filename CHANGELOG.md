@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.0.3] - 2024-06-30
+
+**Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.0.2...v1.0.3
+
 ## [v1.0.2] - 2024-06-30
 
 ### What's Changed
