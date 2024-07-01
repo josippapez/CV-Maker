@@ -6,6 +6,7 @@ import { useAuth } from '@modules/Providers/AuthProvider';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { Tooltip } from '@modules/Shared/Tooltip';
 import { FC, useCallback, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 type Props = {
   isPDFPreview?: boolean;
@@ -32,9 +33,12 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false, data }) => {
   return (
     <>
       <div
-        className={`documentPDFView flex flex-col items-center justify-center overflow-hidden drop-shadow-xl ${
-          windowSize.width < 1550 || isPDFPreview ? 'h-full w-full' : 'w-5/12'
-        }`}
+        className={cn(
+          'documentPDFView flex flex-col items-center justify-center overflow-hidden drop-shadow-xl',
+          'max-[1550px]:h-full max-[1550px]:w-full',
+          isPDFPreview && 'h-full w-full',
+          'w-7/12'
+        )}
       >
         <div
           className='document-display overflow-y-scroll'
