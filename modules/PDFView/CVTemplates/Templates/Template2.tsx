@@ -6,9 +6,9 @@ import {
   TextDisplay,
 } from '@modules/PDFView/CVTemplates/TemplateComponents';
 import { DefaultProps } from '@modules/PDFView/CVTemplates/Templates/CVTemplateProps';
-import { Document, Image, Page, View } from '@rawwee/react-pdf-html';
 import { displayDate } from '@modules/PDFView/CVTemplates/Templates/Utils';
 import { Skill } from '@modules/PDFView/models';
+import { Document, Image, Page, View } from '@rawwee/react-pdf-html';
 import { StyleSheet } from '@react-pdf/renderer';
 import { FC } from 'react';
 
@@ -295,7 +295,6 @@ export const Template2: FC<Props> = ({
           )}
           {!generalInfoIsEmpty && (
             <AdditionalInformation
-              onlyIcon
               generalInfo={generalInfo}
               styles={styles}
               itemWrapperStyle={[
