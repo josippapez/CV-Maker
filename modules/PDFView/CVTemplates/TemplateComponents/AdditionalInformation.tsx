@@ -180,7 +180,7 @@ export const AdditionalInformation: FC<Props> = ({
       >
         <View style={[additionalInfoStyles.infoDisplay, wrapperStyle, {
           justifyContent: 'flex-start',
-          gap: '20%',
+          gap: '100px',
         }]}>
           <View style={additionalInfoStyles.infoWrapper}>{firstHalf}</View>
           <View style={additionalInfoStyles.infoWrapper}>{secondHalf}</View>
