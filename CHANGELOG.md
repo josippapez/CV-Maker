@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.1.0] - 2024-08-12
+
+### What's Changed
+
+* General info toggle only icons display by @josippapez in https://github.com/josippapez/CV-Maker/pull/63
+
+**Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.0.6...v1.1.0
+
 ## [v1.0.6] - 2024-08-12
 
 ### What's Changed
