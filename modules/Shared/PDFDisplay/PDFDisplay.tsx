@@ -36,8 +36,8 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false, data }) => {
         className={cn(
           'documentPDFView flex flex-col items-center justify-center overflow-hidden drop-shadow-xl',
           'max-[1550px]:h-full max-[1550px]:w-full',
-          isPDFPreview && 'h-full w-full',
-          'w-7/12'
+          !isPDFPreview && 'w-7/12',
+          isPDFPreview && 'h-full w-full'
         )}
       >
         <div

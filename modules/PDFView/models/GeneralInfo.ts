@@ -1,4 +1,5 @@
 export interface GeneralInfo {
+  displayOnlyIconsForAdditionalInfo: boolean;
   profilePicture: string;
   firstName: string;
   lastName: string;

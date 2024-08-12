@@ -22,6 +22,7 @@
     "url": "URL (Link na stranicu tečaja)"
   },
   "GeneralInput": {
+    "displayOnlyIconsForAdditionalInfo": "Prikaži samo ikone za dodatne informacije",
     "profilePicture": "Profilna slika",
     "firstName": "Ime",
     "lastName": "Prezime",

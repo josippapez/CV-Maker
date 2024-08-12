@@ -8,11 +8,7 @@ import {
   Pin,
   Twitter,
 } from '@modules/PDFView/CVTemplates/Images';
-import {
-  Link,
-  Text,
-  View,
-} from '@rawwee/react-pdf-html';
+import { Link, Text, View } from '@rawwee/react-pdf-html';
 import { StyleSheet } from '@react-pdf/renderer';
 import { Style } from '@react-pdf/types';
 import { FC } from 'react';
@@ -20,7 +16,6 @@ import { GeneralInfo } from '../../models';
 
 type Props = {
   generalInfo?: GeneralInfo;
-  onlyIcon?: boolean;
   styles: ReturnType<typeof StyleSheet.create>;
   itemWrapperStyle?: Style[] | Style;
   wrapperStyle?: Style;
@@ -63,11 +58,11 @@ export const AdditionalInformation: FC<Props> = ({
   generalInfo,
   styles,
   itemWrapperStyle,
-  onlyIcon,
   wrapperStyle = {},
   backgroundColor,
   wrapper,
 }) => {
+  const onlyIcon = generalInfo?.displayOnlyIconsForAdditionalInfo;
   const info: JSX.Element[] = [
     {
       icon: Pin,
@@ -151,13 +146,48 @@ export const AdditionalInformation: FC<Props> = ({
               }}
             >
               <Text style={styles.additionalInfoBarText}>
-                {link.replace(/(^\w+:|^)\/\//, '').replace(/(^www\.)/, '')}
+                {decodeURIComponent(
+                  link
+                    .replace(/(^\w+:|^)\/\//, '')
+                    .replace(/(^www\.)/, '')
+                    .replace(/(linkedin|github).com\//, '')
+                    .replace(/(in)\//, '')
+                ).replace(/\/$/, '')}
               </Text>
             </Link>
           )}
         </View>
       );
     });
+
+  if (!onlyIcon) {
+    const allInfo = [...info, ...links];
+    const firstHalf = allInfo.slice(0, Math.ceil(allInfo.length / 2));
+    const secondHalf = allInfo.slice(Math.ceil(allInfo.length / 2));
+
+    return wrapper ? (
+      wrapper(
+        <View key={'wrapped-info'} style={wrapperStyle}>
+          <View style={additionalInfoStyles.infoWrapper}>{firstHalf}</View>
+          <View style={additionalInfoStyles.infoWrapper}>{secondHalf}</View>
+        </View>
+      )
+    ) : (
+      <View
+        style={{
+          backgroundColor,
+        }}
+      >
+        <View style={[additionalInfoStyles.infoDisplay, wrapperStyle, {
+          justifyContent: 'flex-start',
+          gap: '20%',
+        }]}>
+          <View style={additionalInfoStyles.infoWrapper}>{firstHalf}</View>
+          <View style={additionalInfoStyles.infoWrapper}>{secondHalf}</View>
+        </View>
+      </View>
+    );
+  }
 
   return wrapper ? (
     wrapper(
