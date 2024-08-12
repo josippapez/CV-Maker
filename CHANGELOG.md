@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.1.1] - 2024-08-12
+
+### What's Changed
+
+* Removed unused props by @josippapez in https://github.com/josippapez/CV-Maker/pull/64
+
+**Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.1.0...v1.1.1
+
 ## [v1.1.0] - 2024-08-12
 
 ### What's Changed
