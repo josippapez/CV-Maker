@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.0.6] - 2024-08-12
+
+### What's Changed
+
+* Fixed luxon date display in correct locale by @josippapez in https://github.com/josippapez/CV-Maker/pull/62
+
+**Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.0.5...v1.0.6
+
 ## [v1.0.5] - 2024-07-01
 
 **Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.0.4...v1.0.5
