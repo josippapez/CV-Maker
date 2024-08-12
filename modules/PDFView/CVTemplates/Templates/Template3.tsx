@@ -323,7 +323,6 @@ export const Template3: FC<Props> = ({
               </View>
             )}
             <AdditionalInformation
-              onlyIcon
               generalInfo={generalInfo}
               styles={styles}
               itemWrapperStyle={{

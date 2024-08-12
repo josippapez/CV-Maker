@@ -22,6 +22,7 @@
     "url": "URL (Link to course page)"
   },
   "GeneralInput": {
+    "displayOnlyIconsForAdditionalInfo": "Display only icons for additional info",
     "profilePicture": "Profile picture",
     "firstName": "First name",
     "lastName": "Last name",

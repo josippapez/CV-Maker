@@ -79,7 +79,6 @@ export const PersonalInfo: FC<Props> = ({ styles, generalInfo, skills }) => {
       </View>
       <Skills styles={styles} skills={skills} />
       <AdditionalInformation
-        onlyIcon
         generalInfo={generalInfo}
         styles={styles}
         itemWrapperStyle={{

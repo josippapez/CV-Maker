@@ -75,6 +75,7 @@ export interface PDFDataWithTimestamp extends PDFData {
 
 const initialState: PDFDataWithTimestamp = {
   generalInfo: {
+    displayOnlyIconsForAdditionalInfo: true,
     profilePicture: '',
     firstName: '',
     lastName: '',

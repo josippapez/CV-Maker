@@ -31,6 +31,7 @@ export interface PDFDataWithTemplate extends PDFData {
 
 const initialState: PDFDataWithTemplate = {
   generalInfo: {
+    displayOnlyIconsForAdditionalInfo: true,
     profilePicture: '',
     firstName: '',
     lastName: '',

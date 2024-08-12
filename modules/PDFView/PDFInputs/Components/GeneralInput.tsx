@@ -11,8 +11,13 @@ import { useTranslations } from 'next-intl';
 const arrayOfGeneralInputs: Array<{
   inputName: string;
   inputValue: keyof Omit<GeneralInfo, 'profilePicture'>;
-  type: 'text' | 'date' | 'email' | 'tel' | 'number' | 'password';
+  type: 'text' | 'date' | 'email' | 'tel' | 'number' | 'password' | 'checkbox';
 }> = [
+  {
+    inputName: 'Display only icons for additional info',
+    inputValue: 'displayOnlyIconsForAdditionalInfo',
+    type: 'checkbox',
+  },
   { inputName: 'First name', inputValue: 'firstName', type: 'text' },
   { inputName: 'Last name', inputValue: 'lastName', type: 'text' },
   { inputName: 'Date of birth', inputValue: 'dob', type: 'date' },
@@ -59,9 +64,7 @@ export const GeneralInput = () => {
         >
           {generalInfo.profilePicture ? (
             <div className='flex w-full flex-col'>
-              <label className='font-medium'>
-                {t('profilePicture')}
-              </label>
+              <label className='font-medium'>{t('profilePicture')}</label>
               <div className='flex flex-row justify-center'>
                 <img
                   className='h-24 w-24 rounded-3xl'
@@ -85,9 +88,7 @@ export const GeneralInput = () => {
             </div>
           ) : (
             <div className='flex w-full flex-col'>
-              <label className='font-medium'>
-                {t('profilePicture')}
-              </label>
+              <label className='font-medium'>{t('profilePicture')}</label>
               <label
                 htmlFor='profilePicture'
                 className='flex h-24 w-24 cursor-pointer items-center justify-center self-center rounded-3xl border border-dashed border-blue-500 bg-blue-100 hover:bg-blue-300'
@@ -160,10 +161,24 @@ export const GeneralInput = () => {
                 duration: 0.2,
               }}
             >
-              {input.type === 'date' ? (
+              {input.type === 'checkbox' ? (
+                <div className='flex items-center'>
+                  <input
+                    type='checkbox'
+                    name={input.inputName}
+                    checked={generalInfo[input.inputValue] as boolean}
+                    onChange={e => {
+                      setGeneralInfo({
+                        [input.inputValue]: e.currentTarget.checked,
+                      });
+                    }}
+                  />
+                  <label className='ml-2'>{t(`${input.inputValue}`)}</label>
+                </div>
+              ) : input.type === 'date' ? (
                 <DateInput
                   label={t(`${input.inputValue}`).toString()}
-                  value={generalInfo[input.inputValue]}
+                  value={generalInfo[input.inputValue] as string}
                   setData={date => {
                     setGeneralInfo({
                       [input.inputValue]: date,
@@ -180,7 +195,7 @@ export const GeneralInput = () => {
                 <TextInput
                   label={t(`${input.inputValue}`).toString()}
                   type={input.type}
-                  defaultValue={generalInfo[input.inputValue]}
+                  defaultValue={generalInfo[input.inputValue] as string}
                   name={input.inputName}
                   onChange={e => {
                     setGeneralInfo({
@@ -208,7 +223,7 @@ export const GeneralInput = () => {
               <TextInput
                 label={t(`${input.inputValue}`).toString()}
                 textarea
-                defaultValue={generalInfo[input.inputValue]}
+                defaultValue={generalInfo[input.inputValue] as string}
                 name={input.inputName}
                 onChange={e => {
                   setGeneralInfo({
