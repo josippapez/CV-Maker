@@ -1,0 +1,81 @@
+{
+  "CertificatesInput": {
+    "name": "名称",
+    "date": "日期",
+    "institution": "机构",
+    "description": "描述",
+    "addCertification": "添加认证"
+  },
+  "EducationInput": {
+    "location": "地点",
+    "startDate": "开始日期",
+    "endDate": "结束日期",
+    "present": "当前",
+    "description": "描述",
+    "school": "学校",
+    "degree": "学位",
+    "fieldOfStudy": "学习领域",
+    "addEducation": "添加教育经历",
+    "currentlyEnrolled": "当前入学",
+    "course": "课程",
+    "url": "URL（课程页面链接）"
+  },
+  "GeneralInput": {
+    "displayOnlyIconsForAdditionalInfo": "仅显示附加信息的图标",
+    "profilePicture": "头像",
+    "firstName": "名",
+    "lastName": "姓",
+    "email": "电子邮件",
+    "dob": "出生日期",
+    "position": "职位",
+    "phone": "电话",
+    "address": "地址",
+    "address1": "地址 1",
+    "address2": "地址 2",
+    "city": "城市",
+    "zip": "邮政编码",
+    "country": "国家",
+    "website": "网站",
+    "LinkedIn": "LinkedIn",
+    "Facebook": "Facebook",
+    "Twitter": "Twitter",
+    "GitHub": "Github",
+    "aboutMe": "关于我",
+    "remove": "删除"
+  },
+  "LanguagesInput": {
+    "level": "水平",
+    "language": "语言",
+    "BEGINNER": "初学者",
+    "CONVERSATIONAL": "会话",
+    "NATIVE": "母语",
+    "FLUENT": "流利",
+    "addLanguage": "添加语言"
+  },
+  "ProfessionalExperienceInput": {
+    "company": "公司",
+    "position": "职位",
+    "location": "地点",
+    "startDate": "开始日期",
+    "endDate": "结束日期",
+    "present": "当前",
+    "description": "描述",
+    "addExperience": "添加经历",
+    "currentlyEnrolled": "当前注册"
+  },
+  "ProjectsInput": {
+    "name": "名称",
+    "description": "描述",
+    "startDate": "开始日期",
+    "endDate": "结束日期",
+    "owner": "所有者",
+    "url": "URL",
+    "currentlyWorking": "目前在做",
+    "addProject": "添加项目"
+  },
+  "SkillsInput": {
+    "skill": "技能",
+    "addSkills": "添加技能",
+    "noSkills": "无技能"
+  }
+}

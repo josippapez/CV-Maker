@@ -41,7 +41,7 @@ export const LandingPage: FC = () => {
     >
       <LandingPageSection sectionClass='md:min-h-[calc(100vh_-_81px)]'>
         {isInView => (
-          <div className='flex flex-col items-center justify-center gap-16 md:flex-row md:gap-5'>
+          <div className='flex w-full flex-col items-center justify-center gap-16 lg:flex-row lg:gap-10'>
             <div className='flex flex-col gap-5'>
               <motion.p
                 initial={combinedStyleInitial}
@@ -69,8 +69,8 @@ export const LandingPage: FC = () => {
               }
               transition={{ duration: 0.1, delay: 0.1 }}
               src={'/Styles/Assets/Images/Template4.webp'}
-              width={'45%'}
               alt='Template4'
+              className='aspect-auto'
             />
           </div>
         )}
@@ -85,7 +85,7 @@ export const LandingPage: FC = () => {
 
       <LandingPageSection sectionClass={`md:min-h-[calc(100vh_-_81px)]`}>
         {isInView => (
-          <div className='flex flex-col items-center justify-center gap-16 md:flex-row md:gap-5'>
+          <div className='flex w-full flex-col items-center justify-center gap-16 lg:flex-row lg:gap-10'>
             <motion.img
               initial={horizontalAnimationMinus.combinedStyleInitial}
               animate={
@@ -97,7 +97,7 @@ export const LandingPage: FC = () => {
               }
               transition={{ duration: 0.2 }}
               src={'/Styles/Assets/Images/Template3.webp'}
-              width={'45%'}
+              className='aspect-auto'
               alt='Template3'
             />
             <motion.p

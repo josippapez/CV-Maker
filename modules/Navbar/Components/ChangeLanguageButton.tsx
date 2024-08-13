@@ -3,6 +3,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { DEFAULT_LOCALE, LOCALES } from '@/translations/locales';
 import { usePathname, useRouter } from '@/translations/navigation';
 import Translate from '@public/Styles/Assets/Images/translate.svg';
 import { useLocale, useTranslations } from 'next-intl';
@@ -30,13 +31,17 @@ export const ChangeLanguageButton: FC<Props> = ({
   const handleSelectLanguage = async (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.target as HTMLButtonElement;
     e.preventDefault();
+    const datasetLocale = target.dataset.locale as
+      | (typeof LOCALES)[number]
+      | undefined
+      | null;
     if (onChangeLanguage) {
-      if (!target.dataset.locale) return;
-      localStorage.setItem('locale', target.dataset.locale);
+      if (!datasetLocale) return;
+      localStorage.setItem('locale', datasetLocale);
       await onChangeLanguage?.();
     }
     router.push(pathname, {
-      locale: target.dataset.locale,
+      locale: datasetLocale ?? DEFAULT_LOCALE,
     });
   };
 
@@ -61,21 +66,19 @@ export const ChangeLanguageButton: FC<Props> = ({
         <Translate height={30} width={35} />
       </PopoverTrigger>
       <PopoverContent side={dropdownPosition} asChild>
-        <div className={`flex w-fit flex-col rounded-md border py-3 !bg-gray-100 dark:!bg-almost-black-input`}>
-          <button
-            data-locale='en-US'
-            className={`${selectedLanguageClass('en-US')}`}
-            onClick={handleSelectLanguage}
-          >
-            {t('English')}
-          </button>
-          <button
-            data-locale='hr'
-            className={`${selectedLanguageClass('hr')}`}
-            onClick={handleSelectLanguage}
-          >
-            {t('Croatian')}
-          </button>
+        <div
+          className={`flex w-fit flex-col rounded-md border !bg-gray-100 py-3 dark:!bg-almost-black-input`}
+        >
+          {LOCALES.map(locale => (
+            <button
+              key={locale}
+              data-locale={locale}
+              className={`${selectedLanguageClass(locale)}`}
+              onClick={handleSelectLanguage}
+            >
+              {t(locale)}
+            </button>
+          ))}
         </div>
       </PopoverContent>
     </Popover>

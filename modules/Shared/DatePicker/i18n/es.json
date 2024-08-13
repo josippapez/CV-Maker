@@ -1,0 +1,9 @@
+{
+  "DatePicker": {
+    "date-selector": "Selector de fecha",
+    "cancel": "Cancelar",
+    "clear": "Borrar",
+    "done": "Hecho",
+    "year-only": "Solo año"
+  }
+}

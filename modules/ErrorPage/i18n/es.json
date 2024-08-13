@@ -1,0 +1,11 @@
+{
+  "ErrorPage": {
+    "errorTitle": "Algo salió mal.",
+    "errorDescription": "Por favor, inténtelo de nuevo más tarde.",
+    "retry": "Reintentar",
+    "Metadata": {
+      "title": "Página de error",
+      "description": "Página de error."
+    }
+  }
+}
