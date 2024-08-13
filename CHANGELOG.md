@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.2.0] - 2024-08-13
+
+### What's Changed
+
+* New languages by @josippapez in https://github.com/josippapez/CV-Maker/pull/65
+
+**Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.1.2...v1.2.0
+
 ## [v1.1.2] - 2024-08-12
 
 **Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.1.1...v1.1.2
