@@ -1,7 +1,10 @@
 {
   "Navbar": {
-    "English": "English",
-    "Croatian": "Croatian",
+    "en-US": "English",
+    "hr": "Croatian",
+    "fr": "French",
+    "zh-cn": "Chinese",
+    "es": "Spanish",
     "home": "Home",
     "create": "Create CV"
   }

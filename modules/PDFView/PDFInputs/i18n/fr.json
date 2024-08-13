@@ -1,0 +1,81 @@
+{
+  "CertificatesInput": {
+    "name": "Nom",
+    "date": "Date",
+    "institution": "Établissement",
+    "description": "Description",
+    "addCertification": "Ajouter une certification"
+  },
+  "EducationInput": {
+    "location": "Lieu",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "present": "Présent",
+    "description": "Description",
+    "school": "École",
+    "degree": "Diplôme",
+    "fieldOfStudy": "Domaine d'étude",
+    "addEducation": "Ajouter une formation",
+    "currentlyEnrolled": "Actuellement inscrit",
+    "course": "Cours",
+    "url": "URL (Lien vers la page du cours)"
+  },
+  "GeneralInput": {
+    "displayOnlyIconsForAdditionalInfo": "Afficher uniquement les icônes pour les infos supplémentaires",
+    "profilePicture": "Photo de profil",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "E-mail",
+    "dob": "Date de naissance",
+    "position": "Poste",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "address1": "Adresse 1",
+    "address2": "Adresse 2",
+    "city": "Ville",
+    "zip": "Code postal",
+    "country": "Pays",
+    "website": "Site web",
+    "LinkedIn": "LinkedIn",
+    "Facebook": "Facebook",
+    "Twitter": "Twitter",
+    "GitHub": "Github",
+    "aboutMe": "À propos de moi",
+    "remove": "Supprimer"
+  },
+  "LanguagesInput": {
+    "level": "Niveau",
+    "language": "Langue",
+    "BEGINNER": "Débutant",
+    "CONVERSATIONAL": "Courant",
+    "NATIVE": "Natif",
+    "FLUENT": "Fluent",
+    "addLanguage": "Ajouter une langue"
+  },
+  "ProfessionalExperienceInput": {
+    "company": "Entreprise",
+    "position": "Poste",
+    "location": "Lieu",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "present": "Présent",
+    "description": "Description",
+    "addExperience": "Ajouter une expérience",
+    "currentlyEnrolled": "Actuellement inscrit"
+  },
+  "ProjectsInput": {
+    "name": "Nom",
+    "description": "Description",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "owner": "Propriétaire",
+    "url": "URL",
+    "currentlyWorking": "Travaille actuellement",
+    "addProject": "Ajouter un projet"
+  },
+  "SkillsInput": {
+    "skill": "Compétence",
+    "addSkills": "Ajouter une compétence",
+    "noSkills": "Pas de compétences"
+  }
+}

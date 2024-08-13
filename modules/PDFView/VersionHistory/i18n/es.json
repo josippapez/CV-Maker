@@ -1,0 +1,9 @@
+{
+  "VersionHistoryModal": {
+    "conflict": "Conflicto de versión: Su CV ha sido editado tanto localmente como en la nube. ¿Desea conservar sus cambios locales o la versión en la nube? Por favor, seleccione una opción a continuación para continuar.",
+    "conflict-local": "Conservar local: Sus cambios locales se mantendrán y la versión en la nube será sobrescrita.",
+    "conflict-cloud": "Conservar nube: Sus cambios locales serán sobrescritos y se mantendrá la versión en la nube.",
+    "conflict_keep_local": "Conservar local",
+    "conflict_keep_cloud": "Conservar nube"
+  }
+}

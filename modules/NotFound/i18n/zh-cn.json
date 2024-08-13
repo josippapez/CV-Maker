@@ -1,0 +1,12 @@
+{
+  "NotFoundPage": {
+    "notFound": "页面未找到",
+    "message": "请导航回 {homepage} 或 {createCV}。",
+    "homePage": "主页",
+    "createCVPage": "创建简历页面",
+    "Metadata": {
+      "title": "404 - 页面未找到",
+      "description": "页面未找到。"
+    }
+  }
+}

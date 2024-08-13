@@ -1,4 +1,4 @@
-export const LOCALES = ['hr', 'en-US']
+export const LOCALES = ['hr', 'en-US', 'fr', 'es', 'zh-cn'];
 export const DEFAULT_LOCALE = 'en-US'
 
 

@@ -1,0 +1,16 @@
+{
+  "Templates": {
+    "chooseYourTemplate": "选择你的模板",
+    "skills": "技能",
+    "languages": "语言",
+    "certificates": "证书",
+    "education": "教育",
+    "projects": "项目",
+    "professionalExperience": "专业经验",
+    "present": "当前",
+    "BEGINNER": "初学者",
+    "CONVERSATIONAL": "会话",
+    "NATIVE": "母语",
+    "FLUENT": "流利"
+  }
+}

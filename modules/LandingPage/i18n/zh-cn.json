@@ -1,0 +1,16 @@
+{
+  "LandingPage": {
+    "pageName": "简历生成器",
+    "createYourCV": "创建您的简历",
+    "welcome": "欢迎使用简历生成器",
+    "welcomeDescription": "创建和下载专业简历的最简单方法。",
+    "offerDescription": "我们提供多种模板可供选择。",
+    "integrationDescription": "通过与Google账户集成。",
+    "createYourCVDescription": "今天开始使用简历生成器。",
+    "templatesDescription": "从多种模板中选择。",
+    "Metadata": {
+      "title": "简历生成器 - 免费在线创建专业简历",
+      "description": "简历生成器 - 免费在线创建专业简历"
+    }
+  }
+}

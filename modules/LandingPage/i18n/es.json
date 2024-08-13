@@ -1,0 +1,16 @@
+{
+  "LandingPage": {
+    "pageName": "Creador de CV",
+    "createYourCV": "Crea tu CV",
+    "welcome": "Bienvenido al Creador de CV",
+    "welcomeDescription": "La forma más fácil de crear y descargar CVs profesionales.",
+    "offerDescription": "Ofrecemos una variedad de plantillas.",
+    "integrationDescription": "Con nuestra integración con Google.",
+    "createYourCVDescription": "Comienza a usar el Creador de CV hoy mismo.",
+    "templatesDescription": "Elige entre una variedad de plantillas.",
+    "Metadata": {
+      "title": "Creador de CV - Crea currículums profesionales en línea gratis",
+      "description": "Creador de CV - Crea currículums profesionales en línea gratis"
+    }
+  }
+}

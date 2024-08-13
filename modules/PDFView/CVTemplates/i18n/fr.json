@@ -1,0 +1,16 @@
+{
+  "Templates": {
+    "chooseYourTemplate": "Choisissez votre modèle",
+    "skills": "Compétences",
+    "languages": "Langues",
+    "certificates": "Certificats",
+    "education": "Éducation",
+    "projects": "Projets",
+    "professionalExperience": "Expérience professionnelle",
+    "present": "Présent",
+    "BEGINNER": "Débutant",
+    "CONVERSATIONAL": "Courant",
+    "NATIVE": "Natif",
+    "FLUENT": "Fluent"
+  }
+}

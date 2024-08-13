@@ -1,0 +1,9 @@
+{
+  "VersionHistoryModal": {
+    "conflict": "版本冲突：您的简历已在本地和云端进行了编辑。您是要保留本地更改还是云版本？请选择以下选项以继续。",
+    "conflict-local": "保留本地：您的本地更改将被保留，并覆盖云版本。",
+    "conflict-cloud": "保留云端：您的本地更改将被覆盖，并保留云版本。",
+    "conflict_keep_local": "保留本地",
+    "conflict_keep_cloud": "保留云端"
+  }
+}

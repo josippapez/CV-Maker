@@ -1,0 +1,11 @@
+{
+  "ErrorPage": {
+    "errorTitle": "出了些问题。",
+    "errorDescription": "请重试或稍后再试。",
+    "retry": "重试",
+    "Metadata": {
+      "title": "错误页面",
+      "description": "错误页面。"
+    }
+  }
+}

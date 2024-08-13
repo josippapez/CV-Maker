@@ -1,0 +1,16 @@
+{
+  "Templates": {
+    "chooseYourTemplate": "Elige tu plantilla",
+    "skills": "Habilidades",
+    "languages": "Idiomas",
+    "certificates": "Certificados",
+    "education": "Educación",
+    "projects": "Proyectos",
+    "professionalExperience": "Experiencia profesional",
+    "present": "Actual",
+    "BEGINNER": "Principiante",
+    "CONVERSATIONAL": "Conversacional",
+    "NATIVE": "Nativo",
+    "FLUENT": "Fluido"
+  }
+}

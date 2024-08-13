@@ -1,0 +1,11 @@
+{
+  "ErrorPage": {
+    "errorTitle": "Quelque chose s'est mal passé.",
+    "errorDescription": "Veuillez réessayer ou réessayer plus tard.",
+    "retry": "Réessayer",
+    "Metadata": {
+      "title": "Page d'erreur",
+      "description": "Page d'erreur."
+    }
+  }
+}

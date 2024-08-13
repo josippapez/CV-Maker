@@ -1,0 +1,11 @@
+{
+  "Navbar": {
+    "en-US": "Anglais",
+    "hr": "Croate",
+    "fr": "Français",
+    "zh-cn": "Chinois",
+    "es": "Espagnol",
+    "home": "Accueil",
+    "create": "Créer CV"
+  }
+}
