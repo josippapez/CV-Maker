@@ -1,10 +1,11 @@
 {
   "Navbar": {
-    "en-US": "英语",
-    "hr": "克罗地亚语",
-    "fr": "法语",
+    "en-US": "English",
+    "hr": "Hrvatski",
+    "fr": "Français",
     "zh-cn": "中文",
-    "es": "西班牙语",
+    "es": "Español",
+    "ja": "日本語",
     "home": "首页",
     "create": "创建简历"
   }

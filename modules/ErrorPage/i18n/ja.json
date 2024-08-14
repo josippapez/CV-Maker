@@ -1,0 +1,11 @@
+{
+  "ErrorPage": {
+    "errorTitle": "問題が発生しました。",
+    "errorDescription": "再試行するか、後でもう一度お試しください。",
+    "retry": "再試行",
+    "Metadata": {
+      "title": "エラーページ",
+      "description": "エラーページ。"
+    }
+  }
+}

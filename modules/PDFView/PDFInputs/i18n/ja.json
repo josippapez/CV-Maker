@@ -1,0 +1,81 @@
+{
+  "CertificatesInput": {
+    "name": "名前",
+    "date": "日付",
+    "institution": "機関",
+    "description": "説明",
+    "addCertification": "認定を追加"
+  },
+  "EducationInput": {
+    "location": "場所",
+    "startDate": "開始日",
+    "endDate": "終了日",
+    "present": "現在",
+    "description": "説明",
+    "school": "学校",
+    "degree": "学位",
+    "fieldOfStudy": "専攻",
+    "addEducation": "教育を追加",
+    "currentlyEnrolled": "現在在籍中",
+    "course": "コース",
+    "url": "URL（コースページへのリンク）"
+  },
+  "GeneralInput": {
+    "displayOnlyIconsForAdditionalInfo": "追加情報にはアイコンのみ表示",
+    "profilePicture": "プロフィール写真",
+    "firstName": "名前",
+    "lastName": "苗字",
+    "email": "メールアドレス",
+    "dob": "生年月日",
+    "position": "ポジション",
+    "phone": "電話番号",
+    "address": "住所",
+    "address1": "住所1",
+    "address2": "住所2",
+    "city": "市",
+    "zip": "郵便番号",
+    "country": "国",
+    "website": "ウェブサイト",
+    "LinkedIn": "LinkedIn",
+    "Facebook": "Facebook",
+    "Twitter": "Twitter",
+    "GitHub": "Github",
+    "aboutMe": "自己紹介",
+    "remove": "削除"
+  },
+  "LanguagesInput": {
+    "level": "レベル",
+    "language": "言語",
+    "BEGINNER": "初心者",
+    "CONVERSATIONAL": "日常会話レベル",
+    "NATIVE": "ネイティブ",
+    "FLUENT": "流暢",
+    "addLanguage": "言語を追加"
+  },
+  "ProfessionalExperienceInput": {
+    "company": "会社",
+    "position": "ポジション",
+    "location": "場所",
+    "startDate": "開始日",
+    "endDate": "終了日",
+    "present": "現在",
+    "description": "説明",
+    "addExperience": "経験を追加",
+    "currentlyEnrolled": "現在在籍中"
+  },
+  "ProjectsInput": {
+    "name": "名前",
+    "description": "説明",
+    "startDate": "開始日",
+    "endDate": "終了日",
+    "owner": "所有者",
+    "url": "URL",
+    "currentlyWorking": "現在作業中",
+    "addProject": "プロジェクトを追加"
+  },
+  "SkillsInput": {
+    "skill": "スキル",
+    "addSkills": "スキルを追加",
+    "noSkills": "スキルなし"
+  }
+}
