@@ -59,23 +59,23 @@ const nextConfig = {
       test: /\.(woff|woff2|eot|ttf|otf)$/i,
       type: 'asset/resource',
     });
-    config.plugins.push(
-      new CopyPlugin({
-        patterns: [
-          {
-            from: path.join('./', 'node_modules/pdfjs-dist/cmaps'),
-            to: path.join('./', 'public/cmaps'),
-          },
-          {
-            from: path.join(
-              './',
-              'node_modules/pdfjs-dist/build/pdf.worker.min.js'
-            ),
-            to: path.join('./', 'public'),
-          },
-        ],
-      })
-    );
+    // config.plugins.push(
+    //   new CopyPlugin({
+    //     patterns: [
+    //       {
+    //         from: path.join('./', 'node_modules/pdfjs-dist/cmaps'),
+    //         to: path.join('./', 'public/cmaps'),
+    //       },
+    //       {
+    //         from: path.join(
+    //           './',
+    //           'node_modules/pdfjs-dist/build/pdf.worker.min.js'
+    //         ),
+    //         to: path.join('./', 'public'),
+    //       },
+    //     ],
+    //   })
+    // );
     return config;
   },
 };

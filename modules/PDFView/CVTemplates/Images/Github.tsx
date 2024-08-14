@@ -1,13 +1,17 @@
-import {
-  G,
-  Path,
-  Svg,
-} from '@rawwee/react-pdf-html';
+import { G, Path, Svg } from '@rawwee/react-pdf-html';
 
 export const GitHub = (props: { width?: number; height?: number }) => {
   const { width, height } = props;
   return (
-    <Svg viewBox='0 0 24 24' width={width} height={height}>
+    <Svg
+      viewBox='0 0 24 24'
+      width={width}
+      height={height}
+      style={{
+        minWidth: width,
+        minHeight: height,
+      }}
+    >
       <G>
         <Path
           stroke='white'

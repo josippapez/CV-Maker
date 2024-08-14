@@ -26,7 +26,6 @@ interface Props {
   template: Template;
   skills: Skill[];
   projects: Project[];
-  isHtml?: boolean;
 }
 
 interface OptionType extends Props {

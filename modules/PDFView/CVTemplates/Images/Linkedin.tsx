@@ -1,13 +1,17 @@
-import {
-  G,
-  Path,
-  Svg,
-} from '@rawwee/react-pdf-html';
+import { G, Path, Svg } from '@rawwee/react-pdf-html';
 
 export const Linkedin = (props: { width?: number; height?: number }) => {
   const { width, height } = props;
   return (
-    <Svg viewBox='0 0 45.959 45.959' width={width} height={height}>
+    <Svg
+      viewBox='0 0 45.959 45.959'
+      width={width}
+      height={height}
+      style={{
+        minWidth: width,
+        minHeight: height,
+      }}
+    >
       <G>
         <Path
           fill='white'

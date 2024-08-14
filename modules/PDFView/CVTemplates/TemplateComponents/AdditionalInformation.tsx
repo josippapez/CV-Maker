@@ -34,6 +34,7 @@ const additionalInfoStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     rowGap: 10,
+    width: '100%',
   },
   iconWrapper: {
     display: 'flex',
@@ -123,9 +124,17 @@ export const AdditionalInformation: FC<Props> = ({
       return condition;
     })
     .map(({ icon, text, link }, index) => {
+      let url = null;
+
+      try {
+        if (link) url = new URL(link ?? '')?.toString();
+      } catch (error) {
+        console.error(error);
+      }
+
       const LinkDisplay = () => (
         <Link
-          src={link || `mailto:${text}`}
+          src={link ?? `mailto:${text}`}
           style={[additionalInfoStyles.iconsDisplay]}
         >
           {icon({ width: 14 })}
@@ -137,25 +146,23 @@ export const AdditionalInformation: FC<Props> = ({
       ) : (
         <View key={`additionalInfo-${index}`} style={itemWrapperStyle}>
           {icon({ width: 14 })}
-          {text && <Text style={styles.additionalInfoBarText}>{text}</Text>}
-          {link && (
-            <Link
-              src={link}
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              <Text style={styles.additionalInfoBarText}>
-                {decodeURIComponent(
+          <Link
+            src={url ?? `mailto:${text}`}
+            style={{
+              textDecoration: 'none',
+            }}
+          >
+            <Text style={styles.additionalInfoBarText}>
+              {link &&
+                decodeURIComponent(
                   link
                     .replace(/(^\w+:|^)\/\//, '')
                     .replace(/(^www\.)/, '')
                     .replace(/(linkedin|github).com\//, '')
-                    .replace(/(in)\//, '')
                 ).replace(/\/$/, '')}
-              </Text>
-            </Link>
-          )}
+              {text}
+            </Text>
+          </Link>
         </View>
       );
     });
@@ -178,10 +185,16 @@ export const AdditionalInformation: FC<Props> = ({
           backgroundColor,
         }}
       >
-        <View style={[additionalInfoStyles.infoDisplay, wrapperStyle, {
-          justifyContent: 'flex-start',
-          gap: '100px',
-        }]}>
+        <View
+          style={[
+            additionalInfoStyles.infoDisplay,
+            wrapperStyle,
+            {
+              justifyContent: 'flex-start',
+              gap: '100px',
+            },
+          ]}
+        >
           <View style={additionalInfoStyles.infoWrapper}>{firstHalf}</View>
           <View style={additionalInfoStyles.infoWrapper}>{secondHalf}</View>
         </View>

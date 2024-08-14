@@ -1,13 +1,17 @@
-import {
-  G,
-  Path,
-  Svg,
-} from '@rawwee/react-pdf-html';
+import { G, Path, Svg } from '@rawwee/react-pdf-html';
 
 export const Pin = (props: { width?: number; height?: number }) => {
   const { width, height } = props;
   return (
-    <Svg width={width} height={height} viewBox='0 0 68.634 68.634'>
+    <Svg
+      width={width}
+      height={height}
+      viewBox='0 0 68.634 68.634'
+      style={{
+        minWidth: width,
+        minHeight: height,
+      }}
+    >
       <G>
         <Path
           fill='white'
