@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.2.1] - 2024-08-14
+
+### What's Changed
+
+* Feature - japanese language by @josippapez in https://github.com/josippapez/CV-Maker/pull/66
+
+**Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.2.0...v1.2.1
+
 ## [v1.2.0] - 2024-08-13
 
 ### What's Changed
