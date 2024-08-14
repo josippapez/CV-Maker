@@ -1,0 +1,12 @@
+{
+  "NotFoundPage": {
+    "notFound": "ページが見つかりません",
+    "message": "{homepage}または{createCV}に戻ってください。",
+    "homePage": "ホームページ",
+    "createCVPage": "履歴書作成ページ",
+    "Metadata": {
+      "title": "404 - ページが見つかりません",
+      "description": "ページが見つかりません。"
+    }
+  }
+}
