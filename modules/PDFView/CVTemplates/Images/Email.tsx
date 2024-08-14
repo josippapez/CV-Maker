@@ -3,7 +3,15 @@ import { G, Path, Svg } from '@rawwee/react-pdf-html';
 export const Email = (props: { width?: number; height?: number }) => {
   const { width, height } = props;
   return (
-    <Svg viewBox='0 0 75.294 75.294' width={width} height={height}>
+    <Svg
+      viewBox='0 0 75.294 75.294'
+      width={width}
+      height={height}
+      style={{
+        minWidth: width,
+        minHeight: height,
+      }}
+    >
       <G>
         <Path
           fill='white'

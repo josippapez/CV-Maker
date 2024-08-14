@@ -1,13 +1,17 @@
-import {
-  G,
-  Path,
-  Svg,
-} from '@rawwee/react-pdf-html';
+import { G, Path, Svg } from '@rawwee/react-pdf-html';
 
 export const Twitter = (props: { width?: number; height?: number }) => {
   const { width, height } = props;
   return (
-    <Svg viewBox='0 0 512 512' width={width} height={height}>
+    <Svg
+      viewBox='0 0 512 512'
+      width={width}
+      height={height}
+      style={{
+        minWidth: width,
+        minHeight: height,
+      }}
+    >
       <G>
         <Path
           fill='white'

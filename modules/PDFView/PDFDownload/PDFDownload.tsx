@@ -1,14 +1,19 @@
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { getCurrentTranslations } from '@/translations/hooks/getCurrentTranslations';
 import { DEFAULT_LOCALE } from '@/translations/locales';
 import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
-import ReactPDF, { PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink, UsePDFInstance } from '@react-pdf/renderer';
 import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 type Props = {
   PdfInstance?: () => JSX.Element;
-  pdfBlob?: ReactPDF.UsePDFInstance;
+  pdfBlob?: UsePDFInstance;
   closeModal(): void;
   show: boolean;
 };
@@ -39,11 +44,18 @@ export const PDFDownload = ({
         setMessages(messages);
       });
     }
+
+    return () => {
+      setHtml(true);
+      setDownload(false);
+    };
   }, [show]);
 
   return (
     <Dialog open={show} onOpenChange={closeModal}>
       <DialogContent showCloseButton={false}>
+        <DialogTitle hidden>Download CV</DialogTitle>
+        <DialogDescription hidden>Download CV</DialogDescription>
         <div className='relative h-fit w-fit flex-col bg-white p-5 text-almost-black'>
           <div className='flex items-center justify-between'>
             <h1 className='text-2xl font-bold'>Download CV</h1>
