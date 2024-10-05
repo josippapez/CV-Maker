@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.3.0] - 2024-10-05
+
+### What's Changed
+
+* Updated packages and fixed styling by @josippapez in https://github.com/josippapez/CV-Maker/pull/68
+
+**Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.2.2...v1.3.0
+
 ## [v1.2.2] - 2024-08-14
 
 ### What's Changed
