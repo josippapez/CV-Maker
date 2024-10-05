@@ -146,18 +146,7 @@ export const usePDFData = () => {
         | Partial<ProfessionalExperience>[],
       index?: number
     ) => {
-      if (operation === Operations.UPDATE) {
-        if (index === undefined) return;
-        if (!tempProfessionalExperience) {
-          tempProfessionalExperience = professionalExperience[index];
-        }
-        tempProfessionalExperience = {
-          ...tempProfessionalExperience,
-          ...professionalExperienceValue,
-        };
-      } else {
-        tempProfessionalExperience = professionalExperienceValue;
-      }
+      tempProfessionalExperience = professionalExperienceValue;
 
       setDebouncedProfessionalExperience(operation, index);
     },
@@ -183,18 +172,7 @@ export const usePDFData = () => {
       certificate?: Partial<Certificate> | Partial<Certificate>[],
       index?: number
     ) => {
-      if (operation === Operations.UPDATE) {
-        if (index === undefined) return;
-        if (!tempCertificates) {
-          tempCertificates = certificates[index];
-        }
-        tempCertificates = {
-          ...tempCertificates,
-          ...certificate,
-        };
-      } else {
-        tempCertificates = certificate;
-      }
+      tempCertificates = certificate;
 
       setDebouncedCertificates(operation, index);
     },
@@ -220,18 +198,7 @@ export const usePDFData = () => {
       educationValue?: Partial<Education> | Partial<Education>[],
       index?: number
     ) => {
-      if (operation === Operations.UPDATE) {
-        if (index === undefined) return;
-        if (!tempEducation) {
-          tempEducation = education[index];
-        }
-        tempEducation = {
-          ...tempEducation,
-          ...educationValue,
-        };
-      } else {
-        tempEducation = educationValue;
-      }
+      tempEducation = educationValue;
 
       setDebouncedEducation(operation, index);
     },
@@ -311,18 +278,7 @@ export const usePDFData = () => {
       projectValue?: Partial<Project> | Partial<Project>[],
       index?: number
     ) => {
-      if (operation === Operations.UPDATE) {
-        if (index === undefined) return;
-        if (!tempProjects) {
-          tempProjects = projects[index];
-        }
-        tempProjects = {
-          ...tempProjects,
-          ...projectValue,
-        };
-      } else {
-        tempProjects = projectValue;
-      }
+      tempProjects = projectValue;
 
       setDebouncedProjects(operation, index);
     },
