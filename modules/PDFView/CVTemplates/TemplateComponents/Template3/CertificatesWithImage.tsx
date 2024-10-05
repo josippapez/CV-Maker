@@ -42,11 +42,11 @@ export const CertificatesWithImage: FC<Props> = ({
           zIndex: -1,
           top: 0,
           left: 0,
-          height: '100px',
-          alignItems: 'flex-start',
+          width: '100%',
+          justifyContent: 'flex-start',
         }}
       >
-        <BlobTopLeft />
+        <BlobTopLeft width={100} height={100} />
       </View>
       {certificates.map((cert, index) => (
         <CertificateItem key={`cert-${index}`} styles={styles} cert={cert} />

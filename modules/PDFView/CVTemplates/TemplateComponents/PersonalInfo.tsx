@@ -45,13 +45,10 @@ export const PersonalInfo: FC<Props> = ({ styles, generalInfo, skills }) => {
         <View
           style={{
             flex: 1,
+            flexDirection: 'column',
           }}
         >
-          <View
-            style={{
-              flexDirection: 'row',
-            }}
-          >
+          <View>
             <TextDisplay style={styles.topBarName}>
               {generalInfo?.firstName} {generalInfo?.lastName}
             </TextDisplay>

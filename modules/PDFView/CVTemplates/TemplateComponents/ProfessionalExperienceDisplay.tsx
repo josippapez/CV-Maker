@@ -44,7 +44,7 @@ export const ProfessionalExperienceDisplay: FC<Props> = ({
       <TextDisplay style={[styles.sectionTitle]}>
         {translate('professionalExperience')}
       </TextDisplay>
-      <View style={[{ rowGap: 30 }]}>
+      <View style={[{ rowGap: 30, flexDirection: 'column' }]}>
         {professionalExperience?.map((experience, index) => (
           <View
             key={index}
