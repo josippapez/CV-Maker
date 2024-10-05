@@ -113,6 +113,7 @@ export const PDFDownload = ({
                   }
                   fileName={`${cvName}.pdf`}
                 >
+                  {/* @ts-ignore-next-line */}
                   {({ blob, url, loading, error }) => {
                     if (loading) return 'Loading document...';
                     return 'Download now!';
