@@ -7,11 +7,7 @@ import {
 import { getCurrentTranslations } from '@/translations/hooks/getCurrentTranslations';
 import { DEFAULT_LOCALE } from '@/translations/locales';
 import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
-import {
-  BlobProviderParams,
-  PDFDownloadLink,
-  UsePDFInstance,
-} from '@react-pdf/renderer';
+import { PDFDownloadLink, UsePDFInstance } from '@react-pdf/renderer';
 import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 
