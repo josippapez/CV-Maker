@@ -35,6 +35,7 @@ export const EducationWithImage: FC<Props> = ({
           backgroundColor: '#13171a',
           overflow: 'hidden',
           flexGrow: 1,
+          position: 'relative',
         },
       ]}
     >
@@ -52,11 +53,12 @@ export const EducationWithImage: FC<Props> = ({
                 zIndex: -1,
                 top: 0,
                 right: 0,
-                height: '100px',
+                width: '100%',
+                justifyContent: 'flex-end',
                 alignItems: 'flex-end',
               }}
             >
-              <BlobTopRight />
+              <BlobTopRight width={100} height={100} />
             </View>
           )}
           {index === education.length - 1 &&
@@ -68,11 +70,11 @@ export const EducationWithImage: FC<Props> = ({
                   position: 'absolute',
                   zIndex: -1,
                   bottom: 0,
-                  height: '100px',
-                  alignItems: 'flex-start',
+                  width: '100%',
+                  justifyContent: 'flex-start',
                 }}
               >
-                <BlobBottomLeft />
+                <BlobBottomLeft width={100} height={100} />
               </View>
             ) : (
               <View

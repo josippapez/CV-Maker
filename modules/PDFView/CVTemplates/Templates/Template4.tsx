@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     height: 'auto',
     minHeight: 150,
     overflow: 'hidden',
+    flexDirection: 'column',
   },
   topBar: {
     height: 'auto',

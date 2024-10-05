@@ -1,12 +1,13 @@
+import { cn } from '@/lib/utils';
 import { CVTemplate } from '@modules/PDFView/CVTemplates/CVTemplate';
-import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
 import { PDFDownload } from '@modules/PDFView/PDFDownload/PDFDownload';
 import { PDFData } from '@modules/PDFView/models';
 import { useAuth } from '@modules/Providers/AuthProvider';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
+import { RealPDFDisplay } from '@modules/Shared/PDFDisplay/RealPDFDisplay';
 import { Tooltip } from '@modules/Shared/Tooltip';
+import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
 import { FC, useCallback, useState } from 'react';
-import { cn } from '@/lib/utils';
 
 type Props = {
   isPDFPreview?: boolean;
@@ -28,7 +29,9 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false, data }) => {
       ? (windowSize.width - 80) / 595
       : (windowSize.height - 80) / 842;
 
-  if (!data) return null;
+  if (process.env.NEXT_PUBLIC_SHOW_REAL_PDF === 'true') {
+    return <RealPDFDisplay Template={Template} />;
+  }
 
   return (
     <>

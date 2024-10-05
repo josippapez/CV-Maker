@@ -59,6 +59,7 @@ export const Languages: FC<Props> = ({
           backgroundColor,
           flexGrow,
           color,
+          flexDirection: 'column',
         },
       ]}
     >

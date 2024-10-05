@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     height: 'auto',
     minHeight: 150,
     overflow: 'hidden',
+    flexDirection: 'column',
   },
   topBar: {
     height: 'auto',
@@ -208,6 +209,9 @@ export const Template3: FC<Props> = ({
               height={200}
               style={{
                 position: 'absolute',
+                width: '100%',
+                left: 0,
+                top: 0,
               }}
             >
               <Defs>
@@ -251,6 +255,7 @@ export const Template3: FC<Props> = ({
                 <View
                   style={{
                     flex: 1,
+                    flexDirection: 'column',
                   }}
                 >
                   <View

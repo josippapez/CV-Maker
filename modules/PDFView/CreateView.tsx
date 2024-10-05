@@ -31,6 +31,9 @@ export const CreateView: FC = () => {
   } = usePDFData();
 
   useEffect(() => {
+    if (process.env.NEXT_PUBLIC_SHOW_REAL_PDF === 'true') {
+      return setHtml(false);
+    }
     setHtml(true);
   }, []);
 
