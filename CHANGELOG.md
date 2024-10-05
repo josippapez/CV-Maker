@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.3.1] - 2024-10-05
+
+### What's Changed
+
+* Fixed minor type issue by @josippapez in https://github.com/josippapez/CV-Maker/pull/69
+
+**Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.3.0...v1.3.1
+
 ## [v1.3.0] - 2024-10-05
 
 ### What's Changed
