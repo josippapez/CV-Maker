@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.4.0] - 2024-10-05
+
+### What's Changed
+
+* Refactored some state updates by @josippapez in https://github.com/josippapez/CV-Maker/pull/70
+
+**Full Changelog**: https://github.com/josippapez/CV-Maker/compare/v1.3.1...v1.4.0
+
 ## [v1.3.1] - 2024-10-05
 
 ### What's Changed
