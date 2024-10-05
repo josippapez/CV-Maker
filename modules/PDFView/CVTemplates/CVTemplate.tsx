@@ -17,7 +17,7 @@ import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
-interface Props {
+export interface PDFProps {
   generalInfo: GeneralInfo;
   professionalExperience: ProfessionalExperience[];
   certificates: Certificate[];
@@ -28,11 +28,11 @@ interface Props {
   projects: Project[];
 }
 
-interface OptionType extends Props {
+export interface OptionType extends PDFProps {
   translate: ReturnType<typeof useTranslations<string>>;
 }
 
-function isNever(template: never): never {
+export function isNever(template: never): never {
   throw new Error(`Unexpected Template: ${template}`);
 }
 
@@ -54,7 +54,7 @@ export const getTemplate = (
   }
 };
 
-export const CVTemplate = (props: Props): JSX.Element => {
+export const CVTemplate = (props: PDFProps): JSX.Element => {
   const t = useTranslations('Templates');
   const { isHTML } = usePDFComponentsAreHTML();
   const { template } = props;

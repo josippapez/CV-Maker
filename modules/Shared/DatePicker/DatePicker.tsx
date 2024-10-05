@@ -2,6 +2,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogTitle,
 } from '@/components/ui/dialog';
 import { DatePickerHeader } from '@modules/Shared/DatePicker';
 import { DatePickerDates } from '@modules/Shared/DatePicker/Dates/DatePickerDates';
@@ -63,6 +64,7 @@ export const DatePicker = (props: Props) => {
 
   return (
     <Dialog open={showDatePicker} onOpenChange={closeDatePicker}>
+      <DialogTitle hidden>{t('date-selector')}</DialogTitle>
       <DialogContent>
         <DialogDescription hidden>{t('date-selector')}</DialogDescription>
         <div className='relative rounded-md bg-white p-4 text-almost-black'>
