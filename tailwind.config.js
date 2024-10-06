@@ -22,7 +22,7 @@ module.exports = {
       colors: {
         midnight: '#121230',
         'almost-black-input': '#2f3132',
-        'almost-black': '#000000',
+        'almost-black': 'rgb(25, 25, 25)',
         'almost-white': '#adaca9',
         'slight-gray': '#deded4',
       },

@@ -135,7 +135,7 @@ export const PDFTabNavigationPresenter = ({
   return (
     <div
       className={cn(
-        'z-10 flex w-28 min-w-fit overflow-y-auto overflow-x-hidden px-1 py-8 shadow-sm max-[500px]:w-[70px] min-[500px]:w-28 min-[500px]:min-w-[7rem]'
+        'z-10 flex w-28 min-w-fit overflow-y-auto overflow-x-hidden px-1 py-8 shadow-sm max-[500px]:w-[70px] min-[500px]:w-28 min-[500px]:min-w-[7rem] md:overflow-y-visible md:overflow-x-visible'
       )}
     >
       <div className='flex flex-grow flex-col justify-between gap-6'>
