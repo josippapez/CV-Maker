@@ -11,13 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Vercel Action
-        uses: amondnet/vercel-action@v25.2.0
+        uses: amondnet/vercel-action@de09aeac2ace6599ec9b11ef87558759a496bac4 # v42.3.0
         id: vercel
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-          scope: ${{ secrets.VERCEL_ORGANIZATION_ID}} # Needed for team deployment
           github-token: ${{ secrets.GITHUB_TOKEN }} #Optional
           vercel-org-id: ${{ secrets.VERCEL_ORGANIZATION_ID}} #Required
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required
-          vercel-args: '--confirm' #Optional
+          vercel-args: '--yes' #Optional
 
