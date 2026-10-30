@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/dialog';
 import { getCurrentTranslations } from '@/translations/hooks/getCurrentTranslations';
 import { DEFAULT_LOCALE } from '@/translations/locales';
-import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
+import { RenderAsPDF } from '@rawwee/react-pdf-html';
 import { PDFDownloadLink, UsePDFInstance } from '@react-pdf/renderer';
 import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -25,7 +25,6 @@ export const PDFDownload = ({
   pdfBlob,
 }: Props) => {
   const locale = useLocale();
-  const { isHTML, setHtml } = usePDFComponentsAreHTML();
   const [cvName, setCvName] = useState('CV');
   const [download, setDownload] = useState(false);
 
@@ -39,14 +38,12 @@ export const PDFDownload = ({
 
   useEffect(() => {
     if (show) {
-      setHtml(false);
       getCurrentTranslations(locale).then(messages => {
         setMessages(messages);
       });
     }
 
     return () => {
-      setHtml(true);
       setDownload(false);
     };
   }, [show]);
@@ -103,13 +100,11 @@ export const PDFDownload = ({
                 <PDFDownloadLink
                   className='w-full bg-blue-500 p-2 text-center font-bold text-white shadow-[0_0_20px_-5px] hover:shadow-blue-800 focus:shadow-blue-800'
                   document={
-                    !isHTML ? (
+                    <RenderAsPDF>
                       <NextIntlClientProvider {...config}>
                         <PdfInstance />
                       </NextIntlClientProvider>
-                    ) : (
-                      <></>
-                    )
+                    </RenderAsPDF>
                   }
                   fileName={`${cvName}.pdf`}
                 >

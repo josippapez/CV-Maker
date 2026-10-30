@@ -1,10 +1,9 @@
 import { getCurrentTranslations } from '@/translations/hooks/getCurrentTranslations';
 import { DEFAULT_LOCALE } from '@/translations/locales';
+import { RenderAsPDF } from '@rawwee/react-pdf-html';
 import { PDFViewer } from '@react-pdf/renderer';
 import { NextIntlClientProvider, useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 export const RealPDFDisplay: React.FC<{
   Template: React.FC;
@@ -26,9 +25,11 @@ export const RealPDFDisplay: React.FC<{
 
   return (
     <PDFViewer className='w-full'>
-      <NextIntlClientProvider {...config}>
-        <Template />
-      </NextIntlClientProvider>
+      <RenderAsPDF>
+        <NextIntlClientProvider {...config}>
+          <Template />
+        </NextIntlClientProvider>
+      </RenderAsPDF>
     </PDFViewer>
   );
 };

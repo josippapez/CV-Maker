@@ -49,7 +49,8 @@ const additionalInfoStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     border: '1.5px solid #919191',
-    borderRadius: '50%',
+    // react-pdf 4.9 only accepts absolute radii, half of the 29pt width.
+    borderRadius: 14.5,
     padding: 6,
     width: 29,
   },

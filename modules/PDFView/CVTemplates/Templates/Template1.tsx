@@ -346,7 +346,7 @@ export const Template1: FC<Props> = ({
                             width: 17,
                             height: 17,
                             position: 'relative',
-                            borderRadius: '50%',
+                            borderRadius: 8.5,
                             left: -50.5,
                             backgroundColor: '#1e86c7',
                           },

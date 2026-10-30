@@ -2,9 +2,8 @@ import { DisplayPdfModalButton } from '@modules/PDFView/DisplayPdfModalButton';
 import { PDFInputsContainer } from '@modules/PDFView/PDFInputs/PDFInputsContainer';
 import { usePDFData } from '@modules/Shared/Hooks/usePDFData';
 import { PageLoader } from '@modules/Shared/Loader/PageLoader';
-import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
 import dynamic from 'next/dynamic';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 
 const DynamicPDFDisplay = dynamic(
   () =>
@@ -18,7 +17,6 @@ const DynamicPDFDisplay = dynamic(
 );
 
 export const CreateView: FC = () => {
-  const { setHtml } = usePDFComponentsAreHTML();
   const {
     certificates,
     education,
@@ -29,13 +27,6 @@ export const CreateView: FC = () => {
     template,
     projects,
   } = usePDFData();
-
-  useEffect(() => {
-    if (process.env.NEXT_PUBLIC_SHOW_REAL_PDF === 'true') {
-      return setHtml(false);
-    }
-    setHtml(true);
-  }, []);
 
   const data = {
     generalInfo,

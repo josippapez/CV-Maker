@@ -96,7 +96,7 @@ export const registerFonts = (template: string) => {
     },
     {
       src: '/Styles/Assets/Fonts/OpenSans/OpenSans-Italic.ttf',
-      fontStyle: 'italic',
+      fontStyle: 'italic' as const,
     },
   ];
 

@@ -6,7 +6,6 @@ import { useAuth } from '@modules/Providers/AuthProvider';
 import { useWindowSize } from '@modules/Shared/Hooks/useWindowSize';
 import { RealPDFDisplay } from '@modules/Shared/PDFDisplay/RealPDFDisplay';
 import { Tooltip } from '@modules/Shared/Tooltip';
-import { usePDFComponentsAreHTML } from '@rawwee/react-pdf-html';
 import { FC, useCallback, useState } from 'react';
 
 type Props = {
@@ -18,10 +17,9 @@ export const PDFDisplay: FC<Props> = ({ isPDFPreview = false, data }) => {
   const windowSize = useWindowSize();
   const { user } = useAuth();
   const [displayDownloadModal, setDisplayDownloadModal] = useState(false);
-  const { isHTML } = usePDFComponentsAreHTML();
 
   const userIsLoggedIn = !!user?.uid;
-  const TemplateNotHtml = useCallback(() => CVTemplate(data), [isHTML, data]);
+  const TemplateNotHtml = useCallback(() => CVTemplate(data), [data]);
   const Template = () => CVTemplate(data);
 
   const scale =
