@@ -100,8 +100,5 @@
     "tailwindcss": "^3.4.13",
     "typescript": "^5.6.2"
   },
-  "packageManager": "pnpm@12.16.1",
-  "engines": {
-    "node": "26.x"
-  }
+  "packageManager": "pnpm@12.16.1"
 }
